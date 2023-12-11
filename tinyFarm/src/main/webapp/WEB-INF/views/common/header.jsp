@@ -19,7 +19,7 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-	
+	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -114,6 +114,7 @@
                                     
                                     <li><a href="list.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
+                                    <li><a href="contact.html">공지사항</a></li>
                                     <li><a href="qnaList">1:1문의</a></li>
                                 </ul>
 
