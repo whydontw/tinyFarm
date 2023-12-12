@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DiaryVo {
+public class Diary {
 	private int diaryNo;
 	private int categoryNo;
 	private int boardWriter;
