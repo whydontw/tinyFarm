@@ -1,16 +1,12 @@
 package com.kh.tinyfarm.diary.controller;
 
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.diary.model.service.DiaryService;
-import com.kh.tinyfarm.diary.model.vo.Diary;
 
 
 
@@ -77,21 +73,6 @@ public class MypageController {
 //				model.addAttribute("pi", pi);
 //				
 		return "mypage/myActivePage";
-	}
-	
-	//일지 작성
-	@ResponseBody
-	@PostMapping("insert.Di")
-	public String insertDiary(Diary d
-							,HttpSession session) {
-		
-		int result = diaryService.insertDiary(d);
-		
-		if(result>0) {
-			return "redirect:diary.me";
-		}else {
-			return "redirect:diary.me";
-		}
 	}
 	
 }

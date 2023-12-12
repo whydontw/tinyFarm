@@ -12,6 +12,7 @@
 		<typeAlias type="com.kh.tinyfarm.board.vo.Board" alias="board"/>
 		<typeAlias type = "com.kh.tinyfarm.member.model.vo.Member" alias ="member"/>
 		<typeAlias type = "com.kh.tinyfarm.qna.model.vo.Qna" alias ="qna"/>
+		<typeAlias type = "com.kh.tinyfarm.diary.model.vo.Diary" alias ="diary"/>
 	</typeAliases>
 	
 </configuration>
