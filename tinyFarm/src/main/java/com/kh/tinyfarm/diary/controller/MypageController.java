@@ -1,62 +1,97 @@
 package com.kh.tinyfarm.diary.controller;
 
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.tinyfarm.diary.model.service.DiaryService;
+import com.kh.tinyfarm.diary.model.vo.Diary;
+
+
+
 
 @Controller
 public class MypageController {
 	
-//	//서비스 호출
+	//서비스 호출
+	@Autowired
+	private DiaryService diaryService;
+	
+//	board 나오면 진행
 //	@Autowired
-//	private DiaryService diaryService;
+//	private BoardService boardService;
 	
 	//각 페이지 위임 모음
-	//마이페이지(회원정보수정이 메인)
+	//마이페이지
 	@GetMapping("mypage.me")
 	public String mypage() {
 		return "mypage/mypage";
 	}
+	//마이페이지
+		@GetMapping("update.me")
+		public String updateUser() {
+			return "mypage/updatePage";
+		}
 	//영농일지
 	@GetMapping("diary.me")
 	public String diary() {
 		return "mypage/myDiaryPage";
 	}
-	//팔로우 목록
-	@GetMapping("follow.me")
-	public String followList() { 
-		return "mypage/myFollowPage";
+	
+	//일지작성페이지
+	@GetMapping("insert.di")
+	public String insertDiary() {
+		return "mypage/insertDiary";
 	}
+	
 	//거래목록
 	@GetMapping("trade.me")
 	public String tradeList() { 
 		return "mypage/myTradePage";
 	}
-	//내가 쓴 게시글
-	@GetMapping("board.me")
+	//활동내역
+	@GetMapping("active.me")
 	public String myboard() {
-		return "mypage/myBoardPage";
-	}
-	//내가 쓴 댓글
-	@GetMapping("reply.me")
-	public String reply() {
-		return "mypage/myReplyPage";
-	}
-	//회원탈퇴
-	@GetMapping("delete.me")
-	public String deleteUser() {
-		return "mypage/myDeletePage";
+//		// 페이징처리 된 게시글 조회하기
+//
+//				// 현재 페이지 정보 (currentPage)
+//				int currentPage = Integer.parseInt(cp);
+//				// 전체 게시글 개수 (listCount)
+//				int listCount = diaryService.boardListCount();
+//				// 한 페이지에서 보여줘야하는 게시글 개수 (boardLimit)X
+//				int boardLimit = 5;
+//				// 페이징바 개수 (pageLimit)
+//				int pageLimit = 5;
+//
+//				// 페이징 처리된 게시글 목록 조회하기
+//				PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+//
+//				ArrayList<Board> list = diaryService.selectMyBoardList(pi);
+//
+//				model.addAttribute("list", list);
+//				model.addAttribute("pi", pi);
+//				
+		return "mypage/myActivePage";
 	}
 	
 	//일지 작성
 	@ResponseBody
 	@PostMapping("insert.Di")
-	public void insertDiary() {
+	public String insertDiary(Diary d
+							,HttpSession session) {
 		
+		int result = diaryService.insertDiary(d);
+		
+		if(result>0) {
+			return "redirect:diary.me";
+		}else {
+			return "redirect:diary.me";
+		}
 	}
-	
-
 	
 }
