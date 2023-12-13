@@ -280,7 +280,7 @@
                     <!-- Section Heading -->
                     <div class="section-heading text-center">
                         <h2>실내정원용 식물</h2>
-                        <p>We have the latest products, it must be exciting for you!!</p>
+                        <p>We have the latest products, it must be exciting for you</p>
                     </div>
                 </div>
             </div>
