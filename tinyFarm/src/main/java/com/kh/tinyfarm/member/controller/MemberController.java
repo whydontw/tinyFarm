@@ -46,7 +46,10 @@ public class MemberController {
     
     	//사용자에게 입력받은 비밀번호 : m.getUserPwd() / 데이터베이스에서 조회해온 암호문은 : loginUser.getUserPwd()
     	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+    		
     		session.setAttribute("loginUser", loginUser);
+    		
+    		
     		System.out.println("성공");
     		mv.setViewName("redirect:/");
     		
@@ -109,7 +112,12 @@ public class MemberController {
     		
     		m.setOriginName(upfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
-    	}
+    	}  else {
+            // 파일이 업로드되지 않았거나 null인 경우
+            m.setOriginName("profile.jpg");
+            m.setChangeName("resources/profile.jpg");
+        }
+    	
 		int result = memberService.insertMember(m);
 				
 				if(result>0) {
