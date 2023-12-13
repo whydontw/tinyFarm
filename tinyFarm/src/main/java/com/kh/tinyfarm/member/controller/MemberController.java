@@ -45,7 +45,7 @@ public class MemberController {
     	Member loginUser = memberService.loginMember(m);
     
     	//사용자에게 입력받은 비밀번호 : m.getUserPwd() / 데이터베이스에서 조회해온 암호문은 : loginUser.getUserPwd()
-    	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+    	if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
     		
     		session.setAttribute("loginUser", loginUser);
     		
@@ -82,8 +82,14 @@ public class MemberController {
     public String insertMember(Member m 
     						 , Model model
     						 , HttpSession session) {
+    	System.out.println(m);
+    	System.out.println("가입이여");
+    	
+    	
     	//암호화 작업
     	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+    	
+    	System.out.println("암호화" + encPwd);
     	
     	m.setUserPwd(encPwd);
    
@@ -104,6 +110,13 @@ public class MemberController {
 	public String insertMember(Member m
 						   ,MultipartFile upfile
 						   ,HttpSession session) {
+    	
+    	
+    	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+    	
+    	System.out.println("암호화" + encPwd);
+    	
+    	m.setUserPwd(encPwd);
     	
    
     	if(!upfile.getOriginalFilename().equals("")) {
