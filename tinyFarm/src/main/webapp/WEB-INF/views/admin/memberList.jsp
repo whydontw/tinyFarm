@@ -198,7 +198,7 @@
                     <!-- <div class="row"> -->
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
-                                <p><h5><b>🌱 답변 관리</b></h5></p>
+                                <p><h5><b>🌱 회원 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
                                 <form action="#" method="post" class="form-inline">
@@ -217,54 +217,52 @@
                             <table class="table table-responsive" align="center">
                                 <colgroup>
                                     <col width="5%">
-                                    <col width="15%">
+                                    <col width="13%">
+                                    <col width="13%">
+                                    <col width="18%">
                                     <col width="auto%">
-                                    <col width="15%">
-                                    <col width="15%">
+                                    <col width="12.5%">
+                                    <col width="7%">
                                     <col width="5%">
                                 </colgroup>
                                 <thead>
                                     <tr align="center">
                                         <th>No.</th>
                                         <th>ID</th>
-                                        <th>문의사항</th>
-                                        <th>작성일자</th>
-                                        <th>답변일자</th>
+                                        <th>이름</th>
+                                        <th>연락처</th>
+                                        <th>EMAIL</th>
+                                        <th>활동여부</th>
+                                        <th>상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<c:forEach var="q" items="${qList }">
+                                	<c:forEach var="m" items="${mList }">
 	                                    <tr>
-	                                        <td>${q.qnaNo }</td>
-	                                        <td>${q.userNo }</td>
-	                                        <c:choose>
-	                                        	<c:when test="${empty q.qnaAnswerContent }">
-			                                        <td><a href="qnaAnswer?qno=${q.qnaNo }">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting-o fa-lg"></i></span></a></td>
-	                                        	</c:when>
-	                                        	<c:otherwise>
-			                                        <td><a href="qnaAnswerUpdate?qno=${q.qnaNo }">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o  fa-lg"></i></span></a></td>
-	                                        	</c:otherwise>
-	                                        </c:choose>
-	                                        <td>${q.qnaCreatedate }</td>
-	                                        <td>${q.qnaAnswerCreatedate }</td>
-	                                        <td><input type="checkbox" value="${q.qnaNo }" class="chkQna"></td>
+	                                        <td>${m.userNo }</td>
+	                                        <td>${m.userId }</td>
+	                                        <td>${m.userName }</td>
+	                                        <td>${m.phone }</td>
+	                                        <td>${m.email }</td>
+	                                        <td>${m.status }</td>
+	                                        <td><a href="#"><i class="fa fa-search"></i></a></td>
+	                                        <td><input type="checkbox" value="${m.userNo }" class="chkMember"></td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <div class="single-widget-area float-right">
-                            <ol class="popular-tags d-flex flex-wrap" onclick="checkQnaDelete()">
-                                <li><a href="#">선택 삭제</a></li>
+                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatusN()">
+                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;활동중지</a></li>
+<!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
                         
                         
-                        
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script type="text/javascript">
-                        
 					    	
                         $(function(){
                         	
@@ -276,37 +274,39 @@
                         });
                         
                         
-                        
-                        function checkQnaDelete(){
+                        function memberStatusN(){
                         	
-                        	if(confirm("선택 내역을 삭제하시겠습니까?")){
+                        	if(confirm("선택한 회원의 활동 중지 처리를 하시겠습니까?")){
 
-                            let chkQnaList = "";
+                            let chkMemberList = "";
 							
                             //체크 요소 접근
-                            $(".chkQna:checked").each(function(index, item){
+                            $(".chkMember:checked").each(function(index, item){
+                            	
+                            	
+                            	console.log("======================");
+                            	console.log(item.value);
+                            	console.log("======================");
+                            	
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkQnaList += item.value;
+                                	chkMemberList += item.value;
                                 } else {								//첫번째 아니면 ,값 넣기
-                                	chkQnaList += "," + item.value;
+                                	chkMemberList += "," + item.value;
                                 }
 
                             });
                             
-                            
 	                            //선택된 글 없을시
-	                            if(chkQnaList == null || chkQnaList == ""){
-	                            	
+	                            if(chkMemberList == null || chkMemberList == ""){
 	                            	alert("삭제할 글을 선택하세요");
-	                            	
 	                            }else{
 	                            
 		                            //선택된 글이 있는 경우
 		                    		var formObj = $("<form>");		//태그 생성하기
-		                    		formObj.attr("action", "qnaAnswerDelete").attr("method", "post");
+		                    		formObj.attr("action", "memberStatus.ad").attr("method", "post");
 		                    		
-		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkQnaList").prop("value", chkQnaList);
+		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkMemberList").prop("value", chkMemberList);
 		                    		var obj = formObj.append(inputQnos);
 		                    		
 		    						$("body").append(obj)
@@ -322,23 +322,24 @@
 					    </script>
                         
                         
-<!--						######### 검색 #########-->
-<!--                         <div class="section-padding-100"> -->
-<!--                             <div class="single-widget-area"> -->
-<!--                                 <form action="#" method="get" class="search-form d-flex float-right">   height-50 css 추가 -->
-<!--                                     <div class=""> -->
-<!--                                         <select class="custom-select widget-title height-50"> -->
-<!--                                             <option value="1">ID</option> -->
-<!--                                             <option value="2">내용</option> -->
-<!--                                         </select> -->
-<!--                                     </div> -->
-<!--                                     <div class=""> -->
-<!--                                         <input type="search" name="search" id="widgetsearch" placeholder="Search..."> -->
-<!--                                         <button type="submit"><i class="icon_search"></i></button> -->
-<!--                                     </div> -->
-<!--                                 </form> -->
-<!--                             </div> -->
-<!--                         </div> -->
+<!--					######### 검색 #########-->
+                        <div class="section-padding-100">
+                            <div class="single-widget-area">
+                            	<!-- height-50 css 추가 -->
+                                <form action="#" method="get" class="search-form d-flex float-right">   
+                                    <div class="">
+                                        <select class="custom-select widget-title height-50">
+                                            <option value="searchId">아이디</option>
+                                            <option value="searchEmail">이메일</option>
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <input type="search" name="search" id="widgetsearch" placeholder="Search...">
+                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
 
                     <!-- </div> -->
@@ -350,18 +351,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
-                                
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${i}">${i}</a></li>
 									</c:forEach>
-									
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>

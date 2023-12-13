@@ -69,5 +69,28 @@
 			FROM MEMBER 
 			WHERE USER_ID= #{checkId}
   		</select>
+		
+		
+		
+		<!-- admin -->
+		<select id="memberListCount" resultType="_int" parameterType="string">
+  			SELECT COUNT(*) FROM MEMBER
+  		</select>
+  		
+  		<select id="selectMemberList" resultMap="memberResultSet">
+  			SELECT * FROM MEMBER
+  		</select>
+  		
+  		
+  		
+  		<update id="memberStatusN">
+			UPDATE MEMBER SET
+			STATUS = 'N'
+	        WHERE 1=1
+	        AND USER_NO IN  
+	        <foreach collection="list" item="userNo" index="index" open="(" close=")" separator=","> 
+	            #{userNo} 
+	        </foreach>
+		</update>
   		
 	</mapper>

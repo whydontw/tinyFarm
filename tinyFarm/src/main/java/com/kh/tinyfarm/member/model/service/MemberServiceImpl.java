@@ -1,9 +1,12 @@
 package com.kh.tinyfarm.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.member.model.dao.MemberDao;
 import com.kh.tinyfarm.member.model.vo.Member;
 
@@ -27,7 +30,6 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public int insertMember(Member m) {
-		
 		return memberDao.insertMember(sqlSession, m);
 	}
 	
@@ -37,4 +39,29 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.checkId(sqlSession,checkId);
 	}
 
+	
+	
+	
+	//admin - 전체 회원수
+	@Override
+	public int memberListCount() {
+		return memberDao.memberListCount(sqlSession);
+	}
+	
+
+	//admin - 회원 리스트
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi) {
+		return memberDao.selectMemberList(sqlSession, pi);
+	}
+
+	
+	//admin - 회원활동 일괄중지
+	@Override
+	public int memberStatusN(ArrayList<Integer> mList) {
+		return memberDao.memberStatusN(sqlSession, mList);
+	}
+	
+	
+	
 }
