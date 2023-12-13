@@ -85,8 +85,8 @@
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="qnaForm" class="post-title"><h6>QNA 작성</h6></a>
-							<a href="qnaList" class="post-title"><h6>나의 QNA 내역</h6></a>
+							<a href="qnaForm.qa" class="post-title"><h6>QNA 작성</h6></a>
+							<a href="qnaList.qa" class="post-title"><h6>나의 QNA 내역</h6></a>
 						</div>
 					</div>
 				</div>
@@ -123,15 +123,14 @@
 										<c:set var="createDate">
 											<fmt:formatDate value="${nowTime}" pattern="yy/MM/dd" />
 										</c:set>
-										<label for="state">작성일자</label> <input type="text"
-											class="form-control" id="" value="${createDate }" disabled>
+										<label for="state">작성일자</label> <input type="text" class="form-control" id="" value="${createDate }" disabled>
 									</div>
 									<div class="col-md-12 mb-4">
 										<label for="order-notes">문의사항 *</label>
 										<textarea class="form-control" id="qnaContent" name="qnaContent" cols="30" rows="80" placeholder="문의할 내용을 입력해 주세요."></textarea>
 									</div>
 									<div class="col-12">
-										<button type="submit" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">Send Message</button>
+										<button type="submit" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
 									</div>
 								</div>
 							</form>

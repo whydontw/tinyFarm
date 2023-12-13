@@ -109,7 +109,7 @@
                                 <ul>
                                     <li><a href="index.html">식물 정보</a>
                                         <ul class="dropdown">
-                                             <li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
+                                            <li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
                                             <li><a href="gardeningList.pp?category=채소">채소 정보</a></li>
                                             <li><a href="gardeningList.pp?category=실내농업">실내농업 관련 정보</a> </li>
                                             <li><a href="gardeningList.pp?category=기능별 텃밭">기능별 텃밭 정보</a> </li>
@@ -121,7 +121,7 @@
                                     <li><a href="list.bo">커뮤니티</a></li>
                                     <li><a href="portfolio.html">작물거래</a></li>
                                     <li><a href="contact.html">공지사항</a></li>
-                                    <li><a href="qnaList">1:1문의</a></li>
+                                    <li><a href="qnaList.qa">1:1문의</a></li>
                                 </ul>
 
                                 <!-- Search Icon -->
