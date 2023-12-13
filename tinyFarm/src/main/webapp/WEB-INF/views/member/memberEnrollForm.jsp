@@ -131,76 +131,53 @@
 	                        </form>
 	                    </div>
 	                   <script>
-							$(function(){
-								
-								//userId 라는 id값은 header에 있는 login Form에 userId 아이디와 겹치기 때문에
-								//더 위에 있는 loginForm userId 요소가 잡히게 된다.
-								var inputUserId = $("#enrollUserId");
-								
-								
-								inputUserId.keyup(function(){
-									
-									console.log(inputUserId);
-									console.log(inputUserId.val().length);
-									
-									if(inputUserId.val().trim().length >= 5){
-									
-										$.ajax({
-											url : "checkId.me",
-											data : {checkId : inputUserId.val()},
-											success : function(result){
-												
-												
-												if(result=="NNNNN"){
-													$("#checkResult").show();
-													$("#checkResult").css("color","red").text("사용 불가능한 아이디입니다.");
-													
-													$("button[type=submit]").attr("disabled",true);
-												}else{//사용가능
-													$("#checkResult").show();
-													$("#checkResult").css("color","blue").text("사용가능한 아이디입니다.");
-													
-													$("button[type=submit]").attr("disabled",false);
-												}
-												
-											},error : function(){
-												console.log("통신 오류");
-											}
-										});
-								
-									}else{
-										$("#checkResult").hide();
+	           		$(function(){
+						
+						//userId 라는 id값은 header에 있는 login Form에 userId 아이디와 겹치기 때문에
+						//더 위에 있는 loginForm userId 요소가 잡히게 된다.
+						var inputUserId = $("#enrollUserId");
+						
+						
+						inputUserId.keyup(function(){
+							
+							console.log(inputUserId);
+							console.log(inputUserId.val().length);
+							
+							var idLength = inputUserId.val().trim().length;
+						    if (idLength >= 5 && idLength <= 15) {
+							
+								$.ajax({
+									url : "checkId.me",
+									data : {checkId : inputUserId.val()},
+									success : function(result){
+										
+										
+										if(result=="NNNNN"){
+											$("#checkResult").show();
+											$("#checkResult").css("color","red").text("사용 불가능한 아이디입니다.");
+											
+											$("button[type=submit]").attr("disabled",true);
+										}else{//사용가능
+											$("#checkResult").show();
+											$("#checkResult").css("color","blue").text("사용가능한 아이디입니다.");
+											
+											$("button[type=submit]").attr("disabled",false);
+										}
+										
+									},error : function(){
+										console.log("통신 오류");
 									}
-								
 								});
-								
-							});
 						
+							}else{
+								$("#checkResult").hide();
+							}
+						
+						});
+						
+					});						
 						</script>
-					<!-- 	<script>
-						    // input 요소들을 가져옵니다.
-						    var passwordInput = document.getElementById('userPwd');
-						    var confirmPasswordInput = document.getElementById('checkPwd');
-						
-						    // 비밀번호 확인 함수
-						    function passConfirm() {
-						        var confirmMsg = document.getElementById('confirmMsg');
-						        var correctColor = "green";
-						        var wrongColor = "red";
-						
-						        if (passwordInput.value === confirmPasswordInput.value) {
-						            confirmMsg.style.color = correctColor;
-						            confirmMsg.innerHTML = "비밀번호 일치";
-						        } else {
-						            confirmMsg.style.color = wrongColor;
-						            confirmMsg.innerHTML = "비밀번호 불일치";
-						        }
-						    }
-						
-						    // input 요소들에 대해 keyup 이벤트를 등록합니다.
-						    passwordInput.addEventListener('keyup', passConfirm);
-						    confirmPasswordInput.addEventListener('keyup', passConfirm);
-						</script> -->
+				
 						
 						<script>
 						$("#password").blur(function() {
@@ -208,7 +185,7 @@
 						 	
 						 	if ($("#password").val() == "") {
 						         $("#pwdcheck_blank1").css("color", "red");
-						         $("#pwdcheck_blank1").text("필수정보예요.");
+						         $("#pwdcheck_blank1").text("필수정보입니다");
 						         password = false;
 						      }	
 						      else if (!pwdCheck.test($("#password").val())) {
