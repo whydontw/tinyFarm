@@ -21,11 +21,56 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
+		.searchContainer{
+			margin-bottom:50px;
+			display:flex;
+			justify-content: flex-end;
+		}
+		.searchOutDiv{
+			width: 235px;
+			height:35px;
+		
+			/* margin-top: 15px;
+			margin-bottom: 15px; */
+			vertical-align:middle;
+			border: 2px #70c745 solid ;
+		}
+		.searchOutDiv input{
+			width: 200px;
+			height: 20px;
+			border-style: none;
+			padding:10px;
+			outline: none;
+			
+		}
+		.searchInDiv{
+			display:flex;
+			align-items:center;
+			width:420px;
+			height:20px;
+			margin:0 auto;
+			margin:5px auto;
+		}
+		.searchInDiv img{
+			width:15px;
+			height:15px;
+		}
+		#searchBtn{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		 	width:30px;
+		 	height:25px;
+			
+		 	border:none;
+		 	align-content: center;
+		}
 	</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
-	 <!-- ##### Product Area Start ##### -->
+	<!-- ##### Product Area Start ##### -->
+	
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
@@ -50,7 +95,10 @@
 			</div>
 		</div>
 	</div>
-    <section class="new-arrivals-products-area bg-gray section-padding-100">
+	
+    <section class="new-arrivals-products-area bg-gray section-padding-0-100">
+    	<!-- ##### Single Widget Area ##### -->
+  		
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -61,6 +109,17 @@
                     </div>
                 </div>
             </div>
+        	<div class="searchContainer">
+		        <div class="searchOutDiv">
+		        	<div class="searchInDiv">
+			  			<input type="search" id="searchInput" placeholder="search..">
+				  		<button id="searchBtn" onclick="search();"><img src="${contextPath}/resources/img/icon/search.svg"></button>       	
+			        	
+		        	</div>
+		        	
+		  			
+		  		</div> 
+        	</div>
 			
             <div class="row itemRow">
 				<c:forEach items="${result}" var="p">
@@ -94,32 +153,65 @@
 
             <!-- 페이징바 -->
 			<div class="wholeList" align="center">
-                <c:choose>
-                    <c:when test="${pi.currentPage eq 1}">
-                        <button  class='btn btn-sm' disabled>이전</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}'">이전</button>
-                    </c:otherwise>
-                </c:choose>
-                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
-                	<c:choose>
-                		<c:when test="${i eq pi.currentPage}">
-                			<button class='btn btn-sm active' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
-                		</c:when>
-                		<c:otherwise>
-                			<button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
-                		</c:otherwise>
-                	</c:choose>
-                </c:forEach>
-                <c:choose>
-                    <c:when test="${pi.currentPage eq pi.maxPage}">
-                        <button  class='btn btn-sm' disabled>다음</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'">다음</button>
-                    </c:otherwise>
-                </c:choose>
+				<c:choose>
+					<c:when test="${not empty sText}">
+						<c:choose>
+		                    <c:when test="${pi.currentPage eq 1}">
+		                        <button  class='btn btn-sm' disabled>이전</button>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}&sText=${sText}'">이전</button>
+		                    </c:otherwise>
+		                </c:choose>
+		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
+		                	<c:choose>
+		                		<c:when test="${i eq pi.currentPage}">
+		                			<button class='btn btn-sm active' onclick="location.href='inGardenPlantList.pp?currentPage=${i}&sText=${sText}'">${i}</button>
+		                		</c:when>
+		                		<c:otherwise>
+		                			<button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${i}&sText=${sText}'">${i}</button>
+		                		</c:otherwise>
+		                	</c:choose>
+		                </c:forEach>
+		                <c:choose>
+		                    <c:when test="${pi.currentPage eq pi.maxPage}">
+		                        <button  class='btn btn-sm' disabled>다음</button>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}&sText=${sText}'">다음</button>
+		                    </c:otherwise>
+		                </c:choose>
+					</c:when>
+					<c:otherwise>
+		                <c:choose>
+		                    <c:when test="${pi.currentPage eq 1}">
+		                        <button  class='btn btn-sm' disabled>이전</button>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}&sText=${sText}'">이전</button>
+		                    </c:otherwise>
+		                </c:choose>
+		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
+		                	<c:choose>
+		                		<c:when test="${i eq pi.currentPage}">
+		                			<button class='btn btn-sm active' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
+		                		</c:when>
+		                		<c:otherwise>
+		                			<button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
+		                		</c:otherwise>
+		                	</c:choose>
+		                </c:forEach>
+		                <c:choose>
+		                    <c:when test="${pi.currentPage eq pi.maxPage}">
+		                        <button  class='btn btn-sm' disabled>다음</button>
+		                    </c:when>
+		                    <c:otherwise>
+		                        <button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'">다음</button>
+		                    </c:otherwise>
+		                </c:choose>
+					
+					</c:otherwise>
+				</c:choose>
 			</div>
             
             <script>
@@ -134,7 +226,12 @@
             			$(this).parents("form").children(".submitBtn").click();
             		})
             	});
-            	
+            	function search(){
+            		var input = document.getElementById("searchInput");
+            		
+            		location.href = "inGardenPlantList.pp?sText="+input.value;
+            		
+            	}
             </script>
         </div>
     </section>

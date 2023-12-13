@@ -19,10 +19,14 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+    	
 </head>
 
 <body>
+	<!-- contextPath 설정 -->
+	<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="session"/>
+	
+	
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-circle"></div>
@@ -144,8 +148,6 @@
     <!-- nav 바 뒤 그림부분 시작-->
 
     <!-- nav 바 뒤 그림부분 끝 -->
-    
-
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
     <!-- <script src="resources/js/jquery/jquery-2.2.4.min.js"></script> -->
@@ -157,6 +159,8 @@
     <script src="resources/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="resources/js/active.js"></script>
+
+    
 </body>
 
 </html>

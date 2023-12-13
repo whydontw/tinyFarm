@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="resources/style.css">
 	<style>
    
-
+		.container{
+			margin-top:30px;
+		}
         table {
         border: 1px #a39485 solid;
         font-size: .9em;
@@ -62,6 +64,58 @@
      	#showMoreBtn{
      		margin-top: 30px;
      	}
+     	.searchContainer{
+     		width:800px;
+			
+			display:flex;
+			justify-content: flex-end;
+			margin:0 auto;
+			
+		}
+		.searchOutDiv{
+			width: 320px;
+			height:35px;
+		
+			/* margin-top: 15px;
+			margin-bottom: 15px; */
+			vertical-align:middle;
+			border: 2px #70c745 solid ;
+		}
+		.searchOutDiv input{
+			width: 210px;
+			height: 20px;
+			border-style: none;
+			padding:10px;
+			outline: none;
+			
+		}
+		.searchInDiv{
+			display:flex;
+			align-items:center;
+			width:310px;
+			height:20px;
+			margin:0 auto;
+			margin:5px auto;
+		}
+		.searchInDiv img{
+			width:15px;
+			height:15px;
+		}
+		#searchBtn{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		 	width:30px;
+		 	height:25px;
+			
+		 	border:none;
+		 	align-content: center;
+		}
+		#sType{
+			border:none;
+			outline:none;
+			
+		}
     </style>
 </head>
 
@@ -81,9 +135,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">텃밭 가꾸기</a></li>
+						<li class="breadcrumb-item"><a href="/">텃밭 가꾸기</a></li>
 						
 					</ol>
 					</nav>
@@ -98,7 +152,7 @@
             <img src="resources/img/core-img/leaf.png" alt="">
         </div>
     </div>
-
+	
 
     <!-- ##### Portfolio Area Start ##### -->
     <section class="alazea-portfolio-area portfolio-page section-padding-0-100">
@@ -130,7 +184,22 @@
                 </div>
             </div>
         </div>
-
+		<div class="searchContainer">
+	        <div class="searchOutDiv">
+	        	<div class="searchInDiv">
+					<select id="sType">
+						<option value="sCntntsSj">제목</option>
+						<option value="sWriteNm">작성자</option>
+						<option value="sQuestDtl">내용</option>
+					</select>
+		  			<input type="search" id="searchInput" placeholder="search..">
+			  		<button id="searchBtn" onclick="search();"><img src="${contextPath}/resources/img/icon/search.svg"></button>       	
+		        	
+	        	</div>
+	        	
+	  			
+	  		</div> 
+	    </div>
         <div class="container">
         
 
@@ -197,6 +266,13 @@
 	    	    }
 	    	  });
 	    	});
+	    function search(){
+    		var input = document.getElementById("searchInput");
+    		var selectEl = document.getElementById("sType");
+    		var selectValue = selectEl.options[selectEl.selectedIndex].value;
+    		location.href = "gardeningList.pp?sText="+input.value+"&sType="+selectValue+"&category=${category}";
+    		
+    	}
     </script>
     <!-- ##### Portfolio Area End ##### -->
 
