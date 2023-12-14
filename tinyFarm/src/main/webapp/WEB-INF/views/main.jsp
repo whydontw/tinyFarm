@@ -119,7 +119,7 @@
                                     <li><a href="mypage.me">체험활동</a></li>
                                     
                                     <li><a href="list.bo">커뮤니티</a></li>
-                                    <li><a href="portfolio.html">작물거래</a></li>
+                                    <li><a href="plist.bo?currentPage=1">작물거래</a></li>
                                     <li><a href="contact.html">공지사항</a></li>
                                     <li><a href="qnaList">1:1문의</a></li>
                                 </ul>
