@@ -33,27 +33,36 @@
 		#boardList{
 			width: 100%;
 			height: 50%;
-			border: 1px solid green;
 		}
 		#replyList{
 			width: 100%;
 			height: 50%;
-			border: 1px solid blue;
-			margin-top: 5%;
-		}
-		#follow{
-			width: 100%;
-			height: 100%;
-			border: 1px solid red;
-		
-		}
-		#follower{
 			margin-top: 5%;
 		}
 		table{
 			width: 100%;
-			text-align: center
+			text-align: center;
 		}
+		.pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .pagination-container a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            color: #333;
+            cursor: pointer;
+        }
+        .pagination-container table tr{
+        	border-bottom: 1px solid grey;
+        }
+        .pagination-container table td{
+        	width: 300px;
+        	text-align: center;
+        }
 	</style>
 
 
@@ -106,8 +115,50 @@
                     					<td style="width: 10%">좋아요</td>
                     				</tr>
                     			</thead>
-                    			<tbody></tbody>
+                    			<tbody>
+                    				<c:choose>
+										<c:when test="${not empty list }">
+											<c:forEach items="${list }" var="b">
+												<tr>
+													<td>${b.boardNo }</td>
+													<td>${b.boardTitle }</td>
+													<td>${b.boardContent }</td>
+													<td>${b.count }</td>
+													<td>${b.likeCount }</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr><td colspan="5">작성한 게시글이 없습니다.</td></tr>
+										</c:otherwise>
+									</c:choose>
+                    			</tbody>
                     		</table>
+                    		<div id="pagingArea">
+								<ul class="pagination">
+									<c:choose>
+										<c:when test="${pi.currentPage eq 1 }">
+											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+										</c:otherwise>
+									</c:choose>
+	
+									<c:forEach var="i" begin="${ pi.startPage}" end="${pi.endPage }">
+										<li class="page-item"><a class="page-link" href="list.bo?currentPage=${i}">${i}</a></li>
+									</c:forEach>
+	
+									<c:choose>
+										<c:when test="${pi.currentPage eq pi.maxPage }">
+											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+							</div>
                     	</div>
                     	
                     	<div id="replyList">
@@ -122,8 +173,49 @@
                     					<td style="width: 15%">작성일</td>
                     				</tr>
                     			</thead>
-                    			<tbody></tbody>
+                    			<tbody>
+                    				<c:choose>
+										<c:when test="${not empty rList }">
+											<c:forEach items="${rList }" var="r">
+											<tr>
+												<td>${r.refBno}</td>
+												<td>${r.replyContent}</td>
+												<td>${r.createDate }</td>
+												<td>${r.likeCount }</td>
+											</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr><td colspan="4">작성한 댓글이 없습니다.</td></tr>
+										</c:otherwise>
+									</c:choose>
+                    			</tbody>
                     		</table>
+                    		<div id="pagingArea">
+								<ul class="pagination">
+									<c:choose>
+										<c:when test="${pi.currentPage eq 1 }">
+											<li class="page-item disabled"><a class="page-link"href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+										</c:otherwise>
+									</c:choose>
+	
+									<c:forEach var="i" begin="${ pi.startPage}" end="${pi.endPage }">
+										<li class="page-item"><a class="page-link" href="list.bo?currentPage=${i}">${i}</a></li>
+									</c:forEach>
+	
+									<c:choose>
+										<c:when test="${pi.currentPage eq pi.maxPage }">
+											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+							</div>
                     	</div>
                     </div>
                 </div>
@@ -135,30 +227,57 @@
                             <div class="widget-title">
                                 <h4>Follow List</h4>
                             </div>
-                            	<!-- 
-                            		조건문으로 팔로우 리스트 뽑은 후
-                            		양옆페이징바 만들 수 있나..?
-                            	 -->
-                            	 <table border="1" id="following">
-									<thead>
-										<tr><td colspan="2">팔로잉</td></tr>
-									</thead>
-									<tbody>
-										<tr><td>아이디</td></tr>
-										<tr><td>아이디</td></tr>
-										<tr><td>아이디</td></tr>
-									</tbody>
-								 </table>
-								 <table border="1" id="follower">
-									<thead>
-										<tr><td colspan="2">팔로워</td></tr>
-									</thead>
-									<tbody>
-										<tr><td>아이디</td></tr>
-										<tr><td>아이디</td></tr>
-										<tr><td>아이디</td></tr>
-									</tbody>
-								 </table>
+                            	<div class="pagination-container">
+        							<a href="#" id="prevBtn">&lt;</a>
+        								<div id="followingTableContainer">
+		                            	 <table id="following">
+											<thead>
+												<tr><td>Following List</td></tr>
+											</thead>
+											<tbody>
+												<c:choose>
+													<c:when test="${not empty fingList }">
+														<c:forEach items="${fingList }" var="fi">
+															<tr>
+																<td>${f.userId }</td>
+															</tr>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<tr><td>친구를 만들어보세요!</td></tr>
+													</c:otherwise>
+												</c:choose>
+											</tbody>
+										 </table>
+										</div>
+									<a href="#" id="nextBtn">&gt;</a>
+   								</div>
+   								<br>
+   								<div class="pagination-container">
+        							<a href="#" id="prevBtn">&lt;</a>
+        								<div id="followerTableContainer">
+		                            	 <table id="follower">
+											<thead>
+												<tr><td>Follower List</td></tr>
+											</thead>
+											<tbody>
+												<c:choose>
+													<c:when test="${not empty fwerList })">
+														<c:forEach items="${fwerList }" var="fw">
+															<tr>
+																<td>${f.userId }</td>
+															</tr>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<tr><td>친구를 만들어보세요!</td></tr>
+													</c:otherwise>
+												</c:choose>
+											</tbody>
+										 </table>
+										</div>
+									<a href="#" id="nextBtn">&gt;</a>
+   								</div>
                             </div>
                         </div>
                     </div>

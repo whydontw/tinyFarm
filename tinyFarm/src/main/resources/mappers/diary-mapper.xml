@@ -17,18 +17,48 @@
   		<result column="STATUS" property="status"/>
   	</resultMap>
   	
+  	<!-- 정보수정 -->
+  	<update id="updateMember" parameterType="member">
+  			UPDATE MEMBER
+			SET USER_NAME = #{userName}
+			   ,EMAIL = #{email}
+			   ,PHONE = #{phone}
+			   ,ADDRESS = #{address}
+			   ,MODIFY_DATE = SYSDATE
+			WHERE USER_ID = #{userId}
+			AND STATUS = 'Y'
+  		</update>
+  	
+  	<!-- 비밀번호 변경 -->
+  	<update id="updatePwd" parameterType="member">
+  		UPDATE MEMBER
+  		SET USER_PWD = #{userPwd}
+  		WHERE USER_ID = #{userId}
+  		AND STATUS = 'Y'
+  	</update>
+  	
+  	
   	<!-- 일지등록 -->
   	<insert id="insertDiary">
   		INSERT INTO DIARY_BOARD VALUES(SEQ_DBNO.NEXTVAL
 								  		,#{categoryNo}
-								  		,#{boardWriter}
+								  		,1
 								  		,#{startDate}
 								  		,#{endDate}
 								  		,#{diaryTitle}
 								        ,#{diaryContent}
-										,DEFAULT
+										,'N'
 										,SYSDATE
 										,'Y')
   	</insert>
+  	
+  	<!-- 회원 탈퇴 -->
+  	<update id="deleteMember" parameterType="string">
+  			UPDATE MEMBER
+  			SET STATUS = 'N'
+  			WHERE USER_ID = #{userId}
+  			AND STATUS = 'Y'
+  	</update>
+  	
   	
   </mapper>
