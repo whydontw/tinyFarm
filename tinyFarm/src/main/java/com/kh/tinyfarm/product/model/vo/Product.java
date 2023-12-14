@@ -28,7 +28,7 @@ public class Product {
 	private int categoryNo;
 	private String productTitle;
 	private String productContent;
-	private int productPrice;
+	private String productPrice;
 	private int count;
 	private String regiDate;
 	private String modiDate;
