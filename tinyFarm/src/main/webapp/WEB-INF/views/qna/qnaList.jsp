@@ -180,7 +180,7 @@
 		                                        </c:if>
 	                                        	<c:if test="${not empty qList.qnaAnswerContent }">-</c:if>
 	                                        </td>
-											<td><a href="#" id="qnaDeleteBtn"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a></td>
+											<td><a href="#" id="qnaDeleteBtn" onclick="qnaDeleteBtn(${qList.qnaNo})"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a></td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>
@@ -206,7 +206,6 @@
         						obj.submit();
                         		
                         	}
-                        	
                         	
                             //QNA 삭제
                         	function qnaDeleteBtn(qnaNo){
@@ -281,8 +280,7 @@
     </section>
     <!-- ##### Blog Area End ##### -->
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
+	<%@include file="/WEB-INF/views/common/footer.jsp" %>
 
 
     <!-- ##### All Javascript Files ##### -->
