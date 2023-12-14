@@ -70,7 +70,7 @@
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 	<!-- ##### Product Area Start ##### -->
-	
+	<a href="chatList.ch">채팅</a>
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
@@ -224,7 +224,9 @@
             		});
             		$(".plantName").click(function(){
             			$(this).parents("form").children(".submitBtn").click();
-            		})
+            		});
+            		
+    
             	});
             	function search(){
             		var input = document.getElementById("searchInput");

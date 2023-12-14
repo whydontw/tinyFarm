@@ -1,6 +1,9 @@
 package com.kh.tinyfarm.qna.model.dao;
 
+
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -44,6 +47,7 @@ public class QnaDao {
 		return (ArrayList)sqlSession.selectList("qnaMapper.selectMyQnaList", userNo, rowBounds);
 	}
 
+	
 
 	//QNA 상세 조회
 	public Qna selectQnaDetail(SqlSessionTemplate sqlSession, int qnaNo) {
@@ -63,10 +67,25 @@ public class QnaDao {
 		return sqlSession.update("qnaMapper.qnaAnswerUpdate", updateAnswer);
 	}
 
-
-	//사용자 QNA 수정
-	public int qnaUpdate(Qna updateQna, SqlSessionTemplate sqlSession) {
-		return sqlSession.update("qnaMapper.qnaUpdate", updateQna);
+	//선택한 QNA 삭제
+	public int chkQnaDelete(ArrayList<Integer> list, SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("qnaMapper.chkQnaDelete", list);
 	}
+	
+	
+	//사용자 QNA 수정
+	public int myQnaUpdate(Qna updateQna, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("qnaMapper.myQnaUpdate", updateQna);
+	}
+
+	//사용자 QNA 삭제
+	public int myQnaDelete(int qnaNo, SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("qnaMapper.myQnaDelete", qnaNo);
+	}
+
+
+
+
+
 
 }

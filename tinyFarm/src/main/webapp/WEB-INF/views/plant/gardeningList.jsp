@@ -20,9 +20,7 @@
     <link rel="stylesheet" href="resources/style.css">
 	<style>
    
-		.container{
-			margin-top:30px;
-		}
+
         table {
         border: 1px #a39485 solid;
         font-size: .9em;
@@ -205,7 +203,7 @@
 
             <div>
 				<!-- Single Portfolio Area -->
-                <div class="vegitable" style="margin:0 auto;">
+                <div class="vegitable" style="margin:0 auto; padding-top:30px;">
                 	
                    <table id="veTable">
 				        <thead>

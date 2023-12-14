@@ -19,7 +19,23 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-    	
+    
+     <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+	 <style>
+		a,p{
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		.plantImg,.plantName:hover{
+			cursor : pointer;
+		}
+		
+	</style>
 </head>
 
 <body>
@@ -119,7 +135,7 @@
                                     <li><a href="list.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
                                     <li><a href="contact.html">공지사항</a></li>
-                                    <li><a href="qnaList">1:1문의</a></li>
+                                    <li><a href="qnaList.qa">1:1 문의</a></li>
                                 </ul>
 
                                 <!-- Search Icon -->
