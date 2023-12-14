@@ -22,201 +22,194 @@ import com.kh.tinyfarm.member.model.service.MemberService;
 import com.kh.tinyfarm.member.model.vo.Member;
 
 
+
 @Controller
 public class MypageController {
-	
-	//서비스 호출
+
+	// 서비스 호출
 	@Autowired
 	private DiaryService diaryService;
+	
 	@Autowired
 	private MemberService memberService;
+	
 	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	 
+    private BCryptPasswordEncoder bcryptPasswordEncoder;
+
 //	board 나오면 진행
 //	@Autowired
 //	private BoardService boardService;
-	
-	//각 페이지 위임 모음
-	//마이페이지
+
+	// 각 페이지 위임 모음
+	// 마이페이지
 	@GetMapping("mypage.me")
 	public String mypage() {
 		return "mypage/mypage";
 	}
-	//마이페이지
-		@GetMapping("update.me")
-		public String updateUser() {
-			return "mypage/updatePage";
-		}
-	//영농일지
+
+	// 마이페이지
+	@GetMapping("update.me")
+	public String updateUser() {
+		return "mypage/updatePage";
+	}
+
+	// 영농일지
 	@GetMapping("diary.me")
 	public String diary() {
 		return "mypage/myDiaryPage";
 	}
-	
-	//일지작성페이지
+
+	// 일지작성페이지
 	@GetMapping("insert.di")
 	public String insertDiary() {
 		return "mypage/insertDiary";
 	}
-	
-	//거래목록
+
+	// 거래목록
 	@GetMapping("trade.me")
-	public String tradeList() { 
+	public String tradeList() {
 		return "mypage/myTradePage";
 	}
-	//활동내역
+
+	// 활동내역
 	@GetMapping("active.me")
 	public String myboard() {
-//		// 페이징처리 된 게시글 조회하기
-//
-//				// 현재 페이지 정보 (currentPage)
-//				int currentPage = Integer.parseInt(cp);
-//				// 전체 게시글 개수 (listCount)
-//				int listCount = diaryService.boardListCount();
-//				// 한 페이지에서 보여줘야하는 게시글 개수 (boardLimit)X
-//				int boardLimit = 5;
-//				// 페이징바 개수 (pageLimit)
-//				int pageLimit = 5;
-//
-//				// 페이징 처리된 게시글 목록 조회하기
-//				PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-//
-//				ArrayList<Board> list = diaryService.selectMyBoardList(pi);
-//
-//				model.addAttribute("list", list);
-//				model.addAttribute("pi", pi);
-//				
+		
 		return "mypage/myActivePage";
 	}
-	
-	//회원정보 수정하기
+
+	// 회원정보 수정하기
 	@PostMapping("update.me")
 	public ModelAndView updateMember(Member m
-							,MultipartFile reUpfile
-							,HttpSession session
-							,ModelAndView mv) {
+									,MultipartFile reUpfile
+									,HttpSession session
+									,ModelAndView mv) {
+		System.out.println(m);
+		System.out.println(reUpfile);
 		
-		//새로운 프로필 사진 첨부시
-		if(!reUpfile.getOriginalFilename().equals("")) {
-			
-			//DB에 정보 덮어쓰기 
-			String changeName = saveFile(reUpfile,session);
-			
-			//기존 파일 존재하면 지어주기
-			if(!m.getOriginName().equals("")) {
+		// 새로운 프로필 사진 첨부시
+		if (!reUpfile.getOriginalFilename().equals("")) {
+
+			// DB에 정보 덮어쓰기
+			String changeName = saveFile(reUpfile, session);
+
+			// 기존 파일 존재하면 지어주기
+			if (!m.getOriginName().equals("")) {
 				File f = new File(session.getServletContext().getRealPath(m.getChangeName()));
 				f.delete();
 			}
-			
-			//Member에 새 프로필사진 담기
+
+			// Member에 새 프로필사진 담기
 			m.setOriginName(reUpfile.getOriginalFilename());
 			m.setChangeName(changeName);
 		}
-		
-		//새로 입력한 정보 변경해주기(DB)
+
+		// 새로 입력한 정보 변경해주기(DB)
 		int result = diaryService.updateMember(m);
-		
-		//마이페이지 재요청
+
+		// 마이페이지 재요청
 		mv.setViewName("redirect:mypage.me");
-		if(result>0) {
-			Member loginUser = memberService.loginMember(m); //기존에 회원정보 조회메소드 활용
-			session.setAttribute("loginUser", loginUser);//조회한 데이터 세션에 갱신
+		if (result > 0) {
+			Member loginUser = memberService.loginMember(m); // 기존에 회원정보 조회메소드 활용
+			session.setAttribute("loginUser", loginUser);// 조회한 데이터 세션에 갱신
 			session.setAttribute("alertMsg", "회원정보 수정이 완료되었습니다.");
-			mv.setViewName("redirect:mypage.me"); //마이페이지 재요청
-		}else {
-			mv.addObject("errorMsg","회원정보수정실패").setViewName("common/error");
+			mv.setViewName("redirect:mypage.me"); // 마이페이지 재요청
+		} else {
+			mv.addObject("errorMsg", "회원정보수정실패").setViewName("common/error");
 		}
-		
+
 		return mv;
 	}
-	
-	//비밀번호 변경
+
+	// 비밀번호 변경
 	@ResponseBody
 	@PostMapping("updatePwd.me")
 	public String updatePWd(Member m
-							,String userPwd
+							,String currentPwd
 							,String updatePwd
 							,Model model
 							,HttpSession session) {
 		
-		//암호화 작업 - 스크립트로 조건처리 하고 넘어왔으니 바로 암호화
-		String encPwd = bcryptPasswordEncoder.encode(updatePwd);
-				
-		m.setUserPwd(encPwd);
-				
-		int result = diaryService.updatePwd(m);
-				
-		if(result>0) { //성공
-			session.setAttribute("alertMsg", "비밀번호 변경 성공");
-			return "YYYYY";
-		}else { //실패
-			model.addAttribute("alertMsg","비밀번호 변경 실패");
-			return "NNNNN";
-		}
-	}
-	
-	//회원탈퇴
-		@PostMapping("delete.me")
-		public String deleteMember(String userPwd
-								  ,HttpSession session
-								  ,Model model) {
+		Member loginUser = ((Member) session.getAttribute("loginUser")); 
+		String loginUserPwd = loginUser.getUserPwd(); // 비밀번호 추출
+
+		
+		if (!bcryptPasswordEncoder.matches(currentPwd, loginUserPwd)) {//현재비밀번호 일치 테스트
+			return "NNNYY"; 
+		}else { //비밀번호 불일치
+			// 암호화 작업 - 스크립트로 조건처리 하고 넘어왔으니 바로 암호화
+			String encPwd = bcryptPasswordEncoder.encode(updatePwd);
 			
-			Member loginUser = ((Member)session.getAttribute("loginUser")); //세션에서 로그인 정보 추출
+			m.setUserPwd(encPwd);
 			
-			String userId = loginUser.getUserId(); //아이디 추출
-			String loginUserPwd = loginUser.getUserPwd(); //비밀번호 추출
+			int result = diaryService.updatePwd(m);
 			
-			if(bcryptPasswordEncoder.matches(userPwd, loginUserPwd)) { //비밀번호 일치
-				
-				int result = diaryService.deleteMember(userId);
-				
-				if(result>0) { //탈퇴 성공
-					
-					session.setAttribute("alertMsg", "그동안 저희 사이트를 이용해주셔서 감사합니다.");
-					//세션에 있는 로그인 정보 지우기 
-					session.removeAttribute("loginUser");
-					return "redirect:/"; //메인으로 위임
-					
-					
-				}else { //탈퇴 실패
-					model.addAttribute("errorMsg","회원 탈퇴 실패");
-					return "common/errorPage"; //에러페이지로 이동
-				}
-				
-				
-			}else {//비밀번호 잘못입력
-				
-				session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
-				return "redirect:mypage.me"; //마이페이지 유지
+			if (result>0) { // 성공
+				return "YYYYY";
+			} else { // 실패
+				return "NNNNN";
 			}
-			
 		}
-	
-	
-	
-	//파일명 수정 모듈
-  	public String saveFile(MultipartFile upfile
-  						  ,HttpSession session) {
-  		String originName = upfile.getOriginalFilename(); 
-  		
-  		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-  		
-  		int ranNum = (int)(Math.random()*90000+10000);
-  		
-  		String ext = originName.substring(originName.lastIndexOf("."));
-  		
-  		String changeName = currentTime+ranNum+ext;
-  		
-  		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-  		
-  		try {
-			upfile.transferTo(new File(savePath+changeName));
+			
+	}
+
+	// 회원탈퇴
+	@PostMapping("delete.me")
+	public String deleteMember(String userPwd
+								,HttpSession session
+								,Model model) {
+
+		Member loginUser = ((Member) session.getAttribute("loginUser")); // 세션에서 로그인 정보 추출
+
+		String userId = loginUser.getUserId(); // 아이디 추출
+		String loginUserPwd = loginUser.getUserPwd(); // 비밀번호 추출
+
+		if (bcryptPasswordEncoder.matches(userPwd, loginUserPwd)) { // 비밀번호 일치
+
+			int result = diaryService.deleteMember(userId);
+
+			if (result > 0) { // 탈퇴 성공
+
+				session.setAttribute("alertMsg", "그동안 저희 사이트를 이용해주셔서 감사합니다.");
+				// 세션에 있는 로그인 정보 지우기
+				session.removeAttribute("loginUser");
+				return "redirect:/"; // 메인으로 위임
+
+			} else { // 탈퇴 실패
+				model.addAttribute("errorMsg", "회원 탈퇴 실패");
+				return "common/errorPage"; // 에러페이지로 이동
+			}
+
+		} else {// 비밀번호 잘못입력
+
+			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
+			return "redirect:mypage.me"; // 마이페이지 유지
+		}
+
+	}
+
+	// 파일명 수정 모듈
+	public String saveFile(MultipartFile upfile
+							,HttpSession session) {
+		String originName = upfile.getOriginalFilename();
+
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+
+		int ranNum = (int) (Math.random() * 90000 + 10000);
+
+		String ext = originName.substring(originName.lastIndexOf("."));
+
+		String changeName = currentTime + ranNum + ext;
+
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+
+		try {
+			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-  		
-  		return changeName;
-  	}
-	
+
+		return changeName;
+	}
+
 }

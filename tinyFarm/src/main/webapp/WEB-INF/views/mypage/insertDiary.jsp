@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String selectDate = request.getParameter("selectDate"); //달력에서 선택한 날짜
+    
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +16,18 @@
     <title>마이페이지</title>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	
     <!-- Core Stylesheet -->
+	 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="resources/style.css">
-	
+  
+	<!-- summernote -->
+  	<script src="resources/jisu/summernote/summernote-lite.js"></script>
+  	<script src="resources/jisu/summernote/lang/summernote-ko-KR.js"></script>
+  	<link rel="stylesheet" href="resources/jisu/summernote/summernote-lite.css">
+		
     <style>
 		.boardHeader{
 			display: flex;
@@ -35,7 +46,7 @@
 	  		height: 40px;
 	  		border: 1px solid #c3c4c5;
 	  	}
-	  	#diaryDate{
+	  	#createDate{
 	  		width: 25%;
 	  		float: right;
 	  		text-align: right;
@@ -46,7 +57,7 @@
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/common/header.jsp" %>
+	<%-- <%@include file="/WEB-INF/views/common/header.jsp" %> --%>
 
 	<div class="breadcrumb-area">
 		<div
@@ -69,7 +80,7 @@
 	</div>
 	<section class="alazea-blog-area mb-100">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="row">
 		          			<form action="insert.di" method="post">
@@ -83,8 +94,7 @@
 		          					<option value="6">정원</option>
 		          					<option value="7">학교</option>
 		          				</select>
-		          				<label for="startDate">작성일 : </label><input type="date" id="startDate" name="startDate">
-		          				<input type="text" name="diaryDate" id="diaryDate" > <br>
+		          				<input type="text" id="createDate" name="createDate" value="작성일 : <%=selectDate%>">
 		          				<input type="text" name="diaryTitle" id="diaryTitle" placeholder="제목을 입력해주세요."> 
 		          				<textarea id="diaryContent" name="diaryContent"></textarea>
 		          				  
@@ -92,7 +102,7 @@
 		          					<label>공개시 내가 팔로우한 사람들에게만 공개됩니다.</label>
 			          				<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
 			          				<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
-			          				<input type="button" class="btn" value="등록">
+			          				<input type="button" id="diBtn" class="btn btn-success" value="등록">
 		          				</div>
 		          			</form>
                     </div>
@@ -103,19 +113,38 @@
     
     <!-- 일지 작성 스크립트 -->
    <script>
-   	$("#diaryContent").summernote({
-	 	height: 550,// content 높이
-	 	minHeight: 570,// content 최소높이
+       $('#diaryContent').summernote({
+    	width: 815,   
+       	height: 550,// content 높이
+	 	maxHeight: 1000,//content 최대높이
+	  	focus: true,// 에디터 로딩후 포커스를 맞출지 여부
 	  	lang: "ko-KR",// 한글 설정
-	  	placeholder: '나만의 영농일지를 작성해보세요! 최대 4000자까지 작성 가능합니다.'//placeholder 설정
-  	});
+	  	placeholder: '나만의 영농일지를 작성해보세요! 최대 4000자까지 작성 가능합니다.',//placeholder 설정
+	  	toolbar: [
+		    ['fontname', ['fontname']],
+		    ['fontsize', ['fontsize']],
+		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+		    ['color', ['forecolor','color']],
+		    ['table', ['table']],
+		    ['para', ['paragraph']],
+		    ['height', ['height']],
+		    ['insert',['picture','link']],
+		    ['view', ['help']]
+		  ],
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+       });
+       
+       $("#diBtn").click(function(){
+    	  console.log($("#diaryContent").val()); 
+       });
    </script>
 
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="resources/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- <script src="resources/js/jquery/jquery-2.2.4.min.js"></script> -->
     <!-- Popper js -->
     <script src="resources/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->

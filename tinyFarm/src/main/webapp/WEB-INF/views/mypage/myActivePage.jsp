@@ -19,53 +19,7 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-
-
-	<style>
-		.boardHeader{
-			display: flex;
-		}
-		.boardFooter{
-			display: flex;
-    		flex-direction: row;
-    		justify-content: space-around;
-		}
-		#boardList{
-			width: 100%;
-			height: 50%;
-		}
-		#replyList{
-			width: 100%;
-			height: 50%;
-			margin-top: 5%;
-		}
-		table{
-			width: 100%;
-			text-align: center;
-		}
-		.pagination-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .pagination-container a {
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            color: #333;
-            cursor: pointer;
-        }
-        .pagination-container table tr{
-        	border-bottom: 1px solid grey;
-        }
-        .pagination-container table td{
-        	width: 300px;
-        	text-align: center;
-        }
-	</style>
-
-
+	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
 </head>
 
 <body>
@@ -94,7 +48,6 @@
 			</div>
 		</div>
 	</div>
-	
     <!-- 활동내역 -->
     <section class="alazea-blog-area mb-100">
         <div class="container">
@@ -105,7 +58,8 @@
                     		<div class="widget-title">
                                 <h4>게시글</h4>
                             </div>
-                    		<table border="1">
+                            <!-- 게시글 테이블 -->
+                    		<table>
                     			<thead>
                     				<tr>
                     					<td style="width: 10%">글번호</td>
@@ -117,8 +71,8 @@
                     			</thead>
                     			<tbody>
                     				<c:choose>
-										<c:when test="${not empty list }">
-											<c:forEach items="${list }" var="b">
+										<c:when test="${not empty bList }">
+											<c:forEach items="${bList }" var="b">
 												<tr>
 													<td>${b.boardNo }</td>
 													<td>${b.boardTitle }</td>
@@ -134,27 +88,28 @@
 									</c:choose>
                     			</tbody>
                     		</table>
+                    		<!-- 게시글 페이징바 -->
                     		<div id="pagingArea">
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${pi.currentPage eq 1 }">
-											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+											<li class="page-item disabled"><a class="page-link" href="">이전</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+											<li class="page-item"><a class="page-link" href="">이전</a></li>
 										</c:otherwise>
 									</c:choose>
 	
 									<c:forEach var="i" begin="${ pi.startPage}" end="${pi.endPage }">
-										<li class="page-item"><a class="page-link" href="list.bo?currentPage=${i}">${i}</a></li>
+										<li class="page-item"><a class="page-link">${i}</a></li>
 									</c:forEach>
 	
 									<c:choose>
 										<c:when test="${pi.currentPage eq pi.maxPage }">
-											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+											<li class="page-item disabled"><a class="page-link">다음</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+											<li class="page-item"><a class="page-link">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</ul>
@@ -165,7 +120,8 @@
                     		<div class="widget-title">
                                 <h4>댓글</h4>
                             </div>
-                    		<table border="1">
+                            <!-- 댓글 테이블 -->
+                    		<table>
                     			<thead>
                     				<tr>
                     					<td style="width: 15%">게시글번호</td>
@@ -191,27 +147,28 @@
 									</c:choose>
                     			</tbody>
                     		</table>
+                    		<!-- 댓글 페이징바 -->
                     		<div id="pagingArea">
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${pi.currentPage eq 1 }">
-											<li class="page-item disabled"><a class="page-link"href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+											<li class="page-item disabled"><a class="page-link">이전</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage-1 }">이전</a></li>
+											<li class="page-item"><a class="page-link">이전</a></li>
 										</c:otherwise>
 									</c:choose>
 	
 									<c:forEach var="i" begin="${ pi.startPage}" end="${pi.endPage }">
-										<li class="page-item"><a class="page-link" href="list.bo?currentPage=${i}">${i}</a></li>
+										<li class="page-item"><a class="page-link">${i}</a></li>
 									</c:forEach>
 	
 									<c:choose>
 										<c:when test="${pi.currentPage eq pi.maxPage }">
-											<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+											<li class="page-item disabled"><a class="page-link">다음</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1 }">다음</a></li>
+											<li class="page-item"><a class="page-link">다음</a></li>
 										</c:otherwise>
 									</c:choose>
 								</ul>
@@ -228,7 +185,7 @@
                                 <h4>Follow List</h4>
                             </div>
                             	<div class="pagination-container">
-        							<a href="#" id="prevBtn">&lt;</a>
+        							<a href="" id="prevBtn">&lt;</a>
         								<div id="followingTableContainer">
 		                            	 <table id="following">
 											<thead>
@@ -236,8 +193,8 @@
 											</thead>
 											<tbody>
 												<c:choose>
-													<c:when test="${not empty fingList }">
-														<c:forEach items="${fingList }" var="fi">
+													<c:when test="${not empty fiList }">
+														<c:forEach items="${fiList }" var="fi">
 															<tr>
 																<td>${f.userId }</td>
 															</tr>
@@ -250,11 +207,11 @@
 											</tbody>
 										 </table>
 										</div>
-									<a href="#" id="nextBtn">&gt;</a>
+									<a href="" id="nextBtn">&gt;</a>
    								</div>
    								<br>
    								<div class="pagination-container">
-        							<a href="#" id="prevBtn">&lt;</a>
+        							<a href="" id="prevBtn">&lt;</a>
         								<div id="followerTableContainer">
 		                            	 <table id="follower">
 											<thead>
@@ -262,8 +219,8 @@
 											</thead>
 											<tbody>
 												<c:choose>
-													<c:when test="${not empty fwerList })">
-														<c:forEach items="${fwerList }" var="fw">
+													<c:when test="${not empty fwList })">
+														<c:forEach items="${fwList }" var="fw">
 															<tr>
 																<td>${f.userId }</td>
 															</tr>
@@ -276,7 +233,7 @@
 											</tbody>
 										 </table>
 										</div>
-									<a href="#" id="nextBtn">&gt;</a>
+									<a href="" id="nextBtn">&gt;</a>
    								</div>
                             </div>
                         </div>
@@ -285,6 +242,19 @@
             </div>
         </div>
     </section>
+    
+    <script>
+    	$(function(){
+    		$.ajax({
+    			url : "boardPage.me",
+    			data : [
+    				curPage : 1,
+    				
+    			]
+    		});
+    		
+    	});
+    </script>
 
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

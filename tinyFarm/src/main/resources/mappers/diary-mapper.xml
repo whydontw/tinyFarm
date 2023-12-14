@@ -36,8 +36,39 @@
   		WHERE USER_ID = #{userId}
   		AND STATUS = 'Y'
   	</update>
-  	
-  	
+  	<!-- 내가 쓴 게시글 개수 -->
+  	<select id="boardListCount" parameterType="board" resultType="_int"> 
+	SELECT COUNT(*)
+	FROM BOARD B
+   	JOIN MEMBER M ON(USER_NO=BOARD_WRITER)
+	WHERE USER_ID = #{userId}
+	AND B.STATUS = 'Y'
+	</select>
+	
+	<!-- 내가 쓴 댓글 개수 -->
+	<select id="replyListCount" parameterType="boardReply" resultType="_int"> 
+	SELECT COUNT(*)
+	FROM BOARD_REPLY R
+	JOIN MEMBER M ON(USER_NO=REPLY_WRITER)
+	WHERE USER_ID = #{userId}
+	AND STATUS = 'Y'
+	</select>
+	
+	<!-- 팔로잉수 -->
+	<select id="fwingListCount" parameterType="follow" resultType="_int"> 
+	SELECT COUNT(FOLLOWING_ID)
+	FROM FOLLOW F
+	JOIN MEMBER M ON(USER_ID=USER_NO)
+	WHERE M.USER_ID = #{userId}
+	</select>
+	
+	<!-- 팔로워수 -->
+	<select id="fwerListCount" parameterType="follow" resultType="_int"> 
+	SELECT COUNT(USER_ID)
+	FROM FOLLOW F
+	WHERE FOLLOWING_ID = #{userId}
+	</select>
+  
   	<!-- 일지등록 -->
   	<insert id="insertDiary">
   		INSERT INTO DIARY_BOARD VALUES(SEQ_DBNO.NEXTVAL
