@@ -1,6 +1,5 @@
 package com.kh.tinyfarm.admin.controller;
 
-import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
@@ -22,7 +20,6 @@ import com.kh.tinyfarm.qna.model.vo.Qna;
 public class AdminController {
 	
 	
-	
 	@Autowired
 	private QnaService qnaService;
 	
@@ -32,14 +29,15 @@ public class AdminController {
 	
 	
 	
-	//관리자 메인 페이지
+	//메인 페이지
 	@GetMapping("/main.ad")
 	public String adminMain() {
 		return "admin/main";
 	}
 	
 	
-	//관리자 Qna 리스트
+	
+	//QNA 목록
 	@GetMapping("/qnaList.ad")
 	public String selectQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
 		
@@ -65,8 +63,7 @@ public class AdminController {
 	}
 	
 	
-	
-	//관리자 QNA 답변페이지
+	//QNA 답변 페이지 이동
 	@GetMapping("/qnaAnswer.ad")
 	public String qnaAnswerForm(int qno, Model model) {
 		
@@ -81,7 +78,8 @@ public class AdminController {
 	}
 	
 	
-	//관리자 QNA 답변 등록
+	
+	//QNA 답변 등록
 	@PostMapping("/qnaAnswer.ad")
 	public String qnaAnswerEnroll(Qna qnaAnswer, Model model) {
 		
@@ -98,7 +96,7 @@ public class AdminController {
 	
 	
 	
-	//관리자 QNA 수정 페이지
+	//QNA 답변 수정
 	@GetMapping("/qnaAnswerUpdate.ad")
 	public String qnaAnswerUpdateForm(int qno, Model model) {
 		
@@ -110,7 +108,7 @@ public class AdminController {
 	
 	
 	
-	//관리자 QNA 답변 수정
+	//QNA 답변 수정
 	@PostMapping("/qnaAnswerUpdate.ad")
 	public String qnaAnswerUpdate(Qna updateAnswer, Model model) {
 		
@@ -129,19 +127,17 @@ public class AdminController {
 	
 	
 	
-	//선택한 QNA 삭제
+	//사용자 QNA 일괄 삭제
 	@PostMapping("/qnaAnswerDelete.ad")
 	public String chkQnaDelete(String chkQnaList, Model model) {
 				
 		String[] ckList = chkQnaList.split(",");
-		
 		
 		ArrayList<Integer> qnaList = new ArrayList<>();
 		
 		for(int i = 0; i < ckList.length; i++) {
 			qnaList.add(i, Integer.parseInt(ckList[i]));
 		}
-				
 		
 		int result = qnaService.chkQnaDelete(qnaList);
 		
@@ -153,6 +149,10 @@ public class AdminController {
 		
 		return "redirect:qnaList.ad";
 	}
+	
+	
+	
+	// ###################################################################
 	
 	
 	
@@ -181,8 +181,7 @@ public class AdminController {
 
 	
 	
-	
-	//선택한 QNA 삭제
+	//선택한 회원 일괄중지
 	@PostMapping("/memberStatus.ad")
 	public String memberStatusN(String chkMemberList, Model model) {
 				
@@ -202,8 +201,14 @@ public class AdminController {
 			System.out.println("실패");
 		}
 		
-		return "redirect:qnaList.ad";
+		return "redirect:memberList.ad";
 	}
+	
+	
+	
+//	public String 
+	
+	
 	
 	
 	
