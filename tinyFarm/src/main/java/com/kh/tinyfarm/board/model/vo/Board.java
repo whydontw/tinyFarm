@@ -1,4 +1,4 @@
-package com.kh.tinyfarm.board.vo;
+package com.kh.tinyfarm.board.model.vo;
 
 import java.sql.Date;
 
@@ -22,7 +22,6 @@ public class Board {
 	private String status;
 
 	private String titleImg;
-	private String originName;
-	private String changeName;
+	private String profile;
 	
 }

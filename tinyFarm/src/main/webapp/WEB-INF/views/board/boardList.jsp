@@ -13,7 +13,8 @@
 
     <!-- Title -->
     <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
-
+	<!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
 
@@ -36,32 +37,30 @@
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/common/header.jsp" %>
+   <%@include file="../common/header.jsp" %>
 
-    <!-- ##### nav 그림 + 페이지 설명 ##### -->
-	<div class="breadcrumb-area">
-		<!-- Top Breadcrumb Area -->
-		<div
-			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>함께 이야기해요</h2>
-		</div>
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="breadcrumb-area">
+        <!-- Top Breadcrumb Area -->
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
+            <h2>함께 이야기해요</h2>
+        </div>
 
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">함께 이야기해요</a></li>
-						
-					</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">함께이야기해요</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
     <!-- ##### Blog Area Start ##### -->
     <section class="alazea-blog-area mb-100">
         <div class="container">
@@ -79,26 +78,29 @@
                             		<c:otherwise>
 		                                <c:forEach items="${blist}" var="b">
 		                                    <li class="feed_item">
+		                                    	
 		                                        <!--프로필사진/이름/올린시간-->
 		                                        <div class="boardHeader">  
 		                                        <img src="" alt="프로필사진">
 		                                            <div> 
-		                                                   <p class="">${b.boardWriter}<span class="">•${b.createDate}</span></p>
+		                                                <p class="">${b.boardWriter}<span class="">•${b.createDate}</span></p>
 		                                            </div>
 		                                       </div>
 		                                       
 		                                        <!--글내용과 사진 작성-->
-		                                       <div>
+		                                       <div class="boardContent">
+		                                       		<input type="hidden" name="boardNo" value="${b.boardNo }">
 		                                            <div>${b.boardContent }</div>
 		                                       </div>                                      
 		                                       
 		                                       <!--댓글/좋아요 영역-->
 		                                       <div>
 		                                            <ul class="boardFooter">  <!--옆으로 띄워야함-->  <!--그리고 좋아요수 댓글수는 비동기식으로 작성하기-->
-		                                                <li><img src="" alt=""> 댓글 <span id="rcount"></span> </li>
-		                                                <li> <img src="" alt=""> 좋아요 <span id="likeCount"></span> </li>
+		                                                <li><img src="resources/img/icon/댓글.png" style="width: 23px; height: 23px;">&nbsp; 댓글  <span id="rcount"></span> </li>
+		                                                <li><img src="resources/img/icon/heart.svg">&nbsp;&nbsp; <button onclick="dolike();">좋아요</button> <span id="likeCount"></span> </li>
 		                                            </ul>
 		                                       </div>
+		                                       <hr style="background-color: #E0E0E0; opacity: 0.7">
 		                                    </li>
 		                                </c:forEach>
                             		
@@ -141,18 +143,37 @@
                             	});
                             }
                             
+                            function dolike(){
+                            	$.ajax({
+                            		url : "dolike.bo",
+                            		data : {
+                            				refBno : "${b.boardNo}"
+                            				userNo : "${loginUser.userNo}"
+                            			},
+                            		success : function(result){
+                            			
+                            		},
+                            		error : function(){
+                            			console.log("통신오류")
+                            		}
+                            	});
+                            }
+                            
                        </script>
 
 				
 						<script>
 							$(function(){
-								$(".feed_items>li").click(function(){
-									console.log($(this).children().eq(1).text());
-									location.href="detail.bo?boardNo="+$(this).children().eq(1).text();
+								$(".feed_items>li>.boardContent").click(function(){
+									//console.log("리스트 클릭시 나오니?");
+									//console.log("boardNo: "+$(this).children().eq(0).val());
+									//location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
+									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
 								});
+								
 							});
 						</script>
-                  
+	                  
                     
 
                     </div>
@@ -163,9 +184,17 @@
                         <div class="col-12">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li> <!--옆으로 가는 버튼-->
+                                	<c:forEach var="i" begin="${pi.startPage }" end="${pi.endPage }">                                	
+                                    	<li class="page-item"><a class="page-link" href="list.bo?currentPage=${i }">${i }</a></li>
+                                	</c:forEach>
+                                	<c:choose>                                            
+                                		<c:when test="">
+                                			<li class="page-item" disabled><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li> <!--옆으로 가는 버튼-->
+                                		</c:when>
+                                		<c:otherwise>                            		
+		                                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li> <!--옆으로 가는 버튼-->
+                                		</c:otherwise>                      
+                                	</c:choose>
                                 </ul>
                             </nav>
                         </div>
@@ -228,7 +257,7 @@
                                     <a href="#" class="post-date">20 Jun 2018</a>
                                 </div>
                             </div>
-
+		
                             <!-- Single Latest Posts -->
                             <div class="single-latest-post d-flex align-items-center">
                                 <div class="post-thumb">
@@ -331,7 +360,9 @@
     </section>
     <!-- ##### Blog Area End ##### -->
 
-   <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+   
+   <jsp:include page="../common/footer.jsp"></jsp:include>
+   
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
