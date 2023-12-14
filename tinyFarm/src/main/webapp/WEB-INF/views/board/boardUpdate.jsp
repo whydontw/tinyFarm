@@ -35,6 +35,9 @@
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
 	
+	
+	
+	
 </head>
 
 <body>
@@ -203,20 +206,21 @@
 
     
                             <div class="post-content">
-                                <form action="insert.bo" method="post" id="boardEnroll">   
+                                <form action="update.bo" method="post" id="boardUpdate">   
                                     <table>
                                         <tr>
                                             <th><label for="boardTitle">제목</label></th>
-                                            <td><input type="text" id="boardTitle" name="boardTitle" required></td> 
+                                            <td><input type="text" id="boardTitle" name="boardTitle" value="${boardInfo.boardTitle}" required></td> 
                                         </tr>
                                         <tr>
                                         	<th><label for="boardContent">내용</label></th>
                                           <!--<td><textarea id="boardContent" name="boardContent" cols="100" rows="10" style="resize: none;" required></textarea></td> -->
-                                            <td><textarea id="summernote" name="boardContent"></textarea></td> <!--  name="editordata" -->
+                                            <td><textarea id="summernote" name="boardContent" value="${boardInfo.boardContent }" ></textarea></td> <!--  name="editordata" -->
                                         </tr>                                                                                
                                     </table>
-                                    <input type="hidden" name="boardWriter" value="${loginUser.userId }유저어쩌구">
-                                    <button type="submit" value="게시글등록">등록</button>
+                                    <input type="hidden" name="boardWriter" value="${boardInfo.boardWriter }" readonly="readonly">
+                                    <input type="hidden" name="boardNo" value="${boardInfo.boardNo }">
+                                    <button type="submit" value="게시글등록">수정</button>
 
                                 </form>
                             </div>
@@ -245,7 +249,7 @@
     </section>
     <!-- ##### Blog Content Area End ##### -->
 
-	 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
 
   
 	

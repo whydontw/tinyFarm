@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.tinyfarm.board.service.BoardService;
-import com.kh.tinyfarm.board.vo.Board;
+import com.kh.tinyfarm.board.model.service.BoardService;
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardLike;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
 
@@ -37,7 +40,7 @@ public class BoardController {
 		
 		PageInfo pi= Pagination.getPageInfo(listCount,currentPage,boardLimit,pageLimit);
 		ArrayList<Board> blist = boardService.selectBoardList(pi);
-				
+		System.out.println("blist : "+blist);
 		model.addAttribute("pi", pi);
 		model.addAttribute("blist",blist);
 		
@@ -70,154 +73,114 @@ public class BoardController {
 	@PostMapping("insert.bo")
 	public String boardInsert(Board b,HttpSession session) {
 		
-		//System.out.println("board 객체: "+b);
-		
 		int result = boardService.insertBoard(b);
 		
+		if(result>0) {
+			session.setAttribute("alertMsg", "게시글 작성이 성공하셨습니다.");
+			return "redirect:list.bo";
+		}else {
+			session.setAttribute("alertMsg", "게시글 작성이 실패하셨습니다.");
+			return "common/errorPage";
+		}
 	
 		
-		return "board/boardList";
 	}
 	
 	@GetMapping("update.bo")
-	public String moveBoardUpdate(int boardNo) {
-		System.out.println();
+	public String moveBoardUpdate(int boardNo,Model model) {
+		Board boardInfo = boardService.boardDetail(boardNo);
+		model.addAttribute("boardInfo",boardInfo);
 		
 		return "board/boardUpdate";
 	}
 	
-	
-	public String boardUpdate(Board b) {
+	@PostMapping("update.bo")
+	public String boardUpdate(Board boardInfo,HttpSession session) {
 		
-		return "";
-	}
-	
-	
-	
-	
-	
-	
-	/*
-	@RequestMapping(value="insert.bo")
-	public String insertBoard(MultipartHttpServletRequest mtfRequest,Board b,HttpSession session) {
-		
-		//if문으로 파일첨부가 있다면 실시하기
-		List<MultipartFile> fileList = (List<MultipartFile>) mtfRequest.getFile("file");
-		System.out.println("fileList : "+fileList);
-		String src = mtfRequest.getParameter("src");
-		System.out.println("src value : "+src);
-		
-		String path = "C:\\image\\";
-		for(MultipartFile mf : fileList) {
-			String originFileName = mf.getOriginalFilename();
-			long fileSize = mf.getSize();
-			
-			System.out.println("originFileName : "+originFileName);
-			System.out.println("fileSize : "+fileSize);
-			
-			String safeFile = path + System.currentTimeMillis()+originFileName;
-		
-			
-			try {
-				mf.transferTo(new File(safeFile));
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-			int result = boardService.insertBoard(b,fileList);
-					
-			if(result>0) {
-				session.setAttribute("alertMsg", "성공");
-				return "redirect:list.bo";
-			}else {
-				session.setAttribute("alrtMsg", "실패");
-				return "common/errorPage";
-			}
-		
-	
-		
-		
-		
-		
-	}
-	*/
-	
-	
-	
-	/*
-	
-	@PostMapping("insert.bo")
-	public String boardInsert(Board b,MultipartFile upfile,HttpSession session) {
-		
-		System.out.println("board 객체: "+b);
-		System.out.println("upfile : "+upfile);
-		ArrayList<Attachment> list =new ArrayList<Attachment>();
-		
-		//System.out.println("zzzz : "+upfile.getOriginalFilename()); 없으면 빈칸으로 넘어옴
-		MultipartRequest multiRequest = new MultipartRequest(saveChangeFile(upfile,session));
-		
-		for(int i=1;i<4;i++) {
-			
-			
-			if(!upfile.getOriginalFilename().equals("")) {
-				String changeName = saveChangeFile(upfile,session);
-				b.setOriginName(upfile.getOriginalFilename());
-				b.setChangeName("resources/uploadFiles/"+changeName);
-			}
-			
-		}
-		
-		int result = boardService.insertBoard(b);
+		int result = boardService.boardUpdate(boardInfo);
 		
 		if(result>0) {
-			
+			session.setAttribute("alertMsg", "게시글 수정이 성공하셨습니다.");
+			return "redirect:detail.bo?boardNo="+boardInfo.getBoardNo();
 		}else {
-			
+			session.setAttribute("alertMsg", "게시글 수정이 실패하셨습니다.");
+			return "common/errorPage";
 		}
+	}
+	
+	
+	@PostMapping("delete.bo")
+	public String boardDelete(int boardNo,HttpSession session) {
+		
+		int result = boardService.boardDelete(boardNo);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "게시글을 삭제하였습니다.");
+			return "redirect:list.bo";
+		}else {
+			session.setAttribute("alertMsg", "게시글 삭제가 실패했습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="boardReplyList.bo",produces ="application/json; charset=UTF-8")
+	//@RequestMapping("boardReplyList.bo")
+	public ArrayList<BoardReply> boardReplyList(int boardNo){
+		
+		ArrayList<BoardReply> rlist = new ArrayList<>();
+		rlist = boardService.boardReplyList(boardNo);
+		
+		
+		return rlist;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertReply.bo", produces="application/json; charset=UTF-8")
+	public int insertReply(BoardReply br) {
+		System.out.println("이것도 안나올까??");
+		System.out.println("br : "+br);
+		int result = boardService.insertReply(br);
+		System.out.println("result : "+result);
+		return result;
+	}
+	
+	@PostMapping("updateReply.bo")
+	public String updateReply(int replyNo) {
+		System.out.println(replyNo);
+		
+		int result = boardService.updateReply(replyNo);
 		
 		return "";
 	}
 	
 	
-	
-	
-	//파일저장하면서 이름바꾸기
-	public String saveChangeFile(MultipartFile upfile,HttpSession session) {
-		System.out.println("upfile이 제대로 넘어왔는지 확인 : "+upfile.getOriginalFilename());
-		
-		String originName = upfile.getOriginalFilename();
-		System.out.println("originName : "+originName);
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		System.out.println("currentTime : "+currentTime);
-		int randomNum = (int)(Math.random()*90000+10000);
-		System.out.println("randomNum : "+randomNum);
-		String ext = originName.substring(originName.lastIndexOf("."));
-		System.out.println("ext : "+ext);
-		String changeName = currentTime+randomNum+ext;
-		
-		String savePath = session.getServletContext().getRealPath("resources/uploadFiles/");
-		System.out.println("savePath : "+savePath);
-		
-		try {
-			upfile.transferTo(new File(savePath+changeName));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@PostMapping("deleteReply.bo")
+	public String deleteReply(int replyNo) {
+		System.out.println(replyNo);
+		int result = boardService.deleteReply(replyNo);
 		
 		
-		return changeName;
+		return "";
 	}
 	
 	
-*/
+	@ResponseBody
+	@RequestMapping(value="dolike.bo",produces = "application/json; charset=UTF-8")
+	public int doLike(BoardLike bl) {
+		
+		int result1 = boardService.likeIncreaseCount(bl);
+		if(result1>0) {			
+			int result2 = boardService.doLike(bl);
+			
+			return result2;
+		}else {
+			return result1;
+		}
+		
+		
+	}
 	
 	
 	
