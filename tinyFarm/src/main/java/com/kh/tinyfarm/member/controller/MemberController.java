@@ -45,8 +45,11 @@ public class MemberController {
     	Member loginUser = memberService.loginMember(m);
     
     	//사용자에게 입력받은 비밀번호 : m.getUserPwd() / 데이터베이스에서 조회해온 암호문은 : loginUser.getUserPwd()
-    	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+    	if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+    		
     		session.setAttribute("loginUser", loginUser);
+    		
+    		
     		System.out.println("성공");
     		mv.setViewName("redirect:/");
     		
@@ -79,8 +82,14 @@ public class MemberController {
     public String insertMember(Member m 
     						 , Model model
     						 , HttpSession session) {
+    	System.out.println(m);
+    	System.out.println("가입이여");
+    	
+    	
     	//암호화 작업
     	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+    	
+    	System.out.println("암호화" + encPwd);
     	
     	m.setUserPwd(encPwd);
    
@@ -95,11 +104,19 @@ public class MemberController {
     	}
     }  
     
+    
     //프로필사진
     @PostMapping("insert.me")
 	public String insertMember(Member m
 						   ,MultipartFile upfile
 						   ,HttpSession session) {
+    	
+    	
+    	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+    	
+    	System.out.println("암호화" + encPwd);
+    	
+    	m.setUserPwd(encPwd);
     	
    
     	if(!upfile.getOriginalFilename().equals("")) {
@@ -108,7 +125,12 @@ public class MemberController {
     		
     		m.setOriginName(upfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
-    	}
+    	}  else {
+            // 파일이 업로드되지 않았거나 null인 경우
+            m.setOriginName("profile.jpg");
+            m.setChangeName("resources/profile.jpg");
+        }
+    	
 		int result = memberService.insertMember(m);
 				
 				if(result>0) {

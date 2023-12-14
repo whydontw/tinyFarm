@@ -22,13 +22,13 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-    
-    
-
 </head>
+
 <body>
+
    <%@include file="/WEB-INF/views/common/header.jsp" %>
-	 <!-- ##### Product Area Start ##### -->
+
+	<!-- ##### Product Area Start ##### -->
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
@@ -42,11 +42,9 @@
 			<div class="row">
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i>QnA</a></li>
-						
-					</ol>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>QnA</a></li>
+						</ol>
 					</nav>
 				</div>
 			</div>
@@ -86,8 +84,8 @@
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="qnaForm" class="post-title"><h6>QNA 작성</h6></a>
-							<a href="qnaList" class="post-title"><h6>나의 QNA 내역</h6></a>
+							<a href="qnaForm.qa" class="post-title"><h6>QNA 작성</h6></a>
+							<a href="qnaList.qa" class="post-title"><h6>나의 QNA 내역</h6></a>
 						</div>
 					</div>
 				</div>
@@ -115,7 +113,8 @@
                             </div>
                         </div>
 
-                        <!-- 표 작성 내역 -->
+
+
                         <div class="clearfix mt-15 mb-15">
                         	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
                             <table class="table table-responsive" align="center">
@@ -124,8 +123,8 @@
                                     <col width="auto%">
                                     <col width="5%">
                                     <col width="15%">
-                                    <col width="12%">
-                                    <col width="5%">
+                                    <col width="7%">
+                                    <col width="7%">
                                 </colgroup>
                                 <thead>
                                     <tr align="center">
@@ -134,7 +133,7 @@
                                         <th></th>
                                         <th>답변</th>
                                         <th>수정</th>
-                                        <th></th>
+                                        <th>삭제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,24 +176,56 @@
 	                                        </td>
 	                                        <td>
 	                                        	<c:if test="${empty qList.qnaAnswerContent }">
- 		                                        	<div class="single-widget-area float-right">
-							                            <ol class="popular-tags d-flex flex-wrap">
-							                                <li><a href="qnaUpdate?qno=${qList.qnaNo }">수정</a></li>
-							                            </ol>
-							                        </div>
+	                                        		<a href="#" id="qnaUpdateBtn" onclick="qnaUpdateBtn(${qList.qnaNo})"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
 		                                        </c:if>
+	                                        	<c:if test="${not empty qList.qnaAnswerContent }">-</c:if>
 	                                        </td>
-											<td><a href="#" id="qnaDelete"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+											<td><a href="#" id="qnaDeleteBtn" onclick="qnaDeleteBtn(${qList.qnaNo})"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a></td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            
                         </div>
                         
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+                        	
+                        <script type="text/javascript">
                         
-                        
+                        	//수정 form 이동
+                        	function qnaUpdateBtn(qnaNo){
+                        		
+                        		var formObj = $("<form>");		//태그 생성하기
+                        		
+                        		formObj.attr("action", "qnaUpdateForm.qa").attr("method", "post");
+                        		
+                        		var inputQno = $("<input>").prop("type", "hidden").prop("name", "qnaNo").prop("value", qnaNo);
+                        		var obj = formObj.append(inputQno);
+                        		
+        						$("body").append(obj)
+
+        						obj.submit();
+                        		
+                        	}
+                        	
+                            //QNA 삭제
+                        	function qnaDeleteBtn(qnaNo){
+                            	
+                            	if(confirm("삭제하시겠습니까?")){
+                            		
+	                        		var formObj = $("<form>");		//태그 생성하기
+	                        		formObj.attr("action", "qnaDelete.qa").attr("method", "post");
+	                        		
+	                        		var inputQno = $("<input>").prop("type", "hidden").prop("name", "qnaNo").prop("value", qnaNo);
+	                        		var obj = formObj.append(inputQno);
+	                        		
+	        						$("body").append(obj)
+	
+	        						obj.submit();
+                            	}
+                            	
+                        	}
+			            	
+			            </script>
                         
                         
                         
@@ -226,16 +257,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="qna/qnaList?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="qna/qnaList?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${i}">${i}</a></li>
 									</c:forEach>
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="qna/qnaList?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>
@@ -249,8 +280,7 @@
     </section>
     <!-- ##### Blog Area End ##### -->
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
+	<%@include file="/WEB-INF/views/common/footer.jsp" %>
 
 
     <!-- ##### All Javascript Files ##### -->

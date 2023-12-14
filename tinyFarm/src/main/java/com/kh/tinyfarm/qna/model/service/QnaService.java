@@ -1,5 +1,6 @@
 package com.kh.tinyfarm.qna.model.service;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
@@ -38,6 +39,15 @@ public interface QnaService {
 
 	
 	//사용자 QNA 수정
-	int qnaUpdate(Qna updateQna);
+	int myQnaUpdate(Qna updateQna);
+
+	
+	
+	//사용자 QNA 수정
+	int myQnaDelete(int qnaNo);
+
+
+	//사용자 QNA 삭제
+	int chkQnaDelete(ArrayList<Integer> qnaList);
 
 }

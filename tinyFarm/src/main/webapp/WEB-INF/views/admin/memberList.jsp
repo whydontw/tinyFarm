@@ -198,7 +198,7 @@
                     <!-- <div class="row"> -->
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
-                                <p><h5><b>🌱 답변 관리</b></h5></p>
+                                <p><h5><b>🌱 회원 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
                                 <form action="#" method="post" class="form-inline">
@@ -217,58 +217,52 @@
                             <table class="table table-responsive" align="center">
                                 <colgroup>
                                     <col width="5%">
-                                    <col width="15%">
+                                    <col width="13%">
+                                    <col width="13%">
+                                    <col width="18%">
                                     <col width="auto%">
-                                    <col width="15%">
-                                    <col width="15%">
+                                    <col width="12%">
+                                    <col width="7%">
                                     <col width="5%">
                                 </colgroup>
                                 <thead>
                                     <tr align="center">
                                         <th>No.</th>
                                         <th>ID</th>
-                                        <th>문의사항</th>
-                                        <th>작성일자</th>
-                                        <th>답변일자</th>
+                                        <th>이름</th>
+                                        <th>연락처</th>
+                                        <th>EMAIL</th>
+                                        <th>활동여부</th>
+                                        <th>상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<c:forEach var="q" items="${qList }">
+                                	<c:forEach var="m" items="${mList }">
 	                                    <tr>
-	                                        <td>${q.qnaNo }</td>
-	                                        <td>${q.userNo }</td>
-	                                        <c:choose>
-	                                        	<c:when test="${empty q.qnaAnswerContent }">
-			                                        <td><a href="#" onclick="qnaAnswerUpdateBtn()">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting-o fa-lg"></i></span></a></td>
-	                                        	</c:when>
-	                                        	<c:otherwise>
-			                                        <td><a href="#" onclick="qnaAnswerUpdateBtn();">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o fa-lg"></i></span></a></td>
-	                                        	</c:otherwise>
-	                                        </c:choose>
-	                                        <td>${q.qnaCreatedate }</td>
-	                                        <td>${q.qnaAnswerCreatedate }</td>
-	                                        <td><input type="checkbox" value="${q.qnaNo }" class="chkQna"></td>
+	                                        <td>${m.userNo }</td>
+	                                        <td>${m.userId }</td>
+	                                        <td>${m.userName }</td>
+	                                        <td>${m.phone }</td>
+	                                        <td>${m.email }</td>
+	                                        <td>${m.status }</td>
+	                                        <td><a href="#" onclick="memberDetailInfo(${m.userNo})"><i class="fa fa-search"></i></a></td>
+	                                        <td><input type="checkbox" value="${m.userNo }" class="chkMember"></td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <div class="single-widget-area float-right">
-                            <ol class="popular-tags d-flex flex-wrap" onclick="checkQnaDelete()">
-                                <li><a href="#">선택 삭제</a></li>
+                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatus()">
+                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;활동중지</a></li>
+<!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
                         
                         
-                        
-
-                        
-                        
-                        
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script type="text/javascript">
-                        
 					    	
                         $(function(){
                         	
@@ -280,54 +274,33 @@
                         });
                         
                         
-                        
-                    	//수정 form 이동
-                    	function qnaAnswerUpdateBtn(qnaNo){
-                    		
-                    		var formObj = $("<form>");		//태그 생성하기
-                    		
-                    		formObj.attr("action", "qnaUpdateForm.ad").attr("method", "post");
-                    		
-                    		var inputQno = $("<input>").prop("type", "hidden").prop("name", "qnaNo").prop("value", qnaNo);
-                    		var obj = formObj.append(inputQno);
-                    		
-    						$("body").append(obj)
-
-    						obj.submit();
-                    		
-                    	}
-                        
-                        
-                        
-                        function checkQnaDelete(){
+                        function memberStatus(){
                         	
-                        	if(confirm("선택 내역을 삭제하시겠습니까?")){
+                        	if(confirm("선택한 회원의 활동 중지 처리를 하시겠습니까?")){
 
-                            let chkQnaList = "";
+                            let chkMemberList = "";
 							
                             //체크 요소 접근
-                            $(".chkQna:checked").each(function(index, item){
+                            $(".chkMember:checked").each(function(index, item){
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkQnaList += item.value;
+                                	chkMemberList += item.value;
                                 } else {								//첫번째 아니면 ,값 넣기
-                                	chkQnaList += "," + item.value;
+                                	chkMemberList += "," + item.value;
                                 }
 
                             });
                             
 	                            //선택된 글 없을시
-	                            if(chkQnaList == null || chkQnaList == ""){
-	                            	
+	                            if(chkMemberList == null || chkMemberList == ""){
 	                            	alert("삭제할 글을 선택하세요");
-	                            	
 	                            }else{
 	                            
 		                            //선택된 글이 있는 경우
 		                    		var formObj = $("<form>");		//태그 생성하기
-		                    		formObj.attr("action", "qnaAnswerDelete.ad").attr("method", "post");
+		                    		formObj.attr("action", "memberStatus.ad").attr("method", "post");
 		                    		
-		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkQnaList").prop("value", chkQnaList);
+		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkMemberList").prop("value", chkMemberList);
 		                    		var obj = formObj.append(inputQnos);
 		                    		
 		    						$("body").append(obj)
@@ -340,29 +313,69 @@
                             
                         }
                         
+                        
+                        
+                        function memberDetailInfo(userNo){
+                        	
+                        	
+                        	
+							
+                        }	
+                        
 					    </script>
                         
                         
-<!--						######### 검색 #########-->
-<!--                         <div class="section-padding-100"> -->
-<!--                             <div class="single-widget-area"> -->
-<!--                                 <form action="#" method="get" class="search-form d-flex float-right">   height-50 css 추가 -->
-<!--                                     <div class=""> -->
-<!--                                         <select class="custom-select widget-title height-50"> -->
-<!--                                             <option value="1">ID</option> -->
-<!--                                             <option value="2">내용</option> -->
-<!--                                         </select> -->
-<!--                                     </div> -->
-<!--                                     <div class=""> -->
-<!--                                         <input type="search" name="search" id="widgetsearch" placeholder="Search..."> -->
-<!--                                         <button type="submit"><i class="icon_search"></i></button> -->
-<!--                                     </div> -->
-<!--                                 </form> -->
-<!--                             </div> -->
-<!--                         </div> -->
-
+                        
+                        
+<!--				######### 검색 #########-->
+                    <div class="section-padding-100">
+                        <div class="single-widget-area">
+                        	<!-- height-50 css 추가 -->
+                            <form action="#" method="get" class="search-form d-flex float-right">   
+                                <div class="">
+                                    <select class="custom-select widget-title height-50">
+                                        <option value="searchId">아이디</option>
+                                        <option value="searchEmail">이메일</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <input type="search" name="search" id="widgetsearch" placeholder="Search...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Button trigger modal -->
+<!-- 					<button type="button" class="btn btn-primary"> -->
+<!-- 					  Launch demo modal -->
+<!-- 					</button> -->
+					
+<!-- 					Modal -->
+<!-- 					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!-- 					  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!-- 					    <div class="modal-content"> -->
+<!-- 					      <div class="modal-header"> -->
+<!-- 					        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+<!-- 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 					          <span aria-hidden="true">&times;</span> -->
+<!-- 					        </button> -->
+<!-- 					      </div> -->
+<!-- 					      <div class="modal-body"> -->
+<!-- 					        ... -->
+<!-- 					      </div> -->
+<!-- 					      <div class="modal-footer"> -->
+<!-- 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+<!-- 					        <button type="button" class="btn btn-primary">Save changes</button> -->
+<!-- 					      </div> -->
+<!-- 					    </div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
 
                     <!-- </div> -->
+                    
+                    
 
                     <div class="row">
                         <div class="col-12 mt-100">
@@ -371,18 +384,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
-                                
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${i}">${i}</a></li>
 									</c:forEach>
-									
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>
@@ -395,10 +406,140 @@
     </section>
     <!-- ##### Blog Area End ##### -->
 
-    
-    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-    
-    
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area bg-img" style="background-image: url(img/bg-img/3.jpg);">
+        <!-- Main Footer Area -->
+        <div class="main-footer-area">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget">
+                            <div class="footer-logo mb-30">
+                                <a href="#"><img src="img/core-img/logo.png" alt=""></a>
+                            </div>
+                            <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione mantor</p>
+                            <div class="social-info">
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h5>QUICK LINK</h5>
+                            </div>
+                            <nav class="widget-nav">
+                                <ul>
+                                    <li><a href="#">Purchase</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="#">Payment</a></li>
+                                    <li><a href="#">News</a></li>
+                                    <li><a href="#">Return</a></li>
+                                    <li><a href="#">Advertise</a></li>
+                                    <li><a href="#">Shipping</a></li>
+                                    <li><a href="#">Career</a></li>
+                                    <li><a href="#">Orders</a></li>
+                                    <li><a href="#">Policities</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h5>BEST SELLER</h5>
+                            </div>
+
+                            <!-- Single Best Seller Products -->
+                            <div class="single-best-seller-product d-flex align-items-center">
+                                <div class="product-thumbnail">
+                                    <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
+                                </div>
+                                <div class="product-info">
+                                    <a href="shop-details.html">Cactus Flower</a>
+                                    <p>$10.99</p>
+                                </div>
+                            </div>
+
+                            <!-- Single Best Seller Products -->
+                            <div class="single-best-seller-product d-flex align-items-center">
+                                <div class="product-thumbnail">
+                                    <a href="shop-details.html"><img src="img/bg-img/5.jpg" alt=""></a>
+                                </div>
+                                <div class="product-info">
+                                    <a href="shop-details.html">Tulip Flower</a>
+                                    <p>$11.99</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Single Footer Widget -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h5>CONTACT</h5>
+                            </div>
+
+                            <div class="contact-information">
+                                <p><span>Address:</span> 505 Silk Rd, New York</p>
+                                <p><span>Phone:</span> +1 234 122 122</p>
+                                <p><span>Email:</span> info.deercreative@gmail.com</p>
+                                <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
+                                <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Area -->
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="border-line"></div>
+                    </div>
+                    <!-- Copywrite Text -->
+                    <div class="col-12 col-md-6">
+                        <div class="copywrite-text">
+                            <p>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Footer Nav -->
+                    <div class="col-12 col-md-6">
+                        <div class="footer-nav">
+                            <nav>
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#">Service</a></li>
+                                    <li><a href="#">Portfolio</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
@@ -411,6 +552,7 @@
     <script src="${contextPath }/resources/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="${contextPath }/resources/js/active.js"></script>
+
 </body>
 
 </html>

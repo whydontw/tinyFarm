@@ -24,8 +24,10 @@
     <link rel="stylesheet" href="${contextPath }/resources/style.css">
 </head>
 <body>
+
      <%@include file="/WEB-INF/views/common/header.jsp" %>
-	 <!-- ##### Product Area Start ##### -->
+     
+	<!-- ##### Product Area Start ##### -->
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
@@ -57,42 +59,7 @@
         <div class="container">
             <div class="row">
             
-            
-            	<div class="col-12 col-md-3">
-		<div class="post-sidebar-area">
-
-			<!-- ##### Single Widget Area ##### -->
-			<!-- 검색창 -->
-			<div class="single-widget-area">
-				<form action="#" method="get" class="search-form">
-					<input type="search" name="search" id="widgetsearch"
-						placeholder="Search...">
-					<button type="submit">
-						<i class="icon_search"></i>
-					</button>
-				</form>
-			</div>
-
-			<!-- ##### Single Widget Area ##### -->
-			<div class="single-widget-area">
-				<!-- Author Widget -->
-				<div class="author-widget mb-30">
-					<div class="author-thumb-name d-flex align-items-center">
-						<div class="author-name">
-							<h4>🌿 <b>QNA</b></h4>
-							<!-- <p>Editor</p> -->
-						</div>
-					</div>
-					<div class="single-latest-post d-flex align-items-center">
-						<div class="post-content">
-							<a href="qnaForm" class="post-title"><h6>QNA 작성</h6></a>
-							<a href="qnaList" class="post-title"><h6>나의 QNA 내역</h6></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            	<%@ include file="qna_nav.jsp" %>
 
 
 				<div class="col-12 col-md-9">
@@ -108,7 +75,7 @@
 							</div>
 						</div>
 						<div class="checkout_details_area clearfix">
-							<form action="qnaEnroll" method="post">
+							<form action="qnaEnroll.qa" method="post">
 								<input type="hidden" value="2" name="userNo">
 								<div class="row">
 									<div class="col-12 mb-4">
@@ -123,16 +90,16 @@
 										<c:set var="createDate">
 											<fmt:formatDate value="${nowTime}" pattern="yy/MM/dd" />
 										</c:set>
-										<label for="state">작성일자</label> <input type="text"
-											class="form-control" id="" value="${createDate }" disabled>
+										<label for="state">작성일자</label> <input type="text" class="form-control" id="" value="${createDate }" disabled>
 									</div>
 									<div class="col-md-12 mb-4">
 										<label for="order-notes">문의사항 *</label>
 										<textarea class="form-control" id="qnaContent" name="qnaContent" cols="30" rows="80" placeholder="문의할 내용을 입력해 주세요."></textarea>
 									</div>
-									<div class="col-12">
-										<button type="submit" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">Send Message</button>
-									</div>
+									<div class="col-12 ">
+                                         <button type="button" class="btn alazea-btn mt-15  float-right" onclick="location.href='qnaList.qa'">목록</button>
+										 <button type="submit" class="btn alazea-btn mt-15 mr-15 float-right" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
+                                     </div>
 								</div>
 							</form>
 						</div>

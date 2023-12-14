@@ -15,11 +15,8 @@
 			<!-- 검색창 -->
 			<div class="single-widget-area">
 				<form action="#" method="get" class="search-form">
-					<input type="search" name="search" id="widgetsearch"
-						placeholder="Search...">
-					<button type="submit">
-						<i class="icon_search"></i>
-					</button>
+					<input type="search" name="search" id="widgetsearch" placeholder="Search...">
+					<button type="submit"><i class="icon_search"></i></button>
 				</form>
 			</div>
 
@@ -30,12 +27,11 @@
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
 							<h4>🌿 <b>회원관리</b></h4>
-							<!-- <p>Editor</p> -->
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="#" class="post-title">
+							<a href="memberList.ad" class="post-title">
 								<h6>회원관리</h6>
 							</a>
 						</div>
@@ -49,7 +45,7 @@
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="qnaList" class="post-title"><h6>답변 관리</h6></a>
+							<a href="qnaList.ad" class="post-title"><h6>답변 관리</h6></a>
 						</div>
 					</div>
 				</div>
@@ -62,8 +58,8 @@
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="#" class="post-title"><h6>게시글 관리</h6></a>
-							<a href="#" class="post-title"><h6>댓글 관리</h6></a>
+							<a href="boardList.ad" class="post-title"><h6>게시글 관리</h6></a>
+							<a href="replyList.ad" class="post-title"><h6>댓글 관리</h6></a>
 						</div>
 					</div>
 				</div>

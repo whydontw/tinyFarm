@@ -115,7 +115,7 @@
                                     <li><a href="list.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
                                     <li><a href="contact.html">공지사항</a></li>
-                                    <li><a href="qnaList">1:1문의</a></li>
+                                    <li><a href="qnaList.qa">1:1 문의</a></li>
                                 </ul>
 
                                 <!-- Search Icon -->
