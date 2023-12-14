@@ -221,7 +221,7 @@
                                     <col width="13%">
                                     <col width="18%">
                                     <col width="auto%">
-                                    <col width="12.5%">
+                                    <col width="12%">
                                     <col width="7%">
                                     <col width="5%">
                                 </colgroup>
@@ -246,7 +246,7 @@
 	                                        <td>${m.phone }</td>
 	                                        <td>${m.email }</td>
 	                                        <td>${m.status }</td>
-	                                        <td><a href="#"><i class="fa fa-search"></i></a></td>
+	                                        <td><a href="#" onclick="memberDetailInfo(${m.userNo})"><i class="fa fa-search"></i></a></td>
 	                                        <td><input type="checkbox" value="${m.userNo }" class="chkMember"></td>
 	                                    </tr>
                                     </c:forEach>
@@ -254,7 +254,7 @@
                             </table>
                         </div>
                         <div class="single-widget-area float-right">
-                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatusN()">
+                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatus()">
                                 <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;활동중지</a></li>
 <!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
@@ -274,7 +274,7 @@
                         });
                         
                         
-                        function memberStatusN(){
+                        function memberStatus(){
                         	
                         	if(confirm("선택한 회원의 활동 중지 처리를 하시겠습니까?")){
 
@@ -282,12 +282,6 @@
 							
                             //체크 요소 접근
                             $(".chkMember:checked").each(function(index, item){
-                            	
-                            	
-                            	console.log("======================");
-                            	console.log(item.value);
-                            	console.log("======================");
-                            	
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
                                 	chkMemberList += item.value;
@@ -319,30 +313,69 @@
                             
                         }
                         
+                        
+                        
+                        function memberDetailInfo(userNo){
+                        	
+                        	
+                        	
+							
+                        }	
+                        
 					    </script>
                         
                         
-<!--					######### 검색 #########-->
-                        <div class="section-padding-100">
-                            <div class="single-widget-area">
-                            	<!-- height-50 css 추가 -->
-                                <form action="#" method="get" class="search-form d-flex float-right">   
-                                    <div class="">
-                                        <select class="custom-select widget-title height-50">
-                                            <option value="searchId">아이디</option>
-                                            <option value="searchEmail">이메일</option>
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <input type="search" name="search" id="widgetsearch" placeholder="Search...">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </form>
-                            </div>
+                        
+                        
+<!--				######### 검색 #########-->
+                    <div class="section-padding-100">
+                        <div class="single-widget-area">
+                        	<!-- height-50 css 추가 -->
+                            <form action="#" method="get" class="search-form d-flex float-right">   
+                                <div class="">
+                                    <select class="custom-select widget-title height-50">
+                                        <option value="searchId">아이디</option>
+                                        <option value="searchEmail">이메일</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <input type="search" name="search" id="widgetsearch" placeholder="Search...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </form>
                         </div>
-
+                    </div>
+                    
+                    
+                    <!-- Button trigger modal -->
+<!-- 					<button type="button" class="btn btn-primary"> -->
+<!-- 					  Launch demo modal -->
+<!-- 					</button> -->
+					
+<!-- 					Modal -->
+<!-- 					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!-- 					  <div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!-- 					    <div class="modal-content"> -->
+<!-- 					      <div class="modal-header"> -->
+<!-- 					        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
+<!-- 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 					          <span aria-hidden="true">&times;</span> -->
+<!-- 					        </button> -->
+<!-- 					      </div> -->
+<!-- 					      <div class="modal-body"> -->
+<!-- 					        ... -->
+<!-- 					      </div> -->
+<!-- 					      <div class="modal-footer"> -->
+<!-- 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+<!-- 					        <button type="button" class="btn btn-primary">Save changes</button> -->
+<!-- 					      </div> -->
+<!-- 					    </div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
 
                     <!-- </div> -->
+                    
+                    
 
                     <div class="row">
                         <div class="col-12 mt-100">
@@ -519,6 +552,7 @@
     <script src="${contextPath }/resources/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="${contextPath }/resources/js/active.js"></script>
+
 </body>
 
 </html>
