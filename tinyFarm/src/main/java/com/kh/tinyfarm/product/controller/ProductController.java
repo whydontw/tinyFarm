@@ -66,7 +66,8 @@ public class ProductController {
 		}else {
 			return "common/errorPage";
 		}
-			return "product/productDetailView";
+
+			return "product/ProductDetailView";
 	}
 	
 	@GetMapping("pinsert.bo")
