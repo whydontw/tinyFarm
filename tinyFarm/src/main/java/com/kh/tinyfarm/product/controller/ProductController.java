@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
 import com.kh.tinyfarm.product.model.service.ProductService;
+import com.kh.tinyfarm.product.model.vo.Category;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Controller
@@ -31,7 +33,7 @@ public class ProductController {
 	
 	@RequestMapping("plist.bo")
 	public String selectProductList(@RequestParam(value="currentPage",defaultValue="1") int currentPage, Model model) {
-		
+
 		int maxPage; // 가장 마지막 페이징바
 		int startPage; // 페이징바 시작수
 		int endPage; //페이징바 끝수
@@ -44,8 +46,14 @@ public class ProductController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, productLimit);
 		
-		ArrayList <Product> list = productservice.selectList(pi);
-	
+		ArrayList<Product> list = productservice.selectList(pi);
+		
+//		System.out.println("출력");
+		
+//		for(Product p : list) {
+//			System.out.println(p.getChangeName());
+//		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
@@ -70,35 +78,53 @@ public class ProductController {
 			return "product/ProductDetailView";
 	}
 	
+	//카테고리 조회
 	@GetMapping("pinsert.bo")
-	public String productEnrollForm(){
+	public String productEnrollForm(Model model){
+		
+		ArrayList <Category> clist = productservice.selectCategoryList();
+		
+		model.addAttribute("clist",clist);
 		
 		return "product/ProductEnrollForm";
 	}
 	
-	
+	//게시글 등록
 	@PostMapping("pinsert.bo")
-	public String insertProduct(Product p, Attachment a, MultipartFile upfile, HttpSession session) {
+	public String insertProduct(Product p, Model model, MultipartFile upfile, HttpSession session) {
+		
+		System.out.println(p);
+
+		int presult = productservice.insertProduct(p);
+		int aresult = 0;
+		
 		
 		if(!upfile.getOriginalFilename().equals("")) {
+			
+			Attachment a = new Attachment();
 			
 			String changeName = saveFile(upfile,session);
 			
 			a.setOriginName(upfile.getOriginalFilename());
-			a.setChangeName("/resources/uploadFiles/"+changeName);
+			a.setChangeName("resources/uploadFiles/"+changeName);
+			
+			aresult = productservice.insertAttachment(a);
+			
 		}
+			
 		
-		int result = productservice.insertProduct(p,a);
-		
-		if(result>0) {
-			session.setAttribute("alertMsg", "게시글 등록 성공");
-			return "redirect:plist.bo";
-		}else {
-			session.setAttribute("alertMsg", "게시글 등록 실패");
-			return "common/errorPage";
-		}
-		
+			if((presult*aresult)>0) { 
+				
+				session.setAttribute("alertMsg", "게시글 등록 성공"); 
+				return "redirect:plist.bo"; 
+				
+				}else { 
+					session.setAttribute("alertMsg", "게시글 등록 실패");
+					return "common/errorPage"; 
+			}
 	}
+	
+
 		
 		//파일명 수정 모듈
 		public String saveFile(MultipartFile upfile

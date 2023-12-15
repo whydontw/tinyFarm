@@ -123,11 +123,12 @@
                     <th align="left">사진</th>
                     <th>작물종류</th>
                     <td style="width: 10%;">
-                        <select name="productslect" id="productslect">
-                            <option value="leaf">식물</option>
-                            <option value="vt">야채</option>
-                            <option value="fruit">과일</option>
-                        </select>
+                   	<!-- 카테고리 선택 말머리 -->
+                       <select name="categoryNo" id="productselect">
+                           <c:forEach items="${clist}" var="c">
+							<option value="${c.categoryNo }">${c.categoryName }</option>
+						</c:forEach>
+                       </select>
                     </td>
                 </tr>
                 <tr style="height: 50px;">
@@ -137,7 +138,8 @@
                                 <img src="resources/img/bg-img/product-inputfile.png" alt="이미지 첨부" id="inputimage">
                                 
                             </label>
-                            <input type="file" id="file" name="upfile" onchange="loadImg(this)" required>
+                            <input type="file" id="file" name="upfile" onchange="loadImg(this)">
+                            <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
                         </div>
                     </td>
                     <th>상품명</th>
