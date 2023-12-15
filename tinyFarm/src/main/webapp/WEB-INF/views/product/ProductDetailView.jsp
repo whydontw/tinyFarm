@@ -11,19 +11,22 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/scss/style.css">
 
     
 
 </head>
 
 <body>
+
+	<%@include file="/WEB-INF/views/common/header.jsp" %>
+
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-circle"></div>
@@ -35,7 +38,7 @@
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
-        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(img/bg-img/24.jpg);">
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
             <h2>SHOP DETAILS</h2>
         </div>
 
@@ -111,6 +114,12 @@
                                     <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">구매하기</button>
                                 </form>
                             </div>
+                            
+                        	<br>
+                        	<!-- 수정/삭제 -->
+                        	<div class="pdubtn" align="center">
+                            	<button type="submit" name="addtocart" value="5" class="btn alazea-btn-orange ml-15">수정하기</button>
+                       		</div>
 
                         </div>
                     </div>
@@ -148,7 +157,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button type="submit" class="btn alazea-btn">Submit Your Review</button>
+                                                <button type="submit" class="btn alazea-btn">등록하기</button>
                                             </div>
                                         </div>
                                     </form>
@@ -162,6 +171,8 @@
         </div>
     </section>
     <!-- ##### Single Product Details Area End ##### -->
+    
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
