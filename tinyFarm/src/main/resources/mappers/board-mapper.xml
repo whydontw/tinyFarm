@@ -12,9 +12,29 @@
 		  	<result column="COUNT" property="count"/>
 		  	<result column="LIKE_COUNT" property="likeCount"/>
 		  	<result column="CREATE_DATE" property="createDate"/>
-		  	<result column="TITLEIMG" property="titleImg"/>
   	</resultMap>
   	
+  	<resultMap type="boardReply" id="boardReplyResultSet">
+  		<result column="REPLY_NO" property="replyNo"/>
+  		<result column="REF_BNO" property="refBno"/>
+  		<result column="REPLY_WRITER" property="replyWriter"/>
+  		<result column="REPLY_CONTENT" property="replyContent"/>
+  		<result column="LIKE_COUNT" property="likeCount"/>
+  		<result column="CREATE_DATE" property="createDate"/>
+  		<result column="STATUS" property="status"/>
+  		<result column="CHANGE_NAME" property="profile"/>
+  	</resultMap>
+  	
+  	<resultMap type="member" id="memberResultSet">
+  		<result column="USER_ID" property="userId"/>
+  		<result column="USER_NO" property="userNo"/>
+  		<result column="CHANGE_NAME" property="changeName"/>
+  	</resultMap>
+  	
+  	<resultMap type="boardLike" id="boardLikeResultSet">
+  		<result column="REF_BNO" property="refBno"/>
+  		<result column="USER_NO" property="userNo"/>
+  	</resultMap>
   	
   	
   	<select id="boardListCount" resultType="_int">
@@ -26,7 +46,7 @@
   	<select id="selectBoardList" parameterType="_int" resultMap="boardResultSet">
   		
   		SELECT BOARD_NO
-		        ,USER_ID BOARD_WRITER
+		        ,USER_ID BOARD_WRITER <!-- 가져온 데이터 USER_ID를 BOARD_WRITER로 별칭으로 변경한 후 resultMap를 이용해 BOARD_WRITER에 이름을 가진 걸 VO객체에 boardWriter에다가 저장   -->
 		        ,BOARD_CONTENT
 		        ,B.COUNT
 		        ,LIKE_COUNT
@@ -34,21 +54,6 @@
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		ORDER BY B.CREATE_DATE DESC
-  		<!--
-  		SELECT 	BOARD_NO
-		        ,USER_ID BOARD_WRITER
-		        ,BOARD_CONTENT
-		        ,B.COUNT
-		        ,LIKE_COUNT
-		        ,B.CREATE_DATE
-		        ,FILE_PATH || CHANGE_NAME TITLEIMG
-		FROM BOARD B
-		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
-		JOIN ATTACHMENT AT ON (B.BOARD_NO = AT.REF_NO)
-		WHERE B.STATUS='Y'
-		AND FILE_TYPE = 1
-		ORDER BY B.CREATE_DATE DESC
-		 -->
   	</select>
   	
   	
@@ -60,21 +65,8 @@
   	</update>
   	
   	<select id="boardDetail" parameterType="_int" resultMap="boardResultSet">
-  		<!-- SELECT 	BOARD_NO
-		        ,USER_ID BOARD_WRITER
-		        ,BOARD_TITLE
-		        ,BOARD_CONTENT
-		        ,B.COUNT
-		        ,LIKE_COUNT
-		        ,B.CREATE_DATE
-		        ,FILE_PATH || CHANGE_NAME TITLEIMG
-		FROM BOARD B
-		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
-		JOIN ATTACHMENT AT ON (B.BOARD_NO = AT.REF_NO)
-		WHERE B.STATUS='Y'
-		AND BOARD_NO = #{boardNo}
-		AND FILE_TYPE = 1 -->
 		SELECT BOARD_NO
+				,BOARD_TITLE
 		        ,USER_ID BOARD_WRITER
 		        ,BOARD_CONTENT
 		        ,B.COUNT
@@ -97,6 +89,73 @@
 		        #{boardContent})
   	</insert>
   
+  	<update id="boardUpdate">
+  		UPDATE BOARD
+		SET BOARD_TITLE = #{boardTitle}
+    		,BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NO = #{boardNo}
+		AND STATUS = 'Y'
+  	</update>
+  	
+  	
+  	<delete id="boardDelete">
+  		DELETE BOARD
+		WHERE BOARD_NO = #{boardNo}
+		AND STATUS = 'Y'
+  	</delete>
+  	
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ댓글영역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  	<select id="boardReplyList" parameterType="_int" resultMap="boardReplyResultSet"> <!--내가 담아줄 vo객체 resultMap을 쓰기 -->	
+		SELECT REPLY_NO
+      		  ,USER_ID REPLY_WRITER
+      		  ,REPLY_CONTENT
+      		  ,LIKE_COUNT
+       		  ,CREATE_DATE
+       		  ,CHANGE_NAME 
+		FROM BOARD_REPLY BR
+		JOIN MEMBER M ON (REPLY_WRITER=USER_NO)
+		WHERE REF_BNO = #{boardNo}
+		AND BR.STATUS = 'Y'
+		ORDER BY BR.CREATE_DATE DESC
+  	</select>
+  	
+  	<insert id="insertReply">
+  		INSERT INTO BOARD_REPLY(REPLY_NO
+                    ,REF_BNO
+                    ,REPLY_WRITER
+                    ,REPLY_CONTENT)
+		VALUES(SEQ_BRNO.NEXTVAL
+		    ,#{refBno}   <!-- view에서 보낸 데이터 -->
+		    ,3
+		    ,#{replyContent})
+  	</insert>
+  	
+  	<update id="updateReply" parameterType="_int">
+  		UPDATE BOARD_REPLY
+		SET REPLY_CONTENT= #{replyContent}
+		WHERE REPLY_NO = #{replyNo}
+		AND STATUS= 'Y'
+  	</update>
+  	
+  	<delete id="deleteReply" parameterType="_int">
+  		DELETE BOARD_REPLY
+		WHERE REPLY_NO = #{replyNo}
+		AND STATUS = 'Y'
+  	</delete>
+  	
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ좋아요영역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  	
+  	<update id="likeIncreaseCount">
+  		UPDATE BOARD
+		SET LIKE_COUNT = LIKE_COUNT+1
+		WHERE BOARD_NO = #{refBno}
+		AND STATUS = 'Y'
+  	</update>
+  	
+  	<insert id="doLike">
+  		INSERT INTO BOARD_LIKE(REF_BNO,USER_NO)
+		VALUES(#{refBno},#{userNo})
+  	</insert>
   	
   	
   	

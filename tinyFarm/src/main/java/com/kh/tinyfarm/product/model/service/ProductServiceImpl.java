@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.product.model.dao.ProductDao;
 import com.kh.tinyfarm.product.model.vo.Product;
@@ -32,6 +33,27 @@ public class ProductServiceImpl implements ProductService {
 	public ArrayList<Product> selectList(PageInfo pi) {
 		
 		return productDao.selectList(sqlSession, pi);
+	}
+
+	//상품 조회수 증가
+	@Override
+	public int increaseCount(int pno) {
+		
+		return productDao.increaseCount(sqlSession,pno);
+	}
+
+	//상품 조회
+	@Override
+	public Product selectProduct(int pno) {
+		
+		return productDao.selectProduct(sqlSession,pno);
+	}
+
+	//상품 등록
+	@Override
+	public int insertProduct(Product p, Attachment a) {
+		// TODO Auto-generated method stub
+		return productDao.insertProduct(sqlSession,p,a);
 	}
 
 }
