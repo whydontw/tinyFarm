@@ -1,6 +1,12 @@
 package com.kh.tinyfarm.member.model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,8 +35,20 @@ public class MemberDao {
 		
 		return sqlSession.selectOne("memberMapper.checkId",checkId);
 	}
-
 	
+	//비밀번호 찾기
+	public Member findPwCheck(Member member, SqlSessionTemplate sqlSession) throws Exception {
+	    return sqlSession.selectOne("memberMapper.findPwCheck", member);
+	}
+
+	// 아이디 찾기
+	public String findId(SqlSessionTemplate sqlSession, Member member) {
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("userName", member.getUserName());
+	    paramMap.put("phone", member.getPhone());
+
+	    return sqlSession.selectOne("memberMapper.findId", paramMap);
+	}
 	
 	
 	//admin - 전체 회원수

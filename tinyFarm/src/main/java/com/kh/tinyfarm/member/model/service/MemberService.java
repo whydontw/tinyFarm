@@ -1,5 +1,6 @@
 package com.kh.tinyfarm.member.model.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
@@ -16,7 +17,7 @@ public interface MemberService {
 	//아이디 중복체크 메소드
 	int checkId(String checkId);
 
-	
+
 	
 	//admin - 회원 목록 (회원수)
 	int memberListCount();
@@ -27,4 +28,9 @@ public interface MemberService {
 	
 	//admin - 회원활동 일괄중지
 	int memberStatusN(ArrayList<Integer> mList);
+
+	
+
+	
+	
 }

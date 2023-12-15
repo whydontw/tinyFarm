@@ -39,6 +39,13 @@
 			AND STATUS = 'Y'
 		</select>
 		
+		  <select id="findId" resultType="String">
+		        SELECT USER_ID 
+		        	FROM MEMBER 
+			        WHERE USER_NAME = #{userName} 
+			        	AND 
+			        PHONE = #{phone}
+		    </select>
 		
 		<insert id = "insertMember" parameterType = "member">
 			INSERT INTO MEMBER (  USER_NO
@@ -93,4 +100,6 @@
 	        </foreach>
 		</update>
   		
+  	
+		
 	</mapper>

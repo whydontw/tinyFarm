@@ -38,8 +38,6 @@ public class MemberServiceImpl implements MemberService{
 	public int checkId(String checkId) {
 		return memberDao.checkId(sqlSession,checkId);
 	}
-
-	
 	
 	
 	//admin - 전체 회원수
@@ -61,7 +59,5 @@ public class MemberServiceImpl implements MemberService{
 	public int memberStatusN(ArrayList<Integer> mList) {
 		return memberDao.memberStatusN(sqlSession, mList);
 	}
-	
-	
-	
+
 }

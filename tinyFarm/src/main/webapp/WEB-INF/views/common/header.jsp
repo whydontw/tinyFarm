@@ -145,6 +145,22 @@
 
     <!-- nav 바 뒤 그림부분 끝 -->
     
+    
+    
+     <script type="text/javascript">
+    
+    	const alertMsg = "${alertMsg}";
+    	
+    	console.log(alertMsg);
+    	
+    	if(alertMsg != null && alertMsg != ""){
+    		alert(alertMsg);
+    		<c:remove var="alertMsg" scope="session" />
+    	}
+    	
+    </script>
+    
+    
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
