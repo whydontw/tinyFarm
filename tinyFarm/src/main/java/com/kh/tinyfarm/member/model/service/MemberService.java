@@ -3,6 +3,8 @@ package com.kh.tinyfarm.member.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.member.model.vo.Member;
 
@@ -17,6 +19,11 @@ public interface MemberService {
 	//아이디 중복체크 메소드
 	int checkId(String checkId);
 
+	//이메일발송
+	public void sendEmail(Member vo, String div, String plainPassword) throws Exception;
+
+	//비밀번호찾기
+	public void findPw(HttpServletResponse resp, Member vo) throws Exception;
 
 	
 	//admin - 회원 목록 (회원수)
@@ -30,7 +37,7 @@ public interface MemberService {
 	int memberStatusN(ArrayList<Integer> mList);
 
 	
+	//아이디 찾기
+	String findId(Member member);
 
-	
-	
 }

@@ -19,6 +19,8 @@ import com.kh.tinyfarm.qna.model.vo.Qna;
 @Repository 
 public class MemberDao {
 	
+	private static final String namespace = "memberMapper";
+	
 	//로그인
 	public Member loginMember(SqlSessionTemplate sqlSession , Member m) {
 	
@@ -43,13 +45,25 @@ public class MemberDao {
 
 	// 아이디 찾기
 	public String findId(SqlSessionTemplate sqlSession, Member member) {
-	    Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("userName", member.getUserName());
-	    paramMap.put("phone", member.getPhone());
-
-	    return sqlSession.selectOne("memberMapper.findId", paramMap);
+	    return sqlSession.selectOne("memberMapper.findId", member);
 	}
 	
+	
+	// 비밀번호 변경
+	public int updatePw(SqlSessionTemplate sqlSession, Member vo) {
+	    return sqlSession.update("memberMapper.updatePw", vo);
+	}
+	
+	// MemberDao 클래스에 추가
+	public Member readMember(SqlSessionTemplate sqlSession, String userId) {
+	    return sqlSession.selectOne("memberMapper.readMember", userId);
+	}
+	
+	// MemberDao 클래스에 추가
+	public int idCheck(SqlSessionTemplate sqlSession, String userId) {
+	    return sqlSession.selectOne("memberMapper.idCheck", userId);
+	}
+
 	
 	//admin - 전체 회원수
 	public int memberListCount(SqlSessionTemplate sqlSession) {
@@ -72,6 +86,4 @@ public class MemberDao {
 	public int memberStatusN(SqlSessionTemplate sqlSession, ArrayList<Integer> list) {
 		return sqlSession.update("memberMapper.memberStatusN", list);
 	}
-
-	
 }

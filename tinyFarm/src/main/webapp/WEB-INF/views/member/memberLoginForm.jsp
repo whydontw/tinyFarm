@@ -83,9 +83,9 @@
 								    </div>
 								<br>	
 								</div>
-								<div>
+								<div style = "margin-top:-45px; margin-left :125px">
 									<a href = "userfind.me">아이디 찾기 /</a> 
-									<a onclick="">비밀번호 찾기</a> 
+									<a href = "findPw.me">비밀번호 찾기</a> 
 								</div>
  								<a onclick="unlinkApp()">로그아웃</a> 
 							    <div id="result"></div>
