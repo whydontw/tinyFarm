@@ -18,6 +18,8 @@
 		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Product" alias="product"/>
 		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Category" alias="category"/>
 		<typeAlias type= "com.kh.tinyfarm.common.model.vo.Attachment" alias="attachment"/>
+		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Category" alias="category"/>
+
 	</typeAliases>
 	
 </configuration>
