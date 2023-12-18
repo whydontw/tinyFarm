@@ -27,4 +27,12 @@ public interface MemberService {
 	
 	//admin - 회원활동 일괄중지
 	int memberStatusN(ArrayList<Integer> mList);
+
+	
+	//admin - 회원정보 상세 조회
+	Member selectMemberDetailInfo(int userNo);
+
+	
+	//admin - 회원상태 업데이트
+	int memberStatusUpdate(Member m);
 }

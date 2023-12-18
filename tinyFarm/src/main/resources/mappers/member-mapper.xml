@@ -69,8 +69,8 @@
 			FROM MEMBER 
 			WHERE USER_ID= #{checkId}
   		</select>
-		
-		
+  		
+  		
 		
 		<!-- admin -->
 		<select id="memberListCount" resultType="_int" parameterType="string">
@@ -78,9 +78,8 @@
   		</select>
   		
   		<select id="selectMemberList" resultMap="memberResultSet">
-  			SELECT * FROM MEMBER
+  			SELECT * FROM MEMBER ORDER BY 1
   		</select>
-  		
   		
   		
   		<update id="memberStatusN">
@@ -89,8 +88,26 @@
 	        WHERE 1=1
 	        AND USER_NO IN  
 	        <foreach collection="list" item="userNo" index="index" open="(" close=")" separator=","> 
-	            #{userNo} 
+	            #{userNo}
 	        </foreach>
 		</update>
+		
+		
+		<select id="selectMemberDetailInfo" resultMap="memberResultSet">
+			SELECT * FROM MEMBER
+			WHERE USER_NO = #{userNo}
+		</select>
+		
+		
+		<update id="memberStatusUpdate">
+			UPDATE MEMBER SET
+			GRADE = #{grade},
+			STATUS = #{status}
+			WHERE USER_NO = #{userNo}
+		</update>
+		
+		
+		
+		
   		
 	</mapper>
