@@ -56,4 +56,16 @@ public class MemberDao {
 	}
 
 	
+	//admin - 회원정보 상세조회
+	public Member selectMemberDetailInfo(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberDetailInfo", userNo);
+	}
+
+
+	//admin - 회원상태 업데이트
+	public int memberStatusUpdate(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.memberStatusUpdate", m);
+	}
+
+	
 }

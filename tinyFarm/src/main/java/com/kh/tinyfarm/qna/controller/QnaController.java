@@ -2,6 +2,8 @@ package com.kh.tinyfarm.qna.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
+import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.qna.model.service.QnaService;
 import com.kh.tinyfarm.qna.model.vo.Qna;
 
@@ -51,10 +54,10 @@ public class QnaController {
 		
 		//사용자 QNA 목록
 		@GetMapping("/qnaList.qa")
-		public String selectMyQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+		public String selectMyQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model, HttpSession session) {
 			
-			//내 세션에서 꺼내오기
-			int userNo =  2;
+			Member m = (Member) session.getAttribute("loginUser");
+			int userNo = m.getUserNo();
 			
 			// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
 			int qnaListCount = qnaService.qnaListCount();
