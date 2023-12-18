@@ -23,34 +23,44 @@
   	<result column="MODI_DATE" property="modiDate"/>
   	<result column="STATUS" property="status"/>
   	<result column="SALES_STATUS" property="salesStatus"/>
+  	<result column="FILE_PATH" property="filePath"/>
+  	<result column="CHANGE_NAME" property="changeName"/>
+  </resultMap>
+  
+  
+  
+  <resultMap type="attachment" id="attachmentResultSet">
+  	<result column="FILE_NO" property="fileNo"/>
+  	<result column="REF_NO" property="refNO"/>
+  	<result column="ORIGIN_NAME" property="originName"/>
+  	<result column="CHANGE_NAME" property="changeName"/>
+  	<result column="FILE_PATH" property="filePath"/>
+  	<result column="CREATE_DATE" property="createDate"/>
+  	<result column="STATUS" property="status"/>
+  	<result column="FILE_TYPE" property="fileType"/>
+  </resultMap>
+  
+  <resultMap type="category" id="categoryResultSet">
+	  <result column="CATEGORY_NO" property="categoryNo"/>
+	  <result column="CATEGORY_NAME" property="categoryName"/>
 
   </resultMap>
   
-  <resultMap type="attachment" id="attachmentResultSet">
-  	<result column="FILE_PATH" property="filePath"/>
-  	<result column="CHANGE_NAME" property="changeName"/>
-  
-  
-  </resultMap>
-  
-  
-   
   <select id="selectList" resultMap="productResultSet">
 	SELECT PRODUCT_NO
 	      ,PRODUCT_TITLE
 	      ,PRODUCT_PRICE
-	      ,FILE_PATH || CHANGE_NAME TITLEIMG
+	      ,FILE_PATH
+	      ,CHANGE_NAME
 	FROM PRODUCT P
-	JOIN ATTACHMENT AT ON (P.PRODUCT_NO=AT.REF_NO)
-	WHERE FILE_TYPE = 2
-	ORDER BY CREATE_DATE DESC
-
+	LEFT JOIN ATTACHMENT AT ON (P.PRODUCT_NO=AT.REF_NO)
+	ORDER BY P.REGI_DATE DESC
   </select>
   
   <update id="increaseCount" parameterType="_int">
   	UPDATE PRODUCT
 	SET COUNT = COUNT + 1
-	WHERE PRODUCT_NO = 1
+	WHERE PRODUCT_NO = #{pno}
 	AND STATUS = 'Y'
 	
   </update>
@@ -63,7 +73,13 @@
     AND SALES_STATUS = 'Y'
   
   </select>
-
+  
+  <select id="selectCategoryList" resultMap="categoryResultSet">
+  	SELECT *
+  	FROM PRODUCT_CATEGORY
+  
+  </select>
+ 
   <insert id="insertProduct" parameterType="product">
     INSERT INTO PRODUCT(PRODUCT_NO,
                        USER_NO,
@@ -87,7 +103,7 @@
 							  ,CHANGE_NAME
 							  ,FILE_PATH) 
            			 VALUES(SEQ_FNO.NEXTVAL
-           			 		,#{refNo}
+           			 		,SEQ_PNO.CURRVAL
            			 		,#{originName}
            			 		,#{changeName}
            			 		,#{filePath})

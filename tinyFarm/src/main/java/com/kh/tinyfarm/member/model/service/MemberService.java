@@ -37,7 +37,5 @@ public interface MemberService {
 	int memberStatusN(ArrayList<Integer> mList);
 
 	
-	//아이디 찾기
-	String findId(Member member);
 
 }

@@ -32,136 +32,7 @@
         </div>
     </div>
 
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-
-        <!-- ***** Top Header Area ***** -->
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a>
-                            </div>
-
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Login -->
-                                <div class="login">
-                                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
-                                </div>
-                                <!-- Cart -->
-                                <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-                        <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand"><img src="${contextPath }/resources/img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="shop.html">Shop</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="shop.html">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio.html">Portfolio</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="single-portfolio.html">Portfolio Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-post.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
@@ -190,9 +61,7 @@
         <div class="container">
             <div class="row">
             
-            
             	<%@ include file="admin_nav.jsp" %>
-
                 
                 <div class="col-12 col-md-9">
                     <!-- <div class="row"> -->
@@ -212,9 +81,9 @@
                         </div>
 
                         <!-- 표 작성 내역 -->
-                        <div class="clearfix mt-15 mb-15">
+                        <div class="clearfix mt-15 mb-15" id="memberListTable">
                         	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
-                            <table class="table table-responsive" align="center">
+                            <table class="table table-responsive" align="center" id="">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="13%">
@@ -222,7 +91,8 @@
                                     <col width="18%">
                                     <col width="auto%">
                                     <col width="12%">
-                                    <col width="7%">
+                                    <col width="13%">
+                                    <col width="8%">
                                     <col width="5%">
                                 </colgroup>
                                 <thead>
@@ -232,6 +102,7 @@
                                         <th>이름</th>
                                         <th>연락처</th>
                                         <th>EMAIL</th>
+                                        <th>등급</th>
                                         <th>활동여부</th>
                                         <th>상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
@@ -245,7 +116,13 @@
 	                                        <td>${m.userName }</td>
 	                                        <td>${m.phone }</td>
 	                                        <td>${m.email }</td>
-	                                        <td>${m.status }</td>
+	                                        <td>${m.grade }</td>
+	                                        <td>
+	                                        	<c:choose>
+	                                        		<c:when test="${m.status == 'Y' }">활동</c:when>
+	                                        		<c:otherwise>활동중지</c:otherwise>
+	                                        	</c:choose>
+	                                        </td>
 	                                        <td><a href="#" onclick="memberDetailInfo(${m.userNo})"><i class="fa fa-search"></i></a></td>
 	                                        <td><input type="checkbox" value="${m.userNo }" class="chkMember"></td>
 	                                    </tr>
@@ -255,16 +132,87 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" onclick="memberStatus()">
-                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;활동중지</a></li>
+                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지</a></li>
 <!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
+                        
+                        
+                        <!-- Button trigger modal -->
+						<button type="button" id="memberdetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
+						
+						<!-- Modal -->
+						<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered" role="document">
+						    <div class="modal-content">
+						      <div class="modal-body">
+						      
+							      <div class="col-12">
+				                    <div class="checkout_details_area clearfix">
+				                        <h5>🌱 회원 정보</h5>
+				                            <div class="row mt-15">
+				                            	<div class="col-md-12 mt-30 mb-30">
+					                            	<div class="mx-auto" style="width: 150px; height: 150px; border: 1px solid #ccc; position: relative; overflow: hidden;">
+												        <!-- 이미지 표시 -->
+												        <img id="profileImage" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+												    </div>
+											    </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="first_name">No</label>
+				                                    <input type="text" class="form-control" id="userNo_detail" name="userNo" value="" readonly="readonly">
+				                                </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="first_name">ID</label>
+				                                    <input type="text" class="form-control" id="userId_detail" name="userId" readonly="readonly">
+				                                </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="last_name">이름</label>
+				                                    <input type="text" class="form-control" id="userName_detail" name="userName" required>
+				                                </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="country">회원등급</label>
+				                                    <select class="custom-select d-block w-100" id="userGrade_detail" name="grade">
+				                                        <option value="일반회원">일반회원</option>
+				                                        <option value="특별회원">특별회원</option>
+				                                        <option value="관리자">관리자</option>
+				                                    </select>
+				                                </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="city">가입일자</label>
+				                                    <input type="text" class="form-control" id="userEnrollDate_detail" name="enrolldate" readonly="readonly">
+				                                </div>
+				                                <div class="col-md-6 mb-4">
+				                                    <label for="country">활동</label>
+				                                    <select class="custom-select d-block w-100" id="userStatus_detail" name="status">
+				                                        <option value="Y">활동</option>
+				                                        <option value="N">활동중지</option>
+				                                    </select>
+				                                </div>
+				                                <div class="col-12 mb-4">
+				                                    <label for="company">주소</label>
+				                                    <input type="text" class="form-control" id="userAddress_detail" name="address" readonly="readonly">
+				                                </div>
+				                                <div class="col-12 mb-4">
+				                                    <label for="company">연락처</label>
+				                                    <input type="text" class="form-control" id="userPhone_detail" name="phone" readonly="readonly">
+				                                </div>
+				                            </div>
+			                              	<button type="button" class="btn alazea-btn mt-15 float-right" onclick="memberInfoUpdate()">수정</button>
+					                    </div>
+					                </div>
+							      </div>
+							    </div>
+							  </div>
+							</div>
                         
                         
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script type="text/javascript">
 					    	
                         $(function(){
+                        	
+                        	//Modal 버튼 숨김
+                        	$("#memberdetailViewModal").hide();
                         	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
@@ -293,7 +241,7 @@
                             
 	                            //선택된 글 없을시
 	                            if(chkMemberList == null || chkMemberList == ""){
-	                            	alert("삭제할 글을 선택하세요");
+	                            	alert("회원을 선택하세요");
 	                            }else{
 	                            
 		                            //선택된 글이 있는 경우
@@ -314,71 +262,109 @@
                         }
                         
                         
-                        
                         function memberDetailInfo(userNo){
                         	
+                        	$.ajax({
+                        		url : "memberDetailInfo.ad",
+                        		data: { userNo : userNo },
+                        		success: function(result){
+                        			
+                        			console.log(result);
+                        			
+                        			$("#userNo_detail").val(result.userNo);
+                        			$("#userId_detail").val(result.userId);
+                        			$("#userName_detail").val(result.userName);
+                        			$("#userEnrollDate_detail").val(result.enrollDate);
+                        			$("#userStatus_detail").val(result.status);
+                        			$("#userGrade_detail").val(result.grade);
+                        			$("#userAddress_detail").val(result.address);
+                        			$("#userPhone_detail").val(result.phone);
+                        			
+                        			var imageSrc = "";
+                        			
+                        			if(result.changeName == null){
+                        				imageSrc = "${contextPath}/resources/img/icon/common_koongya.jpg";
+                        			
+                        			}else{
+                        				imageSrc = "${contextPath}/" + result.changeName;
+                        			}
+                        			
+                        			$("#profileImage").prop("src", imageSrc);
+                        			
+                                	$("#memberdetailViewModal").click();
+                                	
+                        		},
+                        		error: function(){
+                        			alert("오류났수ㅜ");
+                        		}
+
+                        	})
+                        	
+                        }
+                        
+                        
+                        
+                        //div 새로고침
+//                         function memberListReload(){
+//                             $('#memberListTable').load(window.location.href + '#memberListTable');
+//                      	}
+                        
+                        
+                        //회원 정보 변경
+                        function memberInfoUpdate(){
+
+                        	if(!confirm('회원 정보를 수정하겠습니까?')){
+                        		return false;
+                        	}
+                        	
+                        	var userNo = $('#userNo_detail').val();
+                        	var status = $('#userStatus_detail').val();
+                        	var grade = $('#userGrade_detail').val();
                         	
                         	
-							
-                        }	
+                        	$.ajax({
+                        		url : "memberInfoUpdate.ad",
+                        		data: {
+                        			userNo : userNo,
+                        			status : status,
+                        			grade : grade
+                        		},
+                        		success: function(result){
+                        			
+                        			$("#userStatus_detail").val(result.status);
+                        			$("#userGrade_detail").val(result.grade);
+                        			
+                        			location.reload();
+                        			
+                        		},
+                        		error: function(){
+                        			alert("오류났수ㅜ");
+                        		}
+
+                        	})
+                        	
+                        }
                         
-					    </script>
+					</script>
                         
                         
                         
-                        
-<!--				######### 검색 #########-->
+<!--				######### 검색 ######### -->
                     <div class="section-padding-100">
                         <div class="single-widget-area">
                         	<!-- height-50 css 추가 -->
-                            <form action="#" method="get" class="search-form d-flex float-right">   
-                                <div class="">
-                                    <select class="custom-select widget-title height-50">
-                                        <option value="searchId">아이디</option>
-                                        <option value="searchEmail">이메일</option>
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <input type="search" name="search" id="widgetsearch" placeholder="Search...">
+                            <form action="" method="get" class="search-form d-flex float-right">   
+                                <div class="mx-auto">
+                                    <input type="search" name="searchId" id="widgetsearch" placeholder="ID 검색">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    
-                    
-                    <!-- Button trigger modal -->
-<!-- 					<button type="button" class="btn btn-primary"> -->
-<!-- 					  Launch demo modal -->
-<!-- 					</button> -->
-					
-<!-- 					Modal -->
-<!-- 					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!-- 					  <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!-- 					    <div class="modal-content"> -->
-<!-- 					      <div class="modal-header"> -->
-<!-- 					        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> -->
-<!-- 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 					          <span aria-hidden="true">&times;</span> -->
-<!-- 					        </button> -->
-<!-- 					      </div> -->
-<!-- 					      <div class="modal-body"> -->
-<!-- 					        ... -->
-<!-- 					      </div> -->
-<!-- 					      <div class="modal-footer"> -->
-<!-- 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!-- 					        <button type="button" class="btn btn-primary">Save changes</button> -->
-<!-- 					      </div> -->
-<!-- 					    </div> -->
-<!-- 					  </div> -->
-<!-- 					</div> -->
-
-                    <!-- </div> -->
-                    
-                    
 
                     <div class="row">
                         <div class="col-12 mt-100">
+                        
                             <!-- ######### 페이징 바 #########-->
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
@@ -395,9 +381,9 @@
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
 			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
-                                    
                                 </ul>
                             </nav>
+                            
                         </div>
                     </div>
                 </div>
@@ -406,140 +392,8 @@
     </section>
     <!-- ##### Blog Area End ##### -->
 
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area bg-img" style="background-image: url(img/bg-img/3.jpg);">
-        <!-- Main Footer Area -->
-        <div class="main-footer-area">
-            <div class="container">
-                <div class="row">
 
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="footer-logo mb-30">
-                                <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                            </div>
-                            <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione mantor</p>
-                            <div class="social-info">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>QUICK LINK</h5>
-                            </div>
-                            <nav class="widget-nav">
-                                <ul>
-                                    <li><a href="#">Purchase</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="#">Payment</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Return</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Orders</a></li>
-                                    <li><a href="#">Policities</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>BEST SELLER</h5>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="img/bg-img/4.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Cactus Flower</a>
-                                    <p>$10.99</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="img/bg-img/5.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Tulip Flower</a>
-                                    <p>$11.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>CONTACT</h5>
-                            </div>
-
-                            <div class="contact-information">
-                                <p><span>Address:</span> 505 Silk Rd, New York</p>
-                                <p><span>Phone:</span> +1 234 122 122</p>
-                                <p><span>Email:</span> info.deercreative@gmail.com</p>
-                                <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
-                                <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Bottom Area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="border-line"></div>
-                    </div>
-                    <!-- Copywrite Text -->
-                    <div class="col-12 col-md-6">
-                        <div class="copywrite-text">
-                            <p>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Footer Nav -->
-                    <div class="col-12 col-md-6">
-                        <div class="footer-nav">
-                            <nav>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Service</a></li>
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
