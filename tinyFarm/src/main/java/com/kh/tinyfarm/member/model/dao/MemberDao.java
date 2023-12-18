@@ -1,6 +1,12 @@
 package com.kh.tinyfarm.member.model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -12,6 +18,8 @@ import com.kh.tinyfarm.qna.model.vo.Qna;
 
 @Repository 
 public class MemberDao {
+	
+	private static final String namespace = "memberMapper";
 	
 	//로그인
 	public Member loginMember(SqlSessionTemplate sqlSession , Member m) {
@@ -29,9 +37,33 @@ public class MemberDao {
 		
 		return sqlSession.selectOne("memberMapper.checkId",checkId);
 	}
+	
+	//비밀번호 찾기
+	public Member findPwCheck(Member member, SqlSessionTemplate sqlSession) throws Exception {
+	    return sqlSession.selectOne("memberMapper.findPwCheck", member);
+	}
 
+	// 아이디 찾기
+	public String findId(SqlSessionTemplate sqlSession, Member member) {
+	    return sqlSession.selectOne("memberMapper.findId", member);
+	}
 	
 	
+	// 비밀번호 변경
+	public int updatePw(SqlSessionTemplate sqlSession, Member vo) {
+	    return sqlSession.update("memberMapper.updatePw", vo);
+	}
+	
+	// MemberDao 클래스에 추가
+	public Member readMember(SqlSessionTemplate sqlSession, String userId) {
+	    return sqlSession.selectOne("memberMapper.readMember", userId);
+	}
+	
+	// MemberDao 클래스에 추가
+	public int idCheck(SqlSessionTemplate sqlSession, String userId) {
+	    return sqlSession.selectOne("memberMapper.idCheck", userId);
+	}
+
 	
 	//admin - 전체 회원수
 	public int memberListCount(SqlSessionTemplate sqlSession) {
@@ -55,17 +87,3 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.memberStatusN", list);
 	}
 
-	
-	//admin - 회원정보 상세조회
-	public Member selectMemberDetailInfo(SqlSessionTemplate sqlSession, int userNo) {
-		return sqlSession.selectOne("memberMapper.selectMemberDetailInfo", userNo);
-	}
-
-
-	//admin - 회원상태 업데이트
-	public int memberStatusUpdate(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.update("memberMapper.memberStatusUpdate", m);
-	}
-
-	
-}

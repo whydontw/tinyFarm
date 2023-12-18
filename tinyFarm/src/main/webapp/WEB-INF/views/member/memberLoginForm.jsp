@@ -81,7 +81,11 @@
 								    <div class="col-9 mt-100">
 								    	<div><a id="kakao-login-btn"><img onclick="Kakao.Auth.login()"  style = "margin-top:-150px" src="<%= contextPath %>/resources/kakao_login.png" style = "width:286px"></a></div>
 								    </div>
-								<br>
+								<br>	
+								</div>
+								<div style = "margin-top:-45px; margin-left :125px">
+									<a href = "userfind.me">아이디 찾기 /</a> 
+									<a href = "findPw.me">비밀번호 찾기</a> 
 								</div>
  								<a onclick="unlinkApp()">로그아웃</a> 
 							    <div id="result"></div>
@@ -150,10 +154,10 @@
 			    },
 			  })
 		</script>
-		
-
-
 	    
+	    
+	   
+	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
    
