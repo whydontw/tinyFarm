@@ -16,65 +16,14 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-    <style>
-		.boardHeader{
-			display: flex;
-		}
-		.boardFooter{
-			display: flex;
-    		flex-direction: row;
-    		justify-content: space-around;
-		}
-		
-		#sub {
-        list-style-type: none;
-        display: none;
-	    }
-	
-	    #navi:hover #sub {
-	        display: block;
-	        position: absolute;
-	        float: right;
-	        border: 1px solid red;
-	    }
-	
-	    #sub li {
-	        display: none;
-	    }
-	
-	    #navi:hover #sub li {
-	        display: block;
-	    }
-		
-		
-		.myPageMain{
-			border: 1px solid grey;
-            width: 100%;
-            height: 100%;
-            margin: auto;
-        }
-        .myPageMain a{
-            text-decoration: none;
-            color: black;
-        }
-		#updateMe,#myDiary,#myActive,#myTrade{
-            border: 1px solid grey;
-            width: 25%;
-            height: 25%;
-            text-align: center;
-            font-size: 40px;
-            margin: auto;
-        }
-        
-	</style>
+   	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
 </head>
 
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 
 	<div class="breadcrumb-area">
-		<div
-			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
+		<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
 			<h2>마이페이지</h2>
 		</div>
@@ -85,12 +34,6 @@
 						<ul class="breadcrumb" id="navi">
 							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i>Home</a></li>
 							<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
-								<ol class="breadcrumb" id="sub">
-									<li class="breadcrumb-item"><a href="update.me">회원 정보 수정</a></li>
-									<li class="breadcrumb-item"><a href="diary.me">영농일지</a></li>
-									<li class="breadcrumb-item"><a href="active.me">활동내역</a></li>
-									<li class="breadcrumb-item"><a href="trade.me">거래내역</a></li>
-								</ol>
 						</ul>
 					</nav>
 				</div>
@@ -99,25 +42,32 @@
 	</div>
 	<section class="alazea-blog-area mb-100">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="row">
+                        	<div class="myInfo">
+                        		<span>작은농장의 ' ${loginUser.grade } ' ${loginUser.userName }님</span>
+                        	</div>
                         <div class="myPageMain">
                             <div id="updateMe">
-                                <a href="update.me">정보수정</a> <br>
+                                <a href="update.me">정보수정 <br>
                                 <img alt="update-icon" src="resources/jisu/img/update-icon.png">
+                                </a>
                             </div>
                             <div id="myDiary">
-                                <a href="diary.me">영농일지</a> <br>
+                                <a href="diary.me">영농일지 <br>
                                 <img alt="diary-icon" src="resources/jisu/img/diary-icon.png">
+                                </a>'
                             </div>
                             <div id="myActive">
-                                <a href="active.me">활동내역</a> <br>
+                                <a href="active.me">활동내역 <br>
                                 <img alt="active-icon" src="resources/jisu/img/active-icon.png">
+                                </a>
                             </div>
                             <div id="myTrade">
-                                <a href="trade.me">거래내역</a> <br>
+                                <a href="trade.me">거래내역 <br>
                                 <img alt="trade-icon" src="resources/jisu/img/trade-icon.png">
+                                </a>
                             </div>
                        </div>
                     </div>
