@@ -41,34 +41,11 @@
                     <div class="col-12">
                         <div class="top-header-content d-flex align-items-center justify-content-between">
                             <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                              
-                            </div>
+                            <div class="top-header-meta"></div>
 
                             <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                    
-                                  <!-- Login -->
-                              	<div class="login">
-							    <c:choose>
-							        <c:when test="${empty loginUser}">
-							            <a href="loginGo.me">
-							                <i class="fa fa-user" aria-hidden="true"></i> <span>Login</span>
-							            </a>
-							            <a href ="join.me">회원가입</a>
-							        </c:when>
-							  
-							        <c:otherwise>
-							            <c:if test="${not empty loginUser.userName}">
-							                <label style ="font-size:12px; color : white; margin-top:10px">${loginUser.userName}님</label>
-							            
-							            <a style = "margin-left:20px" href="">마이페이지&nbsp;</a>
-							            <a href="logout.me">로그아웃</a>
-							            </c:if>
-							        </c:otherwise>
-							    </c:choose>
-							 	</div>
-                            </div>
+                            <%@ include file="top-header.jsp" %>
+                            
                         </div>
                     </div>
                 </div>
