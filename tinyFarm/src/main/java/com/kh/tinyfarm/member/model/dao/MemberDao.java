@@ -86,4 +86,4 @@ public class MemberDao {
 	public int memberStatusN(SqlSessionTemplate sqlSession, ArrayList<Integer> list) {
 		return sqlSession.update("memberMapper.memberStatusN", list);
 	}
-
+}

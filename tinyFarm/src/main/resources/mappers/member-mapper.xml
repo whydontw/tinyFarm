@@ -77,14 +77,41 @@
 	WHERE USER_ID= #{userId}
   		</select>
 		
+		<!-- 회원 비밀번호 수정 -->
+		<update id="updatePw" parameterType="member">
+			UPDATE MEMBER SET
+			USER_PWD = #{userPwd}
+			WHERE USER_ID = #{userId}
+		</update>
+		
+		<select id="readMember" resultMap="memberResultSet" parameterType="java.lang.String">
+		    SELECT USER_NO, USER_ID, USER_PWD, USER_NAME, EMAIL, PHONE, ADDRESS, ORIGIN_NAME, CHANGE_NAME, ENROLL_DATE, GRADE, STATUS
+		    FROM MEMBER
+		    WHERE USER_ID = #{userId}
+		</select>
+		
+		 <select id="idCheck" parameterType="string" resultType="int">
+	        SELECT COUNT(*) FROM MEMBER
+	        WHERE USER_ID = #{userId}
+	    </select>
+	    
+    
+		<select id="findPwCheck" resultType="int">
+			SELECT COUNT(*) FROM MEMBER
+			WHERE EMAIL = #{EMAIL} AND
+			USER_Id = #{USER_ID}		
+		</select>
+	
+		
 		<!-- admin -->
 		<select id="memberListCount" resultType="_int" parameterType="string">
   			SELECT COUNT(*) FROM MEMBER
   		</select>
   		
   		<select id="selectMemberList" resultMap="memberResultSet">
-  			SELECT * FROM MEMBER ORDER BY 1
+  			SELECT * FROM MEMBER
   		</select>
+  		
   		
   		
   		<update id="memberStatusN">
@@ -93,27 +120,9 @@
 	        WHERE 1=1
 	        AND USER_NO IN  
 	        <foreach collection="list" item="userNo" index="index" open="(" close=")" separator=","> 
-	            #{userNo}
+	            #{userNo} 
 	        </foreach>
 		</update>
-		
-		
-		<select id="selectMemberDetailInfo" resultMap="memberResultSet">
-			SELECT * FROM MEMBER
-			WHERE USER_NO = #{userNo}
-		</select>
-		
-		
-		<update id="memberStatusUpdate">
-			UPDATE MEMBER SET
-			GRADE = #{grade},
-			STATUS = #{status}
-			WHERE USER_NO = #{userNo}
-		</update>
-		
-		
-		
-		
   		
   	
 		
