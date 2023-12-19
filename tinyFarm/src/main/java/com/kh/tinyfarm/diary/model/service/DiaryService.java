@@ -1,14 +1,15 @@
 package com.kh.tinyfarm.diary.model.service;
 
-import java.util.ArrayList;
-import java.util.Date;
 
-import com.kh.tinyfarm.board.vo.Board;
-import com.kh.tinyfarm.board.vo.BoardReply;
+import java.util.ArrayList;
+
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+
 
 
 
@@ -23,7 +24,7 @@ public interface DiaryService {
 	int boardListCount(String userId);
 
 	int replyListCount(String userId);
-	
+
 	int fwingListCount(String userId);
 
 	int fwerListCount(String userId);

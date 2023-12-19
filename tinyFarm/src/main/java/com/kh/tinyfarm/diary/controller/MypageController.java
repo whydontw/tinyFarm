@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.tinyfarm.board.vo.Board;
-import com.kh.tinyfarm.board.vo.BoardReply;
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
 import com.kh.tinyfarm.diary.model.service.DiaryService;

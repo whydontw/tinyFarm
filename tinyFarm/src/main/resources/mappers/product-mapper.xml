@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="productMapper">
+  <select id="listCount" resultType="_int">
+  	SELECT COUNT(*)
+	FROM PRODUCT
+	WHERE STATUS = 'Y'
+
+  </select>
+  
+  <resultMap type="product" id="productResultSet">
+  	<result column="PRODUCT_NO" property="productNo"/>
+  	<result column="USER_NO" property="userNo"/>
+  	<result column="CATEGORY_NO" property="categoryNo"/>
+  	<result column="PRODUCT_TITLE" property="productTitle"/>
+  	<result column="PRODUCT_CONTENT" property="productContent"/>
+  	<result column="PRODUCT_PRICE" property="productPrice"/>
+  	<result column="COUNT" property="Count"/>
+  	<result column="REGI_DATE" property="regiDate"/>
+  	<result column="MODI_DATE" property="modiDate"/>
+  	<result column="STATUS" property="status"/>
+  	<result column="SALES_STATUS" property="salesStatus"/>
+  	<result column="FILE_PATH" property="filePath"/>
+  	<result column="CHANGE_NAME" property="changeName"/>
+  </resultMap>
+  
+  
+  
+  <resultMap type="attachment" id="attachmentResultSet">
+  	<result column="FILE_NO" property="fileNo"/>
+  	<result column="REF_NO" property="refNO"/>
+  	<result column="ORIGIN_NAME" property="originName"/>
+  	<result column="CHANGE_NAME" property="changeName"/>
+  	<result column="FILE_PATH" property="filePath"/>
+  	<result column="CREATE_DATE" property="createDate"/>
+  	<result column="STATUS" property="status"/>
+  	<result column="FILE_TYPE" property="fileType"/>
+  </resultMap>
+  
+  <resultMap type="category" id="categoryResultSet">
+	  <result column="CATEGORY_NO" property="categoryNo"/>
+	  <result column="CATEGORY_NAME" property="categoryName"/>
+
+  </resultMap>
+  
+  <select id="selectList" resultMap="productResultSet">
+	SELECT PRODUCT_NO
+	      ,PRODUCT_TITLE
+	      ,PRODUCT_PRICE
+	      ,FILE_PATH
+	      ,CHANGE_NAME
+	FROM PRODUCT P
+	LEFT JOIN ATTACHMENT AT ON (P.PRODUCT_NO=AT.REF_NO)
+	ORDER BY P.REGI_DATE DESC
+  </select>
+  
+  <update id="increaseCount" parameterType="_int">
+  	UPDATE PRODUCT
+	SET COUNT = COUNT + 1
+	WHERE PRODUCT_NO = #{pno}
+	AND STATUS = 'Y'
+	
+  </update>
+  
+  <select id="selectProduct" resultMap="productResultSet">
+	SELECT *
+    FROM PRODUCT
+    WHERE PRODUCT_NO = 1
+    AND STATUS = 'Y'
+    AND SALES_STATUS = 'Y'
+  
+  </select>
+  
+  <select id="selectCategoryList" resultMap="categoryResultSet">
+  	SELECT *
+  	FROM PRODUCT_CATEGORY
+  
+  </select>
+ 
+  <insert id="insertProduct" parameterType="product">
+    INSERT INTO PRODUCT(PRODUCT_NO,
+                       USER_NO,
+                       CATEGORY_NO,
+                       PRODUCT_TITLE,
+                       PRODUCT_CONTENT,
+                       PRODUCT_PRICE)
+       VALUES (SEQ_PNO.NEXTVAL,
+                   #{userNo},
+                   #{categoryNo},
+                   #{productTitle},
+                   #{productContent},
+                   #{productPrice})
+  
+  </insert>
+ 
+  <insert id="insertAttachment" parameterType="attachment">
+  		INSERT INTO ATTACHMENT(FILE_NO
+							  ,REF_NO
+							  ,ORIGIN_NAME
+							  ,CHANGE_NAME
+							  ,FILE_PATH) 
+           			 VALUES(SEQ_FNO.NEXTVAL
+           			 		,SEQ_PNO.CURRVAL
+           			 		,#{originName}
+           			 		,#{changeName}
+           			 		,#{filePath})
+  </insert>
+  
+  
+  
+  
+  
+  
+  </mapper>

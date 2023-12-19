@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class Product {
@@ -17,7 +17,7 @@ public class Product {
 //	PRODUCT_TITLE	VARCHAR2(100 BYTE)
 //	PRODUCT_CONTENT	VARCHAR2(4000 BYTE)
 //	PRODUCT_PRICE	NUMBER
-//	COUNT	NUMBER
+//	COUNT	NUMBERRpo
 //	REGI_DATE	DATE
 //	MODI_DATE	DATE
 //	STATUS	VARCHAR2(1 BYTE)
@@ -28,13 +28,16 @@ public class Product {
 	private int categoryNo;
 	private String productTitle;
 	private String productContent;
-	private int productPrice;
+	private String productPrice;
 	private int count;
 	private String regiDate;
 	private String modiDate;
 	private String status;
 	private String salesStatus;
+	private String filePath;
+	private String changeName;
 	
 	
+
 	
 }

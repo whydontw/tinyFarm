@@ -1,14 +1,13 @@
 package com.kh.tinyfarm.diary.model.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.kh.tinyfarm.board.vo.Board;
-import com.kh.tinyfarm.board.vo.BoardReply;
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.member.model.vo.Follow;

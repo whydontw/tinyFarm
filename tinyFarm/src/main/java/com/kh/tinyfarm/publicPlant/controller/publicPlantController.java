@@ -38,7 +38,10 @@ import com.kh.tinyfarm.publicPlant.model.vo.InGardenPlantList;
 public class publicPlantController {
 
 	@RequestMapping("/inGardenPlantList.pp")
-	public String getInGardenPlantList(@RequestParam(value="currentPage",defaultValue = "1")int currentPage,Model model) throws IOException, ParserConfigurationException, SAXException {
+	public String getInGardenPlantList(@RequestParam(value="currentPage",defaultValue = "1")int currentPage
+									  ,@RequestParam(value="sType",defaultValue = "sCntntsSj")String sType
+									  ,@RequestParam(value="sText",defaultValue = "")String sText
+									  ,Model model) throws IOException, ParserConfigurationException, SAXException {
 		ArrayList<InGardenPlantList> list = new ArrayList();
 		int listCount;
 		int pageLimit = 10;
@@ -55,6 +58,8 @@ public class publicPlantController {
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + currentPage;
+		parameter += "&sType=" + sType;
+		parameter += "&sText=" + sText;
 		parameter += "&numOfRows=8";
 		// 서버와 통신
 		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);
@@ -130,6 +135,7 @@ public class publicPlantController {
 		
 		model.addAttribute("result", list);
 		model.addAttribute("pi", pi);
+		model.addAttribute("sText",sText);
 		return "plant/gardenList";
 	}
 	@ResponseBody
@@ -242,7 +248,7 @@ public class publicPlantController {
 		
 		// 오퍼레이션 명
 		String operationNameList = "gardenDtl";
-		System.out.println(plantInfo.getCntntsNo());
+		
 		// XML 받을 URL 생성
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
@@ -270,7 +276,7 @@ public class publicPlantController {
 			responseText += line;
 		}
 		
-		//System.out.println(responseText);
+		
 		// model.addAttribute("result",responseText);
 		
 		// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
@@ -289,7 +295,7 @@ public class publicPlantController {
 		for(int i=0;i<responseNameList.length;i++) {
 			nodeList.add(document.getElementsByTagName(responseNameList[i]));
 			Node node = nodeList.get(i).item(0);
-			System.out.println(node.getNodeName());
+			
 			try {
 				map.put(node.getNodeName(), node.getChildNodes().item(0).getNodeValue());
 			} catch (NullPointerException e) {
@@ -297,7 +303,7 @@ public class publicPlantController {
 			}
 			
 			 
-			//System.out.println(node.getNodeName());
+			
 		}
 		
 		//식물 이미지 배열 넘기기
@@ -317,6 +323,8 @@ public class publicPlantController {
 	
 	@RequestMapping("gardeningList.pp")
 	public String gardeningList(@RequestParam(value="category",defaultValue = "채소")String category
+							   ,@RequestParam(value="sType",defaultValue = "sCntntsSj")String sType
+							   ,@RequestParam(value="sText",defaultValue = "")String sText
 							   ,Model model) throws IOException {
 	
 		//listCount는 내가 공공데이터에서 임의로 데이털르 선별했기 때문에 공공데이터에서 넘어오는 listCount를 이용할 수 없다. 데이터의 수가 적기때문에 직접 세어서 넣는게 나을듯 싶다.
@@ -356,6 +364,8 @@ public class publicPlantController {
 			String parameter = "/"+serviceName+"/"+operationName;
 			parameter += "?apiKey="+ apiKey;
 			parameter += "&pageNo="+i;
+			parameter += "&sType="+sType;
+			parameter += "&sText="+sText;
 			parameter += "&sSeCode=335001";
 			
 			//서버와 통신
@@ -393,7 +403,7 @@ public class publicPlantController {
 			/*
 			 * cntntsNo 컨텐츠번호 cntntsSj 컨텐츠명 updusrEsntlNm 등록자 cntntsRdcnt 조회수 
 			 */
-			//System.out.println(category);
+			
 			for(int j=0; j<size; j++){
 				//키값
 				String cntntsNo;
@@ -438,7 +448,7 @@ public class publicPlantController {
 			
 			
 		}
-		System.out.println(list.size());
+		
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
 		model.addAttribute("listSize", list.size());
@@ -505,7 +515,7 @@ public class publicPlantController {
 
 
 		
-		System.out.println(cn);
+		
 		GardeningDetail gd = new GardeningDetail(cntntsSj,cn,updusrEsntlNm,svcDtx,cntntsRdcnt);
 		model.addAttribute("gd", gd);
 		model.addAttribute("category", category);

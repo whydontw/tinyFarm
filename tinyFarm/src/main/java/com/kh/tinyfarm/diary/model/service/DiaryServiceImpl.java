@@ -1,14 +1,13 @@
 package com.kh.tinyfarm.diary.model.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.tinyfarm.board.vo.Board;
-import com.kh.tinyfarm.board.vo.BoardReply;
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.dao.DiaryDao;
 import com.kh.tinyfarm.diary.model.vo.Diary;

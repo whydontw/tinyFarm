@@ -18,11 +18,16 @@
     <link rel="stylesheet" href="resources/style.css">
 	 <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
     <style>
-		p,h1,h2,h3,h4,h5,h6,a{
+		a,p{
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
 		.plantImg,.plantName:hover{
@@ -32,121 +37,9 @@
 	</style>
 </head>
 <body>
-	 <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-circle"></div>
-        <div class="preloader-img">
-            <img src="resources/img/core-img/leaf.png" alt="">
-        </div>
-    </div>
 
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
+	<%@include file="/WEB-INF/views/common/header.jsp" %>
 
-        <!-- ***** Top Header Area ***** -->
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                              
-                            </div>
-
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                    
-                                <!-- Login -->
-                              	<div class="login">
-							    <c:choose>
-							        <c:when test="${empty loginUser}">
-							            <a href="loginGo.me">
-							                <i class="fa fa-user" aria-hidden="true"></i> <span>Login</span>
-							            </a>
-							            <a href ="join.me">회원가입</a>
-							        </c:when>
-							        <c:otherwise>
-							            <label style ="font-size:12px; color : white; margin-top:10px">${loginUser.userName}님</label>
-							            <a style = "margin-left:20px" href="mypage.me">마이페이지&nbsp;</a>
-							            <a href="logout.me">로그아웃</a>
-							           
-							        </c:otherwise>
-							    </c:choose>
-							 	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-                        <!-- Nav Brand -->
-                        <a href="/tinyfarm" class="nav-brand"><img src="resources/img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-                        
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="index.html">식물 정보</a>
-                                        <ul class="dropdown">
-                                            <li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
-                                            <li><a href="gardeningList.pp?category=채소">채소 정보</a></li>
-                                            <li><a href="gardeningList.pp?category=실내농업">실내농업 관련 정보</a> </li>
-                                            <li><a href="gardeningList.pp?category=기능별 텃밭">기능별 텃밭 정보</a> </li>
-                                            <li><a href="makeInGarden.pp">실내정원 만들기</a> </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="mypage.me">체험활동</a></li>
-                                    
-                                    <li><a href="list.bo">커뮤니티</a></li>
-                                    <li><a href="portfolio.html">작물거래</a></li>
-                                    <li><a href="contact.html">공지사항</a></li>
-                                    <li><a href="qnaList.qa">1:1문의</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 	<!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
         <div class="hero-post-slides owl-carousel">
@@ -295,6 +188,7 @@
             </div>
             
             <script>
+            	
 	            $(function(){
 	        		getInGardenPlantListAjax();
 	        		$(".view-all-btn").click(function(){
@@ -309,7 +203,9 @@
 	           			console.log($(this));
 	           			$(this).parents("form").children(".submitBtn").click();
 	           		});
+
 	        	});
+           		
             	function getInGardenPlantListAjax(){
             		$.ajax({
             			url : "inGardenPlantListAjax.pp",

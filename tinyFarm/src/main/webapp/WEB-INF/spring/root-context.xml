@@ -43,4 +43,21 @@
 	 	<property name="maxUploadSize" value="10000000"/>  <!-- 업로드 파일 용량제한 -->
 	 	<property name="maxInMemorySize" value="10000000"/> <!-- 메모리 보관 최대크기(임시저장크기) -->
 	</bean>
+	
+	<!-- AOP 관련 설정
+		@Aspect와 관련된 어노테이션 활성화
+		Namespaces가서 aop를 체크해서 자동완성켜주기 그래도 안나온다면 pom.xml에서 제대로 작성을 안한거
+	-->
+	<aop:aspectj-autoproxy/>
+	
+	<!--
+		component-scan 등록하기
+		@Service, @Repository, @Aspect를  스캔하는 설정 추가해주기
+		 use-default-filters : 기본스캔을 할지 여부(true/false)
+	 -->
+	 <context:component-scan base-package="com.kh.tinyfarm" use-default-filters="false">
+	 	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>  <!-- expression경로는 쓸 클래스 import가서 복사하기 serviceImpl -->
+	 	<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/> 
+	 	<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/> 
+	 </context:component-scan>
 </beans>

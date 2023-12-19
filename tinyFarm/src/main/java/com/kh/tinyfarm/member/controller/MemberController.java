@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,33 +36,66 @@ public class MemberController {
     
     @RequestMapping("/loginGo.me")
     public String loginPage() {
-        return "member/memberLoginForm";
+        return "member/memberLoginForm";  
     }
- 
-    
     
     @RequestMapping("/login.me")
-    public ModelAndView loginProcess(Member m, ModelAndView mv, HttpSession session) {
+    public String loginProcess(Member m, HttpSession session, Model model) {
+        Member loginUser = memberService.loginMember(m);
 
+        if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+            session.setAttribute("loginUser", loginUser);
+            return "redirect:/";
+        } else {
+        	session.setAttribute("alertMsg", "로그인 실패");
+            return "redirect:/loginGo.me";
+        }
+    }
     
-    	Member loginUser = memberService.loginMember(m);
     
-    	//사용자에게 입력받은 비밀번호 : m.getUserPwd() / 데이터베이스에서 조회해온 암호문은 : loginUser.getUserPwd()
-    	if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-    		
-    		session.setAttribute("loginUser", loginUser);
-    		
-    		
-    		System.out.println("성공");
-    		mv.setViewName("redirect:/");
-    		
-   		} else {
-   			mv.addObject("errorMsg", "로그인 실패");
-   			
-   			mv.setViewName("common/errorPage");
-   		}
-    	return mv;
-    } 
+    //아이디 찾기 페이지로 가기
+    @RequestMapping(value="/userfind.me", method = RequestMethod.GET)
+	public String userfind() {
+		return "member/userfindId";
+	}
+    
+    //비밀번호 찾기 페이지로 가기
+    @RequestMapping(value = "/findPw.me", method = RequestMethod.GET)
+    public String userfindPwdPage() {
+        return "member/findPw";
+    }
+    
+    //아이디찾기 결과 페이지
+    @PostMapping("/findIdResult.me")
+    public String findIdResult(Member member, Model model) {
+    	
+    	System.out.println(member);
+    	
+    	String userId = memberService.findId(member);
+    	
+    	model.addAttribute("userId", userId);
+    	
+        return "member/findIdResult";
+    }
+    
+    
+    
+
+    // 비밀번호 찾기    
+    @RequestMapping("/findPw")
+    public void findPwPage() throws Exception {
+        // 비밀번호 찾기 페이지에 대한 로직을 여기에 작성
+    }
+
+    @PostMapping("/findPw.me")
+    public void findPwPost(@ModelAttribute Member member, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            memberService.findPw(response, member);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
     
     //로그아웃
     @RequestMapping("logout.me")
@@ -104,45 +140,37 @@ public class MemberController {
     	}
     }  
     
-    
-    //프로필사진
-    @PostMapping("insert.me")
-	public String insertMember(Member m
-						   ,MultipartFile upfile
-						   ,HttpSession session) {
-    	
-    	
-    	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
-    	
-    	System.out.println("암호화" + encPwd);
-    	
-    	m.setUserPwd(encPwd);
-    	
    
-    	if(!upfile.getOriginalFilename().equals("")) {
-    		
-    		String changeName = saveFile(upfile,session);
-    		
-    		m.setOriginName(upfile.getOriginalFilename());
-			m.setChangeName("resources/uploadFiles/"+changeName);
-    	}  else {
+  //프로필사진
+    @PostMapping("insert.me")
+    public String insertMember(Member m, MultipartFile upfile, HttpSession session) {
+        String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+        m.setUserPwd(encPwd);
+
+        if (!upfile.getOriginalFilename().equals("")) {
+            String changeName = saveFile(upfile, session);
+            m.setOriginName(upfile.getOriginalFilename());
+            m.setChangeName("resources/uploadFiles/" + changeName);
+        } else {
             // 파일이 업로드되지 않았거나 null인 경우
             m.setOriginName("profile.jpg");
             m.setChangeName("resources/profile.jpg");
         }
-    	
-		int result = memberService.insertMember(m);
-				
-				if(result>0) {
-					session.setAttribute("alertMsg", "회원가입 성공");
-					return "redirect:/";
-				}else {
-					session.setAttribute("alertMsg", "회원 등록 실패");
-					return "common/errorPage";
-			}
+
+        int result = memberService.insertMember(m);
+
+        // 여기에 추가적인 로직이나 결과에 대한 처리를 추가할 수 있습니다.
+        if (result > 0) {
+            session.setAttribute("alertMsg", "회원가입 성공");
+            return "redirect:/loginGo.me";
+        } else {
+            session.setAttribute("alertMsg", "회원 등록 실패");
+            return "common/errorPage";
+        }
     }
     
     
+
   //파일명 수정 모듈
   	public String saveFile(MultipartFile upfile
   						  ,HttpSession session) {
