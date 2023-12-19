@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.kh.tinyfarm.diary.model.service.DiaryService;
+import com.kh.tinyfarm.board.service.BoardService;
 
 
 
@@ -16,11 +16,11 @@ public class MypageController {
 	
 	//서비스 호출
 	@Autowired
-	private DiaryService diaryService;
+	private BoardService boardService;
 	
-//	board 나오면 진행
-//	@Autowired
-//	private BoardService boardService;
+	//	board 나오면 진행
+	//	@Autowired
+	//	private BoardService boardService;
 	
 	//각 페이지 위임 모음
 	//마이페이지
@@ -74,5 +74,7 @@ public class MypageController {
 //				
 		return "mypage/myActivePage";
 	}
+
 	
 }
+
