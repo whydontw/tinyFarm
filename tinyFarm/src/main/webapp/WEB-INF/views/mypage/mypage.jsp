@@ -45,6 +45,9 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="row">
+                        	<div class="myInfo">
+                        		<span>작은농장의 ' ${loginUser.grade } ' ${loginUser.userName }님</span>
+                        	</div>
                         <div class="myPageMain">
                             <div id="updateMe">
                                 <a href="update.me">정보수정 <br>
@@ -54,7 +57,7 @@
                             <div id="myDiary">
                                 <a href="diary.me">영농일지 <br>
                                 <img alt="diary-icon" src="resources/jisu/img/diary-icon.png">
-                                </a>
+                                </a>'
                             </div>
                             <div id="myActive">
                                 <a href="active.me">활동내역 <br>

@@ -18,56 +18,13 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
 
 
 	<style>
-		.boardHeader{
-			display: flex;
-		}
-		.boardFooter{
-			display: flex;
-    		flex-direction: row;
-    		justify-content: space-around;
-		}
 		.container h5{
 			font-size: 30px;
 			text-align: center;
-		}
-		#picText{
-			position: absolute; 
-			top: 90px; 
-			left: 30px; 
-			z-index: 2;
-			margin-top: 14%;
-		}
-		#profileImg{
-			 width: 300px;
-			 height: 300px; 
-			 border: 1px solid #ccc; 
-			 margin-top: 45px; 
-			 margin-bottom: 20px; 
-			 margin-left: 200px; 
-			 position: relative; 
-			 overflow: hidden;
-		}
-		#reUpfile{
-			cursor: pointer; 
-			background-color:white; 
-			border:none; 
-			margin-left:260px
-		}
-		#file-name-display{
-			position: absolute; 
-			top: 70%; left: 50%; 
-			transform: translateX(-50%); 
-			text-align: center;
-		}
-		#enrollUserId{
-			margin-top:10px
-		}
-		#checkResult{
-			font-size:0.8em; 
-			display :none;
 		}
 		#center{
 			width: 70%;
@@ -109,18 +66,28 @@
 	            <div class="row justify-content-between">
 	                <div class="col-12 col-lg-7 mx-auto">
 	                        <h5>정보 수정</h5>
-	                        <form action="update.me" method="post" >
+	                        <form action="update.me" method="post" enctype="multipart/form-data">
 			                    <div class="checkout_details_area clearfix">
 		                           <div class="row">
-									    <label for="profile_picture" id="picText">프로필 사진</label>
+									     <label for="reUpfile" id="picText">프로필 사진</label>
 									    <div id="profileImg">
 									        <!-- 이미지 표시 -->
-									       <img id="loadImg" src="${loginUser.changeName }">
+									        <c:choose>
+									        	<c:when test="${not empty loginUser.changeName }">
+											        <img id="profileImage" src="${loginUser.changeName}" alt="프로필 사진">
+									        	</c:when>
+									        	<c:otherwise>
+									        		<img id="profileImage" src="resources/profile.jpg" alt="기본 프로필 사진">
+									        	</c:otherwise>
+									        </c:choose>
 									    </div>
 									    <div>    
-									        <!-- 파일 업로드 입력 폼 사진 수정이므로 reUpfile로 했습니다. -->
-									        <input type="file" id="reUpfile" name="reUpfile">
+									        <!-- 파일 업로드 입력 폼 -->
+									       <input type="file" id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)">
+									       <input type="button" id="deleteImg" value="사진 삭제">
+									       
 									    </div>
+									
 									</div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="enrollUserId">아이디</label>
@@ -169,7 +136,7 @@
                 </div>
 
                     <!-- Modal body -->
-                    <div class="modal-content">
+                    <div class="modal-content" id="pwdModal">
                         <div id="center">
                             <label for="userPwd" class="mr-sm-2">현재 비밀번호</label>
                             <input type="password" class="form-control" placeholder="현재 비밀번호 입력" id="userPwd" name="userPwd"> <br>
@@ -225,30 +192,39 @@
     </div>
 
 	<script>
+		//프로필 사진 삭제   	
+		$(function(){
+			$("#deleteImg").click(function(){
+				//삭제버튼 클릭시 src값 null로 변경, 대체이미지로 기본프로필 사용
+				$("#profileImage").attr("src", "").attr("onerror","this.src='resources/profile.jpg'");
+			});		
+		});
 		//프로필 사진 변경
 		function loadImg(inputFile, num) {
-			let profileImage = $("#loadImg");
-			console.log(profileImage);
+			let profileImage = document.getElementById('profileImage');
+		    
 			if (inputFile.files.length == 1) { //파일이 등록되면(length = 1)
 				let reader = new FileReader();
+			
 				//파일을 읽어줄 메소드 :  reader.readAsDataURL(파일)
 				reader.readAsDataURL(inputFile.files[0]);
 				reader.onload = function(e) {
+					profileImage.src = e.target.result;
 				}
 			}else{
-				profileImage = "${loginUser.originName}";
+				profileImage = "${loginUser.changeName}";
 			}
-		}
-	       	
+		};
+		
+	    
 	    //비밀번호 변경    	
 		function updatePwd(){
 			let currentPwd = $("#userPwd").val(); //현재비밀번호
 			let wantPwd =  $("#updatePwd").val(); //변경할비밀번호
 			let chkPWd = $("#upPwdChk").val(); //변경비번확인
-			
 			let pwdReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 			
-			//////div border 빨간색으로 오류표시 하기 (나중애)
+			//////div border 빨간색으로 오류표시 하기 (나중에)
 			
 			//변경비번 일치하지 않을경우
 			if(wantPwd != chkPWd){
@@ -257,7 +233,7 @@
 			}
 			
 			if(!pwdReg.test(wantPwd)){
-				alert("비밀번호는 영(대/소)문자,숫자,특수문자 호팜 8~16자로 설정해주세요.");
+				alert("비밀번호는 영(대/소)문자,숫자,특수문자 포함 8~16자로 설정해주세요.");
 				return false;
 			}
 			
@@ -265,21 +241,24 @@
 		    $.ajax({
 		    	url : "updatePwd.me",
 		    	data : {
-		    		currentPwd : currentPwd,
+		    		curPwd : currentPwd,
 		    		updatePwd : wantPwd
 		    	},
 		    	type : "post",
 		    	success : function(result){
 		    		if(result=="YYYYY"){
 		    			alert("비밀번호 변경 성공");
+		    			currentPwd = "";
+		    			wantPwd ="";
+		    			chkPWd="";
+		    			
 		    			//성공시 모달창 닫기
-		    			$("#updatePwdForm").modal("hide");
+		    			$("#pwdModal").off();
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");
-		    			$("#updatePwdForm").modal("hide");
+				    	currentPwd.focus();
 		    		}else{
 		    			alert("비밀번호 변경 실패. 다시 시도해주세요.");
-		    			$("#updatePwdForm").modal("hide");
 		    		}
 		    	},error : function(){
 		    		console.log("비번변경 ajax 통신오류");

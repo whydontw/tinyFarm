@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.diary.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.kh.tinyfarm.board.vo.Board;
 import com.kh.tinyfarm.board.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.dao.DiaryDao;
+import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 
@@ -67,26 +69,37 @@ public class DiaryServiceImpl implements DiaryService {
 
 	//내가 쓴 게시글 목록
 	@Override
-	public ArrayList<Board> MyBoardList(PageInfo bPi) {
-		return diaryDao.MyBoardList(sqlSession, bPi);
+	public ArrayList<Board> myBoardList(String userId, PageInfo bPi) {
+		return diaryDao.myBoardList(sqlSession,userId,bPi);
 	}
 
 	//내가 쓴 댓글 목록
 	@Override
-	public ArrayList<BoardReply> MyReplyList(PageInfo rPi) {
-		return diaryDao.MyReplyList(sqlSession, rPi);
+	public ArrayList<BoardReply> myReplyList(String userId,PageInfo rPi) {
+		return diaryDao.myReplyList(sqlSession,userId,rPi);
 	}
 
 	//팔로잉 목록
 	@Override
-	public ArrayList<Follow> MyFollowingList(PageInfo fiPi) {
-		return diaryDao.MyFollowingList(sqlSession, fiPi);
+	public ArrayList<Follow> myFollowingList(String userId,PageInfo fiPi) {
+		return diaryDao.myFollowingList(sqlSession,userId,fiPi);
 	}
 	
 	//팔로워 목록
 	@Override
-	public ArrayList<Follow> MyFollowerList(PageInfo fwPi) {
-		return diaryDao.MyFollowerList(sqlSession, fwPi);
+	public ArrayList<Member> myFollowerList(String userId,PageInfo fwPi) {
+		return diaryDao.myFollowerList(sqlSession,userId,fwPi);
 	}
+
+	@Override
+	public int insertDiary(Diary d) {
+		return diaryDao.insertDiary(sqlSession,d);
+	}
+
+	@Override
+	public ArrayList<Diary> selectDiaryList(int userNo) {
+		return diaryDao.selectDiaryList(sqlSession,userNo);
+	}
+	
 
 }

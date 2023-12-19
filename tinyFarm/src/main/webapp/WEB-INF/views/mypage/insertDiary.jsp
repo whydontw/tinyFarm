@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String selectDate = request.getParameter("selectDate"); //달력에서 선택한 날짜
-    
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,14 +43,12 @@
 	  	#diaryTitle{
 	  		width: 100%;
 	  		height: 40px;
-	  		border: 1px solid #c3c4c5;
 	  	}
-	  	#createDate{
-	  		width: 25%;
+	  	#datelabel{
 	  		float: right;
 	  		text-align: right;
-			border: none;
-			font-size: 17px;
+		  	width: 30%;
+		  	font-size: 17px;
 	  	}
 	</style>
 </head>
@@ -83,7 +80,8 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="row">
-		          			<form action="insert.di" method="post">
+		          		<form action="insert.di" method="post" onsubmit="return insertDiary();">
+		          			<input type="hidden" name="diaryWriter" value="${loginUser.userNo }">
 		          			<label for="categorys">텃밭유형 : </label>
 		          				<select id="categoryNo" name="categoryNo">
 		          					<option value="1">개인밭</option>
@@ -94,7 +92,10 @@
 		          					<option value="6">정원</option>
 		          					<option value="7">학교</option>
 		          				</select>
-		          				<input type="text" id="createDate" name="createDate" value="작성일 : <%=selectDate%>">
+		          				<div id="datelabel">
+		          					<input type="hidden" id="selectDate" name="selectDate" value=" <%=selectDate%>">
+		          					작성일 : <%=selectDate%>
+		          				</div>
 		          				<input type="text" name="diaryTitle" id="diaryTitle" placeholder="제목을 입력해주세요."> 
 		          				<textarea id="diaryContent" name="diaryContent"></textarea>
 		          				  
@@ -102,7 +103,7 @@
 		          					<label>공개시 내가 팔로우한 사람들에게만 공개됩니다.</label>
 			          				<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
 			          				<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
-			          				<input type="button" id="diBtn" class="btn btn-success" value="등록">
+			          				<input type="submit" id="diBtn" class="btn btn-success" value="등록">
 		          				</div>
 		          			</form>
                     </div>
@@ -115,7 +116,7 @@
    <script>
        $('#diaryContent').summernote({
     	width: 815,   
-       	height: 550,// content 높이
+       	height: 600,// content 높이
 	 	maxHeight: 1000,//content 최대높이
 	  	focus: true,// 에디터 로딩후 포커스를 맞출지 여부
 	  	lang: "ko-KR",// 한글 설정
@@ -135,9 +136,28 @@
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
        });
        
-       $("#diBtn").click(function(){
-    	  console.log($("#diaryContent").val()); 
-       });
+       function insertDiary(){
+    	   let diaryTitle = $("#diaryTitle").val();
+    	   let diaryContent = $("#diaryContent").val();
+    	   let openVal = $("input[name=selectOpen]:checked").val();
+    	   
+    	   if(diaryTitle==""){
+    		   alert("제목을 입력해주세요.");
+    		   $("#diaryTitle").focus;
+    		   return false;
+    	   }
+    	   if(diaryContent==""){
+    		   alert("내용을 입력해주세요.");
+    		   $("#diaryContent").focus;
+    		   return false;
+    	   }
+    	   if(openVal==null){
+    		   alert("공개여부를 선택해주세요.");
+    		   return false;
+    	   }
+    	   
+       }
+       
    </script>
 
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
