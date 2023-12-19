@@ -1,15 +1,25 @@
 package com.kh.tinyfarm.common.websocket.server;
 
-import java.net.http.HttpRequest;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.kh.tinyfarm.chat.model.service.ChatService;
+import com.kh.tinyfarm.chat.model.vo.ChatMessage;
+import com.kh.tinyfarm.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,13 +43,16 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 	
 	private Set<WebSocketSession> users = new CopyOnWriteArraySet<>();
 	
+	@Autowired
+	private ChatService chatService;
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		users.add(session);
 		//접속했을때
 		log.info("접속");
 		log.info("session : {}",session);
-		
+		log.info("접속 ! 현재 접속자 수 : {}",users.size());
 	}
 	/*
 	 * 메세지 수신시 실행될 메소드
@@ -62,19 +75,46 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		//새로만든 텍스트를 넣고 TextMessage 생성하기
 		
 		
+		ObjectMapper objectMapper = new ObjectMapper();
 		
+		ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
+		
+		// 시간 세팅
+		chatMessage.setCreateDate( new Date( System.currentTimeMillis()));
+		System.out.println("chatMessage : "+chatMessage);
+		int result = chatService.insertChatMsg(chatMessage);
+
 		for(WebSocketSession ws : users) {
-			if(ws.getId().equals(session.getId())) {
-				TextMessage newMessage = new TextMessage("나 : "+message.getPayload());
+			
+			/*
+			 * if(ws.getId().equals(session.getId())) { TextMessage newMessage = new
+			 * TextMessage("나 : "+message.getPayload());
+			 * 
+			 * ws.sendMessage(new TextMessage( new Gson().toJson(chatMessage)));
+			 * 
+			 * }else { TextMessage newMessage = new
+			 * TextMessage("상대방 : "+message.getPayload());
+			 * 
+			 * 
+			 * 
+			 * }
+			 */
+			// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
+			String id = ((Member)ws.getAttributes().get("loginUser")).getUserId(); //test123와 test1이 채팅jsp에 접속하면 users에는 두개가 담겨있음.
+			System.out.println("id : "+id);
+			//보낸사람 또는 받는사람중에 접속자가 있다면 
+			
+			if(id.equals(chatMessage.getUserId()) || id.equals(chatMessage.getReceiveId())) {
 				
-				ws.sendMessage(newMessage);
-				
-			}else {
-				TextMessage newMessage = new TextMessage("상대방 : "+message.getPayload());
-				ws.sendMessage(newMessage);
+				ws.sendMessage( new TextMessage( new Gson().toJson(chatMessage) ));
 			}
 			
+			// WebSocketSession에 담겨있는 채팅장 번호와
+			// 메시지에 담겨있는 채팅방 번호가 같은 경우  === 같은방 클라이언트
+		
+				//같은방 클라이언트에게 JSON 형식의 메시지를 보냄 
 			
+			//ws.sendMessage(new TextMessage( new Gson().toJson(chatMessage)));
 		}
 	}
 	
@@ -91,6 +131,7 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		log.info("session : {}",session);
 		log.info("status : {}",status);
 		users.remove(session);
+		
 	}
 	
 }

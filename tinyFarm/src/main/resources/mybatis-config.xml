@@ -13,6 +13,10 @@
 		<typeAlias type = "com.kh.tinyfarm.member.model.vo.Member" alias ="member"/>
 		<typeAlias type = "com.kh.tinyfarm.qna.model.vo.Qna" alias ="qna"/>
 		<typeAlias type = "com.kh.tinyfarm.diary.model.vo.Diary" alias ="diary"/>
+		<typeAlias type = "com.kh.tinyfarm.chat.model.vo.ChatMessage" alias ="chatMsg"/>
+		<typeAlias type = "com.kh.tinyfarm.chat.model.vo.ChatRoom" alias ="chatRoom"/>
+		<typeAlias type = "com.kh.tinyfarm.chat.model.vo.ChatRoomList" alias ="chatRoomList"/>
+		
 	</typeAliases>
 	
 </configuration>

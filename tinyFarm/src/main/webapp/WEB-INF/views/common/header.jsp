@@ -41,7 +41,14 @@
 <body>
 	<!-- contextPath 설정 -->
 	<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="session"/>
-	
+	<!-- 알림 alertMsg -->
+	<c:if test="${not empty alertMsg}">
+		<script>
+			var alertMsg = "${alertMsg}";
+			alert(alertMsg);
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
 	
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -61,34 +68,34 @@
                     <div class="col-12">
                         <div class="top-header-content d-flex align-items-center justify-content-between">
                             <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                              
-                            </div>
-
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                    
-                                  <!-- Login -->
-                              	<div class="login">
-							    <c:choose>
-							        <c:when test="${empty loginUser}">
-							            <a href="loginGo.me">
-							                <i class="fa fa-user" aria-hidden="true"></i> <span>Login</span>
-							            </a>
-							            <a href ="join.me">회원가입</a>
-							        </c:when>
-							  
-							        <c:otherwise>
-							            <c:if test="${not empty loginUser.userName}">
-							                <label style ="font-size:12px; color : white; margin-top:10px">${loginUser.userName}님</label>
-							            
-							            <a style = "margin-left:20px" href="">마이페이지&nbsp;</a>
-							            <a href="logout.me">로그아웃</a>
-							            </c:if>
-							        </c:otherwise>
-							    </c:choose>
-							 	</div>
-                            </div>
+                            <div class="top-header-meta"></div>
+                            
+								<!-- Top Header Content -->
+								<div class="top-header-meta d-flex">
+									<!-- Login -->
+									<div class="login">
+										<c:choose>
+											<c:when test="${empty loginUser}">
+												<a href="loginGo.me"> <i class="fa fa-user" aria-hidden="true"></i>
+													<span>Login</span>
+												</a>
+												<a href="join.me">회원가입</a>
+											</c:when>
+											<c:otherwise>
+												<a><i class="fa fa-user" aria-hidden="true"></i> <span>${loginUser.userName } 님</span></a>
+												<c:if test="${loginUser.userId == 'admin'}">
+													<!-- 관리자 로그인시 -->
+													<a href="main.ad" class="px-2">관리페이지</a>
+												</c:if>
+												<c:if test="${loginUser.userId != 'admin'}">
+													<a href="mypage.me" class="px-2">마이페이지</a>
+												</c:if>
+												<a href="logout.me" class="px-2"><i class="fa fa-sign-out" aria-hidden="true"></i>로그아웃</a>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							
                         </div>
                     </div>
                 </div>
@@ -121,7 +128,7 @@
                             <!-- Navbar Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="index.html">식물 정보</a>
+                                    <li><a href="">식물 정보</a>
                                         <ul class="dropdown">
                                             <li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
                                             <li><a href="gardeningList.pp?category=채소">채소 정보</a></li>
@@ -132,7 +139,7 @@
                                     </li>
                                     <li><a href="about.html">체험활동</a></li>
                                     
-                                    <li><a href="list.bo">커뮤니티</a></li>
+                                    <li><a href="moveList.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
                                     <li><a href="contact.html">공지사항</a></li>
                                     <li><a href="qnaList.qa">1:1 문의</a></li>
@@ -161,8 +168,9 @@
             </div>
         </div>
     </header>
-    <!-- nav 바 뒤 그림부분 시작-->
 
+    <!-- nav 바 뒤 그림부분 시작-->
+	
     <!-- nav 바 뒤 그림부분 끝 -->
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->

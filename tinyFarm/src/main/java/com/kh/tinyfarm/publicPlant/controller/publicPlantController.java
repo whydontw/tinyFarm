@@ -248,7 +248,7 @@ public class publicPlantController {
 		
 		// 오퍼레이션 명
 		String operationNameList = "gardenDtl";
-		System.out.println(plantInfo.getCntntsNo());
+		
 		// XML 받을 URL 생성
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
@@ -276,7 +276,7 @@ public class publicPlantController {
 			responseText += line;
 		}
 		
-		//System.out.println(responseText);
+		
 		// model.addAttribute("result",responseText);
 		
 		// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
@@ -295,7 +295,7 @@ public class publicPlantController {
 		for(int i=0;i<responseNameList.length;i++) {
 			nodeList.add(document.getElementsByTagName(responseNameList[i]));
 			Node node = nodeList.get(i).item(0);
-			System.out.println(node.getNodeName());
+			
 			try {
 				map.put(node.getNodeName(), node.getChildNodes().item(0).getNodeValue());
 			} catch (NullPointerException e) {
@@ -303,7 +303,7 @@ public class publicPlantController {
 			}
 			
 			 
-			//System.out.println(node.getNodeName());
+			
 		}
 		
 		//식물 이미지 배열 넘기기
@@ -403,7 +403,7 @@ public class publicPlantController {
 			/*
 			 * cntntsNo 컨텐츠번호 cntntsSj 컨텐츠명 updusrEsntlNm 등록자 cntntsRdcnt 조회수 
 			 */
-			//System.out.println(category);
+			
 			for(int j=0; j<size; j++){
 				//키값
 				String cntntsNo;
@@ -448,7 +448,7 @@ public class publicPlantController {
 			
 			
 		}
-		System.out.println(list.size());
+		
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
 		model.addAttribute("listSize", list.size());
@@ -515,7 +515,7 @@ public class publicPlantController {
 
 
 		
-		System.out.println(cn);
+		
 		GardeningDetail gd = new GardeningDetail(cntntsSj,cn,updusrEsntlNm,svcDtx,cntntsRdcnt);
 		model.addAttribute("gd", gd);
 		model.addAttribute("category", category);
