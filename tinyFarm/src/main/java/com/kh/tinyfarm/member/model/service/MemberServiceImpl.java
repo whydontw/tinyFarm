@@ -172,7 +172,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.memberStatusN(sqlSession, mList);
 	}
 
-
 	
 	@Override
 	public String findId(Member member) {
