@@ -37,7 +37,9 @@
 	</style>
 </head>
 <body>
+
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
+
 	<!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
         <div class="hero-post-slides owl-carousel">

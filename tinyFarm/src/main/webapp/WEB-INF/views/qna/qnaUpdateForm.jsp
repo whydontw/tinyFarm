@@ -83,7 +83,8 @@
 										<input type="text" class="form-control" id="qnaTitle" min="0" name="qnaTitle" value="${qna.qnaTitle}">
 									</div>
 									<div class="col-md-6 mb-4">
-										<label for="city">작성자</label> <input type="text" class="form-control" id="" value="user1" name="" disabled>
+										<label for="city">작성자</label>
+										<input type="text" class="form-control" id="" value="${loginUser.userId }" name="" disabled>
 									</div>
 									<div class="col-md-6 mb-4">
 										<c:set var="nowTime" value="<%=new Date()%>" />

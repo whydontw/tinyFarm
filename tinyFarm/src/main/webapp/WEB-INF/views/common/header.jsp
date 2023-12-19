@@ -41,14 +41,6 @@
 <body>
 	<!-- contextPath 설정 -->
 	<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="session"/>
-	<!-- 알림 alertMsg -->
-	<c:if test="${not empty alertMsg}">
-		<script>
-			var alertMsg = "${alertMsg}";
-			alert(alertMsg);
-		</script>
-		<c:remove var="alertMsg"/>
-	</c:if>
 	
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -69,6 +61,7 @@
                         <div class="top-header-content d-flex align-items-center justify-content-between">
                             <!-- Top Header Content -->
                             <div class="top-header-meta"></div>
+
                             
 								<!-- Top Header Content -->
 								<div class="top-header-meta d-flex">
@@ -96,6 +89,7 @@
 									</div>
 								</div>
 							
+
                         </div>
                     </div>
                 </div>
@@ -172,6 +166,20 @@
     <!-- nav 바 뒤 그림부분 시작-->
 	
     <!-- nav 바 뒤 그림부분 끝 -->
+  
+     <script type="text/javascript">
+    
+    	const alertMsg = "${alertMsg}";
+    	
+    	console.log(alertMsg);
+    	
+    	if(alertMsg != null && alertMsg != ""){
+    		alert(alertMsg);
+    		<c:remove var="alertMsg" scope="session" />
+    	}
+    	
+    </script>
+
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
     <!-- <script src="resources/js/jquery/jquery-2.2.4.min.js"></script> -->

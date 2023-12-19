@@ -1,15 +1,15 @@
-package com.kh.tinyfarm.board.service;
+package com.kh.tinyfarm.board.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.tinyfarm.board.dao.BoardDao;
-import com.kh.tinyfarm.board.vo.Board;
+import com.kh.tinyfarm.board.model.dao.BoardDao;
+import com.kh.tinyfarm.board.model.vo.Board;
+import com.kh.tinyfarm.board.model.vo.BoardLike;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Service
@@ -48,12 +48,70 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardDao.boardDetail(sqlSession,boardNo);
 	}
-
+	
+	//게시글 등록
 	@Override
 	public int insertBoard(Board b) {
 		
 		return boardDao.insertBoard(sqlSession,b);
 	}
+	//게시글 수정
+	@Override
+	public int boardUpdate(Board boardInfo) {
+		
+		return boardDao.boardUpdate(sqlSession,boardInfo);
+	}
+
+	//게시글삭제
+	@Override
+	public int boardDelete(int boardNo) {
+		
+		return boardDao.boardDelete(sqlSession,boardNo);
+	}
+
+	//댓글 리스트조회
+	@Override
+	public ArrayList<BoardReply> boardReplyList(int boardNo) {
+		
+		return boardDao.boardReplyList(sqlSession,boardNo);
+	}
+
+	//댓글 작성
+	@Override
+	public int insertReply(BoardReply br) {
+		
+		return boardDao.insertReply(sqlSession,br);
+	}
+
+	//댓글 수정
+	@Override
+	public int updateReply(int replyNo) {
+		
+		return boardDao.updateReply(sqlSession,replyNo);
+	}
+
+	//댓글 삭제
+	@Override
+	public int deleteReply(int replyNo) {
+		
+		return boardDao.deleteReply(sqlSession,replyNo);
+	}
+
+	//좋아요 수 증가
+	@Override
+	public int likeIncreaseCount(BoardLike bl) {
+		
+		return boardDao.likeIncreaseCount(sqlSession,bl);
+	}
+
+	//좋아요하기
+	@Override
+	public int doLike(BoardLike bl) {
+
+		return boardDao.doLike(sqlSession,bl);
+	}
+
+	
 
 
 	

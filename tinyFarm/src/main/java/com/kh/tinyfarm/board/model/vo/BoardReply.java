@@ -1,4 +1,4 @@
-package com.kh.tinyfarm.board.vo;
+package com.kh.tinyfarm.board.model.vo;
 
 import java.sql.Date;
 
@@ -19,4 +19,8 @@ public class BoardReply {
 	private int likeCount;
 	private Date createDate;
 	private String status;
+	
+	private String profile;
+	
+	
 }
