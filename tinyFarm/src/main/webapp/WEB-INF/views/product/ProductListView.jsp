@@ -43,7 +43,7 @@
    }
    
    #pimg{
-   		width: 270px;
+   		width: 350px;
    		height: 320px;
 
    }
@@ -145,7 +145,7 @@
 									<!-- Product Image -->
 									<div class="product-img">
                                         <a href="<%=request.getContextPath()%>/pdetail.bo?pno=${p.productNo}">
-                                        	<img src="<%=request.getContextPath()%>/${p.changeName}" alt="" id="pimg">
+                                        	<img src="${p.filePath}${p.changeName}" alt="" id="pimg">
                                         </a>
                                         
                                         <div class="product-meta d-flex">
@@ -160,9 +160,10 @@
 	                                        <a href="shop-details.html">
 	                                            <p>${p.productTitle }</p>
 	                                        </a>
-	                                        	<h6>${p.productPrice }</h6>
+	                                        	<h6>${p.productPrice }원</h6>
 	                                        	<input type="hidden" id="regiDate" name="regiDate" value="${p.regiDate}">
 	                                        	<input type="hidden" id="count" name="count" value="${p.count}">
+	                                        	<input type="hidden" id="count" name="productNo" value="${p.productNo}">
                                     	</div>
                                         
 	                         </div>
@@ -194,11 +195,13 @@
                         
                         <br>
                                                 
-                        <!-- 작물 등록 버튼 -->
+                        <!-- 로그인 후 상태일 경우만 보여지는 작물 등록 버튼 -->
                         <div class="plistbtn" align="center">
-						    <button class="btn alazea-btn" id="pbtn" onclick="location.href='<%=request.getContextPath()%>/pinsert.bo'">
-						    작물 등록
-						    </button>
+                        	<c:if test="${not empty loginUser}">
+						    	<button class="btn alazea-btn" id="pbtn" onclick="location.href='<%=request.getContextPath()%>/pinsert.bo'">
+						    	작물 등록
+						    	</button>
+							</c:if>
 					    </div>                     
                     </div>
                 </div>

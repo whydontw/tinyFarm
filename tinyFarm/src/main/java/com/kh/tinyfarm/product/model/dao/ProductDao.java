@@ -44,6 +44,7 @@ public class ProductDao {
 		
 		return sqlSession.selectOne("productMapper.selectProduct", pno);
 	}
+
 	
 	//카테고리 조회
 	public ArrayList<Category> selectCategoryList(SqlSessionTemplate sqlSession) {
@@ -61,6 +62,24 @@ public class ProductDao {
 		
 		return sqlSession.insert("productMapper.insertAttachment", a);
 	}
+
+	//상품 수정
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		return sqlSession.update("productMapper.updateProduct", p);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Attachment a) {
+		
+		return sqlSession.update("productMapper.updateAttachment", a);
+	}
+
+	//상품 삭제
+	public int deleteProduct(SqlSessionTemplate sqlSession, int pno) {
+		
+		return sqlSession.delete("productMapper.deleteProduct", pno);
+	}
+
 
 
 

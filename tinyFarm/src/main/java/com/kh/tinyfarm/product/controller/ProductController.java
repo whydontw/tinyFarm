@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productservice;
 	
+	//상품 리스트
 	@RequestMapping("plist.bo")
 	public String selectProductList(@RequestParam(value="currentPage",defaultValue="1") int currentPage, Model model) {
 
@@ -60,23 +62,25 @@ public class ProductController {
 		return "product/ProductListView";
 	}
 	
-	
+	//상품 상세조회
 	@GetMapping("pdetail.bo")
 	public String selectProduct(int pno, Model model) {
 		
 		int result = productservice.increaseCount(pno);
-		
+					
 		if(result>0) {
 			Product p = productservice.selectProduct(pno);
 			
 			model.addAttribute("p",p);
 			
 		}else {
+			model.addAttribute("errorMsg", "게시글 조회 실패");
 			return "common/errorPage";
 		}
 
 			return "product/ProductDetailView";
 	}
+	
 	
 	//카테고리 조회
 	@GetMapping("pinsert.bo")
@@ -89,24 +93,25 @@ public class ProductController {
 		return "product/ProductEnrollForm";
 	}
 	
-	//게시글 등록
+	//상품 등록
 	@PostMapping("pinsert.bo")
 	public String insertProduct(Product p, Model model, MultipartFile upfile, HttpSession session) {
-		
-		System.out.println(p);
 
 		int presult = productservice.insertProduct(p);
 		int aresult = 0;
 		
+		System.out.println("인서트 p : "+p);
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			
 			Attachment a = new Attachment();
+			System.out.println("a(인서트) : "+a);
 			
 			String changeName = saveFile(upfile,session);
 			
 			a.setOriginName(upfile.getOriginalFilename());
-			a.setChangeName("resources/uploadFiles/"+changeName);
+			a.setChangeName(changeName);
+			a.setFilePath("resources/uploadFiles/");
 			
 			aresult = productservice.insertAttachment(a);
 			
@@ -159,6 +164,96 @@ public class ProductController {
 			
 			return changeName;
 		}
+		
+	//수정하기
+	@GetMapping("pupdate.bo")
+	public String productUpdateForm(int pno, Model model) {
+		
+		Product p = productservice.selectProduct(pno);
+		
+		System.out.println("pno : "+pno);
+		ArrayList <Category> clist = productservice.selectCategoryList();
+	
+		model.addAttribute("p",p);
+		model.addAttribute("clist",clist);
+
+		return "product/ProductUpdateForm";
+	}
+	
+	
+	@PostMapping("pupdate.bo")
+	public String updateProduct(Product p, MultipartFile reUpFile, Model model, HttpSession session) {
+		
+		int presult = productservice.updateProduct(p);
+		int aresult = 0;
+		System.out.println("p : "+p);
+		
+		//게시글에 이미 첨부파일이 있는 경우 or 없는 경우
+		//파일이 담겨 넘어왔다면(새로운 첨부파일이 있는 경우)
+		if(!reUpFile.getOriginalFilename().equals("")) {
+			
+			System.out.println(reUpFile.getOriginalFilename());
+			
+			Attachment a = new Attachment();
+			System.out.println("a1 : "+a);
+			
+			String changeName = saveFile(reUpFile, session);
+			
+			//기존에 파일이 있다면
+			if(!p.getChangeName().equals("")) {
+				
+				System.out.println("a2 : "+a);
+				//new File 객체로 해당 경로에 있는 파일(업로드되어있던)을 delete 메소드로 지우기
+				new File(session.getServletContext().getRealPath(p.getChangeName())).delete();
+			}
+			
+			//attachment 객체에 originName과 changeName을 담기
+			
+			a.setOriginName(reUpFile.getOriginalFilename());
+			a.setChangeName(changeName);
+			a.setFilePath("resources/uploadFiles/");
+			a.setRefNo(p.getProductNo());
+			
+			System.out.println("잘 넣었나보자 " + a);
+			
+			aresult = productservice.updateAttachment(a);
+		} 
+		
+		//전달된 파일이 있다면 세팅이 되었을테니 해당 정보 포함하여 데이터베이스에 전달하기
+		//update - DML
+		
+		
+		if(presult>0) {//수정 성공
+			session.setAttribute("alertmsg","게시글 수정 성공");
+			return "redirect:pdetail.bo?pno="+p.getProductNo();
+		}else {
+			session.setAttribute("alertMsg","게시글 수정 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("pdelete.bo")
+	public String deleteProduct(int pno, String filePath, HttpSession session) {
+		
+		int result = productservice.deleteProduct(pno);
+		
+		if(result>0) {
+			
+			File f = new File(session.getServletContext().getRealPath(filePath));
+					f.delete();
+					
+			session.setAttribute("alertMsg", "상품 삭제 성공");
+			
+		}else {
+			session.setAttribute("alertMsg", "상품 삭제 실패");
+		}
+		
+		return "redirect:plist.bo";
+		
+	}
+		
+	
 		
 		
 		
