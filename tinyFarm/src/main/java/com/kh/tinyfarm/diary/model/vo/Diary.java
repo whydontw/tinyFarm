@@ -1,5 +1,7 @@
 package com.kh.tinyfarm.diary.model.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +12,8 @@ import lombok.NoArgsConstructor;
 public class Diary {
 	private int diaryNo;
 	private int categoryNo;
-	private int boardWriter;
-	private String startDate;
-	private String endDate;
+	private int diaryWriter;
+	private Date selectDate;
 	private String diaryTitle;
 	private String diaryContent;
 	private String selectOpen;
