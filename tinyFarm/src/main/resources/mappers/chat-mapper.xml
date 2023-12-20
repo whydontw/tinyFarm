@@ -8,14 +8,14 @@
 		  	<result column="CHAT_ROOM_NO" property="chatRoomNo"/>
 		  	<result column="FIRST_MEM_ID" property="firstMemId"/>
 		  	<result column="RECEIVE_MEM_ID" property="receiveMemId"/>
-		  	<result column="STATUS" property="status"/>
+		  	
 
   	</resultMap>
   	<resultMap type="chatRoomList" id="chatRoomListResultSet">
 		  	<result column="CHAT_ROOM_NO" property="chatRoomNo"/>
 		  	<result column="FIRST_MEM_ID" property="firstMemId"/>
 		  	<result column="RECEIVE_MEM_ID" property="receiveMemId"/>
-		  	<result column="STATUS" property="status"/>
+
 			<result column="OTHER_ID" property="otherId"/>
 			<result column="CHANGE_NAME" property="changeName"/>
 			<result column="USER_NAME" property="userName"/>
@@ -69,7 +69,7 @@
 		FROM CHAT_ROOM
 		WHERE (RECEIVE_MEM_ID = #{receiveMemId} AND FIRST_MEM_ID = #{firstMemId})
 		OR (RECEIVE_MEM_ID = #{firstMemId} AND FIRST_MEM_ID = #{receiveMemId})
-		AND STATUS = 'Y'
+
   	</select>
   	
   	<select id="selectChatList" parameterType="string" resultMap="chatRoomListResultSet">
@@ -86,10 +86,10 @@
 		      ,CASE WHEN #{userId} = RECEIVE_MEM_ID THEN FIRST_MEM_ID
 		            WHEN #{userId} = FIRST_MEM_ID THEN RECEIVE_MEM_ID         
 		       END  "OTHER_ID"
-		      ,C.STATUS
+		 
 		FROM CHAT_ROOM C
 		WHERE ((RECEIVE_MEM_ID = #{userId}) OR (FIRST_MEM_ID = #{userId}))
-		AND C.STATUS = 'Y')
+		)
 		JOIN MEMBER M ON(OTHER_ID = USER_ID) -->
 		
 		SELECT CHAT_ROOM_NO,
@@ -117,7 +117,6 @@
 		                      END = M.USER_ID)
 		    LEFT JOIN CHAT_MESSAGE CM ON (C.CHAT_ROOM_NO = CM.CHAT_ROOM_NO)
 		    WHERE ((C.RECEIVE_MEM_ID = #{userId}) OR (C.FIRST_MEM_ID = #{userId}))
-		    AND C.STATUS = 'Y'
 		) T
 		WHERE rn = 1
 		ORDER BY CREATE_DATE DESC

@@ -5,104 +5,55 @@
 <head>
 <meta charset="UTF-8">
 <title>작은농장</title>
+<style>
+.footer-area{
+	padding:1em;
+	height:300px;
+}
+.footer-bottom-area{
+	margin-top:20px;
+}
+.footer-message{
+    font-weight: bold;
+    font-size:0.9rem;
+    color:white;
+    margin:0 0 0 0.6rem;
+}
+.footer-contact{
+    font-size:0.9rem;
+    color:white;
+    margin:0.6rem;
+}
+.footer-copyright{
+    font-size:0.9rem;
+    color:white;
+    margin:0.6rem;
+}	
+
+.inner{
+	width:1050px;
+	margin:0 auto;
+	text-align: center;
+}
+</style>
 </head>
 <body>
 	   <footer class="footer-area bg-img" style="background-image: url(resources/img/bg-img/3.jpg);">
         <!-- Main Footer Area -->
-        <div class="main-footer-area">
-            <div class="container">
-                <div class="row">
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="footer-logo mb-30">
-                                <a href="#"><img src="resources/img/core-img/logo.png" alt=""></a>
-                            </div>
-                            <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione mantor</p>
-                            <div class="social-info">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>QUICK LINK</h5>
-                            </div>
-                            <nav class="widget-nav">
-                                <ul>
-                                    <li><a href="#">Purchase</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="#">Payment</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Return</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Orders</a></li>
-                                    <li><a href="#">Policities</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>BEST SELLER</h5>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="resources/img/bg-img/4.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Cactus Flower</a>
-                                    <p>$10.99</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="resources/img/bg-img/5.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Tulip Flower</a>
-                                    <p>$11.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>CONTACT</h5>
-                            </div>
-
-                            <div class="contact-information">
-                                <p><span>Address:</span> 505 Silk Rd, New York</p>
-                                <p><span>Phone:</span> +1 234 122 122</p>
-                                <p><span>Email:</span> info.deercreative@gmail.com</p>
-                                <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
-                                <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        <div class="inner">
+        	<div style="margin-top:40px;">
+	        	
+			  	<nav>
+				  	<a href = '' target = '_blank' style = "margin-left:10px; color:white;">Blog</a> |
+					<a href = 'https://github.com/ggasin/GgulZip' target = '_blank' style ="color:white;">Github</a>
+			  	</nav>
+			    <div class="footer-message">작은농장</div>
+			    <div class="footer-contact">주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩 지번 서울특별시 영등포구 양평동4가 2</div>
+			    <div class="footer-contact">Contact : ggzip@fun-coding.org</div>
+			    <div class="footer-copyright" style = "margin-top :-10px">Copyright 2020 All ⓒ rights reserved</div>
+        	</div>
+		  </div>
 
         <!-- Footer Bottom Area -->
         <div class="footer-bottom-area">
@@ -124,13 +75,9 @@
                     <div class="col-12 col-md-6">
                         <div class="footer-nav">
                             <nav>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Service</a></li>
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
+ 								<ul>
+                                    <li><a href="#">공지</a></li>
+                                    <li><a href="#">1:1문의</a></li>
                                 </ul>
                             </nav>
                         </div>

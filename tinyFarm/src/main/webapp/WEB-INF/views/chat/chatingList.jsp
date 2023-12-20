@@ -14,8 +14,8 @@
 }
 .chat-container {
 	width: 100%;
-	height: 800px;
-	margin-bottom: 100px;
+	height: 700px;
+	margin-bottom: 200px;
 }
 .find-id-btn-div{
 	display: flex;
@@ -67,10 +67,10 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	margin: 16px;
+	margin: 0 16px 0 16px;
 	border: 1px solid black;
 	border-radius: 8px;
-	height: 20%;
+	height: 18%;
 	-webkit-box-pack: justify;
 	justify-content: space-between;
 }
@@ -78,7 +78,7 @@
 .chat-textarea {
 	margin: 12px 12px 0px;
 	width: calc(100% - 24px);
-	height: 63px;
+	height: 100px;
 	line-height: 150%;
 	padding: 0px;
 	resize: none;
@@ -109,17 +109,22 @@
 	transition: background-color 0.5s ease 0s, color 0.5s ease 0s
 }
 
-.chat-area,.chat-div {
+.chat-div {
 	/* background-color: #f3f3df; */
-	height: 80%;
+	height: 100%;
 	padding: 0px 20px;
 	border-radius: 10px;
 	
 }
-.chat-area{
+.chat-area {
+	/* background-color: #f3f3df; */
+	height: 75%;
+	padding: 0px 20px;
+	border-radius: 10px;
 	overflow-y:auto;
 	
 }
+
 .chat-item-div{
 	margin:15px;
 }
@@ -142,7 +147,7 @@
 	display: inline-block;
 	background-color: #70c745;
 	padding: 10px;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 600;
 	color: white;
 	border-top-left-radius:30px;
@@ -193,9 +198,15 @@
 .not-chat-div,.no-chat-user{
 	height:100%;
 	width:100%;
-	display: flex;
-    align-items: center;
-	
+	position : relative;	
+}
+.not-chat-div-in,.no-chat-user-in{
+	width: 350px;
+	position : absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%,-50%);
+
 }
 .other_profile_img{
 	width: 75px;
@@ -242,6 +253,9 @@
 	outline: none;
 	
 }
+div {
+    transition: height 0.5s ease-in-out;
+}
 .searchInDiv{
 	display:flex;
 	align-items:center;
@@ -271,6 +285,17 @@
 #chat-room-out-btn{
 	height:100%;
 	border: none;
+}
+.emoji-div{
+	width:100%;
+	height:30%;
+	overflow: hidden scroll;
+}
+.emoji-item{
+	margin:10px;
+}
+.emoji-item:hover{
+	cursor:pointer;
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -370,7 +395,7 @@
 						  <ul class="dropdown-menu">
 						    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exitModal">삭제하기</a></li>
 						    <li><button class="dropdown-item">차단하기</a></li>
-						    <li><button class="dropdown-item">몰라</a></li>
+				
 						  </ul>
 						</div>
 						
@@ -382,18 +407,21 @@
 					<div class="chat-form">
 						<textarea placeholder="메시지를 입력해주세요" class="chat-textarea"></textarea>
 						<div class="chatform-option-area">
-	
+							<button onclick="visibleEmojiDiv();" style="border:none;"><img alt="이모티콘" src="resources/img/icon/emoji-icon.png"></button>
 							<span class="text-length"></span>
 							<button class="chat-send-btn" onclick="send();">전송</button>
 						</div>
 	
 					</div>
+					<div class="emoji-div hidden">
+					
+					</div>
 				
 				</div>
 				<div class="not-chat-div visible">
-					<div style="margin:0 auto;" align="center">
+					<div class="not-chat-div-in" style="margin:0 auto;" align="center">
 						<img src='resources/img/icon/speech-bubble.png' alt=''>
-						<h2><b>대화할 상대를 정해주세요</b></h2>
+						<h4><b>대화할 상대를 정해주세요</b></h4>
 					
 					</div>
 				</div>
@@ -450,10 +478,10 @@
 		//연결함수 (접속)
 		function connect() {
 			//접속경로를 담아 socket을 생성한다.
-			/* var url = "ws://192.168.50.40:8888/tinyfarm/basic"; */
+			//var url = "ws://192.168.50.40:8888/tinyfarm/basic"; 
 			var url = "ws://localhost:8888/tinyfarm/basic";
 			socket = new WebSocket(url);
-
+			
 			//연결이 되었을때
 			socket.onopen = function() {
 				console.log("연결 성공");
@@ -644,10 +672,10 @@
 					var userId = "${loginUser.userId}";
 					if(result.length == 0){
 						var outDiv = $("<div class='no-chat-user'></div>");
-						var inDiv = $("<div style='margin:0 auto;' align='center'>");
+						var inDiv = $("<div class='no-chat-user-in' style='margin:0 auto;' align='center'>");
 						var icon = $("<img src='resources/img/icon/no-chat-icon.png' alt=''>");
 						var bEl = $("<b></b>").text("채팅 대상이 존재하지 않습니다");					
-						var h2El = $("<h2></h2>").append(bEl);
+						var h2El = $("<h4></h4>").append(bEl);
 						
 						inDiv.append(icon);
 						inDiv.append(h2El);
@@ -772,8 +800,77 @@
 		}
 		//-------------------------채팅메세지 관련 함수 끝----------------------------------------
 		
+		//----------------------------이모지 관련-----------------------------------------------
+		//이모지 div 보이기
+		function visibleEmojiDiv(){
+			//만약 emoji-div가 visible 상태라면 -> 이모지 모드를 나가야함
+			console.log($('.emoji-div').is(".visible"));
+            if($('.emoji-div').is(".visible")){
+            	outEmojiMode();
+            }else { //만약 emoji-div가 hidden 상태라면 -> 이모지 모드에 돌입해야함
+            	
+            	//이모지 채우기 전에 비우기
+    			 $.ajax({
+    	            url: 'https://emoji-api.com/categories/smileys-emotion', // Emoji-One API 엔드포인트
+    	            method: 'GET',
+    	            data: {
+    	            	access_key: '1bcb465e186959f84ebdaeca7fb2657584846377' // 여기에 발급받은 API 키를 입력
+    	                
+    	            	
+    	            },
+    	            success: function(response) {
+    	            	
+    	            	for(var i=0;i<response.length;i++){
+    		            	//console.log(response[i].character);						
+    		            	var rowDiv;
+    		                if(i%8 ==0){
+    		                	$('.emoji-div').append(rowDiv);
+    		                	rowDiv = $("<div class='row'></div>");
+    		                } else {
+    			                // 이모지를 화면에 표시
+    			                var emojiImage = $("<h1 class='emoji-item' style='width:50px; height:50px;'></h1>");
+    			                $(emojiImage).text(response[i].character);
+    			              	
+    			                rowDiv.append(emojiImage);
+
+    		                }
+    		                
+    		                
+    	            	}
+    	            	//이모지 입력 모드로 변경
+    	            	emojiMode();
+    	            },
+    	            error: function(error) {
+    	                console.log('API 호출 중 에러 발생:', error);
+    	            }
+    	        });
+            }
+			
+			
+		}
 		
+		//이모지 클릭시
+		$('.emoji-div').on("click",".emoji-item",function(){
+			//console.log($(this).text());
+			var emoji = $(this).text();
+			$('.chat-textarea').val($('.chat-textarea').val()+emoji);
+
+		});
 		
+		//이모티콘 아이콘 클릭시 chat-area의 height 속성과 emoji-div의 visible을 변경하는 함수
+		function emojiMode(){
+			$('.emoji-div').removeClass("hidden");
+            $('.emoji-div').addClass("visible");
+            $('.chat-area').css('height','auto');
+			$('.chat-area').css('min-height','350px');
+		}
+		function outEmojiMode(){
+			$('.emoji-div').empty();
+			$('.emoji-div').removeClass("visible");
+            $('.emoji-div').addClass("hidden");
+            $('.chat-area').css('height','75%');
+			$('.chat-area').css('min-height','75%');
+		}
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />
