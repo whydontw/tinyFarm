@@ -50,7 +50,7 @@
 			  	</nav>
 			    <div class="footer-message">작은농장</div>
 			    <div class="footer-contact">주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩 지번 서울특별시 영등포구 양평동4가 2</div>
-			    <div class="footer-contact">Contact : ggzip@fun-coding.org</div>
+			    <div class="footer-contact">Contact : tinyfarm@fun-coding.org</div>
 			    <div class="footer-copyright" style = "margin-top :-10px">Copyright 2020 All ⓒ rights reserved</div>
         	</div>
 		  </div>

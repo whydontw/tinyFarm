@@ -33,7 +33,23 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
-		
+		.loader {
+	      border: 16px solid #f3f3f3;
+	      border-top: 16px solid #70c745;
+	      border-radius: 50%;
+	      width: 120px;
+	      height: 120px;
+	      animation: spin 2s linear infinite;
+	      margin: auto;
+	    }
+	
+	    @keyframes spin {
+	      0% { transform: rotate(0deg); }
+	      100% { transform: rotate(360deg); }
+	    }
+		.hidden{
+			display:none;
+		}
 	</style>
 </head>
 <body>
@@ -177,21 +193,26 @@
                     </div>
                 </div>
             </div>
-			
-            <div class="row itemRow">
+			<!-- 로딩 화면 -->
+			<div id="loadingScreen" align="center">
+	  			<div class="loader"></div>
+	  			<br>
+				<h5><b>로딩중입니다. 잠시만 기다려주세요</b></h5>
+			</div>
+            <div class="row itemRow hidden">
 				
 				
             </div>
 
-            <div class="col-12 text-center">
-            	<button class="btn alazea-btn view-all-btn">더보기</button>
+            <div class="col-12 text-center more-view-div hidden ">
+            	<button class="btn alazea-btn more-view-btn">더보기</button>
             </div>
             
             <script>
             	
 	            $(function(){
 	        		getInGardenPlantListAjax();
-	        		$(".view-all-btn").click(function(){
+	        		$(".more-view-btn").click(function(){
 	        			getInGardenPlantListAjax();
 	        			
 	        		});
@@ -253,7 +274,9 @@
             		        	outDiv.append(inDiv);
             		        	$(".itemRow").append(outDiv);
             		        }
-            		        
+            		        $("#loadingScreen").css("display","none");
+            		        $(".itemRow").removeClass("hidden");
+            		        $(".more-view-div").removeClass("hidden");
             			},
             			error : function(){
             				console.log("통신 오류");
