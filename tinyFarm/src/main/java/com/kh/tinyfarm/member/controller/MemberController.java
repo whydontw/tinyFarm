@@ -41,10 +41,17 @@ public class MemberController {
     
     @RequestMapping("/login.me")
     public String loginProcess(Member m, HttpSession session, Model model) {
+    	
+    	
+    	//나중에 없앨거
+    	//가입 비번 고정
+    	m.setUserPwd("1");
+    	
         Member loginUser = memberService.loginMember(m);
 
         if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
             session.setAttribute("loginUser", loginUser);
+            session.setAttribute("alertMsg", loginUser.getUserName() + " 님 환영합니다.");
             return "redirect:/";
         } else {
         	session.setAttribute("alertMsg", "로그인 실패");
@@ -113,37 +120,15 @@ public class MemberController {
         return "member/memberEnrollForm";
     }
     
-    //회원등록
-    @RequestMapping("insert.me")
-    public String insertMember(Member m 
-    						 , Model model
-    						 , HttpSession session) {
-    	System.out.println(m);
-    	System.out.println("가입이여");
-    	
-    	
-    	//암호화 작업
-    	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
-    	
-    	System.out.println("암호화" + encPwd);
-    	
-    	m.setUserPwd(encPwd);
    
-    	int result = memberService.insertMember(m);
-    	
-    	if(result>0) { //성공
-    		session.setAttribute("alertMsg", "회원가입성공");
-    		return "redirect:/";
-    	} else { //실패
-    		model.addAttribute("errorMsg", "회원가입 실패");
-    		return "common/errorPage"; 
-    	}
-    }  
-    
-   
-  //프로필사진
+    //회원가입
     @PostMapping("insert.me")
     public String insertMember(Member m, MultipartFile upfile, HttpSession session) {
+    	
+    	//나중에 없앨거
+    	//로그인 비번 고정
+    	m.setUserPwd("1");
+    	
         String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
         m.setUserPwd(encPwd);
 
@@ -161,7 +146,7 @@ public class MemberController {
 
         // 여기에 추가적인 로직이나 결과에 대한 처리를 추가할 수 있습니다.
         if (result > 0) {
-            session.setAttribute("alertMsg", "회원가입 성공");
+        	session.setAttribute("alertMsg", m.getUserName() + " 님 어서옵쇼~");	//김수연 아이디어
             return "redirect:/loginGo.me";
         } else {
             session.setAttribute("alertMsg", "회원 등록 실패");
