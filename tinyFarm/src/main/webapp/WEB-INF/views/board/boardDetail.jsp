@@ -283,7 +283,8 @@
                    hiddenReplyNo.attr("type","hidden").attr("name","replyNo").attr("value",result[i].replyNo);  //하나하나 replyNo를 숨겨서 controller로 보내줌
                    profileStr.attr("src",result[i].profile);
                    replyWriterStr.text(result[i].replyWriter);
-                   replyCreateDate.text(result[i].createDate);
+                   //replyCreateDate.text(result[i].createDate);
+                   replyCreateDate.text(new Date(result[i].createDate).toLocaleString());
                    replyContentStr.text(result[i].replyContent);
                    
                    
