@@ -211,7 +211,8 @@
                        						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
                        						
                        						profileStr.attr("src",result[i].profile);
-                       						spanDiv1.text(result[i].createDate);
+                       						spanDiv1.text(new Date(result[i].createDate).toLocaleString());
+                       						//spanDiv1.text(result[i].createDate);
                        						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
                        						div1.append(pDiv);
                        						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
