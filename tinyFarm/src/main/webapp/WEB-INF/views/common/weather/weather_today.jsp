@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,10 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
 	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
-
+	
+	<!-- 카카오 API 주소 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea39e9641be78109122ae5eab0b0065f&libraries=services"></script>
+	
 <style type="text/css">
 
 body {
@@ -32,8 +36,8 @@ h1, h2, h3, h4, h5, h6 {
 # Weather Card
 --------------------------------------------------------------*/
 .weather__card {
-  width: 800px;
-  padding: 40px 30px;
+  width: 630px;
+  padding: 15px 30px;
   background-color: #EEEEEE;
   border-radius: 20px;
   color:#3C4048;
@@ -103,57 +107,45 @@ h1, h2, h3, h4, h5, h6 {
 
 </head>
 <body>
-
-
 	<!-- Weather -->
 	<div class="container mt-5">
-		<div class="text-center mb-30"><h3>🌱 오늘의 날씨</h3></div>
-		<div class="d-flex flex-row justify-content-center align-items-center">
+		<div class="mb-30"><h3>🌱 오늘의 날씨</h3></div>
+		
+<!-- 		<div class="d-flex flex-row justify-content-center align-items-center"> -->
 			<div class="weather__card" > <!-- style="background-image: url( '${pageContext.request.contextPath}/resources/img/bg-img/sky.jpg' );">  -->
+				<div class="text-right">
+					<a href="#" onclick="getUserLocation()">
+						<i class="fa fa-refresh fa-lg" aria-hidden="true"></i>
+					</a>
+				</div>
 				<div class="d-flex flex-row justify-content-center align-items-center" id="todayWeather">
 					<div class="p-3 text-center">
-						<h2><span></span>15&deg;</h2>
-						<div>최고 <span id="mxTemp"></span>&deg; / 최저 <span id="minTemp"></span>&deg;</div>
+						<h2><span id="todayT1H"></span>&deg;</h2>
+<!-- 						<div>최고 <span id="mxTemp"></span>&deg; / 최저 <span id="minTemp"></span>&deg;</div> -->
 					</div>
-					<div class="p-3">
-						<!-- 임시 img -->
-						<img src="${pageContext.request.contextPath}/resources/img/weather/Sun.png">
-					</div>
-					<div class="p-3 text-right">
-						<h5 class="mt-20 mb-20"><!-- 오늘 날짜 --></h5>
-						<h3>서울</h3>
-						<span class="weather__description">구름많음</span>
-					</div>
+					<div class="p-3" id="todayWeatherImg"></div>
 				</div>
-				<div
-					class="weather__status d-flex flex-row justify-content-center align-items-center mt-3">
+				<div class="p-3 text-center">
+					<h5 class="mt-20 mb-20" id="todayYYYYMMDD"><!-- 오늘 날짜 --></h5>
+					<h4 id="showAddress">-</h4>
+					<span class="weather__description" id="todaySKY"></span>
+					<span class="weather__description" id="todayPTY"></span>
+				</div>
+				<div class="weather__status d-flex flex-row justify-content-center align-items-center mt-3">
 					<div class="p-4 d-flex justify-content-center align-items-center">
-						<img src="${pageContext.request.contextPath}/resources/img/weather/RainyPercent.png"> <span>10%</span>
+						<img src="${pageContext.request.contextPath}/resources/img/weather/RainyPercent.png">&nbsp; 습도 <span id="todayREH"></span>&nbsp;%
 					</div>
 					<div class="p-4 d-flex justify-content-center align-items-center">
-						<img src="${pageContext.request.contextPath}/resources/img/weather/WindPercent.png"> <span>0.53 mB</span>
+						<img src="${pageContext.request.contextPath}/resources/img/weather/WindPercent.png">&nbsp; 풍속 <span id="todayWSD"></span>&nbsp;m/s
 					</div>
-<!-- 					<div class="p-4 d-flex justify-content-center align-items-center"> -->
-<!-- 						<span class="weather__description">구름 많음</span> -->
-<!-- 					</div> -->
 				</div>
 			</div>
-		</div>
+<!-- 		</div> -->
+		
 		
 		<!-- Weather Forecast -->
-		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-3">
-			<div class="p-4 d-flex flex-column justify-content-center align-items-center">
-				<div><span style="color:#07d007">2:00</span></div>
-				<div class="mb-15 mt-15">
-					<img src="${pageContext.request.contextPath}/resources/img/weather/Fog.png">
-				</div>
-				<div><span>15&deg;</span></div>
-				<div><span>강수확률</span></div>
-				<div><span>습도</span></div>
-				<div><span>상태</span></div>
-			</div>
-		</div>
-		
+<!-- 		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-3" id="todayWeatherInfoArea"></div> -->
+		<div class="weather__forecast d-flex mt-30" id="todayWeatherInfoArea"></div>
 		
 	</div>
 	
@@ -163,152 +155,259 @@ h1, h2, h3, h4, h5, h6 {
 		
 		$(function(){
 			
-			let date = new Date();
-			let year = date.getFullYear();
-			let month = ("0" + (date.getMonth() + 1)).substr(-2);
+	       	getUserLocation();
 			
-			let lastday = ("0" + (date.getDate() - 1)).substr(-2);		//어제 날짜
-			let tday = ("0" + (date.getDate())).substr(-2);				//오늘 날짜
-			
-			//전날
-			let baseDate = year + month + lastday;
-			
-			//오늘
-			let today  = year + month + tday;
-			$("#todayWeather h5").text(year + "/" + month + "/" + tday);
-			
-			
-			let numOfRows = 1000;
-			
-			
-			$.ajax({
-				url: "showTodayWeather.wv",
-				data: {
-					baseDate : baseDate,
-					numOfRows : numOfRows
-				},
-				success: function(result){
-					
-// 					console.log(result);
-					
-					let items = result.response.body.items.item;	//JSON item 변수
-					
-					//오늘날짜 필터링하기
-					let todayItems = items.filter(function(item){
-						return item.fcstDate == today;
-					});
-					
-					
-					//오늘 최저기온/최고기온
-					let mxmnTemp = todayItems.filter(function(item){
-						return item.category == 'TMX' || item.category == 'TMN';
-					});
-					
-					for(var i in mxmnTemp){
-						if(mxmnTemp[i].category == 'TMX'){
-							$("#mxTemp").text(mxmnTemp[i].fcstValue); //최고기온 넣기
-						}else{
-							$("#minTemp").text(mxmnTemp[i].fcstValue); //최저기온 넣기
-						}
-					}
-					
-					
-					
-					//예측 시간
-					var forcastTime = ['0200', '0500', '0800', '1100', '1400', '1700', '2000', '2300'];
-					
-					var forcastTimes = [];
-					
-					for(var i in forcastTime/*8*/){
-						
-						//예측시간별 필터링
-						let forcastInfoByTimes = todayItems.filter(function(item){
-							return item.fcstTime == forcastTime[i];
-						});
-						
-						forcastTimes.push(forcastInfoByTimes);
-
-					}
-					
-					
-					/*				
-						POP: 강수확률
-						PTY: 강수형태
-						PCP: 1시간 강수량
-						REH: 습도
-						SKY: 하늘상태
-					*/					
-					
-					var fcstTimes = []; 
-					
-					for(var i in forcastTimes){
-						
-						var fcst = [forcastTime[i]]
-						
-						for(var k in forcastTimes[i]){
-							
-							if(forcastTimes[i][k].category == 'POP'){
-								fcst.push(forcastTimes[i][k].fcstValue);
-							}if(forcastTimes[i][k].category == 'PTY'){
-								fcst.push(forcastTimes[i][k].fcstValue);
-							}if(forcastTimes[i][k].category == 'REH'){
-								fcst.push(forcastTimes[i][k].fcstValue);
-							}if(forcastTimes[i][k].category == 'SKY'){
-								fcst.push(forcastTimes[i][k].fcstValue);
-							}if(forcastTimes[i][k].category == 'TMP'){
-								fcst.push(forcastTimes[i][k].fcstValue);
-							}
-						}
-						
-						fcstTimes.push(fcst);
-						
-					}
-					
-					console.log(fcstTimes);
-					
-					
-
-					
-
-					
-					
-				}
-			})
-	
 		})
 		
 		
 		
+		//위치 정보
+		function success({ coords, timestamp }) {
+            const latitude = coords.latitude;   		// 위도
+            const longitude = coords.longitude; 		// 경도
+            
+            //날씨 가져오기
+            todayWeather(latitude, longitude)
+            
+            //주소 가져오기
+            geoLocation(latitude, longitude)
+            
+        }
 		
-		
-		//조회 함수
-		function makeTodayWeather(filterItems){
-			
-			console.log(filterItems);
+        function getUserLocation() {
+            if (!navigator.geolocation) {
+                throw "위치 정보가 지원되지 않습니다.";
+            }
+            navigator.geolocation.getCurrentPosition(success)
+        }
 
+        
+        
+        //좌표로 주소 변환
+		function geoLocation(latitude, longitude){
 			
-			var tableHTML = '';
-			
-			filterItems.forEach((forcast) => {
+			$.ajax({
+				url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + longitude +'&y=' + latitude,
+			    type : 'GET',
+			    headers : {
+			      'Authorization' : 'KakaoAK 29b1a05d9503b3e33fd9c96f9d5b751c'		//'KakaoAK {REST API KEY}
+			    },
+			    success : function(data) {
+			    	
+					let address = data.documents[0].address;
+					$("#showAddress").text(address.region_1depth_name + " " + address.region_2depth_name + " " + address.region_3depth_name);
 				
-				console.log(forcast.fcstDate);
-				console.log(forcast.fcstTime);
-				console.log(forcast.fcstValue);
-				
-				tableHTML += 
-					"<div><p>날짜: " + forcast.fcstDate + "</p>" + 
-						"<p>예측시간: " + (forcast.fcstTime).substr(0,2) + "시 기준</p>" +
-						"<p>온도: " + forcast.fcstValue/*fcstValue: 예보값*/ + "</p></div><hr>";
-						
-			});
+			    },
+			    error : function(e) {
+			      console.log("error", e);
+			    }
+			  });
 			
-			$("#todayWeather h5").text(/*year +'년 '+ month + "월" + day + "일"*/today);
-			
-			$("#forcastInfo").html(tableHTML);
 			
 		}
+        
+        
+		//오늘의 날씨 조회하기
+		function todayWeather(latitude, longitude){
+
+			var date = new Date();
+			
+			//어제 날짜	//20231219
+			let lastDayBaseDate = date.getFullYear() + ("0" + (date.getMonth() + 1)).substr(-2) + ("0" + (date.getDate() - 1)).substr(-2);	
+			
+			//오늘 날짜	//20231220
+			let todayBaseDate  = date.getFullYear() + ("0" + (date.getMonth() + 1)).substr(-2) + ("0" + (date.getDate())).substr(-2);	//20231219
+						
+			
+			let hours = ("0" + date.getHours()).substr(-2);							//현재시			ex. 15
+			
+			let baseTime = hours + "00";											//현재시 + "00"	ex)1500
+
+			let hoursMinusOneHour = ("0" + (date.getHours()-1)).substr(-2) + "00";		//한시간 전		ex. 1400
+			
+			
+			if(hours == '00'){
+				baseTime = "2300";
+			}
+			
+			$("#todayYYYYMMDD").text(date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일");
+
+			
+			$.ajax({
+				url: "showTodayWeather.wv",
+				data: {
+					baseDate : todayBaseDate,
+					baseTime : hoursMinusOneHour,				//초단기예보용
+					latitude : latitude,
+					longitude : longitude
+				},
+				success: function(result){
+					
+					let items = result.response.body.items.item;	//JSON item 변수
+					
+					let perTime = [];
+					
+					//현재시간별
+					let todayTimeFilter = items.filter(function(item){
+						perTime.push(item.fcstTime);
+						return item.fcstTime == baseTime;
+					});
+					
+					//배열 중복제거
+					let uniquePerTime = [...new Set(perTime)];
+
+										
+					var weatherList = [];
+					
+					for (var i in uniquePerTime) {
+
+					    let time5Filter = items.filter(function (item) {
+					        return item.fcstTime == uniquePerTime[i];
+					    })
+					    
+					    // 날씨별 객체 생성하기
+					    let obj = {};
+					    obj.fcstTime = uniquePerTime[i];
+					    
+
+					    for (var k in time5Filter) {
+					    	
+					    	if(time5Filter[k].category == "T1H"){	//기온
+					    		obj.T1H = time5Filter[k].fcstValue;
+					    	}if(time5Filter[k].category == "REH"){	//습도
+					    		obj.REH = time5Filter[k].fcstValue;
+					    	}if(time5Filter[k].category == "WSD"){	//풍속
+					    		obj.WSD = time5Filter[k].fcstValue;
+					    	}if(time5Filter[k].category == "SKY"){	//하늘상태
+					    		obj.SKY = time5Filter[k].fcstValue;
+					    	}if(time5Filter[k].category == "PTY"){	//강수형태
+					    		obj.PTY = time5Filter[k].fcstValue;
+					    	}
+					    }
+
+					    weatherList.push(obj);
+					}
+					
+					makePerHourForcast(weatherList, date);
+
+				},
+				error: function(){
+					alert('날씨 정보를 불러오지 못하였습니다.');
+				}
+			})
+			
+		}
+		
+		
+		// 초단기예보(5시간) 조회하기
+		function makePerHourForcast(weatherList, date) {
+			
+			alert("날씨 정보가 업데이트되었습니다.");
+		
+		    let perHours = '';
+		
+		    weatherList.forEach((item) => {
+		    	
+		        // 강수형태
+		        let imgSrc = "<img src='${pageContext.request.contextPath}/resources/img/weather/";
+		    	
+		    	switch (item.SKY) {
+					case "1":
+						item.SKY = '맑음'; break;
+					case "3":
+						item.SKY = '구름많음'; break;
+					case "4":
+						item.SKY = '흐림'; break;
+					default: break;
+				}
+
+		        
+		        //- 강수형태(PTY) 코드 : (초단기) 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+		        switch (item.PTY) {
+		            case "0":
+		            	
+		            	if(date.getHours() > 6 && date.getHours() < 18){
+			                item.WeatherImg = imgSrc + "Sun.png'>";
+		            	}else{
+			                item.WeatherImg = imgSrc + "Moon.png'>";
+		            	}
+		            	
+		                item.PTY = '강수없음';
+		                break;
+		            case "1":
+		                item.WeatherImg = imgSrc + "Rain_Medium.png'>";
+		                item.PTY = '비';
+		                break;
+		            case "2":
+		                item.WeatherImg = imgSrc + "WinteryMix.png'>";
+		                item.PTY = '비 또는 눈';
+		                break;
+		            case "3":
+		                item.WeatherImg = imgSrc + "Snow_2.png'>";
+		                item.PTY = '눈';
+		                break;
+		            case "5":
+		                item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
+		                item.PTY = '빗방울';
+		                break;
+		            case "6":
+		                item.WeatherImg = imgSrc + "WinteryMix.png'>";
+		                item.PTY = '빗방울눈날림';
+		                break;
+		            case "7":
+		                item.WeatherImg = imgSrc + "Snow_1.png'>";
+		                item.PTY = '눈날림';
+		                break;
+		            default:
+		                break;
+		        }
+		        
+		        
+		        //맑지는 않은데 구름있거나 흐린 경우
+		        if(!(item.SKY == '맑음')){	//맑지 않음
+		        	
+		        	if(item.PTY == '구름많음'){
+		        		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
+		        	}else if(item.PTY == '흐림'){
+		        		item.WeatherImg = imgSrc + "Cloud.png'>";
+		        	}
+		        	
+		        }
+		        	
+		        perHours +=
+		            "<div class='p-1 d-flex flex-column justify-content-center align-items-center'>" +
+		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + " 예상" + "</span></div>" +
+		            "<div class='mb-15 mt-15'>" + item.WeatherImg + "</div>" +
+		            "<div><span>" + item.T1H + "&deg;</span></div>" +
+		            "<div><span>💧 " + item.REH + "%</span></div>" +
+		            "</div>";
+				
+		    });
+		
+		    
+	        //현재날씨 넣기
+			$("#todayT1H").text(weatherList[0].T1H);
+			$("#todaySKY").text(weatherList[0].SKY);
+			$("#todayPTY").text(weatherList[0].PTY);
+			$("#todayWeatherImg").html(weatherList[0].WeatherImg);				
+			$("#todayWSD").text(weatherList[0].WSD);
+			$("#todayREH").text(weatherList[0].REH);
+		    
+		    $("#todayWeatherInfoArea").html(perHours);
+
+			
+		}
+		
+		
+		
+		
+		
+		
 	
 	</script>
+
+
+
 
 
 
@@ -323,5 +422,7 @@ h1, h2, h3, h4, h5, h6 {
     <script src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
+    
+    
 </body>
 </html>

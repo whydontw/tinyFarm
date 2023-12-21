@@ -36,6 +36,7 @@ public class Product {
 	private String salesStatus;
 	private String filePath;
 	private String changeName;
+	private String originName;
 	
 	
 

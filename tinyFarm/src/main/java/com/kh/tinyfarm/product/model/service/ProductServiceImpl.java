@@ -72,6 +72,33 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
+	//상품 수정
+	@Override
+	public int updateProduct(Product p) {
+		
+		return productDao.updateProduct(sqlSession,p);
+	}
+
+	@Override
+	public int updateAttachment(Attachment a) {
+		
+		return productDao.updateAttachment(sqlSession, a);
+	}
+
+	//상품 삭제
+	@Override
+	public int deleteProduct(int pno) {
+		
+		return productDao.deleteProduct(sqlSession, pno);
+	}
+
+	
+	
+
+
+
+
+
 
 
 }

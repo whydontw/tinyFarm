@@ -2003,7 +2003,7 @@ img {
     z-index: 10;
     margin-top: 20px;
     overflow: hidden;
-    height: 400px;
+    height: 350px;
     @include trans-duration(500ms);
     @media #{$breakpoint-lg} {
         height: 290px;
