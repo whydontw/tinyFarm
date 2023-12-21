@@ -23,17 +23,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        a,p{
-            font-family: 'Noto Sans KR', sans-serif !important;
-        }
-        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
-            font-family: 'Noto Sans KR', sans-serif !important;
-        }
+
+		a,p{
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		.plantImg,.plantName:hover{
+			cursor : pointer;
+		}
+		.loader {
+	      border: 16px solid #f3f3f3;
+	      border-top: 16px solid #70c745;
+	      border-radius: 50%;
+	      width: 120px;
+	      height: 120px;
+	      animation: spin 2s linear infinite;
+	      margin: auto;
+	    }
+	
+	    @keyframes spin {
+	      0% { transform: rotate(0deg); }
+	      100% { transform: rotate(360deg); }
+	    }
+		.hidden{
+			display:none;
+		}
+
+   
         .plantImg,.plantName:hover{
             cursor : pointer;
         }
         
     </style>
+
 </head>
 <body>
     <%@include file="/WEB-INF/views/common/header.jsp" %>
@@ -163,88 +187,98 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="row itemRow">
-                
-                
+
+			<!-- 로딩 화면 -->
+			<div id="loadingScreen" align="center">
+	  			<div class="loader"></div>
+	  			<br>
+				<h5><b>로딩중입니다. 잠시만 기다려주세요</b></h5>
+			</div>
+            <div class="row itemRow hidden">
+
             </div>
-            <div class="col-12 text-center">
-                <button class="btn alazea-btn view-all-btn">더보기</button>
+
+            <div class="col-12 text-center more-view-div hidden ">
+            	<button class="btn alazea-btn more-view-btn">더보기</button>
             </div>
             
             <script>
-                
-                $(function(){
-                    getInGardenPlantListAjax();
-                    $(".view-all-btn").click(function(){
-                        getInGardenPlantListAjax();
-                        
-                    });
-                    $(".itemRow").on("click","img",function(){
-                        console.log($(this));
-                        $(this).parents("form").children(".submitBtn").click();
-                    });
-                    $(".itemRow").on("click","p",function(){
-                        console.log($(this));
-                        $(this).parents("form").children(".submitBtn").click();
-                    });
-                });
-                
-                function getInGardenPlantListAjax(){
-                    $.ajax({
-                        url : "inGardenPlantListAjax.pp",
-                        data : {
-                            pageNo : $("#pageNo").val()
-                        },
-                        success : function(result){
-                            console.log(result);
-                            var inputValue = $("#pageNo").val(); // input 요소의 값을 가져옴
-                            var incrementedValue = parseInt(inputValue) + 1; // 가져온 값에 1을 더함 (숫자로 변환 후 덧셈)
-                            $("#pageNo").val(incrementedValue); // 변경된 값을 다시 input 요소에 설정함
-                            
-                            for(var i=0;i<result.length;i++){
-                                var outDiv = $("<div class='col-12 col-sm-6 col-lg-3'></div>");
-                                var inDiv = $("<div class='single-product-area mb-50 wow fadeInUp inDiv' data-wow-delay='100ms'></div>");
-                                var formDiv = $("<form action='detailInGarden.pp' method='post'></form>");
-                                
-                                var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
-                                rtnFileUrlStr.val(result[i].rtnFileUrlStr);
-                                
-                                var cntntsNo = $("<input type='hidden' name='cntntsNo' value=''>");
-                                cntntsNo.val(result[i].cntntsNo);
-                                
-                                var cntntsSj = $("<input type='hidden' name='cntntsSj' value=''>");
-                                cntntsSj.val(result[i].cntntsSj);
-                                
-                                var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
-                                var imgDiv = $("<div class='product-img'></div>");
-                                var nameDiv = $("<div class='product-info mt-15 text-center'></div>");
-                                var img = $("<img class='plantImg' style='width:250px; height:250px;'>");
-                                var name = $("<p class='plantName'></p>").text(result[i].cntntsSj);
-                                
-                                img.attr("src",result[i].rtnFileUrl[0]);
-                                
-                                
-                                nameDiv.append(name);
-                                imgDiv.append(img);
-                                formDiv.append(rtnFileUrlStr);
-                                formDiv.append(cntntsNo);
-                                formDiv.append(cntntsSj);
-                                formDiv.append(submitBtn);
-                                formDiv.append(imgDiv);
-                                formDiv.append(nameDiv);
-                                inDiv.append(formDiv);
-                                outDiv.append(inDiv);
-                                $(".itemRow").append(outDiv);
-                            }
-                            
-                        },
-                        error : function(){
-                            console.log("통신 오류");
-                        }
-                    });
-                }
-                
+
+	            $(function(){
+	        		getInGardenPlantListAjax();
+	        		$(".more-view-btn").click(function(){
+	        			getInGardenPlantListAjax();
+	        			
+	        		});
+	           		$(".itemRow").on("click","img",function(){
+	                   	console.log($(this));
+	           			$(this).parents("form").children(".submitBtn").click();
+	           		});
+	           		$(".itemRow").on("click","p",function(){
+	           			console.log($(this));
+	           			$(this).parents("form").children(".submitBtn").click();
+	           		});
+
+	        	});
+           		
+            	function getInGardenPlantListAjax(){
+            		$.ajax({
+            			url : "inGardenPlantListAjax.pp",
+            			data : {
+            				pageNo : $("#pageNo").val()
+            			},
+            			success : function(result){
+            				console.log(result);
+            				var inputValue = $("#pageNo").val(); // input 요소의 값을 가져옴
+            		        var incrementedValue = parseInt(inputValue) + 1; // 가져온 값에 1을 더함 (숫자로 변환 후 덧셈)
+            		        $("#pageNo").val(incrementedValue); // 변경된 값을 다시 input 요소에 설정함
+            		        
+            		        for(var i=0;i<result.length;i++){
+            		        	var outDiv = $("<div class='col-12 col-sm-6 col-lg-3'></div>");
+            		        	var inDiv = $("<div class='single-product-area mb-50 wow fadeInUp inDiv' data-wow-delay='100ms'></div>");
+            		        	var formDiv = $("<form action='detailInGarden.pp' method='post'></form>");
+            		        	
+            		        	var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
+            		        	rtnFileUrlStr.val(result[i].rtnFileUrlStr);
+            		        	
+            		        	var cntntsNo = $("<input type='hidden' name='cntntsNo' value=''>");
+            		        	cntntsNo.val(result[i].cntntsNo);
+            		        	
+            		        	var cntntsSj = $("<input type='hidden' name='cntntsSj' value=''>");
+            		        	cntntsSj.val(result[i].cntntsSj);
+            		        	
+            		        	var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
+            		        	var imgDiv = $("<div class='product-img'></div>");
+            		        	var nameDiv = $("<div class='product-info mt-15 text-center'></div>");
+            		        	var img = $("<img class='plantImg' style='width:250px; height:250px;'>");
+            		        	var name = $("<p class='plantName'></p>").text(result[i].cntntsSj);
+            		        	
+            		        	img.attr("src",result[i].rtnFileUrl[0]);
+            		        	
+            		        	
+            		        	nameDiv.append(name);
+            		        	imgDiv.append(img);
+            		        	formDiv.append(rtnFileUrlStr);
+            		        	formDiv.append(cntntsNo);
+            		        	formDiv.append(cntntsSj);
+            		        	formDiv.append(submitBtn);
+            		        	formDiv.append(imgDiv);
+            		        	formDiv.append(nameDiv);
+            		        	inDiv.append(formDiv);
+            		        	outDiv.append(inDiv);
+            		        	$(".itemRow").append(outDiv);
+            		        }
+            		        $("#loadingScreen").css("display","none");
+            		        $(".itemRow").removeClass("hidden");
+            		        $(".more-view-div").removeClass("hidden");
+            			},
+            			error : function(){
+            				console.log("통신 오류");
+            			}
+            		});
+            	}
+            	
+
             </script>
         </div>
     </section>
