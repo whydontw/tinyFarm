@@ -11,18 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class Board {
-	private int boardNo;
-	private String boardWriter;
-	private String boardTitle;
-	private String boardContent;
-	private int count;
-	private int likeCount;
+public class BoardReport {
+	private int reportNo;
+	private String reportWriter;
+	private int refBno;
+	private String category;
+	private String reportContent;
 	private Date createDate;
 	private String status;
-
-	private String titleImg;
-	private String profile;
-	private int replyCount;
-	private String email;
 }
