@@ -77,6 +77,13 @@
             outline : none;
         }
         
+/*         #pimg{
+
+        width: 350px;
+        height: 450px;
+        
+    	} */
+        
     </style>
 </head>
 <body>
@@ -103,9 +110,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Shop Details</li>
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농부</a></li>
+                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물 등록</li>
                         </ol>
                     </nav>
                 </div>
@@ -123,27 +130,29 @@
                     <th align="left">사진</th>
                     <th>작물종류</th>
                     <td style="width: 10%;">
-                        <select name="productslect" id="productslect">
-                            <option value="leaf">식물</option>
-                            <option value="vt">야채</option>
-                            <option value="fruit">과일</option>
-                        </select>
+                   	<!-- 카테고리 선택 말머리 -->
+                       <select name="categoryNo" id="productselect">
+                           <c:forEach items="${clist}" var="c">
+							<option value="${c.categoryNo }">${c.categoryName }</option>
+						</c:forEach>
+                       </select>
                     </td>
                 </tr>
                 <tr style="height: 50px;">
-                    <td rowspan="3">
-                        <div style="height: 200px; width: 300px;">
+                    <td rowspan="3" style="width: 400px;">
+                        <div>
                             <label for="file">
                                 <img src="resources/img/bg-img/product-inputfile.png" alt="이미지 첨부" id="inputimage">
                                 
                             </label>
-                            <input type="file" id="file" name="upfile" onchange="loadImg(this)" required>
+                            <input type="file" id="file" name="upfile" onchange="loadImg(this)" id="pimg">
+                            <input type="hidden" id="userId" name="userId" value="${loginUser.userId}">
                         </div>
                     </td>
                     <th>상품명</th>
                     <td colspan="2"><input type="text" id="name" name="productTitle"></td>  
                     <th style="padding-left: 50px;">가격</th>
-                    <td colspan="2"><input type="text" id="price" name="productPrice"></td>
+                    <td colspan="2"><input type="text" id="price" name="productPrice">원</td>
                 </tr>
                 <tr>
                     <th rowspan="2">상품내용</th>
@@ -158,7 +167,7 @@
 
         <!-- 등록, 취소 -->
         <div class="penrollbtn" align="center">
-            <button type="reset" class="btn alazea-btn-gray ml-15">취소하기</button>
+            <button type="reset" class="btn alazea-btn-gray ml-15" onclick="javascript:history.go(-1);">취소하기</button>
             <button type="submit" class="btn alazea-btn-orange ml-15">등록하기</button>
         </div>
         

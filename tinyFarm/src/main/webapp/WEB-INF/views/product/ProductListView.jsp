@@ -36,10 +36,16 @@
 	}
 	
     #psearchButton{
-   	width: 120px;
-   	height: 39px;
-   	border: 1px solid #CED4DA;
+	   	width: 120px;
+	   	height: 39px;
+	   	border: 1px solid #CED4DA;
    	       
+   }
+   
+   #pimg{
+   		width: 350px;
+   		height: 320px;
+
    }
    
 	
@@ -94,14 +100,14 @@
 			<table class="psearch-area">
 				<tr id=psearch>
 					<td align="center" class="pcategory" style="width: 200px;">
-						<select class="form-control" name="psearchField" id="psearchField">
-							<option value="title">식물</option>
-							<option value="id">채소</option>
-							<option value="category">과일</option>
+ 						<select class="form-control" name="psearchField" id="psearchField">
+							<option value="title">채소</option>
+							<option value="id">과일</option>
+							<option value="category">곡물</option>
 						</select>
 					</td>
 					<td class="pcontent">
-						<input type="text" class="form-control"placeholder="거래 하고 싶은 작물을 검색해보세요." name="psearchText" id="psearchText" maxlength="100" style="width: 700px;">
+						<input type="text" class="form-control"placeholder="거래 하고 싶은 작물을 검색해보세요." name="psearch" id="psearch" maxlength="100" style="width: 700px;">
 					</td>
 					<td class="psearchbtn">
 						<button class="btn" name="psearchButton" id="psearchButton" style="width: 100px;">검색</button>
@@ -110,250 +116,97 @@
 			</table>
 		</div>
 	</div>
+	
+	<br><br>
     
 
     <!-- ##### Shop Area Start ##### -->
     <section class="shop-page section-padding-0-100">
         <div class="container">
-            
-
             <div class="row">
-
                 <!-- All Products Area -->
                 <div class="col-12">
                     <div class="shop-products-area">
                         <div class="row">
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="resources/img/bg-img/44.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <!-- 좋아요 -->
-                                            <a href="#" class="wishlist-btn">
-                                                <i class="icon_heart_alt"></i>
-                                            </a>
-                                            <!-- 장바구니 -->
-                                            <a href="cart.html" class="add-to-cart-btn">거래하기</a>
-                                            <!-- 3번째 -->
-                                            <!-- <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/41.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/42.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/43.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/44.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <!-- 좋아요 -->
-                                            <a href="#" class="wishlist-btn">
-                                                <div class="icon_heart_alt"></div>
-                                                <p id="liketext">30</p>
-                                            </a>
-                                            <!-- 장바구니 -->
-                                            <a href="cart.html" class="add-to-cart-btn">거래하기</a>
-                                            <!-- 3번째 -->
-                                            <!-- <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/45.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/46.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/47.png" alt=""></a>
-
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="shop-details.html"><img src="img/bg-img/48.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="shop-details.html">
-                                            <p>Cactus Flower</p>
-                                        </a>
-                                        <h6>$10.99</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
+                        
+						<c:forEach items="${list}" var="p">
+ 
+                            <!-- Single Product Area -->
+                            <div class="col-12 col-sm-6 col-lg-4">
+
+                                <div class="single-product-area mb-50">
+                                    
+                                    <c:if test="${empty list }">
+										<div>
+											<p>조회된 게시글이 없습니다.</p>
+										</div>
+									</c:if>
+									<!-- Product Image -->
+									<div class="product-img">
+                                        <a href="<%=request.getContextPath()%>/pdetail.bo?pno=${p.productNo}">
+                                        	<img src="${p.filePath}${p.changeName}" alt="" id="pimg">
+                                        </a>
+                                        
+                                        <div class="product-meta d-flex">
+                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="cart.html" class="add-to-cart-btn">결제하기</a>
+                                        </div>
+                                        
+                                    </div>
+
+                                        <!-- Product Info -->
+                                    	<div class="product-info mt-15 text-center">
+	                                        <a href="shop-details.html">
+	                                            <p>${p.productTitle }</p>
+	                                        </a>
+	                                        	<h6>${p.productPrice }원</h6>
+	                                        	<input type="hidden" id="regiDate" name="regiDate" value="${p.regiDate}">
+	                                        	<input type="hidden" id="count" name="count" value="${p.count}">
+	                                        	<input type="hidden" id="count" name="productNo" value="${p.productNo}">
+                                    	</div>
+                                        
+	                         </div>
+						</div>
+						
+                        </c:forEach>   
+						
+						
+                   </div>    
+                </div> 
+	                                    
                         <!-- Pagination -->
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                            	<c:if test="${pi.currentPage ne 1}">
+                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage-1}">
+                                	<i class="fa fa-angle-left"></i></a>
+                                	</li>
+                                </c:if>
+                                <c:forEach begin="${pi.startPage}" end="${pi.endPage }" var="p">
+                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${p}">${p}</a></li>
+                                </c:forEach>
+                                <c:if test="${pi.currentPage ne pi.maxPage}">
+	                                <li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage+1}">
+	                                <i class="fa fa-angle-right"></i></a></li>
+                                </c:if>
                             </ul>
                         </nav>
                         
-                        <!-- 작물 등록 버튼 -->
+                        <br>
+                                                
+                        <!-- 로그인 후 상태일 경우만 보여지는 작물 등록 버튼 -->
                         <div class="plistbtn" align="center">
-						    <button class="btn alazea-btn" id="pbtn" onclick="location.href='<%=request.getContextPath()%>/pinsert.bo'">
-						    작물 등록
-						    </button>
+                        	<c:if test="${not empty loginUser}">
+						    	<button class="btn alazea-btn" id="pbtn" onclick="location.href='<%=request.getContextPath()%>/pinsert.bo'">
+						    	작물 등록
+						    	</button>
+							</c:if>
 					    </div>                     
                     </div>
                 </div>
             </div>
-        </div>
+
     </section>
     <!-- ##### Shop Area End ##### -->
 

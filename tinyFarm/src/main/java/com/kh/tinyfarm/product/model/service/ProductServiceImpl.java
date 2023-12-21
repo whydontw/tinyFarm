@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.product.model.dao.ProductDao;
+import com.kh.tinyfarm.product.model.vo.Category;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Service
@@ -48,12 +49,56 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productDao.selectProduct(sqlSession,pno);
 	}
+	
+	//카테고리 조회
+	@Override
+	public ArrayList<Category> selectCategoryList() {
+		
+		return productDao.selectCategoryList(sqlSession);
+	}
 
 	//상품 등록
 	@Override
-	public int insertProduct(Product p, Attachment a) {
-		// TODO Auto-generated method stub
-		return productDao.insertProduct(sqlSession,p,a);
+	public int insertProduct(Product p) {
+		
+		return productDao.insertProduct(sqlSession,p);
 	}
+
+
+	@Override
+	public int insertAttachment(Attachment a) {
+		
+		return productDao.insertAttachment(sqlSession,a);
+	}
+
+
+	//상품 수정
+	@Override
+	public int updateProduct(Product p) {
+		
+		return productDao.updateProduct(sqlSession,p);
+	}
+
+	@Override
+	public int updateAttachment(Attachment a) {
+		
+		return productDao.updateAttachment(sqlSession, a);
+	}
+
+	//상품 삭제
+	@Override
+	public int deleteProduct(int pno) {
+		
+		return productDao.deleteProduct(sqlSession, pno);
+	}
+
+	
+	
+
+
+
+
+
+
 
 }

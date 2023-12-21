@@ -76,21 +76,22 @@
 						</div>
 						<div class="checkout_details_area clearfix">
 							<form action="qnaEnroll.qa" method="post">
-								<input type="hidden" value="2" name="userNo">
+								<input type="hidden" value="${loginUser.userNo }" name="userNo">
 								<div class="row">
 									<div class="col-12 mb-4">
 										<label for="phone_number">제목 *</label>
 										<input type="text" class="form-control" id="qnaTitle" min="0" value="" name="qnaTitle" placeholder="제목을 입력해 주세요.">
 									</div>
 									<div class="col-md-6 mb-4">
-										<label for="city">작성자</label> <input type="text" class="form-control" id="" value="user1" name="" disabled>
+										<label for="city">작성자</label> <input type="text" class="form-control" id="qnaUserNo" value="${loginUser.userId }" name="userNo" disabled>
 									</div>
 									<div class="col-md-6 mb-4">
 										<c:set var="nowTime" value="<%=new Date()%>" />
 										<c:set var="createDate">
 											<fmt:formatDate value="${nowTime}" pattern="yy/MM/dd" />
 										</c:set>
-										<label for="state">작성일자</label> <input type="text" class="form-control" id="" value="${createDate }" disabled>
+										<label for="state">작성일자</label>
+										<input type="text" class="form-control" id="" value="${createDate }" disabled>
 									</div>
 									<div class="col-md-12 mb-4">
 										<label for="order-notes">문의사항 *</label>

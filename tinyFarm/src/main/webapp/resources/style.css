@@ -114,6 +114,9 @@ img {
   margin-right: 50px !important; }
 
 /* :: 3.2.0 Height */
+.height-200{
+  height: 200px; }
+  
 .height-400 {
   height: 400px; }
 
