@@ -1,4 +1,9 @@
-/**
+@font-face {
+		    font-family: 'TAEBAEKfont';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKfont.woff2') format('woff2');
+		    font-weight: normal;
+		    font-style: normal;
+		}/**
  * Owl Carousel v2.2.1
  * Copyright 2013-2017 David Deutsch
  * Licensed under  ()
