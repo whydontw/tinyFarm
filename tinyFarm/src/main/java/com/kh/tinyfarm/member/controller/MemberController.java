@@ -146,7 +146,7 @@ public class MemberController {
 
         // 여기에 추가적인 로직이나 결과에 대한 처리를 추가할 수 있습니다.
         if (result > 0) {
-        	session.setAttribute("alertMsg", m.getUserName() + " 님 어서옵쇼~");	//김수연 아이디어
+        	session.setAttribute("alertMsg", m.getUserName() + " 님 환영합니다");	
             return "redirect:/loginGo.me";
         } else {
             session.setAttribute("alertMsg", "회원 등록 실패");

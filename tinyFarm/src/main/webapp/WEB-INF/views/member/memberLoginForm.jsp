@@ -21,7 +21,8 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
-	
+    
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -74,6 +75,9 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" id="contact-subject" style = "width:300px" placeholder="PW" name = "userPwd">
                                     </div>
+                                     <input type="checkbox" id="checkId" name="checkId">                                         
+								    <label for="checkId"><span></span></label>
+								    아이디 저장
                                 	</div>
                                		<div class="col-8">
 										<button type="submit" class="btn mt-15" style = "background-color:#70c745; color:white; height: 45px; width:300px">로그인</button>								    
@@ -103,60 +107,59 @@
         </div>
     </section>
  	
- 	<script type = "text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script>
+	    $(document).ready(function () {
+	        var key = getCookie("key");
+	        $("#contact-name").val(key);
 	
-		<script type="text/javascript">
-			  function unlinkApp() {
-			    Kakao.API.request({
-			      url: '/v1/user/unlink',
-			      success: function(res) {
-			        alert('success: ' + JSON.stringify(res))
-			      },
-			      fail: function(err) {
-			        alert('fail: ' + JSON.stringify(err))
-			      },
-			    })
-			  }
-			</script>
- 
-		<script type="text/javascript">
-			Kakao.init('9dd7e5e19735d15aaef0ecd9dd6b1226');
-			console.log(Kakao.isInitialized());
-			 
-			Kakao.Auth.login({
-			    container: '#kakao-login-btn',
-			    success: function(authObj) {
-			      Kakao.API.request({
-			        url: '/v2/user/me',
-			        success: function(result) {
-			          $('#result').append(result);
-			          
-			          id = result.id
-			          
-			          connected_at = result.connected_at
-			          kakao_account = result.kakao_account
-			          
-			          $('#result').append(kakao_account);
-			        
-			          $('#result').append(resultdiv);
-			          
-			        },
-			        fail: function(error) {
-			          alert(
-			            'login success, but failed to request user information: ' +
-			              JSON.stringify(error)
-			          )
-			        },
-			      })
-			    },
-			    fail: function(err) {
-			      alert('로그인 실패: ' + JSON.stringify(err))
-			    },
-			  })
-		</script>
-	    
-	    
-	   
+	        if ($("#contact-name").val() != "") {
+	            $("#checkId").prop("checked", true);
+	        }
+	
+	        $("#checkId").change(function () {
+	            if ($("#checkId").is(":checked")) {
+	                setCookie("key", $("#contact-name").val(), 7);
+	            } else {
+	                deleteCookie("key");
+	            }
+	        });
+	
+	        $("#contact-name").keyup(function () {
+	            if ($("#checkId").is(":checked")) {
+	                setCookie("key", $("#contact-name").val(), 7);
+	            }
+	        });
+	
+	        function setCookie(cookieName, value, exdays) {
+	            var exdate = new Date();
+	            exdate.setDate(exdate.getDate() + exdays);
+	            var cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+	            document.cookie = cookieName + "=" + cookieValue;
+	        }
+	
+	        function deleteCookie(cookieName) {
+	            var expireDate = new Date();
+	            expireDate.setDate(expireDate.getDate() - 1);
+	            document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	        }
+	
+	        function getCookie(cookieName) {
+	            cookieName = cookieName + '=';
+	            var cookieData = document.cookie;
+	            var start = cookieData.indexOf(cookieName);
+	            var cookieValue = '';
+	            if (start != -1) {
+	                start += cookieName.length;
+	                var end = cookieData.indexOf(';', start);
+	                if (end == -1)
+	                    end = cookieData.length;
+	                console.log("end 위치  : " + end);
+	                cookieValue = cookieData.substring(start, end);
+	            }
+	            return unescape(cookieValue);
+	        }
+	    });
+	</script> 
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
@@ -164,8 +167,6 @@
 	
 	
     <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="<%= contextPath %>/resources/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="<%= contextPath %>/resources/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->
