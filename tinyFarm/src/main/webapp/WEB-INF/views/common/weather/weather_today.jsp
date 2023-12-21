@@ -15,7 +15,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 	
 	<!-- 카카오 API 주소 -->
-<!-- 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea39e9641be78109122ae5eab0b0065f&libraries=services"></script> -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea39e9641be78109122ae5eab0b0065f&libraries=services"></script>
 	
 <style type="text/css">
 
@@ -127,12 +127,7 @@ h1, h2, h3, h4, h5, h6 {
 				</div>
 				<div class="p-3 text-center">
 					<h5 class="mt-20 mb-20" id="todayYYYYMMDD"><!-- 오늘 날짜 --></h5>
-					<h4>
-						<c:choose>
-							<c:when test="${empty loginUser}">서울 영등포구 선유동2로 57</c:when>
-							<c:otherwise>${loginUser.address }</c:otherwise>
-						</c:choose>
-					</h4>
+					<h4 id="showAddress">-</h4>
 					<span class="weather__description" id="todaySKY"></span>
 					<span class="weather__description" id="todayPTY"></span>
 				</div>
@@ -160,13 +155,13 @@ h1, h2, h3, h4, h5, h6 {
 		
 		$(function(){
 			
-			//위치정보 가져오기
 	       	getUserLocation();
 			
 		})
 		
 		
 		
+		//위치 정보
 		function success({ coords, timestamp }) {
             const latitude = coords.latitude;   		// 위도
             const longitude = coords.longitude; 		// 경도
@@ -174,20 +169,45 @@ h1, h2, h3, h4, h5, h6 {
             //날씨 가져오기
             todayWeather(latitude, longitude)
             
+            //주소 가져오기
+            geoLocation(latitude, longitude)
+            
         }
 		
-
         function getUserLocation() {
             if (!navigator.geolocation) {
                 throw "위치 정보가 지원되지 않습니다.";
             }
             navigator.geolocation.getCurrentPosition(success)
-            
         }
 
-		
         
-		
+        
+        //좌표로 주소 변환
+		function geoLocation(latitude, longitude){
+			
+			$.ajax({
+				url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=' + longitude +'&y=' + latitude,
+			    type : 'GET',
+			    headers : {
+			      'Authorization' : 'KakaoAK 29b1a05d9503b3e33fd9c96f9d5b751c'		//'KakaoAK {REST API KEY}
+			    },
+			    success : function(data) {
+			    	
+					let address = data.documents[0].address;
+					$("#showAddress").text(address.region_1depth_name + " " + address.region_2depth_name + " " + address.region_3depth_name);
+				
+			    },
+			    error : function(e) {
+			      console.log("error", e);
+			    }
+			  });
+			
+			
+		}
+        
+        
+		//오늘의 날씨 조회하기
 		function todayWeather(latitude, longitude){
 
 			var date = new Date();
@@ -213,8 +233,6 @@ h1, h2, h3, h4, h5, h6 {
 			$("#todayYYYYMMDD").text(date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일");
 
 			
-			alert("확인");
-			
 			$.ajax({
 				url: "showTodayWeather.wv",
 				data: {
@@ -227,14 +245,6 @@ h1, h2, h3, h4, h5, h6 {
 					
 					let items = result.response.body.items.item;	//JSON item 변수
 					
-					//최고기온 최저기온
-					/*
-					let todayTimeFilter = items.filter(function(item){
-						return item.fcstTime == baseTime;
-					});
-					*/
-					
-					
 					let perTime = [];
 					
 					//현재시간별
@@ -243,7 +253,7 @@ h1, h2, h3, h4, h5, h6 {
 						return item.fcstTime == baseTime;
 					});
 					
-					//배열 중복제거하기
+					//배열 중복제거
 					let uniquePerTime = [...new Set(perTime)];
 
 										
@@ -278,7 +288,7 @@ h1, h2, h3, h4, h5, h6 {
 					    weatherList.push(obj);
 					}
 					
-					makePerHourForcast(weatherList);
+					makePerHourForcast(weatherList, date);
 
 				},
 				error: function(){
@@ -289,14 +299,8 @@ h1, h2, h3, h4, h5, h6 {
 		}
 		
 		
-		// 조회 함수
-		function makePerHourForcast(weatherList) {
-			
-			
-			console.log("날씨 리스트", weatherList);
-			
-			
-			let date = new Date();
+		// 초단기예보(5시간) 조회하기
+		function makePerHourForcast(weatherList, date) {
 			
 			alert("날씨 정보가 업데이트되었습니다.");
 		
@@ -393,6 +397,12 @@ h1, h2, h3, h4, h5, h6 {
 
 			
 		}
+		
+		
+		
+		
+		
+		
 	
 	</script>
 
