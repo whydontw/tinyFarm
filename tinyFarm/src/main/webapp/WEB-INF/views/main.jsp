@@ -9,148 +9,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
     <!-- Title -->
     <title>작은농장</title>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-	 <!-- jQuery 라이브러리 -->
+     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
     <style>
-		p,h1,h2,h3,h4,h5,h6,a{
-			font-family: 'Noto Sans KR', sans-serif !important;
-		}
-		.plantImg,.plantName:hover{
-			cursor : pointer;
-		}
-		
-	</style>
+        a,p{
+            font-family: 'Noto Sans KR', sans-serif !important;
+        }
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+            font-family: 'Noto Sans KR', sans-serif !important;
+        }
+        .plantImg,.plantName:hover{
+            cursor : pointer;
+        }
+        
+    </style>
 </head>
 <body>
-	 <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-circle"></div>
-        <div class="preloader-img">
-            <img src="resources/img/core-img/leaf.png" alt="">
-        </div>
-    </div>
-
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-
-        <!-- ***** Top Header Area ***** -->
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                              
-                            </div>
-
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                    
-                                <!-- Login -->
-                              	<div class="login">
-							    <c:choose>
-							        <c:when test="${empty loginUser}">
-							            <a href="loginGo.me">
-							                <i class="fa fa-user" aria-hidden="true"></i> <span>Login</span>
-							            </a>
-							            <a href ="join.me">회원가입</a>
-							        </c:when>
-							        <c:otherwise>
-							            <label style ="font-size:12px; color : white; margin-top:10px">${loginUser.userName}님</label>
-							            <a style = "margin-left:20px" href="mypage.me">마이페이지&nbsp;</a>
-							            <a href="logout.me">로그아웃</a>
-							           
-							        </c:otherwise>
-							    </c:choose>
-							 	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-                        <!-- Nav Brand -->
-                        <a href="/tinyfarm" class="nav-brand"><img src="resources/img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-                        
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="index.html">식물 정보</a>
-                                        <ul class="dropdown">
-                                            <li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
-                                            <li><a href="gardeningList.pp?category=채소">채소 정보</a></li>
-                                            <li><a href="gardeningList.pp?category=실내농업">실내농업 관련 정보</a> </li>
-                                            <li><a href="gardeningList.pp?category=기능별 텃밭">기능별 텃밭 정보</a> </li>
-                                            <li><a href="makeInGarden.pp">실내정원 만들기</a> </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="mypage.me">체험활동</a></li>
-                                    
-                                    <li><a href="list.bo">커뮤니티</a></li>
-                                    <li><a href="plist.bo?currentPage=1">작물거래</a></li>
-                                    <li><a href="contact.html">공지사항</a></li>
-                                    <li><a href="qnaList.qa">1:1문의</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-	<!-- ##### Hero Area Start ##### -->
+    <%@include file="/WEB-INF/views/common/header.jsp" %>
+    <!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
         <div class="hero-post-slides owl-carousel">
-
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
@@ -169,7 +58,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
@@ -190,11 +78,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- ##### Hero Area End ##### -->
-
     <!-- ##### Service Area Start ##### -->
     <section class="our-services-area bg-gray section-padding-100-0">
         <div class="container">
@@ -207,11 +93,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="row justify-content-between">
                 <div class="col-12 col-lg-5">
                     <div class="alazea-service-area mb-100" style="margin-bottom: 0px;">
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
                             <!-- Icon -->
@@ -226,7 +110,6 @@
                                      가려져 희미한 빛만 드는 환경에서도 잘 자라는 경우가 많습니다.</p>
                             </div>
                         </div>
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="300ms">
                             <!-- Icon -->
@@ -237,11 +120,9 @@
                             <div class="service-content">
                                 <h5>물과 환기</h5>
                                 <p style="font-size: 10px;">식물은 물을 통해 많은 영양분을 흡수합니다. 식물이 광합성을 할 때 꼭 필요한 물질이며 잎과 줄기를 지탱해주죠. 
-
                                     식물에게 물은 아주 중요하지만, 흙이 숨 쉴 수 있도록 만들어주는 것은 신선한 공기입니다. 실내공간에서 공기의 순환이 어렵다는 것은 모두 알고 계실 텐데요. 주기적인 환기를 통해 식물과 흙을 건강하게 유지해 줘야 벌레도 안 생기고 식물도 건강해집니다.</p>
                             </div>
                         </div>
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="500ms">
                             <!-- Icon -->
@@ -255,10 +136,8 @@
                                     또한 냉난방기 주변은 매우 건조하기 때문에 피하는 것이 좋습니다. </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="col-12 col-lg-6">
                     <div class="alazea-video-area bg-overlay mb-100">
                         <img style="height:460px;" src="resources/img/bg-img/23.jpg" alt="">
@@ -271,8 +150,8 @@
         </div>
     </section>
     <!-- ##### Service Area End ##### -->
-	<input id="pageNo" type="hidden" value="1">
-	 
+    <input id="pageNo" type="hidden" value="1">
+     
     <section class="new-arrivals-products-area bg-gray section-padding-100">
         <div class="container">
             <div class="row">
@@ -284,87 +163,88 @@
                     </div>
                 </div>
             </div>
-			
+            
             <div class="row itemRow">
-				
-				
+                
+                
             </div>
-
             <div class="col-12 text-center">
-            	<button class="btn alazea-btn view-all-btn">더보기</button>
+                <button class="btn alazea-btn view-all-btn">더보기</button>
             </div>
             
             <script>
-	            $(function(){
-	        		getInGardenPlantListAjax();
-	        		$(".view-all-btn").click(function(){
-	        			getInGardenPlantListAjax();
-	        			
-	        		});
-	           		$(".itemRow").on("click","img",function(){
-	                   	console.log($(this));
-	           			$(this).parents("form").children(".submitBtn").click();
-	           		});
-	           		$(".itemRow").on("click","p",function(){
-	           			console.log($(this));
-	           			$(this).parents("form").children(".submitBtn").click();
-	           		});
-	        	});
-            	function getInGardenPlantListAjax(){
-            		$.ajax({
-            			url : "inGardenPlantListAjax.pp",
-            			data : {
-            				pageNo : $("#pageNo").val()
-            			},
-            			success : function(result){
-            				console.log(result);
-            				var inputValue = $("#pageNo").val(); // input 요소의 값을 가져옴
-            		        var incrementedValue = parseInt(inputValue) + 1; // 가져온 값에 1을 더함 (숫자로 변환 후 덧셈)
-            		        $("#pageNo").val(incrementedValue); // 변경된 값을 다시 input 요소에 설정함
-            		        
-            		        for(var i=0;i<result.length;i++){
-            		        	var outDiv = $("<div class='col-12 col-sm-6 col-lg-3'></div>");
-            		        	var inDiv = $("<div class='single-product-area mb-50 wow fadeInUp inDiv' data-wow-delay='100ms'></div>");
-            		        	var formDiv = $("<form action='detailInGarden.pp' method='post'></form>");
-            		        	
-            		        	var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
-            		        	rtnFileUrlStr.val(result[i].rtnFileUrlStr);
-            		        	
-            		        	var cntntsNo = $("<input type='hidden' name='cntntsNo' value=''>");
-            		        	cntntsNo.val(result[i].cntntsNo);
-            		        	
-            		        	var cntntsSj = $("<input type='hidden' name='cntntsSj' value=''>");
-            		        	cntntsSj.val(result[i].cntntsSj);
-            		        	
-            		        	var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
-            		        	var imgDiv = $("<div class='product-img'></div>");
-            		        	var nameDiv = $("<div class='product-info mt-15 text-center'></div>");
-            		        	var img = $("<img class='plantImg' style='width:250px; height:250px;'>");
-            		        	var name = $("<p class='plantName'></p>").text(result[i].cntntsSj);
-            		        	
-            		        	img.attr("src",result[i].rtnFileUrl[0]);
-            		        	
-            		        	
-            		        	nameDiv.append(name);
-            		        	imgDiv.append(img);
-            		        	formDiv.append(rtnFileUrlStr);
-            		        	formDiv.append(cntntsNo);
-            		        	formDiv.append(cntntsSj);
-            		        	formDiv.append(submitBtn);
-            		        	formDiv.append(imgDiv);
-            		        	formDiv.append(nameDiv);
-            		        	inDiv.append(formDiv);
-            		        	outDiv.append(inDiv);
-            		        	$(".itemRow").append(outDiv);
-            		        }
-            		        
-            			},
-            			error : function(){
-            				console.log("통신 오류");
-            			}
-            		});
-            	}
-            	
+                
+                $(function(){
+                    getInGardenPlantListAjax();
+                    $(".view-all-btn").click(function(){
+                        getInGardenPlantListAjax();
+                        
+                    });
+                    $(".itemRow").on("click","img",function(){
+                        console.log($(this));
+                        $(this).parents("form").children(".submitBtn").click();
+                    });
+                    $(".itemRow").on("click","p",function(){
+                        console.log($(this));
+                        $(this).parents("form").children(".submitBtn").click();
+                    });
+                });
+                
+                function getInGardenPlantListAjax(){
+                    $.ajax({
+                        url : "inGardenPlantListAjax.pp",
+                        data : {
+                            pageNo : $("#pageNo").val()
+                        },
+                        success : function(result){
+                            console.log(result);
+                            var inputValue = $("#pageNo").val(); // input 요소의 값을 가져옴
+                            var incrementedValue = parseInt(inputValue) + 1; // 가져온 값에 1을 더함 (숫자로 변환 후 덧셈)
+                            $("#pageNo").val(incrementedValue); // 변경된 값을 다시 input 요소에 설정함
+                            
+                            for(var i=0;i<result.length;i++){
+                                var outDiv = $("<div class='col-12 col-sm-6 col-lg-3'></div>");
+                                var inDiv = $("<div class='single-product-area mb-50 wow fadeInUp inDiv' data-wow-delay='100ms'></div>");
+                                var formDiv = $("<form action='detailInGarden.pp' method='post'></form>");
+                                
+                                var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
+                                rtnFileUrlStr.val(result[i].rtnFileUrlStr);
+                                
+                                var cntntsNo = $("<input type='hidden' name='cntntsNo' value=''>");
+                                cntntsNo.val(result[i].cntntsNo);
+                                
+                                var cntntsSj = $("<input type='hidden' name='cntntsSj' value=''>");
+                                cntntsSj.val(result[i].cntntsSj);
+                                
+                                var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
+                                var imgDiv = $("<div class='product-img'></div>");
+                                var nameDiv = $("<div class='product-info mt-15 text-center'></div>");
+                                var img = $("<img class='plantImg' style='width:250px; height:250px;'>");
+                                var name = $("<p class='plantName'></p>").text(result[i].cntntsSj);
+                                
+                                img.attr("src",result[i].rtnFileUrl[0]);
+                                
+                                
+                                nameDiv.append(name);
+                                imgDiv.append(img);
+                                formDiv.append(rtnFileUrlStr);
+                                formDiv.append(cntntsNo);
+                                formDiv.append(cntntsSj);
+                                formDiv.append(submitBtn);
+                                formDiv.append(imgDiv);
+                                formDiv.append(nameDiv);
+                                inDiv.append(formDiv);
+                                outDiv.append(inDiv);
+                                $(".itemRow").append(outDiv);
+                            }
+                            
+                        },
+                        error : function(){
+                            console.log("통신 오류");
+                        }
+                    });
+                }
+                
             </script>
         </div>
     </section>
