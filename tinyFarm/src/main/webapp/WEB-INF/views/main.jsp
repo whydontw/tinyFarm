@@ -9,14 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
     <!-- Title -->
     <title>작은농장</title>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
-	 <!-- jQuery 라이브러리 -->
+     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <!-- font -->
@@ -24,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
     <style>
+
 		a,p{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
@@ -33,17 +33,37 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
-		
-	</style>
+		.loader {
+	      border: 16px solid #f3f3f3;
+	      border-top: 16px solid #70c745;
+	      border-radius: 50%;
+	      width: 120px;
+	      height: 120px;
+	      animation: spin 2s linear infinite;
+	      margin: auto;
+	    }
+	
+	    @keyframes spin {
+	      0% { transform: rotate(0deg); }
+	      100% { transform: rotate(360deg); }
+	    }
+		.hidden{
+			display:none;
+		}
+
+   
+        .plantImg,.plantName:hover{
+            cursor : pointer;
+        }
+        
+    </style>
+
 </head>
 <body>
-
-	<%@include file="/WEB-INF/views/common/header.jsp" %>
-
-	<!-- ##### Hero Area Start ##### -->
+    <%@include file="/WEB-INF/views/common/header.jsp" %>
+    <!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
         <div class="hero-post-slides owl-carousel">
-
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
@@ -62,7 +82,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
                 <!-- Post Image -->
@@ -83,11 +102,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- ##### Hero Area End ##### -->
-
     <!-- ##### Service Area Start ##### -->
     <section class="our-services-area bg-gray section-padding-100-0">
         <div class="container">
@@ -100,11 +117,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="row justify-content-between">
                 <div class="col-12 col-lg-5">
                     <div class="alazea-service-area mb-100" style="margin-bottom: 0px;">
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
                             <!-- Icon -->
@@ -119,7 +134,6 @@
                                      가려져 희미한 빛만 드는 환경에서도 잘 자라는 경우가 많습니다.</p>
                             </div>
                         </div>
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="300ms">
                             <!-- Icon -->
@@ -130,11 +144,9 @@
                             <div class="service-content">
                                 <h5>물과 환기</h5>
                                 <p style="font-size: 10px;">식물은 물을 통해 많은 영양분을 흡수합니다. 식물이 광합성을 할 때 꼭 필요한 물질이며 잎과 줄기를 지탱해주죠. 
-
                                     식물에게 물은 아주 중요하지만, 흙이 숨 쉴 수 있도록 만들어주는 것은 신선한 공기입니다. 실내공간에서 공기의 순환이 어렵다는 것은 모두 알고 계실 텐데요. 주기적인 환기를 통해 식물과 흙을 건강하게 유지해 줘야 벌레도 안 생기고 식물도 건강해집니다.</p>
                             </div>
                         </div>
-
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="500ms">
                             <!-- Icon -->
@@ -148,10 +160,8 @@
                                     또한 냉난방기 주변은 매우 건조하기 때문에 피하는 것이 좋습니다. </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="col-12 col-lg-6">
                     <div class="alazea-video-area bg-overlay mb-100">
                         <img style="height:460px;" src="resources/img/bg-img/23.jpg" alt="">
@@ -164,8 +174,8 @@
         </div>
     </section>
     <!-- ##### Service Area End ##### -->
-	<input id="pageNo" type="hidden" value="1">
-	 
+    <input id="pageNo" type="hidden" value="1">
+     
     <section class="new-arrivals-products-area bg-gray section-padding-100">
         <div class="container">
             <div class="row">
@@ -177,21 +187,26 @@
                     </div>
                 </div>
             </div>
-			
-            <div class="row itemRow">
-				
-				
+
+			<!-- 로딩 화면 -->
+			<div id="loadingScreen" align="center">
+	  			<div class="loader"></div>
+	  			<br>
+				<h5><b>로딩중입니다. 잠시만 기다려주세요</b></h5>
+			</div>
+            <div class="row itemRow hidden">
+
             </div>
 
-            <div class="col-12 text-center">
-            	<button class="btn alazea-btn view-all-btn">더보기</button>
+            <div class="col-12 text-center more-view-div hidden ">
+            	<button class="btn alazea-btn more-view-btn">더보기</button>
             </div>
             
             <script>
-            	
+
 	            $(function(){
 	        		getInGardenPlantListAjax();
-	        		$(".view-all-btn").click(function(){
+	        		$(".more-view-btn").click(function(){
 	        			getInGardenPlantListAjax();
 	        			
 	        		});
@@ -253,7 +268,9 @@
             		        	outDiv.append(inDiv);
             		        	$(".itemRow").append(outDiv);
             		        }
-            		        
+            		        $("#loadingScreen").css("display","none");
+            		        $(".itemRow").removeClass("hidden");
+            		        $(".more-view-div").removeClass("hidden");
             			},
             			error : function(){
             				console.log("통신 오류");
@@ -261,6 +278,7 @@
             		});
             	}
             	
+
             </script>
         </div>
     </section>

@@ -177,5 +177,26 @@ public class MemberServiceImpl implements MemberService {
 	public String findId(Member member) {
 		return memberDao.findId(sqlSession, member);
 	}
+
+
+
+
+	//admin - 회원 정보 상세조회
+	@Override
+	public Member selectMemberDetailInfo(int userNo) {
+		return memberDao.selectMemberDetailInfo(sqlSession, userNo);
+	}
+
+	
+	//admin - 회원 정보 상세조회
+	@Override
+	public int memberStatusUpdate(Member m) {
+		return memberDao.memberStatusUpdate(sqlSession, m);
+	}
+
+
+
+
+
 }
 

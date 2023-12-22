@@ -1,7 +1,5 @@
 package com.kh.tinyfarm.common.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +16,7 @@ public class Attachment {
 	private String originName;
 	private String changeName;
 	private String filePath;
-	private Date createDate;
+	private String createDate;
 	private String status;
 	private int fileType;
 }

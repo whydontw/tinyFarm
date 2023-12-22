@@ -10,15 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.board.model.service.BoardService;
 import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
-import com.kh.tinyfarm.common.model.vo.PageInfo;
-import com.kh.tinyfarm.common.template.Pagination;
+import com.kh.tinyfarm.board.model.vo.BoardReport;
+
 
 @Controller
 public class BoardController {
@@ -26,26 +25,23 @@ public class BoardController {
 	private BoardService boardService;
 	
 	
-	//페이징처리한 boardList
-	@RequestMapping("list.bo")
-	//@GetMapping("list.bo")
-	public String selectBoardList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,Model model) {
-			
-		//총 게시글 리스트 개수 가져오기
-		int listCount = boardService.boardListCount();
-		
-		int boardLimit = 5;
-		int pageLimit = 5;
-		
-		
-		PageInfo pi= Pagination.getPageInfo(listCount,currentPage,boardLimit,pageLimit);
-		ArrayList<Board> blist = boardService.selectBoardList(pi);
-		System.out.println("blist : "+blist);
-		model.addAttribute("pi", pi);
-		model.addAttribute("blist",blist);
-		
+	
+	@RequestMapping("moveList.bo")
+	public String moveList() {
 		return "board/boardList";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="list.bo",produces = "application/json; charset=UTF-8")
+	public ArrayList<Board>selectBoardList(){
+		
+		
+		ArrayList<Board> blist=boardService.selectBoardList();
+		//System.out.println("blist : "+blist);
+		
+		return blist;
+	}
+	
 	
 	@RequestMapping("detail.bo")
 	public String boardDetail(int boardNo,Model model) {
@@ -77,7 +73,7 @@ public class BoardController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글 작성이 성공하셨습니다.");
-			return "redirect:list.bo";
+			return "redirect:moveList.bo";
 		}else {
 			session.setAttribute("alertMsg", "게시글 작성이 실패하셨습니다.");
 			return "common/errorPage";
@@ -86,9 +82,10 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("update.bo")
+	@GetMapping("moveUpdate.bo")
 	public String moveBoardUpdate(int boardNo,Model model) {
 		Board boardInfo = boardService.boardDetail(boardNo);
+		System.out.println("boardInfo : "+boardInfo);
 		model.addAttribute("boardInfo",boardInfo);
 		
 		return "board/boardUpdate";
@@ -96,9 +93,10 @@ public class BoardController {
 	
 	@PostMapping("update.bo")
 	public String boardUpdate(Board boardInfo,HttpSession session) {
-		
+		System.out.println("업데이트확인");
+		System.out.println("boardInfo : "+boardInfo);
 		int result = boardService.boardUpdate(boardInfo);
-		
+		System.out.println("result : "+result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글 수정이 성공하셨습니다.");
 			return "redirect:detail.bo?boardNo="+boardInfo.getBoardNo();
@@ -114,9 +112,9 @@ public class BoardController {
 		
 		int result = boardService.boardDelete(boardNo);
 		
-		if(result>0) {
+		if(result>0) {	
 			session.setAttribute("alertMsg", "게시글을 삭제하였습니다.");
-			return "redirect:list.bo";
+			return "redirect:moveList.bo";
 		}else {
 			session.setAttribute("alertMsg", "게시글 삭제가 실패했습니다.");
 			return "common/errorPage";
@@ -139,49 +137,145 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="insertReply.bo", produces="application/json; charset=UTF-8")
 	public int insertReply(BoardReply br) {
-		System.out.println("이것도 안나올까??");
-		System.out.println("br : "+br);
+		//System.out.println("이것도 안나올까??");
+		//System.out.println("br : "+br);
 		int result = boardService.insertReply(br);
-		System.out.println("result : "+result);
+		//System.out.println("result : "+result);
 		return result;
 	}
 	
-	@PostMapping("updateReply.bo")
-	public String updateReply(int replyNo) {
-		System.out.println(replyNo);
+	@ResponseBody
+	@RequestMapping(value="updateReply.bo",produces="application/json; charset=UTF-8")
+	public int updateReply(BoardReply br) {
 		
-		int result = boardService.updateReply(replyNo);
-		
-		return "";
+		//System.out.println("br : "+br);
+		int result = boardService.updateReply(br);
+		//System.out.println(result);
+		return result;
 	}
 	
-	
-	@PostMapping("deleteReply.bo")
-	public String deleteReply(int replyNo) {
-		System.out.println(replyNo);
+	@ResponseBody
+	@RequestMapping(value="deleteReply.bo",produces = "application/json; charset=UTF-8")
+	public int deleteReply(int replyNo) {
+		//System.out.println(replyNo);
 		int result = boardService.deleteReply(replyNo);
 		
 		
-		return "";
+		return result;
 	}
 	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="findLike.bo",produces =
+	 * "application/json; charset=UTF-8") public int findLike(BoardLike br) {
+	 * System.out.println("br : "+br); //int result = boardService.findLike(br);
+	 * 
+	 * int result = boardService.findLike(br);
+	 * System.out.println("result : "+result); return result;
+	 * 
+	 * }
+	 */
+	@ResponseBody
+	@RequestMapping(value="findLike.bo",produces = "application/json; charset=UTF-8")
+	public ArrayList<BoardLike> findLike(BoardLike br) {
+		//System.out.println("br : "+br);
+		//int result  = boardService.findLike(br);
+		
+		ArrayList<BoardLike> blList = boardService.findLike(br);
+		//System.out.println("result : "+blList);
+		return blList;
+		
+	}
+
 	
 	@ResponseBody
 	@RequestMapping(value="dolike.bo",produces = "application/json; charset=UTF-8")
 	public int doLike(BoardLike bl) {
 		
+		//System.out.println("bl : "+bl);
+		
 		int result1 = boardService.likeIncreaseCount(bl);
+		int result2 = 0;
+		
 		if(result1>0) {			
-			int result2 = boardService.doLike(bl);
+			result2 = boardService.doLike(bl);
 			
 			return result2;
 		}else {
-			return result1;
+			return result2;
+		}
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="cancelLike.bo",produces = "application/json; charset=UTF-8")
+	public int cancelLike(BoardLike bl) {
+		int result1= boardService.likeDecreaseCount(bl);
+		int result2=0;
+		if(result1>0) {
+			result2= boardService.cancelLike(bl);
+			return result2;
+		}else {
+			return result2;
 		}
 		
+	}
+	//게시글 신고페이지로 이동
+	@PostMapping("moveReport.bo")
+	public String moveReport(int userNo,int boardNo,Model model) {
+		//System.out.println("userNo : "+userNo);
+		//System.out.println("boardNo :"+boardNo);
+		model.addAttribute("reportWriter", userNo);
+		model.addAttribute("refBno", boardNo);
+		
+		return "board/boardReport";
+	}
+	//게시글 신고
+	@PostMapping("report.bo")
+	public String boardReport(BoardReport bp,HttpSession session) {
+		//System.out.println("bp : "+bp);
+		
+		int result =boardService.boardReport(bp);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg","게시글 신고에 성공하셨습니다.");
+			return "redirect:moveList.bo";
+		}else {
+			session.setAttribute("alertMsg","게시글 신고에 실패하셨습니다.");
+			return "redirect:moveList.bo";
+		}
 		
 	}
 	
+	/*
+	//댓글 신고페이지로 이동
+	@PostMapping("moveReReport.bo")
+	public String moveReReport(String userId,int replyNo,Model model) {
+		System.out.println("userId : "+userId);
+		System.out.println("boardNo :"+replyNo);
+		model.addAttribute("reportWriter", userId);
+		model.addAttribute("refRno", replyNo);
+		
+		return "board/replyReport";
+	}
 	
-	
+	//댓글 신고
+	@PostMapping("reReport.bo")
+	public String boardReReport(ReplyReport rp,HttpSession session) {
+		//System.out.println("rp : "+rp);
+		
+		int result =boardService.boardReReport(rp);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg","댓글 신고에 성공하셨습니다.");
+			return "redirect:moveList.bo";
+		}else {
+			session.setAttribute("alertMsg","댓글 신고에 실패하셨습니다.");
+			return "redirect:moveList.bo";
+		}
+		
+	}
+	*/
+
 }

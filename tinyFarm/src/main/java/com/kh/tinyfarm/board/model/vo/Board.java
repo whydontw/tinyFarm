@@ -23,5 +23,6 @@ public class Board {
 
 	private String titleImg;
 	private String profile;
-	
+	private int replyCount;
+	private String email;
 }

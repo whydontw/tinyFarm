@@ -28,12 +28,14 @@
 		a,p{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
-		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+		.h1, .h3, .h4, .h5, .h6, h1, h4, h5, h6{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
+		
+
 		
 	</style>
 </head>
@@ -129,13 +131,14 @@
                                             <li><a href="gardeningList.pp?category=실내농업">실내농업 관련 정보</a> </li>
                                             <li><a href="gardeningList.pp?category=기능별 텃밭">기능별 텃밭 정보</a> </li>
                                             <li><a href="makeInGarden.pp">실내정원 만들기</a> </li>
+                                            <li><a href="season.re">계절별 텃밭 가꾸는법</a> </li>
                                         </ul>
                                     </li>
                                     <li><a href="about.html">체험활동</a></li>
                                     
                                     <li><a href="moveList.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
-                                    <li><a href="contact.html">공지사항</a></li>
+                                    <li><a href="noticeList.no">공지사항</a></li>
                                     <li><a href="qnaList.qa">1:1 문의</a></li>
                                 </ul>
 

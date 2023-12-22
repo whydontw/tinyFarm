@@ -11,6 +11,6 @@ public class ChatRoom {
 	private int chatRoomNo;//	CHAT_ROOM_NO 채팅방 번호
 	private String firstMemId;//	FIRST_MEM_ID 최초 송신자
 	private String receiveMemId;//	RECEIVE_MEM_ID 수신자
-	private String status;//	STATUS 상태
+	
 
 }

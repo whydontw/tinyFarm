@@ -123,6 +123,24 @@
 	            #{userNo} 
 	        </foreach>
 		</update>
+		
+		
+		<select id="selectMemberDetailInfo" resultMap="memberResultSet">
+			SELECT * FROM MEMBER
+			WHERE USER_NO = #{userNo}
+		</select>
+		
+		
+		<update id="memberStatusUpdate">
+			UPDATE MEMBER SET
+			GRADE = #{grade},
+			STATUS = #{status}
+			WHERE USER_NO = #{userNo}
+		</update>
+		
+		
+		
+		
   		
   	
 		

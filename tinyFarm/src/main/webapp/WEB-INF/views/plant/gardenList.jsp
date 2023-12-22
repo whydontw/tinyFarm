@@ -69,8 +69,6 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
-	<!-- ##### Product Area Start ##### -->
-	<a href="chatList.ch">채팅</a>
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->

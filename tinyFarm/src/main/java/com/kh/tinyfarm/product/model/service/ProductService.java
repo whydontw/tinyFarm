@@ -28,6 +28,15 @@ public interface ProductService {
 	int insertProduct(Product p);
 	int insertAttachment(Attachment a);
 
+	//상품 수정
+	int updateProduct(Product p);
+	int updateAttachment(Attachment a);
+
+	//상품 삭제
+	int deleteProduct(int pno);
+
+	
+
 
 
 }
