@@ -19,8 +19,6 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
 	<style>
-   
-
         table {
         border: 1px #a39485 solid;
         font-size: .9em;

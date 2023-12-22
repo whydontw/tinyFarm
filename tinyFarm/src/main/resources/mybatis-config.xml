@@ -31,6 +31,7 @@
 		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Category" alias="category"/>
 		
 		<typeAlias type="com.kh.tinyfarm.publicPlant.model.vo.PlantComment" alias="plantComment"/>
+		<typeAlias type="com.kh.tinyfarm.notice.model.vo.Notice" alias="notice"/>
 
 	</typeAliases>
 	
