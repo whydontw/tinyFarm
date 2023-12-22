@@ -4,7 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="diaryMapper">
-  
   	<resultMap type="diary" id="diaryResultSet">
   		<result column="DIARY_NO" property="diaryNo"/>
   		<result column="CATEGORY_NO" property="categoryNo"/>
@@ -15,6 +14,11 @@
   		<result column="SELECT_OPEN" property="selectOpen"/>
   		<result column="CREATE_DATE" property="createDate"/>
   		<result column="STATUS" property="status"/>
+  	</resultMap>
+  	
+  	<resultMap type="diaryCategory" id="cateResultSet">
+  		<result column="CATEGORY_NO" property="diaryCateNo"/>
+  		<result column="CATEGORY_NAME" property="diarycateName"/>
   	</resultMap>
   	
   	<resultMap type="board" id="boardResultSet">
@@ -37,7 +41,7 @@
 		  	<result column="STATUS" property="status"/>
   	</resultMap>
   	
-  	<resultMap type = "member" id = "memberResultSet">
+  	<resultMap type="member" id="memberResultSet">
 			<result column = "USER_NO" property="userNo"/>
 			<result column = "USER_ID" property="userId"/>
 			<result column = "USER_PWD" property="userPwd"/>
@@ -155,7 +159,7 @@
     </select>
   
   	<!-- 달력 -->
-	<select id="selectDiaryList" resultType="diary" resultMap="diaryResultSet">
+	<select id="selectDiaryList" parameterType="diary" resultMap="diaryResultSet">
 		SELECT SELECT_DATE
 		FROM DIARY_BOARD
 		WHERE DIARY_WRITER = #{userNo}
@@ -182,8 +186,80 @@
 										,SYSDATE
 										,'Y')
   	</insert>
-
   	
+  	<!-- 일지개수 -->
+  	<select id="diaryListCount" resultType="_int">
+  		SELECT COUNT(DIARY_NO)
+		FROM DIARY_BOARD
+		WHERE DIARY_WRITER=#{userNo}
+  	</select>
+  	<!-- 회원등급변경 -->
+  	<update id="gradeSeed" parameterType="member">
+  		UPDATE MEMBER
+  		SET GRADE='씨앗'
+  		WHERE USER_NO=${userNo}
+  	</update>
+  	<update id="gradeShoot" parameterType="member">
+  		UPDATE MEMBER
+  		SET GRADE='새싹'
+  		WHERE USER_NO=${userNo}
+  	</update>
+  	<update id="gradeLeaf" parameterType="member">
+  		UPDATE MEMBER
+  		SET GRADE='잎새'
+  		WHERE USER_NO=${userNo}
+  	</update>
+  	<update id="gradeFruit" parameterType="member">
+  		UPDATE MEMBER
+  		SET GRADE='열매'
+  		WHERE USER_NO=${userNo}
+  	</update>
+  	
+	<!-- 일지 선택 -->
+  	<select id="selectDiary" parameterType="diary" resultMap="diaryResultSet">
+	  	SELECT DIARY_NO,CATEGORY_NO, DIARY_WRITER, SELECT_DATE, DIARY_TITLE, DIARY_CONTENT, SELECT_OPEN, CREATE_DATE
+		FROM DIARY_BOARD
+		WHERE DIARY_WRITER=#{diaryWriter}
+		AND SELECT_DATE=#{selectDate}
+  	</select>
+  	
+  	<!-- 일지보기 -->
+  	<select id="viewDiary" resultType="diary" resultMap="diaryResultSet">
+  		SELECT DIARY_NO,CATEGORY_NO,SELECT_DATE,DIARY_TITLE,DIARY_CONTENT,SELECT_OPEN
+  		FROM DIARY_BOARD
+  		WHERE DIARY_NO=#{diaryNo}
+  	</select>
+  	
+  	<!-- 카테고리 이름뽑기 -->
+  	<select id="selectCategory" resultType="diaryCategory" resultMap="cateResultSet">
+  		SELECT CATEGORY_NAME
+  		FROM DIARY_FARM_CATEGORY
+  		WHERE CATEGORY_NO = #{cNo}
+  	</select>
+  	
+  	<!-- 달력에서 일지 유무 -->
+  	<select id="existDiary" resultType="_int">
+  		SELECT COUNT(*)
+		FROM DIARY_BOARD
+		WHERE DIARY_WRITER = #{diaryWriter}
+		AND SELECT_DATE = #{selectDate}
+  	</select>
+  	
+  	<!-- 일지 삭제 -->
+  	<delete id="deleteDiary">
+  		DELETE FROM DIARY_BOARD
+		WHERE DIARY_NO = #{diaryNo}
+  	</delete>
+  	<!-- 일지 수정 -->
+  	<update id="updateDiary" parameterType="diary">
+  		UPDATE DIARY_BOARD
+  		SET CATEGORY_NO = #{categoryNo}
+  			,DIARY_TITLE = #{diaryTitle}
+  			,DIARY_CONTENT = #{diaryContent}
+  			,SELECT_OPEN = #{selectOpen}
+  		WHERE DIARY_NO=#{diaryNo} 
+  		AND STATUS = 'Y'
+  	</update>
   	
   	
   </mapper>

@@ -68,7 +68,7 @@
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="insert.di">영농일지 작성</a></li>
+						<li class="breadcrumb-item"><a href="insert.di">영농일지 수정</a></li>
 					</ol>
 					</nav>
 				</div>
@@ -80,8 +80,9 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="row">
-		          		<form action="insert.di" method="post" onsubmit="return insertDiary();">
+		          		<form action="update.di" method="post" onsubmit="return updateDiary();">
 		          			<input type="hidden" name="diaryWriter" value="${loginUser.userNo }">
+		          			<input type="hidden" name="diaryNo" value="${d.diaryNo }">
 		          			<label for="categorys">텃밭유형 : </label>
 		          				<select id="categoryNo" name="categoryNo">
 		          					<option value="1">개인밭</option>
@@ -93,17 +94,25 @@
 		          					<option value="7">학교</option>
 		          				</select>
 		          				<div id="datelabel">
-		          					<input type="hidden" id="selectDate" name="selectDate" value=" <%=selectDate%>">
-		          					작성일 : <%=selectDate%>
+		          					작성일 : ${d.selectDate }
+		          					<input type="hidden" name="selectDate" value="${d.selectDate }">
 		          				</div>
-		          				<input type="text" name="diaryTitle" id="diaryTitle" placeholder="제목을 입력해주세요."> 
-		          				<textarea id="diaryContent" name="diaryContent"></textarea>
+		          				<input type="text" name="diaryTitle" id="diaryTitle" value="${d.diaryTitle }"> 
+		          				<textarea id="diaryContent" name="diaryContent">${d.diaryContent }</textarea>
 		          				  
 		          				<div id="radioBtn">
-		          					<label>공개시 내가 팔로우한 사람들에게만 공개됩니다.</label>
-			          				<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
-			          				<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
-			          				<input type="submit" id="diBtn" class="btn btn-success" value="등록">
+		          					<label>공개여부</label>
+		          					<c:choose>
+		          						<c:when test="${d.selectOpen eq 'Y' }">
+					          				<input type="radio" id="openY" name="selectOpen" value="Y" checked> <label for="openY">공개</label>
+					          				<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
+		          						</c:when>
+		          						<c:otherwise>
+		          						 	<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
+					          				<input type="radio" id="openN" name="selectOpen" value="N" checked> <label for="openN">비공개</label>
+		          						</c:otherwise>
+		          					</c:choose>
+			          				<input type="submit" id="diBtn" class="btn btn-success" value="수정">
 		          				</div>
 		          			</form>
                     </div>
@@ -137,7 +146,7 @@
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
        });
        
-       function insertDiary(){
+       function updateDiary(){
     	   let diaryTitle = $("#diaryTitle").val();
     	   let diaryContent = $("#diaryContent").val();
     	   let openVal = $("input[name=selectOpen]:checked").val();

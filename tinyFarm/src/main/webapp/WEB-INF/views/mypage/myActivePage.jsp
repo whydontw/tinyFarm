@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="resources/style.css">
 	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
 	<style>
+	
 		#boardList>table thead tr:hover,
 		#replyList>table thead tr:hover,
 		#followingTableContainer>table thead tr:hover,
@@ -35,10 +36,6 @@
 		}
 		.page-item.current-page a{
 		    background-color: #70c745;
-		}
-		ul{
-			position: absolute;
-			text-align: left;
 		}
 	</style>
 </head>
@@ -200,7 +197,7 @@
 	    			let bList = result.bList;
 	    			
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(bList == null){
+	    			if(bList.length == 0){
 	    				str += "<tr>"
 		    				+ "<td colspan='5'>게시글이 존재하지 않습니다.</td>"
 		    				+ "</tr>";
@@ -325,7 +322,7 @@
 	    			let maxPage = result.fiPi.maxPage;
 	    			let fiList = result.fiList;
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(fiList == null){
+	    			if(fiList.length == 0){
 	    				str += "<tr>"
 		    				+ "<td>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
@@ -384,7 +381,7 @@
 	    			let maxPage = result.fwPi.maxPage;
 	    			let fwList = result.fwList;
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(fwList == null){
+	    			if(fwList.length == 0){
 	    				str += "<tr>"
 		    				+ "<td>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
