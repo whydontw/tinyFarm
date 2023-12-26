@@ -2,6 +2,7 @@ package com.kh.tinyfarm.member.model.service;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -154,22 +155,22 @@ public class MemberServiceImpl implements MemberService {
 		
 	//admin - 전체 회원수
 	@Override
-	public int memberListCount() {
-		return memberDao.memberListCount(sqlSession); 
+	public int memberListCount(String searchId) {
+		return memberDao.memberListCount(sqlSession, searchId); 
 	}
 	
 
 	//admin - 회원 리스트
 	@Override
-	public ArrayList<Member> selectMemberList(PageInfo pi) {
-		return memberDao.selectMemberList(sqlSession, pi);
+	public ArrayList<Member> selectMemberList(PageInfo pi, String searchId) {
+		return memberDao.selectMemberList(sqlSession, pi, searchId);
 	}
 
 	
 	//admin - 회원활동 일괄중지
 	@Override
-	public int memberStatusN(ArrayList<Integer> mList) {
-		return memberDao.memberStatusN(sqlSession, mList);
+	public int memberStatus(Map<String, Object> map) {
+		return memberDao.memberStatus(sqlSession, map);
 	}
 
 	
@@ -193,6 +194,8 @@ public class MemberServiceImpl implements MemberService {
 	public int memberStatusUpdate(Member m) {
 		return memberDao.memberStatusUpdate(sqlSession, m);
 	}
+
+
 
 
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+	<mapper namespace="adminMapper">
+	
+		<resultMap type="boardReport" id="boardReportResultSet">
+			<result column="REPORT_NO" property="reportNo" />
+			<result column="REPORT_WRITER" property="reportWriter" />
+			<result column="REF_BNO" property="refBno" />
+			<result column="CATEGORY" property="category" />
+			<result column="REPORT_CONTENT" property="reportContent" />
+			<result column="CREATE_DATE" property="createDate" />
+			<result column="STATUS" property="status" />
+			
+			<result column="BOARD_WRITER" property="boardWriter" />
+			<result column="BOARD_TITLE" property="boardTitle" />
+			<result column="BOARD_CONTENT" property="boardContent" />
+<!-- 			<result column="COUNT" property="count" /> -->
+<!-- 			<result column="LIKE_COUNT" property="likeCount" /> -->
+			<result column="BOARD_CREATEDATE" property="boardCreateDate" />
+		</resultMap>
+		
+		
+		<!-- admin - 신고 게시글 개수 세기 -->
+		<select id="boardReportListCount" resultType="_int">
+  			SELECT COUNT(*) FROM BOARD_REPORT
+  		</select>
+  		
+  		<select id="selectBoardReportList" resultMap="boardReportResultSet">
+  			SELECT
+					REPORT_NO,
+					REF_BNO,
+					USER_ID  REPORT_WRITER,
+					CATEGORY,
+					BR.CREATE_DATE,
+					REPORT_CONTENT,
+					BOARD_TITLE,
+					BOARD_WRITER,
+					B.CREATE_DATE BOARD_CREATEDATE
+					FROM BOARD_REPORT BR
+					JOIN (SELECT
+							BOARD_NO,
+							USER_ID BOARD_WRITER,
+							BOARD_TITLE,
+							CREATE_DATE
+							FROM BOARD JOIN MEMBER ON(BOARD_WRITER=USER_NO)
+                            WHERE BOARD.STATUS = 'Y'
+                            ) B ON(REF_BNO = BOARD_NO) 
+							JOIN MEMBER ON(REPORT_WRITER = USER_NO)
+							WHERE BR.STATUS = 'Y'
+					<choose>
+				        <when test="category == 1">
+				            AND CATEGORY = 1
+				        </when>
+				        <when test="category == 2">
+				            AND CATEGORY = 2
+				        </when>
+				        <when test="category == 3">
+				            AND CATEGORY = 3
+				        </when>
+				        <when test="category == 4">
+				            AND CATEGORY = 4
+				        </when>
+				        <otherwise></otherwise>
+				    </choose>
+  		</select>
+  		
+  		
+  		<update id="revokeBoardReport">
+  			UPDATE BOARD_REPORT SET
+			STATUS = 'N'
+			WHERE REPORT_NO IN 
+		    <foreach collection="brList" item="reportNo" index="index" open="(" close=")" separator=","> 
+		        #{reportNo}
+		    </foreach>
+  		</update>
+  		
+		<update id="deleteBoardReport">
+		    UPDATE BOARD
+		    SET STATUS = 'N'
+		    WHERE EXISTS (
+		        SELECT 1
+		        FROM BOARD_REPORT
+		        WHERE REF_BNO = BOARD.BOARD_NO
+		        AND REF_BNO IN 
+		            <foreach collection="brList" item="reportNo" index="index" open="(" close=")" separator=","> 
+		                #{reportNo}
+		            </foreach>
+		    )
+		</update>
+  		
+		
+	</mapper>
