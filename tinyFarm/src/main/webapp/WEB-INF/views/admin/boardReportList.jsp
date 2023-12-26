@@ -1,4 +1,3 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -68,44 +67,38 @@
                     <!-- <div class="row"> -->
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
-                                <p><h5><b>🌱 회원 관리</b></h5></p>
+                                <p><h5><b>🌱 신고 게시글 관리</b></h5></p>
                             </div>
-<!--                             <div class="search_by_terms"> -->
-<!--                                 <form action="#" method="post" class="form-inline"> -->
-<!--                                     <select class="custom-select widget-title"> -->
-<!--                                       <option selected>Show:</option> -->
-<!--                                       <option value="1">미답변</option> -->
-<!--                                       <option value="2">답변완료</option> -->
-<!--                                     </select> -->
-<!--                                 </form> -->
-<!--                             </div> -->
+                            <div class="search_by_terms">
+                                <select class="custom-select widget-title" id="selectBrCategory" onchange="selectBrCategory(this.value)">
+                                  <option value="0" selected>CATEGORY:</option>
+                                  <option value="1">스팸</option>
+                                  <option value="2">욕설</option>
+                                  <option value="3">광고</option>
+                                  <option value="4">음란물</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- 표 작성 내역 -->
-                        <div class="clearfix mt-15 mb-15" id="memberListTable">
-                        	<div class="mb-15" id="memberListCurrentPage">현재 페이지: ${result.pi.currentPage }</div>
+                        <div class="clearfix mt-15 mb-15" id="boardReportListTable">
+                        	<div class="mb-15" id="boardReportListCurrentPage"></div>
                             <table class="table table-responsive" align="center">
                                 <colgroup>
                                     <col width="5%">
-                                    <col width="13%">
-                                    <col width="13%">
-                                    <col width="18%">
-                                    <col width="auto%">
                                     <col width="12%">
                                     <col width="13%">
-                                    <col width="8%">
+                                    <col width="13%">
+                                    <col width="auto%">
                                     <col width="5%">
                                 </colgroup>
                                 <thead>
                                     <tr align="center">
                                         <th>No.</th>
-                                        <th>ID</th>
-                                        <th>이름</th>
-                                        <th>연락처</th>
-                                        <th>EMAIL</th>
-                                        <th>등급</th>
-                                        <th>활동여부</th>
-                                        <th>상세</th>
+                                        <th>카테고리</th>
+                                        <th>신고ID</th>
+                                        <th>신고일자</th>
+                                        <th>신고내역 상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
@@ -114,33 +107,25 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" >
-                                <li onclick="memberStatus('N')"><a><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지</a></li>
-                                <li onclick="memberStatus('Y')"><a><i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지 해제</a></li>
+                                <li onclick="boardReportStatus('cancel')"><a><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;&nbsp;신고취소</a></li>
+                                <li onclick="boardReportStatus('delete')"><a><i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;게시글 삭제</a></li>
 <!--                            <li><a><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
 
                         
-                        <%@ include file="memberDetail.jsp" %>
-                        
+						<%@ include file="memberDetail.jsp" %>
+						
 						<!-- ######### 검색 ######### -->
 	                    <div class="section-padding-100">
-	                        <div class="single-widget-area">
-	                        	<!-- height-50 css 추가 -->
-	                           <div class="mx-auto search-form d-flex float-right">
-	                               <input type="search" name="searchId" id="searchMemberId" placeholder="ID 검색">
-	                               <button type="button" onclick="searchMemberId()"><i class="fa fa-search"></i></button>
-	                           </div>
-	                        </div>
-	                    </div>
-	
-	                    <div class="row">
-	                        <div class="col-12 mt-100">
-	                            <!-- ######### 페이징 바 #########-->
-	                            <nav aria-label="Page navigation">
-	                            	<ul class="pagination" id="memberListPagenation"></ul>
-	                            </nav>
-	                        </div>
+		                    <div class="row">
+		                        <div class="col-12 mt-100">
+		                            <!-- ######### 페이징 바 #########-->
+		                            <nav aria-label="Page navigation">
+		                            	<ul class="pagination" id="boardReportListPagenation"></ul>
+		                            </nav>
+		                        </div>
+		                    </div>
 	                    </div>
 	                </div>
 	            </div>
@@ -149,13 +134,12 @@
     <!-- ##### Blog Area End ##### -->
 
 
-
 						<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script type="text/javascript">
 					    	
                         $(function(){
                         	
-                        	selectMemberList(${currentPage}, "");
+                        	selectBoardReportList(${currentPage}, 0);
                         	
                         	//Modal 버튼 숨김
                         	$("#memberdetailViewModal").hide();
@@ -169,16 +153,16 @@
                         
                         
                         //회원 리스트
-                        function selectMemberList(currentPage, searchId){
+                        function selectBoardReportList(currentPage, category){
                         	
                         	$.ajax({
-                        		url: "selectMemberList.ad",
+                        		url: "selectBoardReportList.ad",
                         		data: {
                         			currentPage: currentPage,
-                        			searchId : searchId
+                        			category : category
                         		},
                         		success: function(result){
-                        			makeMemberListTable(result, searchId);
+                        			makeBoardReportListTable(result, category);
                         		},error: function(){
                         			console.log("오류났수 ㅠㅠ");
                         		}
@@ -188,116 +172,153 @@
                         }
                         
                         
-                        function makeMemberListTable(result, searchId){
+                        function makeBoardReportListTable(result, category){
                         	
-                        	let mList = result.mList;
-                        	let mPi = result.pi;
+                        	let brList = result.brList;
+                        	let brPi = result.pi;
                         	
-                        	let str = "";
+                			let str = "";
                 			
-                        	mList.forEach((item) => {
+                        	brList.forEach((item) => {
+                        		
+                        		let categoryStr = "";
                 				
-                				if(item.status == 'Y'){
-                					item.status = '활동';
-                				}else{
-                					item.status = '활동중지';
-                				}
+                				switch (item.category) {
+								case "1" :
+									item.category = '스팸';
+									break;
+								case "2" :
+									item.category = '욕설';
+									break;
+								case "3" :
+									item.category = '광고';
+									break;
+								case "4" :
+									item.category = '음란물';
+									break;
+								default:
+									break;
+								}
                 				
-                				str += "<tr><td>" + item.userNo + "</td>" +
-                                 		"<td>" + item.userId + "</td>" +
-                                 		"<td>" + item.userName + "</td>" +
-                                 		"<td>" + item.phone + "</td>" +
-                                 		"<td>" + item.email + "</td>" +
-                                 		"<td>" + item.grade + "</td>" +
-                                 		"<td>" + item.status + "</td>" +
-                                 		"<td><a href='#' onclick='memberDetailInfo(" + item.userNo + ")'><i class='fa fa-search'></i></a></td>" +
-                               			"<td><input type='checkbox' value=" + item.userNo + " class='chkMember'></td></tr>"
+                				
+                				console.log("카테고리", item.category); 
+                				
+                				str += "<tr class='align-items-center'><td>" + item.reportNo + "</td>" + 
+			                        	"<td>" + item.category + "</td>" +
+			                        	"<td>" + item.reportWriter + "</td>" +
+			                        	"<td>" + item.createDate + "</td>" +
+			                        	"<td><div class='single-widget-area'>" +
+			                            			"<div class='single-latest-post d-flex align-items-center mb-15'>" +
+// 						                                "<div class='post-thumb'>" +
+// 						                                    "<img src='${contextPath}/resources/img/bg-img/30.jpg' alt=''>" +
+// 						                                "</div>" +
+						                                "<div class='post-content'>" +
+						                                    "<a href='detail.bo?boardNo=" + item.refBno + "' class='post-title'>" +
+						                                        "<h6>" + item.boardTitle + "</h6>" +
+						                                    "</a>" +
+						                                    "<a class='post-date'>" + item.boardWriter + " / " + item.boardCreateDate + "</a>" +
+						                                "</div>" +
+						                            "</div>" +
+					                        		"<div class='p-2' style='background: #F9F9F9'> <span style='color:red'>[ 신고사유 상세 ]  </span>   <span>   " + item.reportContent +"</div>" + 
+					                            "</div>" +
+			                        		"</td>" +
+			                        	"<td><input type='checkbox' value=" + item.reportNo + " class='chkBoardReport'></td></tr>";
+                				
+                				
+//                 				str += "<tr><td>" + item.ㄱ데ㅐ + "</td>" +
+//                                  		"<td>" + item.userId + "</td>" +
+//                                  		"<td>" + item.userName + "</td>" +
+//                                  		"<td>" + item.phone + "</td>" +
+//                                  		"<td>" + item.email + "</td>" +
+//                                  		"<td>" + item.grade + "</td>" +
+//                                  		"<td>" + item.status + "</td>" +
+//                                  		"<td><a href='#' onclick='memberDetailInfo(" + item.userNo + ")'><i class='fa fa-search'></i></a></td>" +
+//                                			"<td><input type='checkbox' value=" + item.userNo + " class='chkBoardReport'></td></tr>"
                 				
                 			})
 
-                			$("#memberListTable table tbody").html(str);
+                			$("#boardReportListTable table tbody").html(str);
                         	
                         	
                         	//pagination
-                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + (mPi.currentPage - 1) + ", \"" + searchId + "\")'><i class='fa fa-angle-left'></i></a></li>"
-                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + (mPi.currentPage + 1) + ", \"" + searchId + "\")'><i class='fa fa-angle-right'></i></a></li>"
+                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectBoardReportList(" + (brPi.currentPage - 1) + ", \"" + category + "\")'><i class='fa fa-angle-left'></i></a></li>"
+                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectBoardReportList(" + (brPi.currentPage + 1) + ", \"" + category + "\")'><i class='fa fa-angle-right'></i></a></li>"
                         	
                         	let paging = "";
                     		
                     		
-                    		if(mPi.currentPage > 1){
+                    		if(brPi.currentPage > 1){
                     			paging = beforePage;
                     		}
                     		
                     		
-                           	console.log("페이징 searchId : ", searchId);
-                    		
-                    		for(var i = 1; i <= mPi.endPage; i++) {
-                        		paging += "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + i + ", \"" + searchId + "\")'>" + i + "</a></li>";
+                    		for(var i = 1; i <= brPi.endPage; i++) {
+                        		paging += "<li class='page-item'><a class='page-link' onclick='selectBoardReportList(" + i + ", \"" + category + "\")'>" + i + "</a></li>";
                     		}
                         	
-                    		if(mPi.currentPage < mPi.maxPage){
+                    		if(brPi.currentPage < brPi.maxPage){
                        			paging += afterPage;
                        		}	
                         	
-                    		
-                    		$("#memberListCurrentPage").text("현재 페이지: " + mPi.currentPage);
-                			$("#memberListPagenation").html(paging);
+                    		$("#boardReportListCurrentPage").text("현재 페이지: " + brPi.currentPage);
+                			$("#boardReportListPagenation").html(paging);
                         	
                         }
                         
                         
-                        //아이디 검색
-                        function searchMemberId(){
-                        	selectMemberList(1, $("#searchMemberId").val());
+                        
+                        //카테고리별 검색
+                        function selectBrCategory(category){
+                        	selectBoardReportList(1, category);
                         }
                         
                         
                         
-                        function memberStatus(status){
+                        function boardReportStatus(status){
                         	
                         	let statusMsg = "";
                         	
-                        	if(status == 'Y'){
-                        		statusMsg = "활동중지 해지";
+                        	if(status == 'cancel'){
+                        		statusMsg = "신고 일괄취소";
                         	}else{
-                        		statusMsg = "활동중지 처리"
+                        		statusMsg = "게시글 삭제"
                         	}
                         	
-                        	if(confirm("선택한 회원의 " + statusMsg + "를 하시겠습니까?")){
+                        	if(confirm("선택한 건의 " + statusMsg + "를 하시겠습니까?")){
 
-                            let chkMemberList = "";
+                            let chkBoardReportList = "";
 							
                             //체크 요소 접근
-                            $(".chkMember:checked").each(function(index, item){
+                            $(".chkBoardReport:checked").each(function(index, item){
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkMemberList += item.value;
+                                	chkBoardReportList += item.value;
                                 } else {								//첫번째 아니면 ,값 넣기
-                                	chkMemberList += "," + item.value;
+                                	chkBoardReportList += "," + item.value;
                                 }
 
                             });
                             
 	                            //선택된 글 없을시
-	                            if(chkMemberList == null || chkMemberList == ""){
+	                            if(chkBoardReportList == null || chkBoardReportList == ""){
 	                            	alert("회원을 선택하세요");
 	                            }else{
+	                            	
 	                            
 									//선택된 글이 있으면
 	                            	$.ajax({
-		    							url: "memberStatus.ad",
+		    							url: "boardReportStatus.ad",
 		    							data: {
 		    								status : status,
-		    								chkMemberList : chkMemberList
+		    								chkBoardReportList : chkBoardReportList
 		    							},
 		    							success: function(result){
 		    								
 		    								if(result === "NNNY"){
-		    									alert("회원 활동 상태변경이 일괄 변경되었습니다.");
+		    									alert("일괄 변경되었습니다.");
 		    									
 		    									$("input[type=checkbox]").prop("checked",false);
-		    									selectMemberList(${currentPage}, $("#searchMemberId").val());
+		    									selectBoardReportList(${currentPage}, $("#selectBrCategory").val());
 		    								}
 		    								
 		    							},
@@ -354,40 +375,40 @@
                         }
                         
 						
-                        //회원 정보 변경
-                        function memberInfoUpdate(){
+//                         //회원 정보 변경
+//                         function memberInfoUpdate(){
 
-                        	if(!confirm('회원 정보를 수정하겠습니까?')){
-                        		return false;
-                        	}
+//                         	if(!confirm('회원 정보를 수정하겠습니까?')){
+//                         		return false;
+//                         	}
                         	
-                        	var userNo = $('#userNo_detail').val();
-                        	var status = $('#userStatus_detail').val();
-                        	var grade = $('#userGrade_detail').val();
+//                         	var userNo = $('#userNo_detail').val();
+//                         	var status = $('#userStatus_detail').val();
+//                         	var grade = $('#userGrade_detail').val();
                         	
                         	
-                        	$.ajax({
-                        		url : "memberInfoUpdate.ad",
-                        		data: {
-                        			userNo : userNo,
-                        			status : status,
-                        			grade : grade
-                        		},
-                        		success: function(result){
+//                         	$.ajax({
+//                         		url : "memberInfoUpdate.ad",
+//                         		data: {
+//                         			userNo : userNo,
+//                         			status : status,
+//                         			grade : grade
+//                         		},
+//                         		success: function(result){
                         			
-                        			$("#userStatus_detail").val(result.status);
-                        			$("#userGrade_detail").val(result.grade);
+//                         			$("#userStatus_detail").val(result.status);
+//                         			$("#userGrade_detail").val(result.grade);
                         			
-                                	selectMemberList(${currentPage});
+//                                 	selectBoardReportList(${currentPage});
                         			
-                        		},
-                        		error: function(){
-                        			alert("오류났수ㅜ");
-                        		}
+//                         		},
+//                         		error: function(){
+//                         			alert("오류났수ㅜ");
+//                         		}
 
-                        	})
+//                         	})
                         	
-                        }
+//                         }
                         
 					</script>
 

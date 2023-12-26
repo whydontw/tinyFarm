@@ -66,25 +66,28 @@ public class MemberDao {
 
 	
 	//admin - 전체 회원수
-	public int memberListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.memberListCount");
+	public int memberListCount(SqlSessionTemplate sqlSession, String searchId) {
+		return sqlSession.selectOne("memberMapper.memberListCount", searchId);
 	}
 
 	
 	//admin - 전체 회원목록
-	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String searchId) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", searchId, rowBounds);
 	}
 
 	
 	//admin - 회원활동 일괄중지
-	public int memberStatusN(SqlSessionTemplate sqlSession, ArrayList<Integer> list) {
-		return sqlSession.update("memberMapper.memberStatusN", list);
+	public int memberStatus(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		
+		System.out.println(map);
+		int result = sqlSession.update("memberMapper.memberStatus", map);
+		return result;
 	}
 
 	
@@ -98,6 +101,7 @@ public class MemberDao {
 	public int memberStatusUpdate(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.memberStatusUpdate", m);
 	}
+
 
 	
 }
