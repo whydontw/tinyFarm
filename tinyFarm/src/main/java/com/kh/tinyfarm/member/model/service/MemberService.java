@@ -2,6 +2,7 @@ package com.kh.tinyfarm.member.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,14 +28,14 @@ public interface MemberService {
 
 	
 	//admin - 회원 목록 (회원수)
-	int memberListCount();
+	int memberListCount(String searchId);
 
 	//admin - 회원 목록
-	ArrayList<Member> selectMemberList(PageInfo pi);
+	ArrayList<Member> selectMemberList(PageInfo pi, String searchId);
 
 	
 	//admin - 회원활동 일괄중지
-	int memberStatusN(ArrayList<Integer> mList);
+	int memberStatus(Map<String, Object> map);
 
 	
 	//아이디 찾기
@@ -47,4 +48,13 @@ public interface MemberService {
 	
 	//admin - 회원상태 업데이트
 	int memberStatusUpdate(Member m);
+	
+
+	
+	//카카오 로그인
+	String insertKakaoUserInfo(String userId, String userName, String originName, String changeName);
+	
+
+	
+	
 }
