@@ -48,4 +48,13 @@ public interface MemberService {
 	
 	//admin - 회원상태 업데이트
 	int memberStatusUpdate(Member m);
+	
+
+	
+	//카카오 로그인
+	String insertKakaoUserInfo(String userId, String userName, String originName, String changeName);
+	
+
+	
+	
 }

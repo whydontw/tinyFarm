@@ -103,5 +103,8 @@ public class MemberDao {
 	}
 
 
-	
+	//카카오 로그인
+	public int insertKakaoUserInfo(SqlSessionTemplate sqlSession, Member member) {
+	    return sqlSession.insert("memberMapper.insertKakaoUserInfo", member);
+	}
 }
