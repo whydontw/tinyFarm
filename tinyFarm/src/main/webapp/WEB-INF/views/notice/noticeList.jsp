@@ -127,9 +127,9 @@ crossorigin="anonymous">
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">공지사항</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/noticeList.no">공지사항</a></li>
 					
 					</ol>
 					</nav>
@@ -162,6 +162,7 @@ crossorigin="anonymous">
 			
 				<div class="insertNoticeDiv">
 					<c:if test="${loginUser.userId eq 'admin'}">
+						<!-- <a href="goInsertNotice.no" class="btn btn-success" id="insertNoticeBtn">글쓰기</a> -->
 						<a href="goInsertNotice.no" class="btn btn-success" id="insertNoticeBtn">글쓰기</a>
 					</c:if>
 				</div>

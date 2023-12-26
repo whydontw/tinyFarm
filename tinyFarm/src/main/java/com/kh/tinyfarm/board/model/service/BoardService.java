@@ -6,7 +6,7 @@ import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
-
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -63,11 +63,10 @@ public interface BoardService {
 
 	//게시글 신고하기
 	int boardReport(BoardReport bp);
-
-	/*
+	
 	//댓글 신고하기
-	int boardReReport(ReplyReport rp);
-	*/
+	int replyReport(ReplyReport rp);
+
 
 	
 

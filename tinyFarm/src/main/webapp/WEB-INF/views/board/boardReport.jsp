@@ -106,10 +106,10 @@
 											<th><label for="category">카테고리</label>&nbsp;&nbsp;</th> 
 											<td>
 												<select name="category" class="pl">
-													<option value="1" selected>1: 스팸</option>
-													<option value="2">2: 욕설</option>
-													<option value="3">3: 광고</option>
-													<option value="4">4: 음란물</option>
+													<option value="스팸" selected>1: 스팸</option>
+													<option value="욕설">2: 욕설</option>
+													<option value="광고">3: 광고</option>
+													<option value="음란물">4: 음란물</option>
 												</select>
 											</td>
 										</tr>

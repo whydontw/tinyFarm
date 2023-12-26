@@ -78,9 +78,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">실내정원용 식물</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
 						<li class="breadcrumb-item active" aria-current="page">상세보기</li>
 					</ol>
 					</nav>
@@ -485,43 +485,51 @@
 	                 
      		         var incrementedValue = parseInt(currentPage) + 1; // 가져온 값에 1을 더함 (숫자로 변환 후 덧셈)
      		         $("#currentPage").val(incrementedValue); // 변경된 값을 다시 input 요소에 설정함
-	                 for(var i=0;i<result.length;i++){
-	                	 var outDiv = $("<div class='single_user_review mb-15'></div>");
-	                	 var starDiv = $("<div class='review-rating'></div>");
-	                	 var detailDiv = $("<div class='review-details'></div>");
-	                	 var commentP = $("<p class='comment-p'></p>").text(result[i].commentContent);
-	                	 var footerDiv = $("<div class='comment-footer'></div>");
-	                	 var writerDateP = $("<p></p>");
-	                	 var by = $("<small></small>").text("by");
-	           			 var on = $("<small></small>").text("on");
-	                	 var writerA = $("<b style='margin:0 5px'></b>").text(result[i].commentWriter);
-	                	 var createDateSpan = $("<span style='margin:0 5px'></span>").text(new Date(result[i].createDate).toLocaleString());
-	                	 var hiddenCtpNo = $("<input type='hidden' class='ctpNo'>").val(result[i].ctpNo);
-	                	 
-	                	 writerDateP.append(by).append(writerA).append(on).append(createDateSpan);
-	                	 
-	                	 footerDiv.append(writerDateP);	                	 
-	                	 //로그인 유저와 작성자와 id가 같다면 수정 삭제 버튼 추가
-	                	 var userId = "${loginUser.userId}";
-	                	 if(result[i].commentWriter == userId){
-	                		 var updateCommentDiv = $("<div class='update-comment-div'></div>");
-	                		 var updateCommentBtn = $("<p class='update-comment-btn' onclick='updateCommentClick(this);'></p>").text("수정");
-	                		 var deleteCommentBtn = $("<p class='delete-comment-btn' onclick='deleteComment(this);'></p>").text("삭제");
-	                		 updateCommentDiv.append(updateCommentBtn).append(deleteCommentBtn);
-	                		 footerDiv.append(updateCommentDiv);
-	                	 }
-	                	 
-	                	 detailDiv.append(commentP).append(footerDiv).append(hiddenCtpNo);
-	                	
-	                	
-	                	 for(var j=0;j<result[i].star;j++){
-	                		 starDiv.append($("<i class='fa fa-star' aria-hidden='true'></i>"));
-	                	 }
-	                	 outDiv.append(starDiv).append(detailDiv);
-	                	 
-	                	 
-	                	 $(".reviews_area-li").append(outDiv);
-	                 }
+     		         
+     		         if(result.length == 0){
+     		        	 var outDiv = $("<div class='single_user_review mb-15' style='text-align:center;'></div>").text("의견이 존재하지 않습니다.");
+     		        	$(".reviews_area-li").append(outDiv);
+     		         }else {
+		                 for(var i=0;i<result.length;i++){
+		                	 var outDiv = $("<div class='single_user_review mb-15'></div>");
+		                	 var starDiv = $("<div class='review-rating'></div>");
+		                	 var detailDiv = $("<div class='review-details'></div>");
+		                	 var commentP = $("<p class='comment-p'></p>").text(result[i].commentContent);
+		                	 var footerDiv = $("<div class='comment-footer'></div>");
+		                	 var writerDateP = $("<p></p>");
+		                	 var by = $("<small></small>").text("by");
+		           			 var on = $("<small></small>").text("on");
+		                	 var writerA = $("<b style='margin:0 5px'></b>").text(result[i].commentWriter);
+		                	 var createDateSpan = $("<span style='margin:0 5px'></span>").text(new Date(result[i].createDate).toLocaleString());
+		                	 var hiddenCtpNo = $("<input type='hidden' class='ctpNo'>").val(result[i].ctpNo);
+		                	 
+		                	 writerDateP.append(by).append(writerA).append(on).append(createDateSpan);
+		                	 
+		                	 footerDiv.append(writerDateP);	                	 
+		                	 //로그인 유저와 작성자와 id가 같다면 수정 삭제 버튼 추가
+		                	 var userId = "${loginUser.userId}";
+		                	 if(result[i].commentWriter == userId){
+		                		 var updateCommentDiv = $("<div class='update-comment-div'></div>");
+		                		 var updateCommentBtn = $("<p class='update-comment-btn' onclick='updateCommentClick(this);'></p>").text("수정");
+		                		 var deleteCommentBtn = $("<p class='delete-comment-btn' onclick='deleteComment(this);'></p>").text("삭제");
+		                		 updateCommentDiv.append(updateCommentBtn).append(deleteCommentBtn);
+		                		 footerDiv.append(updateCommentDiv);
+		                	 }
+		                	 
+		                	 detailDiv.append(commentP).append(footerDiv).append(hiddenCtpNo);
+		                	
+		                	
+		                	 for(var j=0;j<result[i].star;j++){
+		                		 starDiv.append($("<i class='fa fa-star' aria-hidden='true'></i>"));
+		                	 }
+		                	 outDiv.append(starDiv).append(detailDiv);
+		                	 
+		                	 
+		                	 $(".reviews_area-li").append(outDiv);
+		                 }
+     		        	 
+     		         }
+     		         
     			},
     			error : function(){
     				console.log("통신 오류");

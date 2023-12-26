@@ -13,7 +13,7 @@
 		<typeAlias type="com.kh.tinyfarm.board.model.vo.BoardReply" alias="boardReply"/>
 		<typeAlias type="com.kh.tinyfarm.board.model.vo.BoardLike" alias="boardLike"/>
 		<typeAlias type="com.kh.tinyfarm.board.model.vo.BoardReport" alias="boardReport"/>
-
+		<typeAlias type="com.kh.tinyfarm.board.model.vo.ReplyReport" alias="replyReport"/>
 		
 
 		<typeAlias type = "com.kh.tinyfarm.member.model.vo.Member" alias ="member"/>

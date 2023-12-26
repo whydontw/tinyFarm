@@ -43,9 +43,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">실내정원 만들기</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/makeInGarden.pp">실내정원 만들기</a></li>
 						
 					</ol>
 					</nav>

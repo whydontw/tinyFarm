@@ -229,8 +229,8 @@
 			      ,#{category}
 			      ,#{reportContent})
   	</insert>
-  	<!-- 
-  	<insert id="boardReReport">
+   
+  	<insert id="replyReport" parameterType="replyReport">
   		INSERT INTO REPLY_REPORT(REPORT_NO
                         ,REPORT_WRITER
                         ,REF_RNO
@@ -242,7 +242,7 @@
 			      ,#{category}
 			      ,#{reportContent})
   	</insert>
-  	 -->
+  	
   	
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ팔로우하기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
   	<insert id="">

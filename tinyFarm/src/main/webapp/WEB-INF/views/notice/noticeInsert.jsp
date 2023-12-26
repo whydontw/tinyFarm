@@ -59,10 +59,10 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
-									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="noticeList.no">공지사항</a></li>
-							<li class="breadcrumb-item"><a href="#">공지사항 작성</a></li>
+							<li class="breadcrumb-item"><a href="/"><i
+								class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/noticeList.no">공지사항</a></li>
+							<li class="breadcrumb-item">공지사항 작성</li>
 						</ol>
 					</nav>
 				</div>
