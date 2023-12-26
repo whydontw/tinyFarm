@@ -103,7 +103,7 @@
 			align-items: center;
 		 	width:30px;
 		 	height:25px;
-			
+			background-color:transparent;
 		 	border:none;
 		 	align-content: center;
 		}
