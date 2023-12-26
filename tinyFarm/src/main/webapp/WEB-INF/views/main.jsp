@@ -94,7 +94,7 @@
                                 <h2>오늘의 식물 일지 작성하기</h2>
                                 <p>오늘의 식물 일지를 작성하고 등급을 높여보아요</p>
                                 <div class="welcome-btn-group">
-                                    <a href="#" class="btn alazea-btn mr-30">일지 작성하러 가기</a>
+                                    <button class="btn alazea-btn mr-30 go-diary">일지 작성하러 가기</a>
                                     
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
             <script>
 
 	            $(function(){
-	        		getInGardenPlantListAjax();
+	        		//getInGardenPlantListAjax();
 	        		$(".more-view-btn").click(function(){
 	        			getInGardenPlantListAjax();
 	        			
@@ -222,6 +222,7 @@
 	        	});
            		
             	function getInGardenPlantListAjax(){
+            		console.log("식물 리스트 ajax 불러오기");
             		$.ajax({
             			url : "inGardenPlantListAjax.pp",
             			data : {
@@ -277,6 +278,17 @@
             			}
             		});
             	}
+            	//일지 작성 버튼 클릭 이벤트
+            	$(".go-diary").click(function(){
+            		var loginUser = "${loginUser.userId}";
+            		console.log(loginUser);
+            		if(loginUser == ""){
+            			alert("로그인 후 진행해주세요.");
+            			location.href = "loginGo.me";
+            		}else {
+            			location.href = "diary.me";
+            		}
+            	});	
             	
 
             </script>

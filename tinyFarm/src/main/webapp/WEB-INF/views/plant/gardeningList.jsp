@@ -133,7 +133,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="/">텃밭 가꾸기</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/gardeningList.pp?category=${category}">텃밭 가꾸기</a></li>
 						
 					</ol>
 					</nav>

@@ -46,6 +46,26 @@
         .modal-content{
             margin-top: 300px;
         }
+        
+        
+        #originContent{
+        	width:600px;
+        	height:auto;
+        	word-wrap:break-word;
+        }
+        .reply-report-btn{
+        	margin-right:10px;
+        	color: #b7b7b7;
+        }
+        .reply-report-btn:hover{
+        	cursor:pointer;
+			color:#FF6C30;
+        }
+        .reply-report-div{
+        	width:100%;
+        	display: flex;
+        	justify-content: flex-end;
+        }
         </style>
 
 
@@ -271,7 +291,7 @@
                    var replyWriterStr = $("<h5></h5>");
                    var replyCreateDate = $("<span class='comment-date'></span>");
                    var replyContentStr = $("<p id='originContent'></p>");
-                   
+                  
                    if(loginUserId == result[i].replyWriter){
                   	   var replyModalBtn = $("<button type='button' id='replyBtn' data-toggle='modal' data-target='#replyModal' style='border: none;' onclick='giveRno(this);'><img src='resources/img/icon/dots.png' id='replyImg' style='width: 20px; height: 20px;'></button>");
                    }else{
@@ -291,7 +311,19 @@
                    profileDiv.append(profileStr);
                    contentBetweenDiv.append(hiddenReplyNo).append(replyCreateDate).append(replyModalBtn)
                    inConmmentContent.append(replyWriterStr).append(contentBetweenDiv)
-                   commentContent.append(inConmmentContent).append(replyContentStr);
+                   //승민 추가-------------------
+                   if(loginUserId == result[i].replyWriter){
+	                   commentContent.append(inConmmentContent).append(replyContentStr);
+                	   
+                   }else {
+                	   //승민 추가-------
+                       var replyReportDiv = $("<div class='reply-report-div'></div>");
+                       var replyReportBtn = $("<p class='reply-report-btn' onclick='reportReply(this);' '></p>").text("신고");
+                       replyReportDiv.append(replyReportBtn);
+                       //-------------
+                	   commentContent.append(inConmmentContent).append(replyContentStr).append(replyReportDiv);
+                   }
+                   //승민추가 끝 ---------------------
                    wraperDiv.append(profileDiv).append(commentContent);
                
                    
@@ -456,7 +488,12 @@
 
        
     }
-
+	//승민 추가-----------
+	function reportReply(el){
+		var replyNo = $(el).parent().siblings("div").find("input[name='replyNo']").val();
+		location.href = "moveReplyReport.bo?replyNo="+replyNo;
+	}
+	
 </script>
 
 

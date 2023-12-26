@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -161,7 +163,7 @@ public class publicPlantController {
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + pageNo;
-		parameter += "&numOfRows=8";
+		parameter += "&numOfRows=4";
 
 		// 서버와 통신
 		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);

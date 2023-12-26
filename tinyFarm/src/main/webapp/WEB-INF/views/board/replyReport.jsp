@@ -95,21 +95,22 @@
 						<!-- Leave A Comment -->
 						<div class="leave-comment-area clearfix">
 							<div class="comment-form">
-								<form action="reReport.bo" method="post">
+								<form action="replyReport.bo" method="post">
 									<h4 class="headline">
 										<span id="rcount"></span> Report
 									</h4>
-									<input type="hidden" name="reportWriter" value="${reportWriter }">
-									<input type="hidden" name="refBno" value="${refRno }">
+								
+									<input type="hidden" name="refRno" value="${replyNo}">
+									<input type="hidden" name="reportWriter" value="${loginUser.userId}">
 									<table>
 										<tr>
 											<th><label for="category">카테고리</label>&nbsp;&nbsp;</th> 
 											<td>
 												<select name="category" class="pl">
-													<option value="1" selected>1: 스팸</option>
-													<option value="2">2: 욕설</option>
-													<option value="3">3: 광고</option>
-													<option value="4">4: 음란물</option>
+													<option value="스팸" selected>1: 스팸</option>
+													<option value="욕설">2: 욕설</option>
+													<option value="광고">3: 광고</option>
+													<option value="음란물">4: 음란물</option>
 												</select>
 											</td>
 										</tr>
