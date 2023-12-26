@@ -154,7 +154,27 @@
 		
 		
 		
-		
+	<insert id="insertKakaoUserInfo" parameterType="member">
+			    INSERT INTO MEMBER 
+				    (USER_NO,
+				     USER_ID, 
+				     USER_NAME, 
+				     ORIGIN_NAME, 
+				     CHANGE_NAME, 
+				     ENROLL_DATE, 
+				     GRADE, 
+				     STATUS)
+				    VALUES (
+				    	SEQ_MNO.NEXTVAL,
+				        #{userId},
+				        #{userName}, 
+				        #{originName}, 
+				        #{changeName}, 
+				        SYSDATE, 
+				        '씨앗',
+				        'Y' 
+				    )
+			</insert>		
   		
   	
 		
