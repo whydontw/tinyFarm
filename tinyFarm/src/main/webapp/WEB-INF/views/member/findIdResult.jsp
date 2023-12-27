@@ -24,6 +24,13 @@
 		        margin: 0 auto;
 		        text-align: center;
 		    }
+		    
+		    @font-face {
+			  font-family: 'LotteMartDream';
+			  font-style: normal;
+			  font-weight: 400;
+			  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+			}
 	</style>
   
 </head>
@@ -33,7 +40,7 @@
 						<!-- Top Breadcrumb Area -->
 						<div
 							class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-							style="background-image: url(resources/img/bg-img/24.jpg);">
+							style="background-image: url(resources/img/bg-img/24.jpg); font-family:LotteMartDream">
 							<h2>아이디 찾기</h2>
 						</div>
 				

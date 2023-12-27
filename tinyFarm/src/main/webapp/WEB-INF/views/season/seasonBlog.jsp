@@ -53,7 +53,7 @@
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/50.jpg);">
-            <h2 style = "font-family:LotteMartDream">계절별 텃밭 가꾸는 법</h2>
+            <h2>계절별 텃밭 가꾸는 법</h2>
         </div>
 
         <div class="container">

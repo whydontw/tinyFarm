@@ -129,6 +129,62 @@ String contextPath = request.getContextPath();
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 	<script>
+		//아이디 저장
+	    $(document).ready(function () {
+	        var key = getCookie("key");
+	        $("#contact-name").val(key);
+	
+	        if ($("#contact-name").val() != "") {
+	            $("#checkId").prop("checked", true);
+	        }
+	
+	        $("#checkId").change(function () {
+	            if ($("#checkId").is(":checked")) {
+	                setCookie("key", $("#contact-name").val(), 7);
+	            } else {
+	                deleteCookie("key");
+	            }
+	        });
+	
+	        $("#contact-name").keyup(function () {
+	            if ($("#checkId").is(":checked")) {
+	                setCookie("key", $("#contact-name").val(), 7);
+	            }
+	        });
+	
+	        function setCookie(cookieName, value, exdays) {
+	            var exdate = new Date();
+	            exdate.setDate(exdate.getDate() + exdays);
+	            var cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+	            document.cookie = cookieName + "=" + cookieValue;
+	        }
+	
+	        function deleteCookie(cookieName) {
+	            var expireDate = new Date();
+	            expireDate.setDate(expireDate.getDate() - 1);
+	            document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	        }
+	
+	        function getCookie(cookieName) {
+	            cookieName = cookieName + '=';
+	            var cookieData = document.cookie;
+	            var start = cookieData.indexOf(cookieName);
+	            var cookieValue = '';
+	            if (start != -1) {
+	                start += cookieName.length;
+	                var end = cookieData.indexOf(';', start);
+	                if (end == -1)
+	                    end = cookieData.length;
+	                console.log("end 위치  : " + end);
+	                cookieValue = cookieData.substring(start, end);
+	            }
+	            return unescape(cookieValue);
+	        }
+	    });
+	</script> 
+	
+	
+	<script>
     //카카오 초기화
         Kakao.init('aef906bc476f983341072fc51f3c5b36');
         console.log( Kakao.isInitialized() ); // 초기화 판단여부
@@ -166,26 +222,7 @@ String contextPath = request.getContextPath();
 		        }
 		    });
 		}
-     
-     
-//      // 로그아웃 기능 - 카카오 서버에 접속하는 엑세스 토큰을 만료, 사용자 어플리케이션의 로그아웃은 따로 진행.      
-// 	     function kakaoLogout() {
-// 		   if (!Kakao.Auth.getAccessToken()) {
-// 		       alert('Not logged in.');
-// 		       return;
-// 		   }
-// 		   Kakao.API.request({
-// 		       url: '/v1/user/unlink',
-// 		       success: function (response) {
-// 		           console.log(response);
-// 		           alert('로그아웃이 되었습니다');
-// 		       },
-// 		       fail: function (error) {
-// 		           console.log(error);
-// 		           alert('로그인을 해주세요');
-// 		       }
-// 		   });
-// 		}
+    
      
 	  // 카카오 사용자 정보를 서버로 전송하여 데이터베이스에 저장
 		function insertKakaoUserInfo(id, nickname, profile_image) {
