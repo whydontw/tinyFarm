@@ -31,6 +31,87 @@
 			margin: auto;
 			margin-top: 2%;
 		}
+		.col-8{
+			float:right;
+			margin-right: 8%;
+		}
+		.changeImg{
+            margin: auto;
+            width: 50%;
+            height: 100%;
+		}
+        .box-file-input label{
+		  display:inline-block;
+		  background:#70c745;
+		  color:#fff;
+		  padding:0px 15px;
+		  line-height:35px;
+		  cursor:pointer;
+		  margin-left: 26%;
+		}
+		
+		.box-file-input label:after{
+		  content:"사진등록";
+		}
+		
+		.box-file-input .file-input{
+		  display:none;
+		}
+        #deleteImg{
+            height: 36px;
+            width: 28%;
+            border: none;
+            cursor: pointer;
+        }
+        #searchBtn {
+		    width: 50px;
+		    height: 46px;
+		    font-size: 18px;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    margin-top: 5%;
+		    margin-right: 15px;
+		    cursor: pointer;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    background-color: #dddfdc;
+		    color: #ffffff;
+		    border-radius: 0px 3px 3px 0px;
+		}
+
+		#searchBtn:hover {
+		    background-color: #c9cdc6; /* Darker gray background on hover */
+		}
+		
+		.modal-header{
+			background-color: #98d479;
+			color: #fff;
+		}
+		#pwd-area{
+			margin-right: 20%;
+		}
+		.btn-click{
+			width: 80px;
+			height: 40px;
+			background-color: #98d479;
+			border: none;
+			color: #fff;
+		}
+		.btn-click:hover{
+			background-color: #a4c992;	
+			border: none;	
+		}
+		.btn-click:checked, .btn-click:after{
+			border: none;
+		}
+		#delPwd{
+			width: 100%;
+			height: 40px;
+			border: 1px solid #c9cdc6;
+			padding-left: 5px;
+		}
 	</style>
 
 
@@ -81,13 +162,14 @@
 									        	</c:otherwise>
 									        </c:choose>
 									    </div>
-									    <div>    
 									        <!-- 파일 업로드 입력 폼 -->
-									       <input type="file" id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)">
-									       <input type="button" id="deleteImg" value="사진 삭제">
-									       
-									    </div>
-									
+									    <div class="changeImg">
+	    									<!-- 파일 업로드 입력 폼 -->
+									       <div class="box-file-input">
+									       	<label><input type="file"class="file-input" id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)"></label>
+									       	<button type="button" id="deleteImg">사진 삭제</button>
+									       </div>
+										</div>
 									</div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="enrollUserId">아이디</label>
@@ -112,6 +194,7 @@
 	                                <div class="col-12 mb-4">
 	                                    <label for="address">주소</label>
 	                                    <input type="text" class="form-control" id="address" name="address" value="${loginUser.address }">
+	                                    <a id="searchBtn" onclick="addrSearch()">검색</a>
 	                                </div>
 	                            </div>
   								<div class="col-8">
@@ -128,13 +211,11 @@
     <div class="modal fade" id="updatePwdForm">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">비밀번호변경</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
                     <!-- Modal body -->
                     <div class="modal-content" id="pwdModal">
                         <div id="center">
@@ -145,13 +226,13 @@
                             <input type="password" class="form-control" placeholder="변경할 비밀번호 입력" id="updatePwd" name="updatePwd"> <br>
                             
                             <label for="upPwdChk" class="mr-sm-2">비밀번호 확인</label>
-                            <input type="password" class="form-control" placeholder="변경할 비밀번호 입력" id="upPwdChk" name="upPwdChk">
+                            <input type="password" class="form-control" placeholder="변경할 비밀번호 입력" id="upPwdChk" name="upPwdChk"> <br>
                             
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button class="btn btn-success" onclick="updatePwd();">수정하기</button>
+                        <button class="btn-click" onclick="updatePwd();">수정하기</button>
                     </div>
             </div>
         </div>
@@ -159,34 +240,53 @@
 
 
 	<!-- 회원탈퇴 버튼 클릭 시 보여질 Modal -->
-    <div class="modal fade" id="deleteForm">
+ 	<div class="modal fade" id="deleteForm">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">회원탈퇴</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
-                <form action="delete.me" method="post">
                     <!-- Modal body -->
-                    <div class="modal-content">
+                    <div class="modal-content" id="deleteModal">
                         <div id="center">
-                        	작성한 영농일지 : <span id="dList">1</span>개 <br>
-                           	작성한 게시글 : <span id="bList">1</span>개 <br>
-                           	작성한 댓글 : <span id="rList">2</span>개 <br>
-                           	탈퇴시 모든 정보가 삭제됩니다. 정말로 탈퇴하시겠습니까?
-                        <br>
-                            <label for="deletePwd" class="mr-sm-2">비밀번호를 입력해주세요. </label>
-                            <input type="password" class="form-control" placeholder="비밀번호 입력" id="deletePwd" name="userPwd"> <br>
+                        	<c:choose>
+	                        	<c:when test="${diaryCount eq 0 }">
+	                        		<p class="mr-sm-2">작성한 영농일지 : 0개</p> 
+	                        	</c:when>
+	                        	<c:otherwise>
+		                            <p class="mr-sm-2">작성한 영농일지 : ${diaryCount } 개</p> 
+	                        	</c:otherwise>
+                        	</c:choose>
+	                        	
+	                        <c:choose>	
+	                        	<c:when test="${boardCount eq 0 }">
+	                        		<p class="mr-sm-2">작성한 게시글 수 : 0개</p> 
+	                        	</c:when>
+	                        	<c:otherwise>
+		                            <p class="mr-sm-2">작성한 게시글 수 : ${boardCount } 개</p> 
+	                        	</c:otherwise>
+	                        </c:choose>	
+	                        <c:choose>	
+	                        	<c:when test="${replyCount eq 0}">
+	                        		<p class="mr-sm-2">작성한 댓글 수 : 0개</p> 
+	                        	</c:when>
+	                        	<c:otherwise>
+		                            <p class="mr-sm-2">작성한 댓글 수 : ${replyCount } 개</p> 
+	                        	</c:otherwise>
+                        	</c:choose>
+                            <p class="mr-sm-2">작은농장과 함께한 일수 : ${date }일</p>
+                            <p>탈퇴 후 복구할 수 없습니다. <br>탈퇴하시려면 비밀번호 입력 후 버튼을 클릭해주세요.</p>
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                    	<div id="pwd-area">
+    	                	<input type="password" id="delPwd" name="delPwd" placeholder="비밀번호 입력">
+                    	</div>
+                        <button class="btn-click" onclick="location.href='delete.me'">탈퇴하기</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
@@ -224,7 +324,8 @@
 			let chkPWd = $("#upPwdChk").val(); //변경비번확인
 			let pwdReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 			
-			//////div border 빨간색으로 오류표시 하기 (나중에)
+			console.log(currentPwd);
+			console.log(wantPwd);		
 			
 			//변경비번 일치하지 않을경우
 			if(wantPwd != chkPWd){
@@ -256,7 +357,7 @@
 		    			$("#pwdModal").off();
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");
-				    	currentPwd.focus();
+				    	$("#userPwd").focus();
 		    		}else{
 		    			alert("비밀번호 변경 실패. 다시 시도해주세요.");
 		    		}
@@ -266,6 +367,30 @@
 		    });
 		};
 	</script>
+	
+	<!-- 주소변경 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+    function addrSearch() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("address").focus();
+            }
+        }).open();
+    }
+</script>
 
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

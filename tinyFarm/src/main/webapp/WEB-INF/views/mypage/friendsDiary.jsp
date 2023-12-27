@@ -58,9 +58,6 @@
 	.fc-day.fc-day-today.fc-daygrid-day{
 		background-color: #ebdfd3;
 	}
-	.fc-daygrid-bg-harness{
-		background-color: #f1efec;
-	}
 	</style>
 </head>
 
@@ -103,36 +100,11 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
+		
 		initialView: 'dayGridMonth',
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
-		navLinks: true, //날짜 선택 가능
-		navLinkDayClick: function(date,jsEvent){ //날짜 클릭시
-			let formattedDate = moment(date).format('YYYY/MM/DD'); //DB저장을 위해 date 형식 변경
-		    let str = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 " + date.getDate() + "일";
-			let userNo = ${loginUser.userNo};
-			//클릭 날짜에 일지 있는지 없는지 확인(없으면 작성 있으면 일지보기)
-			$.ajax({
-				url : "info.di",
-				type : "post",
-				data : {
-					date : formattedDate,
-					userNo : userNo
-				},success:function(result){
-					if(result=='NN'){ //작성된 일지 없을시
-					    let goInsert = window.confirm("선택하신 날짜는 " + str + "입니다.\n일지를 작성하시겠습니까?");
-						    if (goInsert != false) { //확인 누를시 일지작성페이지로 가기
-						    	location.href = "insert.di?selectDate=" + encodeURIComponent(formattedDate);
-						    }
-					}else{
-						let goView = window.alert(str + "에 작성하신 일지가 있습니다.\n확인하시려면 새싹 아이콘을 눌러주세요.");
-					}
-				},error:function(){
-					console.log("일지 유무확인 ajax 통신오류");
-				}
-			
-			})
-	    },editable: true, 
+		editable: true, 
 	    eventContent: function(img) { //새싹이미지를 위한 함수 ..
 	    	let imageUrl = img.event.extendedProps.imageUrl;
 	        return {
@@ -140,7 +112,7 @@
 	        };
 	    },events: //일지 작성된 날짜에 이미지 띄우기
 	    	function(info, successCallback, failureCallback){
-	    		let userNo = ${loginUser.userNo};
+	    		let userNo = ${f.userNo};
 	        	let events = [];
 	        	
 	        	$.ajax({
@@ -167,7 +139,7 @@
 	    	let year = info.event.start.getFullYear();
 		    let month = info.event.start.getMonth()+1;
 		    let day = info.event.start.getDate();
-		    let userNo = ${loginUser.userNo};
+		    let userNo = ${f.userNo};
 	        let view = window.confirm(year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?");
 	        	if(view != false){
 					let date = moment(info.event.start).format('YYYY/MM/DD');
@@ -207,6 +179,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
+		        	//location.href="view.di?selectDate="+date+"&userNo="+userNo;
 	        	}
 	        }
 	    });

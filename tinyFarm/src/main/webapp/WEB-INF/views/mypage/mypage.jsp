@@ -17,6 +17,19 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
    	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+   	
+   	<style>
+   		#updateMe, #myDiary, #myActive, #myTrade {
+			border-radius: 10px 10px 10px 10px;
+			padding-top: 50px;
+			background-color: #f7f5f5;
+		}
+		#gradeImg{
+			margin: auto;
+			width: 50px;
+			height: 50px;
+		}
+   	</style>
 </head>
 
 <body>
@@ -46,7 +59,21 @@
                 <div class="col-12 col-md-8">
                     <div class="row">
                         	<div class="myInfo">
-                        		<span>작은농장의 ' ${loginUser.grade } ' ${loginUser.userName }님</span>
+                        		<c:choose>
+                        			<c:when test="${loginUser.grade eq '씨앗'}">
+		                        		<img src="resources/jisu/img/seed.png" id="gradeImg"> <br>
+                        			</c:when>
+                        			<c:when test="${loginUser.grade eq '새싹'}">
+		                        		<img src="resources/jisu/img/shoot.png" id="gradeImg"> <br>
+                        			</c:when>
+                        			<c:when test="${loginUser.grade eq '잎새'}">
+		                        		<img src="resources/jisu/img/leaf.png" id="gradeImg"> <br>
+                        			</c:when>
+                        			<c:when test="${loginUser.grade eq '열매'}">
+		                        		<img src="resources/jisu/img/fruit.png" id="gradeImg"> <br>
+                        			</c:when>
+                        		</c:choose>
+                        		<span>작은농장의 '${loginUser.grade } ' ${loginUser.userName }님</span>
                         	</div>
                         <div class="myPageMain">
                             <div id="updateMe">

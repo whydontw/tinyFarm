@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.diary.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.dao.DiaryDao;
 import com.kh.tinyfarm.diary.model.vo.Diary;
+import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Product;
 
 
 @Service
@@ -89,16 +92,131 @@ public class DiaryServiceImpl implements DiaryService {
 	public ArrayList<Member> myFollowerList(String userId,PageInfo fwPi) {
 		return diaryDao.myFollowerList(sqlSession,userId,fwPi);
 	}
-
+	
+	//일지등록
 	@Override
 	public int insertDiary(Diary d) {
 		return diaryDao.insertDiary(sqlSession,d);
 	}
 
+	//일지목록
 	@Override
 	public ArrayList<Diary> selectDiaryList(int userNo) {
 		return diaryDao.selectDiaryList(sqlSession,userNo);
 	}
+
+	//일지 선택
+	@Override
+	public Diary selectDiary(Diary d) {
+		return diaryDao.selectDiary(sqlSession, d);
+	}
+
+	//일지 디테일
+	@Override
+	public Diary viewDiary(int diaryNo) {
+		return diaryDao.viewDiary(sqlSession,diaryNo);
+	}
 	
+	//일지 존재여부
+	@Override
+	public int existDiary(Diary d) {
+		return diaryDao.existDiary(sqlSession,d);
+	}
+	
+	//일지삭제
+	@Override
+	public int deleteDiary(int diaryNo) {
+		return diaryDao.deleteDiary(sqlSession,diaryNo);
+	}
+	//카테고리이름 추출
+	@Override
+	public DiaryCategory selectCategory(String cNo) {
+		return diaryDao.selectCategory(sqlSession,cNo);
+	}
+	//일지 수정
+	@Override
+	public int updateDiary(Diary d) {
+		return diaryDao.updateDiary(sqlSession,d);
+	}
+	//일지 개수(등급관리용)
+	@Override
+	public int diaryListCount(int userNo) {
+		return diaryDao.diaryListCount(sqlSession,userNo);
+	}
+	
+	//씨앗등급
+	@Override
+	public int gradeSeed(int userNo) {
+		return diaryDao.gradeSeed(sqlSession,userNo);
+	}
+	
+	//새싹등급
+	@Override
+	public int gradeShoot(int userNo) {
+		return diaryDao.gradeShoot(sqlSession,userNo);
+	}
+	//잎새등급
+	@Override
+	public int gradeLeaf(int userNo) {
+		return diaryDao.gradeLeaf(sqlSession,userNo);
+	}
+	//열매등급
+	@Override
+	public int gradeFruit(int userNo) {
+		return diaryDao.gradeFruit(sqlSession,userNo);
+	}
+	//주문내역 수
+	@Override
+	public int orderListCount(int userNo) {
+		return diaryDao.orderListCount(sqlSession,userNo);
+	}
+	//주문내역 리스트
+	@Override
+	public ArrayList<Product> myOrderList(int userNo, PageInfo oPi) {
+		return (ArrayList)diaryDao.myOrderList(sqlSession,userNo,oPi);
+	}
+	//판매내역 수
+	@Override
+	public int sellListCount(int userNo) {
+		return diaryDao.sellListCount(sqlSession,userNo);
+	}
+	//판매내역 리스트
+	@Override
+	public ArrayList<Product> mySellrList(int userNo, PageInfo sPi) {
+		return (ArrayList)diaryDao.mySellList(sqlSession,userNo,sPi);
+	}
+	//팔로우 정보
+	@Override
+	public Member selectFollowInfo(String followingId) {
+		return diaryDao.selectFollowInfo(sqlSession,followingId);
+	}
+	//팔로우 취소
+	@Override
+	public int unfollowUser(Follow following) {
+		return diaryDao.unfollowUser(sqlSession,following);
+	}
+
+	/* 거래내역 날짜검색
+	@Override
+	public int searchDateOrderCount(Payment pm) {
+		return diaryDao.searchDateOrderCount(sqlSession,pm);
+	}
+	
+	@Override
+	public ArrayList<Product> searchOrderList(Payment pm, PageInfo oPi) {
+		return (ArrayList)diaryDao.searchOrderList(sqlSession,pm);
+	}
+
+	@Override
+	public int searchDateSellCount(Payment pm) {
+		return diaryDao.searchDateSellCount(sqlSession,pm);
+	}
+
+	@Override
+	public ArrayList<Product> searchSellList(Payment pm) {
+		return (ArrayList)diaryDao.searchSellList(sqlSession,pm);
+	}
+	*/
+
 
 }
