@@ -35,16 +35,16 @@ public class QnaController {
 		
 		//사용자 QNA 입력
 		@PostMapping("/qnaEnroll.qa")
-		public String qnaEnroll(Qna qna, Model model) {
+		public String qnaEnroll(Qna qna, Model model, HttpSession session) {
 			
 			System.out.println(qna);
 			
 			int result = qnaService.qnaEnroll(qna);
 			
 			if(result > 0) {
-				System.out.println("성공");
+	        	session.setAttribute("alertMsg", "QNA 등록 완료하였습니다.");
 			}else {
-				System.out.println("실패");
+				session.setAttribute("alertMsg", "QNA 등록 실패하였습니다.");
 			}
 			
 			return "redirect:qnaList.qa";
@@ -56,8 +56,19 @@ public class QnaController {
 		@GetMapping("/qnaList.qa")
 		public String selectMyQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model, HttpSession session) {
 			
-			Member m = (Member) session.getAttribute("loginUser");
+			Member m = null;
+			
+			if((Member) session.getAttribute("loginUser") != null) {
+				m = (Member) session.getAttribute("loginUser");
+				
+			}else {
+				session.setAttribute("alertMsg", "로그인을 해주세요");
+				return "redirect:loginGo.me";
+			}
+			
+			
 			int userNo = m.getUserNo();
+			
 			
 			// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
 			int qnaListCount = qnaService.qnaListCount();
@@ -94,14 +105,14 @@ public class QnaController {
 		
 		//사용자 QNA 수정
 		@PostMapping("/qnaUpdate.qa")
-		public String qnaUpdate(Qna updateQna, Model model) {
+		public String qnaUpdate(Qna updateQna, Model model, HttpSession session) {
 			
 			int result = qnaService.myQnaUpdate(updateQna);
 	
 			if(result > 0) {
-				System.out.println("성공");
+	        	session.setAttribute("alertMsg", "QNA 수정 완료하였습니다.");
 			}else {
-				System.out.println("실패");
+				session.setAttribute("alertMsg", "QNA 수정 실패하였습니다.");
 			}
 			
 			return "redirect:qnaList.qa";
@@ -110,14 +121,14 @@ public class QnaController {
 		
 		//사용자 QNA 삭제
 		@PostMapping("/qnaDelete.qa")
-		public String myQnaDelete(int qnaNo, Model model) {
+		public String myQnaDelete(int qnaNo, Model model, HttpSession session) {
 			
 			int result = qnaService.myQnaDelete(qnaNo);
 			
 			if(result > 0) {
-				System.out.println("성공");
+	        	session.setAttribute("alertMsg", "QNA 삭제 완료하였습니다.");
 			}else {
-				System.out.println("실패");
+				session.setAttribute("alertMsg", "QNA 삭제 실패하였습니다.");
 			}
 			
 			return "redirect:qnaList.qa";

@@ -11,7 +11,7 @@ import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
-
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Service
@@ -170,15 +170,14 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.boardReport(sqlSession,bp);
 	}
 
-	/*
-	//댓글 신고하기
+	//댓글 신고
 	@Override
-	public int boardReReport(ReplyReport rp) {
-		
-		return boardDao.boardReReport(sqlSession,rp);
+	public int replyReport(ReplyReport rp) {
+		// TODO Auto-generated method stub
+		return boardDao.replyReport(sqlSession,rp);
 	}
 
-	 */
+	
 	
 	
 }

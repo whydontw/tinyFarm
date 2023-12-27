@@ -17,6 +17,7 @@ import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 
 
 @Controller
@@ -248,24 +249,20 @@ public class BoardController {
 		
 	}
 	
-	/*
-	//댓글 신고페이지로 이동
-	@PostMapping("moveReReport.bo")
-	public String moveReReport(String userId,int replyNo,Model model) {
-		System.out.println("userId : "+userId);
-		System.out.println("boardNo :"+replyNo);
-		model.addAttribute("reportWriter", userId);
-		model.addAttribute("refRno", replyNo);
-		
+	//댓글 신고창으로 이동
+	@RequestMapping("moveReplyReport.bo")
+	public String moveReplyReport(int replyNo,Model model) {
+		model.addAttribute("replyNo", replyNo);
 		return "board/replyReport";
 	}
 	
+
 	//댓글 신고
-	@PostMapping("reReport.bo")
-	public String boardReReport(ReplyReport rp,HttpSession session) {
+	@PostMapping("replyReport.bo")
+	public String replyReport(ReplyReport rp,HttpSession session) {
 		//System.out.println("rp : "+rp);
 		
-		int result =boardService.boardReReport(rp);
+		int result =boardService.replyReport(rp);
 		
 		if(result>0) {
 			session.setAttribute("alertMsg","댓글 신고에 성공하셨습니다.");
@@ -276,6 +273,6 @@ public class BoardController {
 		}
 		
 	}
-	*/
+	
 
 }

@@ -134,7 +134,7 @@
                                             <li><a href="season.re">계절별 텃밭 가꾸는법</a> </li>
                                         </ul>
                                     </li>
-                                    <li><a href="about.html">체험활동</a></li>
+                                    <li><a href="chatList.ch">1:1 채팅</a></li>
                                     
                                     <li><a href="moveList.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
@@ -142,10 +142,6 @@
                                     <li><a href="qnaList.qa">1:1 문의</a></li>
                                 </ul>
 
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
 
                             </div>
                             <!-- Navbar End -->

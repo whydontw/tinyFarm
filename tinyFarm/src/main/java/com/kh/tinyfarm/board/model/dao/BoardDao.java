@@ -10,7 +10,7 @@ import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
-
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Repository
@@ -143,13 +143,13 @@ public class BoardDao {
 
 		return sqlSession.insert("boardMapper.boardReport", bp);
 	}
-	/*
+
 	//댓글 신고
-	public int boardReReport(SqlSessionTemplate sqlSession, ReplyReport rp) {
-		
-		return sqlSession.insert("boardMapper.boardReReport", rp);
+	public int replyReport(SqlSessionTemplate sqlSession, ReplyReport rp) {
+		System.out.println(rp);
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.replyReport", rp);
 	}
-	*/
 
 
 	

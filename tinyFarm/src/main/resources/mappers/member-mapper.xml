@@ -20,7 +20,7 @@
 			<result column = "STATUS" property="status"/>
 		</resultMap>
 		
-		<select id = "loginMember" resultMap = "memberResultSet">
+		<select id = "loginMember" resultMap ="memberResultSet">
 			SELECT USER_NO
 			     , USER_ID
 			     , USER_PWD
@@ -106,22 +106,36 @@
 		<!-- admin -->
 		<select id="memberListCount" resultType="_int" parameterType="string">
   			SELECT COUNT(*) FROM MEMBER
+  			<if test='searchId != ""'>
+  				 WHERE USER_ID  LIKE '%' || #{searchId} || '%'
+  			</if>
   		</select>
   		
   		<select id="selectMemberList" resultMap="memberResultSet">
   			SELECT * FROM MEMBER
+  			<if test='searchId != ""'>
+  				 WHERE USER_ID  LIKE '%' || #{searchId} || '%'
+  			</if>
+		    ORDER BY USER_NO
   		</select>
   		
   		
   		
-  		<update id="memberStatusN">
-			UPDATE MEMBER SET
-			STATUS = 'N'
-	        WHERE 1=1
-	        AND USER_NO IN  
-	        <foreach collection="list" item="userNo" index="index" open="(" close=")" separator=","> 
-	            #{userNo} 
-	        </foreach>
+		<update id="memberStatus" parameterType="hashmap">
+		    UPDATE MEMBER SET
+		    STATUS = 
+		    <choose>
+		        <when test="status == 1">
+		            'Y'
+		        </when>
+		        <otherwise>
+		            'N'
+		        </otherwise>
+		    </choose>
+		    WHERE USER_NO IN 
+		    <foreach collection="mList" item="userNo" index="index" open="(" close=")" separator=","> 
+		        #{userNo}
+		    </foreach>
 		</update>
 		
 		
@@ -140,7 +154,27 @@
 		
 		
 		
-		
+	<insert id="insertKakaoUserInfo" parameterType="member">
+			    INSERT INTO MEMBER 
+				    (USER_NO,
+				     USER_ID, 
+				     USER_NAME, 
+				     ORIGIN_NAME, 
+				     CHANGE_NAME, 
+				     ENROLL_DATE, 
+				     GRADE, 
+				     STATUS)
+				    VALUES (
+				    	SEQ_MNO.NEXTVAL,
+				        #{userId},
+				        #{userName}, 
+				        #{originName}, 
+				        #{changeName}, 
+				        SYSDATE, 
+				        '씨앗',
+				        'Y' 
+				    )
+			</insert>		
   		
   	
 		

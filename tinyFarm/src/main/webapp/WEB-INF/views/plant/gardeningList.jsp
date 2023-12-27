@@ -19,8 +19,6 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
 	<style>
-   
-
         table {
         border: 1px #a39485 solid;
         font-size: .9em;
@@ -105,7 +103,7 @@
 			align-items: center;
 		 	width:30px;
 		 	height:25px;
-			
+			background-color:transparent;
 		 	border:none;
 		 	align-content: center;
 		}
@@ -135,7 +133,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="/">텃밭 가꾸기</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/gardeningList.pp?category=${category}">텃밭 가꾸기</a></li>
 						
 					</ol>
 					</nav>
