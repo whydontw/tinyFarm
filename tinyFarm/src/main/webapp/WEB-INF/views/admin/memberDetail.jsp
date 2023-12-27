@@ -8,7 +8,7 @@
 </head>
 <body>
 		<!-- Button trigger modal -->
-		<button type="button" id="memberdetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
+		<button type="button" id="memberdetailViewModal" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
 		
 		<!-- Modal -->
 		<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -16,7 +16,7 @@
 		    <div class="modal-content">
 		      <div class="modal-body">
 		      
-			      <div class="col-12">
+			      <div class="col-12" style = "background-color:gray">
                     <div class="checkout_details_area clearfix">
                         <h5>🌱 회원 정보</h5>
                             <div class="row mt-15">
