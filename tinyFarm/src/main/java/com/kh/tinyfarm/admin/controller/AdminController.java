@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.admin.model.service.AdminService;
 import com.kh.tinyfarm.board.model.service.BoardService;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
@@ -50,7 +52,50 @@ public class AdminController {
 	
 	//메인 페이지
 	@GetMapping("/main.ad")
-	public String adminMain() {
+	public String adminMain(Model model) {
+		
+		//오늘의 통계
+		//1: MEMBER, 2:QNA, 3:PRODUCT, 4:BOARD
+		int mCount = adminService.selectTodayCount("member");
+		int qCount = adminService.selectTodayCount("qna");
+		int pCount = adminService.selectTodayCount("product");
+		int bCount = adminService.selectTodayCount("board");
+		
+		HashMap<String, Integer> todayMap = new HashMap<String, Integer>();
+		
+		todayMap.put("mCount", mCount);
+		todayMap.put("qCount", qCount);
+		todayMap.put("pCount", pCount);
+		todayMap.put("bCount", bCount);
+
+		model.addAttribute("todayMap", todayMap);
+		
+		
+		
+		
+		//회원가입 통계
+		int allCount = adminService.memberStaticCount("all");
+
+		int activeCount = adminService.memberStaticCount("active");
+		int dropCount = allCount - activeCount;
+		
+		int snsCount = adminService.memberStaticCount("sns");
+		int normalCount = allCount - snsCount;
+		
+		
+		HashMap<String, Integer> mMap = new HashMap<String, Integer>();
+		
+		mMap.put("allCount", allCount);				//전체수
+		mMap.put("activeCount", activeCount);		//활동회원수
+		mMap.put("dropCount", dropCount);			//비활동회원수
+		mMap.put("snsCount", snsCount);				//sns가입회원수
+		mMap.put("normalCount", normalCount);		//일반회원수
+		
+		mMap.put("normalPercentage", (int)(normalCount * 100 / allCount));
+		mMap.put("activePercentage", (int)(activeCount * 100 / allCount));
+		
+		model.addAttribute("mMap", mMap);
+
 		return "admin/main";
 	}
 	
@@ -87,7 +132,6 @@ public class AdminController {
 	public String qnaAnswerForm(int qnaNo, Model model) {
 
 		Qna qna = qnaService.selectQnaDetail(qnaNo);
-		System.out.println(qna);
 		
 		model.addAttribute("qna", qna);
 		
@@ -99,8 +143,6 @@ public class AdminController {
 	//QNA 답변 등록
 	@PostMapping("/qnaAnswer.ad")
 	public String qnaAnswerEnroll(Qna qnaAnswer, Model model, HttpSession session) {
-		
-		System.out.println(qnaAnswer);
 		
 		int result = qnaService.qnaAnswerEnroll(qnaAnswer);
 		
@@ -302,29 +344,48 @@ public class AdminController {
 	}
 	
 	
+	//신고 댓글 페이지
+	@GetMapping("/replyReportList.ad")
+	public String boardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model){
+		model.addAttribute("currentPage", currentPage);
+		return "admin/replyReportList";
+		
+	}
+	
+	
+	
 	//신고글 목록 조회하기
 	@ResponseBody
-	@GetMapping("selectBoardReportList.ad")
-	public  ResponseEntity<Map<String, Object>> selectBoardReportList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="category", defaultValue="0")int category, Model model) {
+	@GetMapping("selectReportList.ad")
+	public  ResponseEntity<Map<String, Object>> selectReportList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+																 @RequestParam(value="category", defaultValue="0") int category,
+																 String type,
+																 Model model) {
 
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("category", String.valueOf(category));
+		map.put("type", type);
+		
+		
 		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
-		int boardListCount = adminService.boardReportListCount();
+		int listCount = adminService.reportListCount(map);
+		
 
 		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
-		int boardLimit = 10;
+		int boardLimit = 5;
 		// 페이징 바 개수(pageLimit)
 		int pageLimit = 5;
 
-		PageInfo pi = Pagination.getPageInfo(boardListCount, currentPage, pageLimit, boardLimit);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
-	    ArrayList<BoardReport> brList = adminService.selectBoardReportList(pi, category);
-
+	    ArrayList<BoardReport> reportList = adminService.selectReportList(pi, map);
+	    
 	    
 	    // 데이터를 Map에 담아서 전송
 	    Map<String, Object> resultMap = new HashMap<>();
 	    
-	    resultMap.put("brList", brList);
+	    resultMap.put("reportList", reportList);
 	    resultMap.put("pi", pi);
 
 	    
@@ -332,39 +393,34 @@ public class AdminController {
 	    return ResponseEntity.ok(resultMap);
 		
 	}
-	
+
 	
 	
 	
 	//신고 취소, 게시글 삭제
 	@ResponseBody
-	@GetMapping("/boardReportStatus.ad")
-	public String boardReportStatus(String chkBoardReportList, String status, Model model, HttpSession session) {
-		
-		System.out.println("status" + status);
-		
-		int statusNm = 0;
-		
-		if(status.equals("cancel")) {
-			statusNm = 1;
-		}
+	@GetMapping("/reportStatus.ad")
+	public String reportStatus(String chkReportList, String status, String type, Model model, HttpSession session) {
 		
 		
-		String[] ckList = chkBoardReportList.split(",");
+		String[] ckList = chkReportList.split(",");
 		
-		ArrayList<Integer> brList = new ArrayList<>();
+		ArrayList<Integer> chkArrList = new ArrayList<>();
 		
 		for(int i = 0; i < ckList.length; i++) {
-			brList.add(i, Integer.parseInt(ckList[i]));
+			chkArrList.add(i, Integer.parseInt(ckList[i]));
 		}
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("status", statusNm);
-		map.put("brList", brList);
+		map.put("type", type);
+		map.put("status", status);
+		map.put("rList", chkArrList);
 
 		
-		int result = adminService.boardReportStatus(map);
+		int result = adminService.reportStatus(map);
+		
+		System.out.println("result " + result);
 		
 		String resultStr = "";
 		
@@ -379,15 +435,19 @@ public class AdminController {
 	}
 	
 	
-	//신고 게시글 페이지
-	@GetMapping("/replyReportList.ad")
-	public String boardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model){
-		model.addAttribute("currentPage", currentPage);
-		return "admin/replyReportList";
-		
+	
+	//회원 상세조회
+	@ResponseBody
+	@RequestMapping(value="reportDetailInfo.ad", produces = "application/json; charset=utf-8")
+	public HashMap<String, Object> reportDetailInfo(int replyNo) {
+		return adminService.reportDetailInfo(replyNo);
 	}
 	
 
+
+	
+	
+	
 	
 	
 }

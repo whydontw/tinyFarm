@@ -57,6 +57,7 @@
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Blog Area Start ##### -->
+<!-- ##### Blog Area Start ##### -->
     <section class="alazea-blog-area mb-100">
         <div class="container">
             <div class="row">
@@ -70,7 +71,7 @@
                                 <p><h5><b>🌱 신고 게시글 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
-                                <select class="custom-select widget-title" id="selectReportCategory" onchange="selectReportCategory(this.value)">
+                                <select class="custom-select widget-title" id="selectBrCategory" onchange="selectBrCategory(this.value)">
                                   <option value="0" selected>CATEGORY:</option>
                                   <option value="1">스팸</option>
                                   <option value="2">욕설</option>
@@ -88,7 +89,7 @@
                                     <col width="5%">
                                     <col width="12%">
                                     <col width="13%">
-                                    <col width="15%">
+                                    <col width="13%">
                                     <col width="auto%">
                                     <col width="7%">
                                     <col width="5%">
@@ -99,7 +100,7 @@
                                         <th>카테고리</th>
                                         <th>신고ID</th>
                                         <th>신고일자</th>
-                                        <th>신고내용</th>
+                                        <th>신고사유 상세</th>
                                         <th>상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
@@ -109,8 +110,8 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" >
-                                <li onclick="reportStatus('revoke')"><a><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;&nbsp;신고취소</a></li>
-                                <li onclick="reportStatus('delete')"><a><i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;게시글 삭제</a></li>
+                                <li onclick="boardReportStatus('cancel')"><a><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;&nbsp;신고취소</a></li>
+                                <li onclick="boardReportStatus('delete')"><a><i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;게시글 삭제</a></li>
 <!--                            <li><a><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
@@ -131,6 +132,26 @@
 	        </div>
 	    </section>
     <!-- ##### Blog Area End ##### -->
+    
+    
+    
+    
+    
+				    <!-- Button trigger modal -->
+						<button type="button" id="replydetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2"></button>
+						
+						<!-- Modal -->
+						<div class="modal" id="exampleModalCenter2" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered" role="document">
+						    <div class="modal-content">
+						      <div class="modal-body">
+						      
+						      dddd
+				                
+						      </div>
+						    </div>
+						  </div>
+						</div>
 
 
 						<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -141,7 +162,7 @@
                         	selectReportList(${currentPage}, 0);
                         	
                         	//Modal 버튼 숨김
-                        	$("#memberdetailViewModal").hide();
+//                         	$("#replydetailViewModal").hide();
                         	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
@@ -159,10 +180,10 @@
                         		data: {
                         			currentPage: currentPage,
                         			category : category,
-                        			type: "board"
+                        			type: "reply"
                         		},
                         		success: function(result){
-                        			ReportListTable(result, category);
+                        			makeReplyReportListTable(result, category);
                         		},error: function(){
                         			console.log("오류났수 ㅠㅠ");
                         		}
@@ -172,18 +193,14 @@
                         }
                         
                         
-                        function ReportListTable(result, category){
+					function makeBoardReportListTable(result, category){
                         	
-                        	let reportList = result.reportList;
-                        	let reportPi = result.pi;
-                        	
-                        	
-                        	console.log("reportPi", reportPi);
-                        	
+                        	let rrList = result.rrList;
+                        	let brPi = result.pi;
                         	
                 			let str = "";
                 			
-                        	reportList.forEach((item) => {
+                        	rrList.forEach((item) => {
                         		
                         		let categoryStr = "";
                 				
@@ -213,7 +230,18 @@
 			                        	"<td>" + item.createDate + "</td>" +
 			                        	"<td>" + item.reportContent +"</div>" + 
 			                        	"<td><a href='#' onclick='reportDetailInfo(" + item.refBno + ")'><i class='fa fa-search'></i></a></td>" +
-			                        	"<td><input type='checkbox' value=" + item.reportNo + " class='checkBoxReport'></td></tr>";
+			                        	"<td><input type='checkbox' value=" + item.reportNo + " class='chkReplyReport'></td></tr>";
+                				
+                				
+//                 				str += "<tr><td>" + item.ㄱ데ㅐ + "</td>" +
+//                                  		"<td>" + item.userId + "</td>" +
+//                                  		"<td>" + item.userName + "</td>" +
+//                                  		"<td>" + item.phone + "</td>" +
+//                                  		"<td>" + item.email + "</td>" +
+//                                  		"<td>" + item.grade + "</td>" +
+//                                  		"<td>" + item.status + "</td>" +
+//                                  		"<td><a href='#' onclick='boardReplyDetailInfo(" + item.userNo + ")'><i class='fa fa-search'></i></a></td>" +
+//                                			"<td><input type='checkbox' value=" + item.userNo + " class='chkReplyReport'></td></tr>"
                 				
                 			})
 
@@ -221,44 +249,44 @@
                         	
                         	
                         	//pagination
-                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (reportPi.currentPage - 1) + ", \"" + category + "\")'><i class='fa fa-angle-left'></i></a></li>"
-                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (reportPi.currentPage + 1) + ", \"" + category + "\")'><i class='fa fa-angle-right'></i></a></li>"
+                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (brPi.currentPage - 1) + ", \"" + category + "\")'><i class='fa fa-angle-left'></i></a></li>"
+                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (brPi.currentPage + 1) + ", \"" + category + "\")'><i class='fa fa-angle-right'></i></a></li>"
                         	
                         	let paging = "";
                     		
                     		
-                    		if(reportPi.currentPage > 1){
+                    		if(brPi.currentPage > 1){
                     			paging = beforePage;
                     		}
                     		
                     		
-                    		for(var i = 1; i <= reportPi.endPage; i++) {
+                    		for(var i = 1; i <= brPi.endPage; i++) {
                         		paging += "<li class='page-item'><a class='page-link' onclick='selectReportList(" + i + ", \"" + category + "\")'>" + i + "</a></li>";
                     		}
                         	
-                    		if(reportPi.currentPage < reportPi.maxPage){
+                    		if(brPi.currentPage < brPi.maxPage){
                        			paging += afterPage;
                        		}	
                         	
-                    		$("#reportListCurrentPage").text("현재 페이지: " + reportPi.currentPage);
-                			$("#reportListPagenation").html(paging);
+                    		$("#boardReportListCurrentPage").text("현재 페이지: " + brPi.currentPage);
+                			$("#boardReportListPagenation").html(paging);
                         	
                         }
                         
                         
                         
                         //카테고리별 검색
-                        function selectReportCategory(category){
+                        function selectRrCategory(category){
                         	selectReportList(1, category);
                         }
                         
                         
                         
-                        function reportStatus(status){
+                        function replyReportStatus(status){
                         	
                         	let statusMsg = "";
                         	
-                        	if(status == 'revoke'){
+                        	if(status == 'cancel'){
                         		statusMsg = "신고 일괄취소";
                         	}else{
                         		statusMsg = "게시글 삭제"
@@ -266,32 +294,31 @@
                         	
                         	if(confirm("선택한 건의 " + statusMsg + "를 하시겠습니까?")){
 
-                            let chkReportList = "";
+                            let chkReplyReportList = "";
 							
                             //체크 요소 접근
-                            $(".checkBoxReport:checked").each(function(index, item){
+                            $(".chkReplyReport:checked").each(function(index, item){
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkReportList += item.value;
+                                	chkReplyReportList += item.value;
                                 } else {								//첫번째 아니면 ,값 넣기
-                                	chkReportList += "," + item.value;
+                                	chkReplyReportList += "," + item.value;
                                 }
 
                             });
                             
 	                            //선택된 글 없을시
-	                            if(chkReportList == null || chkReportList == ""){
+	                            if(chkReplyReportList == null || chkReplyReportList == ""){
 	                            	alert("회원을 선택하세요");
 	                            }else{
 	                            	
 	                            
 									//선택된 글이 있으면
 	                            	$.ajax({
-		    							url: "reportStatus.ad",
+		    							url: "replyReportStatus.ad",
 		    							data: {
 		    								status : status,
-		    								chkReportList : chkReportList,
-		    								type : "board"
+		    								chkReplyReportList : chkReplyReportList
 		    							},
 		    							success: function(result){
 		    								
@@ -299,7 +326,7 @@
 		    									alert("일괄 변경되었습니다.");
 		    									
 		    									$("input[type=checkbox]").prop("checked",false);
-		    									selectReportList(${currentPage}, $("#selectReportCategory").val());
+		    									selectReportList(${currentPage}, $("#selectRrCategory").val());
 		    								}
 		    								
 		    							},
@@ -315,10 +342,45 @@
                         }
                         
                         
-                        //신고글 내용 상세조회
-                        function reportDetailInfo(refBno){
-                        	window.open("detail.bo?boardNo="+ refBno, '신고글', "width=1000, height=800");
-                        }
+//                         function memberDetailInfo(userNo){
+                        	
+//                         	$.ajax({
+//                         		url : "memberDetailInfo.ad",
+//                         		data: { userNo : userNo },
+//                         		success: function(result){
+                        			
+//                         			console.log(result);
+                        			
+//                         			$("#userNo_detail").val(result.userNo);
+//                         			$("#userId_detail").val(result.userId);
+//                         			$("#userName_detail").val(result.userName);
+//                         			$("#userEnrollDate_detail").val(result.enrollDate);
+//                         			$("#userStatus_detail").val(result.status);
+//                         			$("#userGrade_detail").val(result.grade);
+//                         			$("#userAddress_detail").val(result.address);
+//                         			$("#userPhone_detail").val(result.phone);
+                        			
+//                         			var imageSrc = "";
+                        			
+//                         			if(result.changeName == null){
+//                         				imageSrc = "${contextPath}/resources/img/icon/common_koongya.jpg";
+                        			
+//                         			}else{
+//                         				imageSrc = "${contextPath}/" + result.changeName;
+//                         			}
+                        			
+//                         			$("#profileImage").prop("src", imageSrc);
+                        			
+//                                 	$("#replydetailViewModal").click();
+                                	
+//                         		},
+//                         		error: function(){
+//                         			alert("오류났수ㅜ");
+//                         		}
+
+//                         	})
+                        	
+//                         }
                         
 						
 //                         //회원 정보 변경
