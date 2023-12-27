@@ -21,6 +21,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
+    
     <style>
 		a,p{
 			font-family: 'Noto Sans KR', sans-serif !important;
@@ -28,18 +30,22 @@
 		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
-		.plantImg,.plantName:hover{
-			cursor : pointer;
-		}
-		.boardFooter{
-			display: flex;
-    		flex-direction: row;
-    		justify-content: space-around;
+		.pl{
+		    width: 100px;
+		    height: 35px;
+		    box-sizing: border-box;
+		    border-radius: 10px;
+		    font-style: normal;
+		    font-size: 14px;
+		    line-height: 16px;
 		}
 		
-	  	.btn{
-	  		float: right
-	  	}
+		.pl:focus{
+		    border: 1px solid #70c745;
+		    box-sizing: border-box;
+		    border-radius: 10px;
+		    border-radius: 10px;
+		}
 	  	#diaryTitle{
 	  		width: 100%;
 	  		height: 40px;
@@ -47,9 +53,16 @@
 	  	#datelabel{
 	  		float: right;
 	  		text-align: right;
+	  		padding-top: 20px;
 		  	width: 30%;
 		  	font-size: 17px;
 	  	}
+	  	.btn-green, .btn-red{
+	  		width: 50px;
+	  		height: 30px;
+	  		float: right;
+	  	}
+	  	
 	</style>
 </head>
 
@@ -84,7 +97,7 @@
 		          			<input type="hidden" name="diaryWriter" value="${loginUser.userNo }">
 		          			<input type="hidden" name="diaryNo" value="${d.diaryNo }">
 		          			<label for="categorys">텃밭유형 : </label>
-		          				<select id="categoryNo" name="categoryNo">
+		          				<select id="categoryNo" name="categoryNo" class="pl">
 		          					<option value="1">개인밭</option>
 		          					<option value="2">마당</option>
 		          					<option value="3">베란다</option>
@@ -100,7 +113,7 @@
 		          				<input type="text" name="diaryTitle" id="diaryTitle" value="${d.diaryTitle }"> 
 		          				<textarea id="diaryContent" name="diaryContent">${d.diaryContent }</textarea>
 		          				  
-		          				<div id="radioBtn">
+		          				<div class="radioBtn">
 		          					<label>공개여부</label>
 		          					<c:choose>
 		          						<c:when test="${d.selectOpen eq 'Y' }">
@@ -112,7 +125,8 @@
 					          				<input type="radio" id="openN" name="selectOpen" value="N" checked> <label for="openN">비공개</label>
 		          						</c:otherwise>
 		          					</c:choose>
-			          				<input type="submit" id="diBtn" class="btn btn-success" value="수정">
+			          				<input type="button" id="backBtn" class="btn-red" value="이전">
+			          				<input type="submit" id="diBtn" class="btn-green" value="수정">
 		          				</div>
 		          			</form>
                     </div>
@@ -123,10 +137,10 @@
     
     <!-- 일지 작성 스크립트 -->
    <script>
-	   
        $('#diaryContent').summernote({
     	width: 815,   
-       	height: 600,// content 높이
+       	height: 1000,// content 높이
+       	minHeight: 1000,
 	 	maxHeight: 1000,//content 최대높이
 	  	focus: true,// 에디터 로딩후 포커스를 맞출지 여부
 	  	lang: "ko-KR",// 한글 설정
@@ -139,11 +153,25 @@
 		    ['table', ['table']],
 		    ['para', ['paragraph']],
 		    ['height', ['height']],
-		    ['insert',['picture','link']],
-		    ['view', ['help']]
+		    ['insert',['picture','link']]
 		  ],
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+       });
+       
+       //카테고리 값
+       $(function(){
+    	  let caNo = ${d.categoryNo};
+    	  $("#categoryNo").val(caNo);
+       });
+       
+       $("#backBtn").click(function(){
+    	   let alert = window.confirm("이전 페이지로 이동하시겠습니까?\n수정 중인 내용이 사라집니다.");
+	       	if(alert){
+	           	window.history.back();
+	       	}else{
+	       		return false;
+	       	} 
        });
        
        function updateDiary(){

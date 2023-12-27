@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.diary.model.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -13,6 +14,7 @@ import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Product;
 
 
 
@@ -144,10 +146,63 @@ public class DiaryDao {
 	public int gradeFruit(SqlSession sqlSession, int userNo) {
 		return sqlSession.update("diaryMapper.gradeFruit", userNo);
 	}
+	//등급 씨앗으로 변경
 	public int gradeSeed(SqlSession sqlSession, int userNo) {
 		return sqlSession.update("diaryMapper.gradeSeed", userNo);
 	}
-
+	//구매내역 카운트
+	public int orderListCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.orderCount",userNo);
+	}
+	//구매목록
+	public ArrayList<Product> myOrderList(SqlSession sqlSession, int userNo, PageInfo oPi) {
+		int limit = oPi.getPageLimit();
+		int offset = (oPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.myOrderList",userNo,rowbounds);
+	}
+	//판매내역 카운트
+	public int sellListCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.sellCount",userNo);
+	}
+	//판매목록
+	public ArrayList<Product> mySellList(SqlSession sqlSession, int userNo, PageInfo sPi) {
+		int limit = sPi.getPageLimit();
+		int offset = (sPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.mySellList",userNo,rowbounds);
+	}
+/*	거래내역 날짜 검색내역 (vo 나오면 맞춰서 진행)
+	//날짜 검색 카운트
+	public int searchDateOrderCount(SqlSession sqlSession, Payment pm) {
+		return sqlSession.selectOne("diaryMapper.searchDateOrderCount",pm);
+	}
+	
+	public ArrayList searchOrderList(SqlSession sqlSession, Payment pm,  PageInfo oPi) {
+		int limit = oPi.getPageLimit();
+		int offset = (oPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.searchOrderList",pm,rowbounds);
+	}
+	
+	//날짜 검색 카운트
+	public int searchDateSellCount(SqlSession sqlSession, Payment pm) {
+		return sqlSession.selectOne("diaryMapper.searchDateSellCount",pm);
+	}
+	
+	public ArrayList searchSellList(SqlSession sqlSession, Payment pm,  PageInfo sPi) {
+		int limit = sPi.getPageLimit();
+		int offset = (sPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.searchSellList",pm,rowbounds);
+	}
+*/
+	public Member selectFollowInfo(SqlSession sqlSession, String followingId) {
+		return sqlSession.selectOne("memberMapper.loginMember",followingId);
+	}
+	public int unfollowUser(SqlSession sqlSession, Follow following) {
+		return sqlSession.delete("diaryMapper.unfollowUser",following);
+	}
 	
 	
 	

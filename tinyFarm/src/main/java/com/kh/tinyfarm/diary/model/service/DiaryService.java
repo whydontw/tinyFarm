@@ -1,8 +1,8 @@
 package com.kh.tinyfarm.diary.model.service;
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
@@ -11,9 +11,7 @@ import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
-
-
-
+import com.kh.tinyfarm.product.model.vo.Product;
 
 public interface DiaryService {
 
@@ -65,8 +63,23 @@ public interface DiaryService {
 
 	int gradeFruit(int userNo);
 
+	int orderListCount(int userNo);
 
+	ArrayList<Product> myOrderList(int userNo, PageInfo oPi);
 
+	int sellListCount(int userNo);
 
+	ArrayList<Product> mySellrList(int userNo, PageInfo sPi);
 
+	Member selectFollowInfo(String followingId);
+
+	int unfollowUser(Follow following);
+
+//	int searchDateOrderCount(Payment pm);
+//	
+//	ArrayList<Product> searchOrderList(Payment pm);
+//	
+//	int searchDateSellCount(Payment pm);
+//	
+//	ArrayList<Product> searchSellList(Payment pm);
 }

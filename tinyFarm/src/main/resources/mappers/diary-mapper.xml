@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
   <mapper namespace="diaryMapper">
   	<resultMap type="diary" id="diaryResultSet">
   		<result column="DIARY_NO" property="diaryNo"/>
@@ -61,6 +61,24 @@
   		<result column="FOLLOWING_ID" property="followingId"/>
   	</resultMap>
   	
+  	<resultMap type="product" id="productResultSet">
+	  	<result column="PRODUCT_NO" property="productNo"/>
+	  	<result column="USER_NO" property="userNo"/>
+	  	<result column="CATEGORY_NO" property="categoryNo"/>
+	  	<result column="PRODUCT_TITLE" property="productTitle"/>
+	  	<result column="PRODUCT_CONTENT" property="productContent"/>
+	  	<result column="PRODUCT_PRICE" property="productPrice"/>
+	  	<result column="COUNT" property="count"/>
+	  	<result column="REGI_DATE" property="regiDate"/>
+	  	<result column="MODI_DATE" property="modiDate"/>
+	  	<result column="STATUS" property="status"/>
+	  	<result column="SALES_STATUS" property="salesStatus"/>
+	  	<result column="FILE_PATH" property="filePath"/>
+	  	<result column="CHANGE_NAME" property="changeName"/>
+  	</resultMap>
+  	
+  	
+  	
   	<!-- 정보수정 -->
   	<update id="updateMember" parameterType="member">
   			UPDATE MEMBER
@@ -83,7 +101,7 @@
   	</update>
   	
   	<!-- 회원 탈퇴 -->
-  	<update id="deleteMember" parameterType="string">
+  	<update id="deleteMember" parameterType="member">
   			UPDATE MEMBER
   			SET STATUS = 'N'
   			WHERE USER_ID = #{userId}
@@ -260,6 +278,78 @@
   		WHERE DIARY_NO=#{diaryNo} 
   		AND STATUS = 'Y'
   	</update>
+  	
+  	<select id="orderCount" resultType="_int" parameterType="product">
+  		SELECT COUNT(PAYMENT_NO)
+  		FROM PRODUCT_PAYMENT
+  		WHERE USER_NO=#{userNo}
+  		AND STATUS='Y'
+  	</select>
+  	
+  	<select id="myOrderList" parameterType="product" resultMap="productResultSet">
+  		SELECT PAYMENT_NO,PRODUCT_TITLE,PRODUCT_PRICE,USER_NAME,PAYMENT_METHOD
+		FROM PRODUCT P
+		JOIN PRODUCT_PAYMENT PP ON(P.USER_NO=PP.USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=P.USER_NO)
+		WHERE PP.USER_NO=#{userNo}
+  	</select>
+  	
+  	<select id="sellCount" resultType="_int" parameterType="product">
+  		SELECT COUNT(PRODUCT_NO)
+  		FROM PRODUCT
+  		WHERE USER_NO=#{userNo}
+  		AND STATUS='Y'
+  	</select>
+  	
+  	<select id="mySellList" parameterType="product" resultMap="productResultSet">
+  		SELECT P.PRODUCT_NO,PRODUCT_TITLE, P.PRODUCT_PRICE,SALES_STATUS,PP.USER_NO
+		FROM PRODUCT P 
+		JOIN PRODUCT_PAYMENT PP ON (P.USER_NO=PP.USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=P.USER_NO)
+		WHERE P.USER_NO=#{userNo}
+  	</select>
+  	
+  	<delete id="unfollowUser" parameterType="follow">
+		DELETE FOLLOW
+		WHERE USER_ID = #{userNo}
+		AND FOLLOWING_ID = #{followingId}
+  	</delete>
+  	
+<!-- 거래내역 검색 주문내역
+  	<select id="searchDateOrderCount" resultType="_int" parameterType="product">
+  		SELECT COUNT(PAYMENT_NO)
+  		FROM PRODUCT
+  		WHERE USER_NO=#{userNo}
+  		AND ORDER_DATE LIKE '%'||#{orderDate}||'%'
+  	</select>
+  	
+  	<select id="searchOrderList" parameterType="product" resultMap="productResultSet">
+  		SELECT PAYMENT_NO,PRODUCT_TITLE,PRODUCT_PRICE,USER_NAME,PAYMENT_METHOD
+		FROM PRODUCT P
+		JOIN PRODUCT_PAYMENT PP ON(P.USER_NO=PP.USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=P.USER_NO)
+		WHERE PP.USER_NO=#{userNo}
+		AND ORDER_DATE LIKE '%'||#{orderDate}||'%'
+		ORDER BY ORDER_DATE;
+  	</select>
+ 판매내역
+  	<select id="searchDateSellCount" resultType="_int" parameterType="product">
+  		SELECT COUNT(PRODUCT_NO)
+  		FROM PRODUCT
+  		WHERE USER_NO=#{userNo}
+  		AND ORDER_DATE LIKE '%'||#{sellDate}||'%'
+  	</select>
+  	
+  	<select id="searchSellList" parameterType="product" resultMap="productResultSet">
+  		SELECT P.PRODUCT_NO,PRODUCT_TITLE, P.PRODUCT_PRICE,SALES_STATUS,PP.USER_NO
+		FROM PRODUCT P 
+		JOIN PRODUCT_PAYMENT PP ON (P.USER_NO=PP.USER_NO)
+		JOIN MEMBER M ON(M.USER_NO=P.USER_NO)
+		WHERE P.USER_NO=#{userNo}
+		AND ORDER_DATE LIKE '%'||#{sellDate}||'%'
+		ORDER BY ORDER_DATE;
+  	</select>
+--> 
   	
   	
   </mapper>

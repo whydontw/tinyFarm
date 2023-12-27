@@ -55,10 +55,15 @@
             width: 100%;
             margin-top: 5%;
         }
-        .btn-area {
-            margin-top: 10%;
-            margin: auto;
-            text-align: center;
+        .btn-area{
+        	width: 50%;
+        	margin: auto;
+        	text-align: center;
+        }
+        .btn-green{
+        	width: 80px;
+        	height: 40px;
+        	margin: auto;
         }
     </style>
 </head>
@@ -95,15 +100,24 @@
 		                        <p>${d.categoryNo }</p>
 		                        <h4>${d.diaryTitle }</h4>
 	                    	</div>
-	                    	<span id="miniProfile"><img src="${loginUser.changeName }">&nbsp;${loginUser.userName } &nbsp;</span>
+	                    	<c:choose>
+	                    		<c:when test="${not empty loginUser.changeName }">
+			                    	<span id="miniProfile"><img src="${loginUser.changeName }">&nbsp;${loginUser.userName } &nbsp;</span>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<span id="miniProfile"><img src="resources/profile.jpg">&nbsp;${loginUser.userName } &nbsp;</span>
+	                    		</c:otherwise>
+			                    	
+	                    	</c:choose>
 	                    	<span id="selectDate">${d.selectDate }</span>
 	                    	<hr>
 	                        <div id="diaryContent">${d.diaryContent }</div>
 	                    </div>
-	                   	<div class="btn-area">
-	                        <button id="updateBtn" class="btn btn-primary">수정</button>
-	                        <button id="delBtn" class="btn btn-danger">삭제</button>
-	                   	</div>
+	                    <div class="btn-area">
+	                        <button id="updateBtn" class="btn-green">수정</button>
+	                        <button id="delBtn" class="btn-green">삭제</button>
+	                        <button id="backBtn" class="btn-green">뒤로가기</button>
+	                    </div>
                 	</div>
                 </div>
             </div>
@@ -126,6 +140,15 @@
             $("#updateBtn").click(function(){
             	location.href="updatePage.di?diaryNo="+${d.diaryNo};
             });
+            
+            $("#backBtn").click(function(){
+            	let alert = window.confirm("이전페이지로 이동하시겠습니까?");
+            	if(alert){
+	            	window.history.back();
+            	}else{
+            		return false;
+            	}
+            })
         });
         
         
