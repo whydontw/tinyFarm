@@ -18,7 +18,7 @@ public class Board {
 	private String boardContent;
 	private int count;
 	private int likeCount;
-	private Date createDate;
+	private String createDate;
 	private String status;
 
 	private String titleImg;
