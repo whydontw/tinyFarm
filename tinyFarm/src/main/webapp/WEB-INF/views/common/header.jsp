@@ -24,6 +24,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- summernote -->
+  	<script src="resources/jisu/summernote/summernote-lite.js"></script>
+  	<script src="resources/jisu/summernote/lang/summernote-ko-KR.js"></script>
+  	<link rel="stylesheet" href="resources/jisu/summernote/summernote-lite.css">
+  	
+  	<!-- Date -->
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	 <style>
 		a,p{
 			font-family: 'Noto Sans KR', sans-serif !important;
