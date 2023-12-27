@@ -167,7 +167,7 @@
                         <img style="height:460px;" src="resources/img/bg-img/23.jpg" alt="">
                         <a href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" class="video-icon">
                             <i class="fa fa-play" aria-hidden="true"></i>
-                        </a>
+                        </a>                      
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
             <script>
 
 	            $(function(){
-	        		//getInGardenPlantListAjax();
+	        		getInGardenPlantListAjax();
 	        		$(".more-view-btn").click(function(){
 	        			getInGardenPlantListAjax();
 	        			

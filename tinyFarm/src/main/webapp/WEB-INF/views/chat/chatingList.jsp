@@ -221,7 +221,7 @@
 .post-content p{
 
 	font-size: 12px;
-	margin-top:10px;
+	margin:0;
 }
 .message-p{
 	width:300px;
@@ -296,6 +296,27 @@ div {
 }
 .emoji-item:hover{
 	cursor:pointer;
+}
+.msg-div{
+	display:flex;
+	height:24px;
+	margin-top:10px;
+
+}
+.not-read-msg-count-div{
+	text-align:center;
+	width:20px;
+	height:20px;
+	font-size:12px;
+	border-radius: 25px;
+	background-color: red;
+	color:white;
+	line-height : 14px;
+	margin-left:15px;
+	margin-top:4px;
+	padding-top:4px;
+	
+	
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -393,8 +414,8 @@ div {
 						    <img src="resources/img/icon/menu-icon.png">
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exitModal">삭제하기</a></li>
-						    <li><button class="dropdown-item">차단하기</a></li>
+						    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exitModal">나가기</a></li>
+						    <!-- <li><button class="dropdown-item">차단하기</a></li> -->
 				
 						  </ul>
 						</div>
@@ -457,6 +478,7 @@ div {
 			connect();
 			//chatingList.jsp에 들어오는 순간 채팅 상대 리스트를 불러온다.
 			selectChatList();
+			
 			
 			//채팅 입력창(textArea 입력 이벤트)
 			var chatInputEl = document.querySelector(".chat-textarea");
@@ -528,13 +550,26 @@ div {
 
 				// chat-list 클래스를 가진 요소들 중에서 후손 중 input 태그이고 id가 chatRoomNo이며 value가 chatRoomNoValue와 일치하는 요소를 찾습니다.
 				var chatRoomNoEl = document.querySelectorAll('.chat-list input#chatRoomNo');
-				
-				console.log(chatRoomNoEl);
-				
+			
 				chatRoomNoEl.forEach(function(chEl){
-					console.log(chEl);
+					
 					if(chatRoomNo == chEl.value){
-						$(chEl).siblings('.post-content').children("p").text(messageData.message);
+						$(chEl).siblings('.post-content').find(".msg-div").children("p").text(messageData.message);
+						
+						
+						//채팅방이 아무것도 열려있지 않거나
+						if($(".not-chat-div").is(".visible")){
+							console.log(1);
+							//메세지가 도착하면 빨간원으로 도착한 메세지가 표시되도록
+							selectNotReadMsg();						
+						}else if(messageData.userId != $(".chat-div").find("input[id='userId']").val()){ //메세지를 보낸 사람의 채팅방이 열려있지 않으면
+							console.log(2);
+							//메세지가 도착하면 빨간원으로 도착한 메세지가 표시되도록
+							selectNotReadMsg();
+						}else {
+							
+						}
+						
 					}
 				});				
 				
@@ -557,6 +592,8 @@ div {
 				text.value = "";
 
 			} else {
+				//전송된 시간으로 업데이트
+				updateConnectTime($("#currentChatRoomNo").val());
 				const chatMessage = {
 					"userId" : "${loginUser.userId}",
 					"receiveId" : $(".chat-area>#userId").val(),
@@ -626,9 +663,10 @@ div {
 		}
 		
 		//나를 제외한 회원 리스트 중 하나를 클릭했을때 이벤트
-		$(".find-id-div").on("click","div",function(){
+		$(".find-id-div").on("click",".post-content",function(){			
 			//아이디 : test1 이런식으로 p태그에 담겨있기 때문에 split으로 분리를 한 뒤에 가져옴.
-			var receiveMemId = $(this).children().eq(0).text().split(" : ")[1];
+			var receiveMemId = $(this).children().eq(0).text().split(" : ")[1];	
+		
 			//가져온 아이디 값을 insertChatRoom 메소드(db에 채팅방을 추가하는 메소드)에 전달.
 			insertChatRoom(receiveMemId);
 			//모달창을 닫기 위해 회원 찾기 모달창에 있는 닫기버튼을 클릭
@@ -637,6 +675,7 @@ div {
 		
 		//채팅방 추가 함수. 
 		function insertChatRoom(receiveMemId){
+			
 			$.ajax({
 				url : "insertChatRoom.ch",
 				data : {
@@ -692,17 +731,20 @@ div {
 							var chatRoomNo = $("<input type='hidden' id='chatRoomNo'>").val(result[i].chatRoomNo);
 							//로그인한 유저 말고 상대방의 이름을 적어야하기 떄문에 체크
 							var name = $("<h7 class='chat-other-name-id'></h7>").append($("<b></b>").text(result[i].userName+"("+result[i].otherId+")")); //로그인한 아이디와 다르기때문에 상대아이디임. 상대아이디 넣기
+							var msgDiv = $("<div class='msg-div'></div>");
 							//아니라면 receiveMemId 넣기
 							if(result[i].message != null){								
 								var msg = $("<p class='message-p'></p>").text(result[i].message);
 							} else {
 								var msg = $("<p></p>").text("최근 채팅이 없습니다");
 							}
+							
 							var hiddenUserId = $("<input type='hidden' id='userId'>").val(result[i].otherId);
+							msgDiv.append(msg);
 							
 							profileDiv.append(profile);
 							nameDiv.append(name);
-							nameDiv.append(msg);
+							nameDiv.append(msgDiv);
 							outDiv.append(profileDiv);
 							outDiv.append(nameDiv);
 							outDiv.append(chatRoomNo);
@@ -710,6 +752,8 @@ div {
 							
 							$(".chat-list").append(outDiv);
 						}
+						//읽지 않은 메시지 카운트 표시
+						selectNotReadMsg();
 					}
 				},
 				error : function(){
@@ -730,8 +774,13 @@ div {
 			
 			$(".chat-area").empty();
 			var hiddenUserId = $("<input type='hidden' id='userId'>").val(userId);
-			$(".chat-area").append(hiddenUserId);			
+			$(".chat-area").append(hiddenUserId);
+			//채팅 메세지 불러오기
 			selectChatMsg(chatRoomNo);
+			//채팅방에 있는 모든 메세지를 읽었다는 의미로 접속 시간 최신으로 업데이트
+			updateConnectTime(chatRoomNo);
+			
+			$(this).find(".msg-div").children().remove(".not-read-msg-count-div");
 			
 		});
 		
@@ -747,6 +796,53 @@ div {
 		//채팅방 삭제 메핑주소로 이동
 		function deleteRoom(){
 			location.href = "deleteRoom.ch?chatRoomNo="+$("#currentChatRoomNo").val();
+		}
+		
+		//채팅방 접속 시간 업데이트
+		function updateConnectTime(chatRoomNo) {
+			$.ajax({
+				url : "updateConnectTime.ch",
+				data : {
+					chatRoomNo : chatRoomNo,
+					userId : "${loginUser.userId}"
+				},
+				success : function(result){
+					
+				},
+				error : function(){
+					
+				}
+			});
+		}
+		//읽지 않은 채팅이 있다면 빨간 div로 표시하는 함수
+		function selectNotReadMsg(){
+			$.ajax({
+				url : "selectNotReadMsg.ch",
+				data : {
+					userId : "${loginUser.userId}"
+				},
+				success : function(result){
+					for(var i=0;i<$(".chat-item-div").length;i++){
+						//안읽은 메세지 표현할 div
+						var notReadMsgCount = $("<div class='not-read-msg-count-div'></div>");
+						var chatRoomNo = $(".chat-item-div").eq(i).children("input[id='chatRoomNo']").val();
+						var msgDiv = $(".chat-item-div").find(".msg-div").eq(i);
+						
+						for(var j=0;j<result.length;j++){
+							
+							if(chatRoomNo == result[j].CHAT_ROOM_NO){
+								msgDiv.children().remove(".not-read-msg-count-div");
+								msgDiv.append(notReadMsgCount.text(result[j].COUNT));
+								break;
+							}
+						}
+						
+					}
+				},
+				error : function(){
+				
+				}
+			});
 		}
 		//-------------------------채팅방 리스트 관련 함수 끝----------------------------------------
 		
@@ -804,7 +900,7 @@ div {
 		//이모지 div 보이기
 		function visibleEmojiDiv(){
 			//만약 emoji-div가 visible 상태라면 -> 이모지 모드를 나가야함
-			console.log($('.emoji-div').is(".visible"));
+			
             if($('.emoji-div').is(".visible")){
             	outEmojiMode();
             }else { //만약 emoji-div가 hidden 상태라면 -> 이모지 모드에 돌입해야함
@@ -851,7 +947,7 @@ div {
 		
 		//이모지 클릭시
 		$('.emoji-div').on("click",".emoji-item",function(){
-			//console.log($(this).text());
+			
 			var emoji = $(this).text();
 			$('.chat-textarea').val($('.chat-textarea').val()+emoji);
 

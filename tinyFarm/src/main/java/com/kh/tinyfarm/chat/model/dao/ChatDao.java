@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.chat.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,12 +14,12 @@ import com.kh.tinyfarm.member.model.vo.Member;
 public class ChatDao {
 
 	public ArrayList<Member> findUser(SqlSessionTemplate sqlSession,String search) {
-		System.out.println(search);
+		
 		return (ArrayList)sqlSession.selectList("chatMapper.selectFindUserList",search);
 	}
 
 	public int insertChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr) {
-		System.out.println(cr);
+		
 		return sqlSession.insert("chatMapper.insertChatRoom", cr);
 	}
 
@@ -51,10 +52,22 @@ public class ChatDao {
 	}
 
 	public int deleteRoom(SqlSessionTemplate sqlSession, int chatRoomNo) {
-		System.out.println("안녕22 : "+chatRoomNo);
+		
 		int result = sqlSession.delete("chatMapper.deleteRoom", chatRoomNo);
-		System.out.println("result : "+result);
+
 		return result;
+	}
+	
+	//채팅방 접속 시간 업데이트
+	public int updateConnectTime(SqlSessionTemplate sqlSession,HashMap map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("chatMapper.updateConnectTime", map);
+	}
+	
+	//내가 읽지 않은 메세지의 수를 세서 채팅방 번호와 함께 가져온다
+	public ArrayList<HashMap> selectNotReadMsg(SqlSessionTemplate sqlSession, String userId) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("chatMapper.selectNotReadMsg", userId);
 	}
 	
 	
