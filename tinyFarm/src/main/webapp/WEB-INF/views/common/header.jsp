@@ -43,8 +43,14 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
-		
+		.chat-icon{
+			width:12px; 
+			height:12px;
+		}
 
+		.container{
+			max-width:1200px;
+		}
 		
 	</style>
 </head>
@@ -86,12 +92,14 @@
 												<a href="join.me">회원가입</a>
 											</c:when>
 											<c:otherwise>
-												<a><i class="fa fa-user" aria-hidden="true"></i> <span>${loginUser.userName } 님</span></a>
+												<a style="margin-right:16px;"><i class="fa fa-user" aria-hidden="true"></i> <span>${loginUser.userName } 님</span></a>
 												<c:if test="${loginUser.userId == 'admin'}">
 													<!-- 관리자 로그인시 -->
-													<a href="main.ad" class="px-2">관리페이지</a>
+													<a style="margin-right:8px;" href="chatList.ch"><img class="chat-icon" alt="채팅방 가기" src="${contextPath}/resources/img/icon/chat-btn-icon.png">채팅</a>
+													<a href="main.ad">관리페이지</a>
 												</c:if>
 												<c:if test="${loginUser.userId != 'admin'}">
+													<a style="margin-right:8px;" href="chatList.ch"><img class="chat-icon" alt="채팅방 가기" src="${contextPath}/resources/img/icon/chat-btn-icon.png">채팅</a>
 													<a href="mypage.me" class="px-2">마이페이지</a>
 												</c:if>
 												<a href="logout.me" class="px-2"><i class="fa fa-sign-out" aria-hidden="true"></i>로그아웃</a>
@@ -143,7 +151,7 @@
                                             <li><a href="season.re">계절별 텃밭 가꾸는법</a> </li>
                                         </ul>
                                     </li>
-                                    <li><a href="chatList.ch">1:1 채팅</a></li>
+                                    <li><a href="moveMbtiTest.bo">작은농부 테스트</a></li>
                                     
                                     <li><a href="moveList.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>

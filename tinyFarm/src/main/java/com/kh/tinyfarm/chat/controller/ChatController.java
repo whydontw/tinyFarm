@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.chat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -66,6 +67,27 @@ public class ChatController {
 	public ArrayList<ChatRoom> selectChatList(String userId){
 		ArrayList<ChatRoom> list = chatService.selectChatList(userId);
 		
+		return list;
+	}
+	
+	
+	@RequestMapping("updateConnectTime.ch")
+	public void updateConnectTime(String userId,String chatRoomNo){
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("chatRoomNo", chatRoomNo);
+		int result = chatService.updateConnectTime(map);
+		if(result > 0) {
+			System.out.println("업데이트 성공");
+		}else {
+			System.out.println("업데이트 실패");
+		}	
+	}
+	@ResponseBody
+	@RequestMapping(value="selectNotReadMsg.ch",produces = "application/json; charset=UTF-8")
+	public ArrayList<HashMap> selectNotReadMsg(String userId){
+		ArrayList<HashMap> list = chatService.selectNotReadMsg(userId);
+		System.out.println(list);
 		return list;
 	}
 	

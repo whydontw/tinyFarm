@@ -66,6 +66,10 @@
         	display: flex;
         	justify-content: flex-end;
         }
+        .post-content{
+			width:800px;
+			word-wrap:break-word;
+		}
         </style>
 
 
