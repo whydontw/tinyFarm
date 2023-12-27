@@ -13,15 +13,43 @@
 	justify-content: space-around;
 }
 
+.btn-green {
+	border: none;
+	margin-top: 1%;
+	background-color: #70c745;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.btn-red {
+	float: right;
+	border: none;
+	margin-top: 1%;
+	margin-left: 1%;
+	background-color: #fa5a5a;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.btn-red:active {
+	top: 1px;
+	border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21)
+		rgba(0, 0, 0, 0.21);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05)
+		inset;
+	position: relative;
+}
+
 /* 마이페이지 메인 css */
-.myInfo{
+.myInfo {
 	width: 50%;
 	height: 10%;
 	text-align: center;
 	margin: auto;
-	font-size: 20px;
-	border: 1px solid grey;
+	font-size: 25px;
+	border: none;
 }
+
 .myPageMain {
 	width: 100%;
 	margin: auto;
@@ -40,11 +68,14 @@
 	text-align: center;
 	margin: 5%;
 	padding: 5%;
+	width: 80%;
+	height: 80%;
+	
 }
 
 #updateMe img, #myDiary img, #myActive img, #myTrade img {
-	max-width: 55%; /* 원하는 크기로 조절하세요 */
-	max-height: 55%; /* 원하는 크기로 조절하세요 */
+	max-width: 60%;
+	max-height: 60%; 
 	width: auto;
 	height: auto;
 }
@@ -79,18 +110,6 @@
 	width: 100%;
 	height: 50%;
 	margin-top: 5%;
-}
-
-#boardList>table, #replyList>table {
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	border-bottom: 1px solid grey;
-}
-
-#boardList tbody tr, #replyList tbody tr {
-	height: 100%;
-	border-bottom: 1px solid grey;
 }
 
 .pagination-container {
@@ -146,7 +165,6 @@
 	cursor: pointer;
 	background-color: white;
 	border: none;
-	margin-left: 260px
 }
 
 #file-name-display {
@@ -157,6 +175,79 @@
 	text-align: center;
 }
 
+.popup-wrap {
+	background-color: #70c745;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	padding: 15px;
+}
+
+.popup {
+	width: 100%;
+	max-width: 400px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #70c745;
+	box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .3);
+}
+
+.popup-head {
+	width: 100%;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.popup-body {
+	width: 100%;
+	background-color: #ffffff;
+}
+
+.body-content {
+	width: 100%;
+	padding: 30px;
+}
+
+.body-titlebox {
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 10px;
+}
+
+.body-contentbox {
+	word-break: break-word;
+	overflow-y: auto;
+	min-height: 100px;
+	max-height: 200px;
+}
+
+.popup-foot {
+	width: 100%;
+	height: 50px;
+}
+
+.pop-btn {
+	display: inline-flex;
+	width: 50%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	float: left;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.pop-btn.confirm {
+	border-right: 1px solid #3b5fbf;
+}
 /* 영농일지 css */
 #calendar {
 	width: 100%;
@@ -174,4 +265,51 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.radioBtn input[type=radio]{
+    display: none;
+}
+.radioBtn input[type=radio]+label{
+	margin-top: 1%;
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 60px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.radioBtn input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.radioBtn input[type=radio]:checked+label{
+    background-color: #96d179;
+    color: #fff;
+}
+/* 거래내역 css */
+#buyList {
+	width: 100%;
+	height: 50%;
+}
+
+#sellList {
+	width: 100%;
+	height: 50%;
+	margin-top: 5%;
+}
+
+#buyList>table, #sellList>table {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	border-bottom: 1px solid grey;
+}
+
+#buyList tbody tr, #sellList tbody tr {
+	height: 100%;
+	border-bottom: 1px solid grey;
 }
