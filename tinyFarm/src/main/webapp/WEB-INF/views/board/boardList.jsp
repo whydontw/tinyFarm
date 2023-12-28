@@ -94,6 +94,16 @@
 
 				<div class="col-12 col-md-4">
 					<div class="post-sidebar-area">
+						<!-- ##### Single Widget Area ##### -->
+						<div class="single-widget-area">
+							<form action="#" method="get" class="search-form">
+								<input type="search" name="search" id="widgetsearch"
+									placeholder="Search...">
+								<button type="submit">
+									<i class="icon_search"></i>
+								</button>
+							</form>
+						</div>
 						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
 					</div>
 				</div>

@@ -378,7 +378,7 @@
                         			$("#userStatus_detail").val(result.status);
                         			$("#userGrade_detail").val(result.grade);
                         			
-                                	selectMemberList(${currentPage});
+                                	selectMemberList(${currentPage}, $("#searchMemberId").val());
                         			
                         		},
                         		error: function(){

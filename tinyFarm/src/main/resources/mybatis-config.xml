@@ -33,6 +33,9 @@
 		
 		<typeAlias type="com.kh.tinyfarm.publicPlant.model.vo.PlantComment" alias="plantComment"/>
 		<typeAlias type="com.kh.tinyfarm.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.kh.tinyfarm.mbti.model.vo.InGardenMbti" alias="inGardenMbti"/>
+		
+	
 
 	</typeAliases>
 	

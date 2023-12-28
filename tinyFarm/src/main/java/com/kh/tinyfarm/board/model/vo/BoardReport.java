@@ -18,10 +18,4 @@ public class BoardReport {
 	private String createDate;
 	private String status;
 
-	private String boardWriter;
-	private String boardTitle;
-	private String boardCreateDate;
-//	private String status;
-	private String boardContent;
-
 }
