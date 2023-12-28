@@ -73,15 +73,15 @@
                             <div class="mb-0">
                                 <p><h5><b>🌱 답변 관리</b></h5></p>
                             </div>
-                            <div class="search_by_terms">
-                                <form action="#" method="post" class="form-inline">
-                                    <select class="custom-select widget-title">
-                                      <option selected>Show:</option>
-                                      <option value="1">미답변</option>
-                                      <option value="2">답변완료</option>
-                                    </select>
-                                </form>
-                            </div>
+<!--                             <div class="search_by_terms"> -->
+<!--                                 <form action="#" method="post" class="form-inline"> -->
+<!--                                     <select class="custom-select widget-title"> -->
+<!--                                       <option selected>Show:</option> -->
+<!--                                       <option value="1">미답변</option> -->
+<!--                                       <option value="2">답변완료</option> -->
+<!--                                     </select> -->
+<!--                                 </form> -->
+<!--                             </div> -->
                         </div>
 
                         <!-- 표 작성 내역 -->
@@ -129,7 +129,7 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" onclick="checkQnaDelete()">
-                                <li><a href="#"><i class="fa fa-times">&nbsp;&nbsp;선택 삭제</i></a></li>
+                                <li><a href="#"><i class="fa fa-times">&nbsp;&nbsp;문의내역 삭제</i></a></li>
                             </ol>
                         </div>
                         
@@ -151,9 +151,6 @@
                         
                     	//등록 form 이동
                     	function qnaAnswerEnrollBtn(qnaNo){
-                    		
-                    		console.log(qnaNo);
-                    		alert(qnaNo);
                     		
                     		var formObj = $("<form>");		//태그 생성하기
                     		
@@ -190,7 +187,7 @@
                         
                         function checkQnaDelete(){
                         	
-                        	if(confirm("선택 내역을 삭제하시겠습니까?")){
+                        	if(confirm("선택 문의내역을 삭제하시겠습니까?")){
 
                             let chkQnaList = "";
 							

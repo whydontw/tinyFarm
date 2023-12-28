@@ -34,9 +34,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">텃밭 가꾸기</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/gardeningList.pp?category=${category}">텃밭 가꾸기</a></li>
 						<li class="breadcrumb-item active" aria-current="page">상세정보</li>
 					</ol>
 					</nav>

@@ -34,7 +34,10 @@
 	flex-direction: row;
 	justify-content: space-around;
 }
-
+.boardContent{
+	width:800px;
+	word-wrap:break-word;
+}
 
 </style>
 
@@ -68,16 +71,16 @@
 		</div>
 	</div>
 	<!-- ##### Breadcrumb Area End ##### -->
-	<div align="center">
-		<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
-			style="width: 25px; height: 25px;"></a>
-	</div>
 
 	<!-- ##### Blog Area Start ##### -->
 	<section class="alazea-blog-area mb-100">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-8">
+					<div style="display:flex; justify-content:flex-end;">
+						<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
+							style="width: 25px; height: 25px;"></a>
+					</div>
 					<div class="row">
 
 
@@ -129,105 +132,108 @@
                        			$.ajax({
                        				url: "list.bo",
                        				success: function(result){
-                       					
+                     					
                        					$(".feed_items").empty();
-                       					for(var i in result){
-                       						var wraperDiv = $("<div></div>");
-                       						var ulDiv = $("<ul class='feed_items'></ul>");
-                       						var liDiv = $("<li class='feed_item'></li>");
-                       						var boardHeaderDiv = $("<div class='boardHeader'></div>");
-                       						var div1 = $("<div></div>");
-                       						var pDiv = $("<p></p>");
-                       						var spanDiv1 = $("<span></span>");
-                       						var boardContentDiv= $("<div class='boardContent'></div>");
-                       						var div2 = $("<div></div>");
-                       						var div3 = $("<div></div>");
-                       						var footerUl = $("<ul class='boardFooter'>");
-                       						var footerLi1 = $("<li></li>");
-                       						var footerLi2 = $("<li></li>");
+                       					if(result.length == 0){
                        						
-                       					
-                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
-                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
-                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
-                       						var replyCount = $("<span id='rcount'></span>");
-                       						var hiddenBno2 = $("<input type='hidden' name='boardNo' id='hiddenBno'>");
-                       						var heartIcon = $("<img>");
-                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none;'>좋아요</button>");
-                       						var spanDiv2 = $("<span id='likeCount'></span>");
-                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
+                       					}else {
                        						
-                       						profileStr.attr("src",result[i].profile);
-                       						spanDiv1.text(new Date(result[i].createDate).toLocaleString());
-                       						//spanDiv1.text(result[i].createDate);
-                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
-                       						div1.append(pDiv);
-                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
-                       						
-                       						hiddenBno.attr("value",result[i].boardNo);
-                       						div2.append(result[i].boardContent);
-                       						boardContentDiv.append(hiddenBno).append(div2);
-                       						
-                       						replyIcon.attr("src","resources/img/icon/댓글.png");
-                       						replyCount.text(result[i].replyCount);
-                       						footerLi1.append(replyIcon).append("&nbsp;댓글").append("&nbsp;").append(replyCount);
-                       						
-                       						hiddenBno2.attr("value",result[i].boardNo);
-                       						heartIcon.attr("src","resources/img/icon/heart.svg").attr("class","heartClass");
-                       						spanDiv2.text(result[i].likeCount);
-                       						footerLi2.append(hiddenBno2).append(heartIcon).append(" &nbsp;").append(buttonStr).append("&nbsp;").append(spanDiv2);
-                       						
-                       						footerUl.append(footerLi1).append(footerLi2);
-                       						div3.append(footerUl);
-                       						
-                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
-                       						
-                       						$(".feed_items").append(liDiv);
-                       					
-                       						
-                       						/*
-                       							<div>
-                      						      <ul class="feed_items">
-                      						    	 <li class="feed_item">
-	                      						    	 <div class="boardHeader">  
-	     		                                       	    <img src="${b.profile }" style="width: 30px; height: 30px; border-radius: 20px;"> &nbsp;&nbsp;
-		     		                                       	<div> 
-				                                               <p class="">${b.boardWriter}<span class="">•${b.createDate}</span></p>
-				                                            </div>
-			                                       		 </div>
-			                                       		 
-				                                       	  <!--글내용과 사진 작성-->
-					                                       <div class="boardContent">
-					                                       		<input type="hidden" name="boardNo" value="${b.boardNo }">
-					                                            <div>${b.boardContent }</div>
-					                                       </div>    
-     		                                       	    
-					                                       <!--댓글/좋아요 영역-->
-					                                       <div>
-					                                            <ul class="boardFooter">  <!--옆으로 띄워야함-->  <!--그리고 좋아요수 댓글수는 비동기식으로 작성하기-->
-					                                            	
-					                                                <li>
-					                                                	<img src="resources/img/icon/댓글.png" style="width: 23px; height: 23px;">
-					                                                	&nbsp; 댓글  
-					                                                	<span id="rcount">${b.replyCount }</span> 
-					                                                </li>
-					                                                <li>
-					                                                	<input type="hidden" name="boardNo" id='hiddenBno' value="${b.boardNo }">
-					                                                	<img class="heartClass" src="resources/img/icon/heart.svg">&nbsp;&nbsp;
-					                                                	<button type="button" onclick="dolike(this);" style="border: none;">좋아요</button>  <!-- 내 자신의 정보를 넣어주려고 this 넣음 --> 
-					                                                	<span id="likeCount">${b.likeCount }</span> 
-					                                                </li>
-					                                            </ul>
-					                                       </div>
-					                                       
-					                                       <hr style="background-color: #E0E0E0; opacity: 0.7">
-					                                   </li>
-					                               </ul>
-
-					                           </div>
-                       						*/
-                       						
-                       						
+	                       					for(var i in result){
+	                       						var liDiv = $("<li class='feed_item'></li>");
+	                       						var boardHeaderDiv = $("<div class='boardHeader'></div>");
+	                       						var div1 = $("<div style='width:800px;'></div>");
+	                       						var pDiv = $("<p></p>");
+	                       						var spanDiv1 = $("<span></span>");
+	                       						var boardContentDiv= $("<div class='boardContent'></div>");
+	                       						var div2 = $("<div></div>");
+	                       						var div3 = $("<div></div>");
+	                       						var footerUl = $("<ul class='boardFooter'>");
+	                       						var footerLi1 = $("<li></li>");
+	                       						var footerLi2 = $("<li></li>");
+	                       						
+	                       					
+	                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
+	                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
+	                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
+	                       						var replyCount = $("<span id='rcount'></span>");
+	                       						var hiddenBno2 = $("<input type='hidden' name='boardNo' id='hiddenBno'>");
+	                       						var heartIcon = $("<img>");
+	                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none;'>좋아요</button>");
+	                       						var spanDiv2 = $("<span id='likeCount'></span>");
+	                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
+	                       						
+	                       						profileStr.attr("src",result[i].profile);
+	                       						spanDiv1.text(new Date(result[i].createDate).toLocaleString());
+	                       						//spanDiv1.text(result[i].createDate);
+	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
+	                       						div1.append(pDiv);
+	                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
+	                       						
+	                       						hiddenBno.attr("value",result[i].boardNo);
+	                       						div2.append(result[i].boardContent);
+	                       						boardContentDiv.append(hiddenBno).append(div2);
+	                       						
+	                       						replyIcon.attr("src","resources/img/icon/댓글.png");
+	                       						replyCount.text(result[i].replyCount);
+	                       						footerLi1.append(replyIcon).append("&nbsp;댓글").append("&nbsp;").append(replyCount);
+	                       						
+	                       						hiddenBno2.attr("value",result[i].boardNo);
+	                       						heartIcon.attr("src","resources/img/icon/heart.svg").attr("class","heartClass");
+	                       						spanDiv2.text(result[i].likeCount);
+	                       						footerLi2.append(hiddenBno2).append(heartIcon).append(" &nbsp;").append(buttonStr).append("&nbsp;").append(spanDiv2);
+	                       						
+	                       						footerUl.append(footerLi1).append(footerLi2);
+	                       						div3.append(footerUl);
+	                       						
+	                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
+	                       						
+	                       						$(".feed_items").append(liDiv);
+	                       					
+	                       						
+	                       						/*
+	                       							<div>
+	                      						      <ul class="feed_items">
+	                      						    	 <li class="feed_item">
+		                      						    	 <div class="boardHeader">  
+		     		                                       	    <img src="${b.profile }" style="width: 30px; height: 30px; border-radius: 20px;"> &nbsp;&nbsp;
+			     		                                       	<div> 
+					                                               <p class="">${b.boardWriter}<span class="">•${b.createDate}</span></p>
+					                                            </div>
+				                                       		 </div>
+				                                       		 
+					                                       	  <!--글내용과 사진 작성-->
+						                                       <div class="boardContent">
+						                                       		<input type="hidden" name="boardNo" value="${b.boardNo }">
+						                                            <div>${b.boardContent }</div>
+						                                       </div>    
+	     		                                       	    
+						                                       <!--댓글/좋아요 영역-->
+						                                       <div>
+						                                            <ul class="boardFooter">  <!--옆으로 띄워야함-->  <!--그리고 좋아요수 댓글수는 비동기식으로 작성하기-->
+						                                            	
+						                                                <li>
+						                                                	<img src="resources/img/icon/댓글.png" style="width: 23px; height: 23px;">
+						                                                	&nbsp; 댓글  
+						                                                	<span id="rcount">${b.replyCount }</span> 
+						                                                </li>
+						                                                <li>
+						                                                	<input type="hidden" name="boardNo" id='hiddenBno' value="${b.boardNo }">
+						                                                	<img class="heartClass" src="resources/img/icon/heart.svg">&nbsp;&nbsp;
+						                                                	<button type="button" onclick="dolike(this);" style="border: none;">좋아요</button>  <!-- 내 자신의 정보를 넣어주려고 this 넣음 --> 
+						                                                	<span id="likeCount">${b.likeCount }</span> 
+						                                                </li>
+						                                            </ul>
+						                                       </div>
+						                                       
+						                                       <hr style="background-color: #E0E0E0; opacity: 0.7">
+						                                   </li>
+						                               </ul>
+	
+						                           </div>
+	                       						*/
+	                       						
+	                       						
+	                       					}
                        					}
                        					findLike();
                        				},

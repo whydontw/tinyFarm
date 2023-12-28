@@ -109,12 +109,13 @@ h1, h2, h3, h4, h5, h6 {
 <body>
 	<!-- Weather -->
 	<div class="container mt-5">
-		<div class="mb-30"><h3>🌱 오늘의 날씨</h3></div>
+		<div class="mb-30 text-center"><h3>🌱 오늘의 날씨</h3></div>
 		
 <!-- 		<div class="d-flex flex-row justify-content-center align-items-center"> -->
-			<div class="weather__card" > <!-- style="background-image: url( '${pageContext.request.contextPath}/resources/img/bg-img/sky.jpg' );">  -->
+			<div class="weather__card mx-auto" > <!-- style="background-image: url( '${pageContext.request.contextPath}/resources/img/bg-img/sky.jpg' );">  -->
 				<div class="text-right">
-					<a href="#" onclick="getUserLocation()">
+					<span id="updateWeatherHour" class="text-left"></span>&nbsp;&nbsp;
+					<a href="#" onclick="alert('현재 위치 및 시각을 기반으로 새로운 날씨 정보를 불러옵니다.'); getUserLocation()">
 						<i class="fa fa-refresh fa-lg" aria-hidden="true"></i>
 					</a>
 				</div>
@@ -145,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		<!-- Weather Forecast -->
 <!-- 		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-3" id="todayWeatherInfoArea"></div> -->
-		<div class="weather__forecast d-flex mt-30" id="todayWeatherInfoArea"></div>
+		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-30" id="todayWeatherInfoArea"></div>
 		
 	</div>
 	
@@ -302,8 +303,6 @@ h1, h2, h3, h4, h5, h6 {
 		// 초단기예보(5시간) 조회하기
 		function makePerHourForcast(weatherList, date) {
 			
-			alert("날씨 정보가 업데이트되었습니다.");
-		
 		    let perHours = '';
 		
 		    weatherList.forEach((item) => {
@@ -386,6 +385,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		    
 	        //현재날씨 넣기
+	        updateWeatherHour
 			$("#todayT1H").text(weatherList[0].T1H);
 			$("#todaySKY").text(weatherList[0].SKY);
 			$("#todayPTY").text(weatherList[0].PTY);
@@ -393,16 +393,13 @@ h1, h2, h3, h4, h5, h6 {
 			$("#todayWSD").text(weatherList[0].WSD);
 			$("#todayREH").text(weatherList[0].REH);
 		    
+			
+			$("#updateWeatherHour").text((weatherList[0].fcstTime).substr(0,2) + ":00 기준");
 		    $("#todayWeatherInfoArea").html(perHours);
 
 			
 		}
-		
-		
-		
-		
-		
-		
+
 	
 	</script>
 

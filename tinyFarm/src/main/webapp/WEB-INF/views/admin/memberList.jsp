@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -69,21 +70,21 @@
                             <div class="mb-0">
                                 <p><h5><b>🌱 회원 관리</b></h5></p>
                             </div>
-                            <div class="search_by_terms">
-                                <form action="#" method="post" class="form-inline">
-                                    <select class="custom-select widget-title">
-                                      <option selected>Show:</option>
-                                      <option value="1">미답변</option>
-                                      <option value="2">답변완료</option>
-                                    </select>
-                                </form>
-                            </div>
+<!--                             <div class="search_by_terms"> -->
+<!--                                 <form action="#" method="post" class="form-inline"> -->
+<!--                                     <select class="custom-select widget-title"> -->
+<!--                                       <option selected>Show:</option> -->
+<!--                                       <option value="1">미답변</option> -->
+<!--                                       <option value="2">답변완료</option> -->
+<!--                                     </select> -->
+<!--                                 </form> -->
+<!--                             </div> -->
                         </div>
 
                         <!-- 표 작성 내역 -->
                         <div class="clearfix mt-15 mb-15" id="memberListTable">
-                        	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
-                            <table class="table table-responsive" align="center" id="">
+                        	<div class="mb-15" id="memberListCurrentPage">현재 페이지: ${result.pi.currentPage }</div>
+                            <table class="table table-responsive" align="center">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="13%">
@@ -108,108 +109,53 @@
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                	<c:forEach var="m" items="${mList }">
-	                                    <tr>
-	                                        <td>${m.userNo }</td>
-	                                        <td>${m.userId }</td>
-	                                        <td>${m.userName }</td>
-	                                        <td>${m.phone }</td>
-	                                        <td>${m.email }</td>
-	                                        <td>${m.grade }</td>
-	                                        <td>
-	                                        	<c:choose>
-	                                        		<c:when test="${m.status == 'Y' }">활동</c:when>
-	                                        		<c:otherwise>활동중지</c:otherwise>
-	                                        	</c:choose>
-	                                        </td>
-	                                        <td><a href="#" onclick="memberDetailInfo(${m.userNo})"><i class="fa fa-search"></i></a></td>
-	                                        <td><input type="checkbox" value="${m.userNo }" class="chkMember"></td>
-	                                    </tr>
-                                    </c:forEach>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                         <div class="single-widget-area float-right">
-                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatus()">
-                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지</a></li>
-<!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
+                            <ol class="popular-tags d-flex flex-wrap" >
+                                <li onclick="memberStatus('N')"><a><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지</a></li>
+                                <li onclick="memberStatus('Y')"><a><i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;일괄중지 해제</a></li>
+<!--                            <li><a><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
+
                         
+                        <%@ include file="memberDetail.jsp" %>
                         
-                        <!-- Button trigger modal -->
-						<button type="button" id="memberdetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
-						
-						<!-- Modal -->
-						<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						  <div class="modal-dialog modal-dialog-centered" role="document">
-						    <div class="modal-content">
-						      <div class="modal-body">
-						      
-							      <div class="col-12">
-				                    <div class="checkout_details_area clearfix">
-				                        <h5>🌱 회원 정보</h5>
-				                            <div class="row mt-15">
-				                            	<div class="col-md-12 mt-30 mb-30">
-					                            	<div class="mx-auto" style="width: 150px; height: 150px; border: 1px solid #ccc; position: relative; overflow: hidden;">
-												        <!-- 이미지 표시 -->
-												        <img id="profileImage" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
-												    </div>
-											    </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="first_name">No</label>
-				                                    <input type="text" class="form-control" id="userNo_detail" name="userNo" value="" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="first_name">ID</label>
-				                                    <input type="text" class="form-control" id="userId_detail" name="userId" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="last_name">이름</label>
-				                                    <input type="text" class="form-control" id="userName_detail" name="userName" required>
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="country">회원등급</label>
-				                                    <select class="custom-select d-block w-100" id="userGrade_detail" name="grade">
-				                                        <option value="일반회원">일반회원</option>
-				                                        <option value="특별회원">특별회원</option>
-				                                        <option value="관리자">관리자</option>
-				                                    </select>
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="city">가입일자</label>
-				                                    <input type="text" class="form-control" id="userEnrollDate_detail" name="enrolldate" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="country">활동</label>
-				                                    <select class="custom-select d-block w-100" id="userStatus_detail" name="status">
-				                                        <option value="Y">활동</option>
-				                                        <option value="N">활동중지</option>
-				                                    </select>
-				                                </div>
-				                                <div class="col-12 mb-4">
-				                                    <label for="company">주소</label>
-				                                    <input type="text" class="form-control" id="userAddress_detail" name="address" readonly="readonly">
-				                                </div>
-				                                <div class="col-12 mb-4">
-				                                    <label for="company">연락처</label>
-				                                    <input type="text" class="form-control" id="userPhone_detail" name="phone" readonly="readonly">
-				                                </div>
-				                            </div>
-			                              	<button type="button" class="btn alazea-btn mt-15 float-right" onclick="memberInfoUpdate()">수정</button>
-					                    </div>
-					                </div>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-                        
-                        
-                        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+						<!-- ######### 검색 ######### -->
+	                    <div class="section-padding-100">
+	                        <div class="single-widget-area">
+	                        	<!-- height-50 css 추가 -->
+	                           <div class="mx-auto search-form d-flex float-right">
+	                               <input type="search" name="searchId" id="searchMemberId" placeholder="ID 검색">
+	                               <button type="button" onclick="searchMemberId()"><i class="fa fa-search"></i></button>
+	                           </div>
+	                        </div>
+	                    </div>
+	
+	                    <div class="row">
+	                        <div class="col-12 mt-100">
+	                            <!-- ######### 페이징 바 #########-->
+	                            <nav aria-label="Page navigation">
+	                            	<ul class="pagination" id="memberListPagenation"></ul>
+	                            </nav>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+    <!-- ##### Blog Area End ##### -->
+
+
+
+						<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         <script type="text/javascript">
 					    	
                         $(function(){
+                        	
+                        	selectMemberList(${currentPage}, "");
                         	
                         	//Modal 버튼 숨김
                         	$("#memberdetailViewModal").hide();
@@ -222,9 +168,103 @@
                         });
                         
                         
-                        function memberStatus(){
+                        //회원 리스트
+                        function selectMemberList(currentPage, searchId){
                         	
-                        	if(confirm("선택한 회원의 활동 중지 처리를 하시겠습니까?")){
+                        	$.ajax({
+                        		url: "selectMemberList.ad",
+                        		data: {
+                        			currentPage: currentPage,
+                        			searchId : searchId
+                        		},
+                        		success: function(result){
+                        			makeMemberListTable(result, searchId);
+                        		},error: function(){
+                        			console.log("오류났수 ㅠㅠ");
+                        		}
+                        		
+                        	})
+                        	
+                        }
+                        
+                        
+                        function makeMemberListTable(result, searchId){
+                        	
+                        	let mList = result.mList;
+                        	let mPi = result.pi;
+                        	
+                        	let str = "";
+                			
+                        	mList.forEach((item) => {
+                				
+                				if(item.status == 'Y'){
+                					item.status = '활동';
+                				}else{
+                					item.status = '활동중지';
+                				}
+                				
+                				str += "<tr><td>" + item.userNo + "</td>" +
+                                 		"<td>" + item.userId + "</td>" +
+                                 		"<td>" + item.userName + "</td>" +
+                                 		"<td>" + item.phone + "</td>" +
+                                 		"<td>" + item.email + "</td>" +
+                                 		"<td>" + item.grade + "</td>" +
+                                 		"<td>" + item.status + "</td>" +
+                                 		"<td><a href='#' onclick='memberDetailInfo(" + item.userNo + ")'><i class='fa fa-search'></i></a></td>" +
+                               			"<td><input type='checkbox' value=" + item.userNo + " class='chkMember'></td></tr>"
+                				
+                			})
+
+                			$("#memberListTable table tbody").html(str);
+                        	
+                        	
+                        	//pagination
+                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + (mPi.currentPage - 1) + ", \"" + searchId + "\")'><i class='fa fa-angle-left'></i></a></li>"
+                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + (mPi.currentPage + 1) + ", \"" + searchId + "\")'><i class='fa fa-angle-right'></i></a></li>"
+                        	
+                        	let paging = "";
+                    		
+                    		
+                    		if(mPi.currentPage > 1){
+                    			paging = beforePage;
+                    		}
+                    		
+                    		
+                           	console.log("페이징 searchId : ", searchId);
+                    		
+                    		for(var i = 1; i <= mPi.endPage; i++) {
+                        		paging += "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + i + ", \"" + searchId + "\")'>" + i + "</a></li>";
+                    		}
+                        	
+                    		if(mPi.currentPage < mPi.maxPage){
+                       			paging += afterPage;
+                       		}	
+                        	
+                    		
+                    		$("#memberListCurrentPage").text("현재 페이지: " + mPi.currentPage);
+                			$("#memberListPagenation").html(paging);
+                        	
+                        }
+                        
+                        
+                        //아이디 검색
+                        function searchMemberId(){
+                        	selectMemberList(1, $("#searchMemberId").val());
+                        }
+                        
+                        
+                        
+                        function memberStatus(status){
+                        	
+                        	let statusMsg = "";
+                        	
+                        	if(status == 'Y'){
+                        		statusMsg = "활동중지 해지";
+                        	}else{
+                        		statusMsg = "활동중지 처리"
+                        	}
+                        	
+                        	if(confirm("선택한 회원의 " + statusMsg + "를 하시겠습니까?")){
 
                             let chkMemberList = "";
 							
@@ -244,16 +284,27 @@
 	                            	alert("회원을 선택하세요");
 	                            }else{
 	                            
-		                            //선택된 글이 있는 경우
-		                    		var formObj = $("<form>");		//태그 생성하기
-		                    		formObj.attr("action", "memberStatus.ad").attr("method", "post");
-		                    		
-		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkMemberList").prop("value", chkMemberList);
-		                    		var obj = formObj.append(inputQnos);
-		                    		
-		    						$("body").append(obj)
-		
-		    						obj.submit();
+									//선택된 글이 있으면
+	                            	$.ajax({
+		    							url: "memberStatus.ad",
+		    							data: {
+		    								status : status,
+		    								chkMemberList : chkMemberList
+		    							},
+		    							success: function(result){
+		    								
+		    								if(result === "NNNY"){
+		    									alert("회원 활동 상태변경이 일괄 변경되었습니다.");
+		    									
+		    									$("input[type=checkbox]").prop("checked",false);
+		    									selectMemberList(${currentPage}, $("#searchMemberId").val());
+		    								}
+		    								
+		    							},
+		    							error: function(){
+		    								console.error("오류발생")
+		    							}
+		    						})
 	    						
 	                            }
 	                            
@@ -302,14 +353,7 @@
                         	
                         }
                         
-                        
-                        
-                        //div 새로고침
-//                         function memberListReload(){
-//                             $('#memberListTable').load(window.location.href + '#memberListTable');
-//                      	}
-                        
-                        
+						
                         //회원 정보 변경
                         function memberInfoUpdate(){
 
@@ -334,7 +378,7 @@
                         			$("#userStatus_detail").val(result.status);
                         			$("#userGrade_detail").val(result.grade);
                         			
-                        			location.reload();
+                                	selectMemberList(${currentPage}, $("#searchMemberId").val());
                         			
                         		},
                         		error: function(){
@@ -346,58 +390,16 @@
                         }
                         
 					</script>
-                        
-                        
-                        
-<!--				######### 검색 ######### -->
-                    <div class="section-padding-100">
-                        <div class="single-widget-area">
-                        	<!-- height-50 css 추가 -->
-                            <form action="" method="get" class="search-form d-flex float-right">   
-                                <div class="mx-auto">
-                                    <input type="search" name="searchId" id="widgetsearch" placeholder="ID 검색">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12 mt-100">
-                        
-                            <!-- ######### 페이징 바 #########-->
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                
-			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
-									</c:if>
-                                    
-                                    <!-- paging 개수 -->
-                                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${i}">${i}</a></li>
-									</c:forEach>
-				                    
-				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
-									</c:if>
-                                </ul>
-                            </nav>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Blog Area End ##### -->
+
+
 
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="${contextPath }/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<%--     <script src="${contextPath }/resources/js/jquery/jquery-2.2.4.min.js"></script> --%>
     <!-- Popper js -->
     <script src="${contextPath }/resources/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->

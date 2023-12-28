@@ -9,13 +9,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +32,19 @@ import org.xml.sax.SAXException;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
+import com.kh.tinyfarm.publicPlant.model.service.PublicPlantService;
 import com.kh.tinyfarm.publicPlant.model.vo.Gardening;
 import com.kh.tinyfarm.publicPlant.model.vo.GardeningDetail;
 import com.kh.tinyfarm.publicPlant.model.vo.InGardenPlantList;
+import com.kh.tinyfarm.publicPlant.model.vo.PlantComment;
 
 
 @Controller
 public class publicPlantController {
-
+	
+	@Autowired
+	private PublicPlantService publicPlantService;
+	
 	@RequestMapping("/inGardenPlantList.pp")
 	public String getInGardenPlantList(@RequestParam(value="currentPage",defaultValue = "1")int currentPage
 									  ,@RequestParam(value="sType",defaultValue = "sCntntsSj")String sType
@@ -155,7 +163,7 @@ public class publicPlantController {
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + pageNo;
-		parameter += "&numOfRows=8";
+		parameter += "&numOfRows=4";
 
 		// 서버와 통신
 		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);
@@ -300,16 +308,17 @@ public class publicPlantController {
 				map.put(node.getNodeName(), node.getChildNodes().item(0).getNodeValue());
 			} catch (NullPointerException e) {
 				map.put(node.getNodeName(), "정보 없음");
-			}
-			
-			 
-			
+			}			
 		}
 		
 		//식물 이미지 배열 넘기기
 		String[] imgArr = plantInfo.getRtnFileUrlStr().split("\\|");
 		model.addAttribute("imgArr", imgArr);
 		model.addAttribute("plantInfo", plantInfo);
+		
+		//식물에 대한 의견 정보 리스트 넘기기
+		//ArrayList<PlantComment> pcList = pl
+		
 		//응답 키와 값을 가진 map 넘기기
 		model.addAllAttributes(map);
 		return "plant/gardenDetail";	
@@ -520,6 +529,72 @@ public class publicPlantController {
 		model.addAttribute("gd", gd);
 		model.addAttribute("category", category);
 		return "plant/gardeningDetail";
+	}
+	
+	//식물 의견 리스트 가져오기
+	@ResponseBody
+	@RequestMapping(value="selectComment.pp",produces="application/json; charset=UTF-8")
+	public ArrayList<PlantComment> selectComment(@RequestParam(value = "currentPage",defaultValue = "1")int currentPage
+												,int cntntsNo){
+		HashMap<String,Integer> map = new HashMap<String, Integer>();
+		
+		//식물 의견 테이블 내 해당 식물에 적힌 댓글 개수 가져오기
+		//int listCount = publicPlantService.getCommentCount(cntntsNo);
+		int boardLimit = 5;
+		//int pageLimit = 5;
+		
+		map.put("limit",boardLimit);
+		map.put("currentPage",currentPage);
+		map.put("cntntsNo",cntntsNo);
+		ArrayList<PlantComment> list = publicPlantService.selectComment(map);
+		
+		return list;
+	}
+	//식물 의견 개수
+	@ResponseBody
+	@RequestMapping("getCommentCount.pp")
+	public int getCommentCount(int cntntsNo) {
+		return publicPlantService.getCommentCount(cntntsNo);
+	}
+	
+	
+	//식물 의견 추가
+	@ResponseBody
+	@RequestMapping(value="insertCommentToPlant.pp",produces="text/html; charset=UTF-8")
+	public String insertCommentToPlant(PlantComment pc) {
+		
+		int result = publicPlantService.insertCommentToPlant(pc);
+		if(result > 0) {
+			return "NNNNY";			
+		}else {
+			return "NNNNN";
+		}
+	}
+	
+	//식물 의견 수정
+	@ResponseBody
+	@RequestMapping(value="updateComment.pp",produces="text/html; charset=UTF-8")
+	public String updateComment(PlantComment pc) {
+		System.out.println(pc);
+		int result = publicPlantService.updateComment(pc);
+		if(result > 0) {
+			return "NNNNY";			
+		}else {
+			return "NNNNN";
+		}
+	}
+	
+	//식물 의견 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteComment.pp",produces="text/html; charset=UTF-8")
+	public String deleteComment(int ctpNo) {
+	
+		int result = publicPlantService.deleteComment(ctpNo);
+		if(result > 0) {
+			return "NNNNY";			
+		}else {
+			return "NNNNN";
+		}
 	}
 }
 

@@ -2,6 +2,7 @@ package com.kh.tinyfarm.member.model.service;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -154,22 +155,22 @@ public class MemberServiceImpl implements MemberService {
 		
 	//admin - 전체 회원수
 	@Override
-	public int memberListCount() {
-		return memberDao.memberListCount(sqlSession); 
+	public int memberListCount(String searchId) {
+		return memberDao.memberListCount(sqlSession, searchId); 
 	}
 	
 
 	//admin - 회원 리스트
 	@Override
-	public ArrayList<Member> selectMemberList(PageInfo pi) {
-		return memberDao.selectMemberList(sqlSession, pi);
+	public ArrayList<Member> selectMemberList(PageInfo pi, String searchId) {
+		return memberDao.selectMemberList(sqlSession, pi, searchId);
 	}
 
 	
 	//admin - 회원활동 일괄중지
 	@Override
-	public int memberStatusN(ArrayList<Integer> mList) {
-		return memberDao.memberStatusN(sqlSession, mList);
+	public int memberStatus(Map<String, Object> map) {
+		return memberDao.memberStatus(sqlSession, map);
 	}
 
 	
@@ -194,6 +195,37 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.memberStatusUpdate(sqlSession, m);
 	}
 
+
+
+
+
+	// 카카오 로그인
+		@Override
+		public String insertKakaoUserInfo(String userId, String userName, String originName, String changeName) {
+		    try {
+		        Member member = new Member();
+		        member.setUserId(userId);
+		        member.setUserName(userName);
+		        member.setOriginName(originName);
+		        member.setChangeName(changeName);
+
+		        // 아이디 체크
+		        int idCheckResult = memberDao.idCheck(sqlSession, member.getUserId());
+
+		        if (idCheckResult == 0) {
+		            // 존재하지 않는 아이디라면 회원 정보 삽입
+		            memberDao.insertKakaoUserInfo(sqlSession, member);
+		            return "success"; // 성공적으로 회원 정보 삽입
+		        } else {
+		            System.out.println("이미 가입된 아이디 입니다");
+		            return "duplicate"; // 이미 가입된 아이디인 경우
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        // 예외 처리를 필요에 따라 수행하세요.
+		        return "error"; // 예외 발생 시
+		    }
+		}
 
 
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,14 +21,45 @@
 	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<style>
 	.fc-event {
-    background: none; /* 이벤트 컨텐츠의 배경색 */
-    border: none;
-    width:30px;
+	    background: none;
+	    border: none;
+	    width:30px;
   	}
   	.fc-daygrid-event-harness {
 	    display: flex;
 	    align-items: center;
 	    justify-content: center;
+	}
+	.fc-day-sun a {
+	  color: red;
+	  text-decoration: none;
+	}
+	
+	.fc-day-sat a {
+	  color: blue;
+	  text-decoration: none;
+	}
+	.fc-prev-button.fc-button.fc-button-primary,
+	.fc-next-button.fc-button.fc-button-primary{
+		background-color: #98d479;
+		border: 1px solid #d6e5c5;
+	}
+	.fc-today-button.fc-button.fc-button-primary{
+		background-color: #98d479;
+		border: 1px solid #d6e5c5;
+	}
+	
+	.fc-col-header-cell.fc-day{
+		background-color: #98d479;
+	}
+	.fc-scrollgrid.fc-scrollgrid-liquid tbody{
+		border: 1px solid #98d479;
+	}
+	.fc-day.fc-day-today.fc-daygrid-day{
+		background-color: #ebdfd3;
+	}
+	.fc-daygrid-bg-harness{
+		background-color: #f1efec;
 	}
 	</style>
 </head>
@@ -73,7 +103,6 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
-		
 		initialView: 'dayGridMonth',
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
@@ -81,10 +110,28 @@
 		navLinkDayClick: function(date,jsEvent){ //날짜 클릭시
 			let formattedDate = moment(date).format('YYYY/MM/DD'); //DB저장을 위해 date 형식 변경
 		    let str = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 " + date.getDate() + "일";
-		    let goInsert = window.confirm("선택하신 날짜는 " + str + "입니다. 일지를 작성하시겠습니까?");
-			    if (goInsert != false) { //확인 누를시 일지작성페이지로 가기
-			    	location.href = "insert.di?selectDate=" + encodeURIComponent(formattedDate);
-			    }
+			let userNo = ${loginUser.userNo};
+			//클릭 날짜에 일지 있는지 없는지 확인(없으면 작성 있으면 일지보기)
+			$.ajax({
+				url : "info.di",
+				type : "post",
+				data : {
+					date : formattedDate,
+					userNo : userNo
+				},success:function(result){
+					if(result=='NN'){ //작성된 일지 없을시
+					    let goInsert = window.confirm("선택하신 날짜는 " + str + "입니다.\n일지를 작성하시겠습니까?");
+						    if (goInsert != false) { //확인 누를시 일지작성페이지로 가기
+						    	location.href = "insert.di?selectDate=" + encodeURIComponent(formattedDate);
+						    }
+					}else{
+						let goView = window.alert(str + "에 작성하신 일지가 있습니다.\n확인하시려면 새싹 아이콘을 눌러주세요.");
+					}
+				},error:function(){
+					console.log("일지 유무확인 ajax 통신오류");
+				}
+			
+			})
 	    },editable: true, 
 	    eventContent: function(img) { //새싹이미지를 위한 함수 ..
 	    	let imageUrl = img.event.extendedProps.imageUrl;
@@ -117,14 +164,49 @@
 	        		}
 	        	});
 	    },eventClick: function(info){ //새싹 이미지 클릭시 일지 보러가기
-	        //나중에 필요할 것 같아서 미리 ..
-	       	let date = moment(info.event.start).format('YYYY/MM/DD');
-	        let year = info.event.start.getFullYear();
-	        let month = info.event.start.getMonth()+1;
-	        let day = info.event.start.getDate();
-	        let view = alert(year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?");
+	    	let year = info.event.start.getFullYear();
+		    let month = info.event.start.getMonth()+1;
+		    let day = info.event.start.getDate();
+		    let userNo = ${loginUser.userNo};
+	        let view = window.confirm(year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?");
 	        	if(view != false){
-		        	location.href="view.di?selectDate="+encodeURIComponent(date);
+					let date = moment(info.event.start).format('YYYY/MM/DD');
+					$.ajax({
+						url : "viewSet.di",
+						type : "post",
+						data : {
+							date:date,
+							userNo:userNo
+						},
+						success:function(result){
+							//post방식으로 페이지 이동을 위한 준비
+							let diaryNo = result.diaryNo;
+							let selectDate = moment(result.selectDate).format('YYYY/MM/DD');
+							let form = document.createElement("form");
+							let obj; //넘겨받을 값 준비
+							//일지번호
+							obj = document.createElement("input");
+							obj.setAttribute("type","hidden");
+							obj.setAttribute("name","diaryNo");
+							obj.setAttribute("value",diaryNo);
+							form.appendChild(obj);
+							//일지날짜
+							obj = document.createElement("input");
+							obj.setAttribute("type","hidden");
+							obj.setAttribute("name","selectDate");
+							obj.setAttribute("value",selectDate);
+							//폼 형식 갖추기
+							form.appendChild(obj);
+							form.setAttribute("method","post");
+							form.setAttribute("action","view.di");
+							//body부분에 폼 추가
+							document.body.appendChild(form);
+							//전송!
+							form.submit();
+						},error:function(){
+							console.log("일지불러오기 ajax 통신 실패");
+						}
+					});
 	        	}
 	        }
 	    });
