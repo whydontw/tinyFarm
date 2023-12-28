@@ -436,6 +436,7 @@
         var originContent=$("#hiddenRContent").val();
         console.log(originContent);
         
+       
         var contentArea = document.getElementById("replyContent");
         contentArea.innerText = originContent;
         

@@ -24,15 +24,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- summernote -->
+  	<script src="resources/jisu/summernote/summernote-lite.js"></script>
+  	<script src="resources/jisu/summernote/lang/summernote-ko-KR.js"></script>
+  	<link rel="stylesheet" href="resources/jisu/summernote/summernote-lite.css">
+  	
+  	<!-- Date -->
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	 <style>
 		a,p{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
-		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+		.h1, .h3, .h4, .h5, .h6, h1, h4, h5, h6{
 			font-family: 'Noto Sans KR', sans-serif !important;
 		}
 		.plantImg,.plantName:hover{
 			cursor : pointer;
+		}
+		.chat-icon{
+			width:12px; 
+			height:12px;
+		}
+
+		.container{
+			max-width:1200px;
 		}
 		
 	</style>
@@ -75,12 +92,14 @@
 												<a href="join.me">회원가입</a>
 											</c:when>
 											<c:otherwise>
-												<a><i class="fa fa-user" aria-hidden="true"></i> <span>${loginUser.userName } 님</span></a>
+												<a style="margin-right:16px;"><i class="fa fa-user" aria-hidden="true"></i> <span>${loginUser.userName } 님</span></a>
 												<c:if test="${loginUser.userId == 'admin'}">
 													<!-- 관리자 로그인시 -->
-													<a href="main.ad" class="px-2">관리페이지</a>
+													<a style="margin-right:8px;" href="chatList.ch"><img class="chat-icon" alt="채팅방 가기" src="${contextPath}/resources/img/icon/chat-btn-icon.png">채팅</a>
+													<a href="main.ad">관리페이지</a>
 												</c:if>
 												<c:if test="${loginUser.userId != 'admin'}">
+													<a style="margin-right:8px;" href="chatList.ch"><img class="chat-icon" alt="채팅방 가기" src="${contextPath}/resources/img/icon/chat-btn-icon.png">채팅</a>
 													<a href="mypage.me" class="px-2">마이페이지</a>
 												</c:if>
 												<a href="logout.me" class="px-2"><i class="fa fa-sign-out" aria-hidden="true"></i>로그아웃</a>
@@ -129,20 +148,17 @@
                                             <li><a href="gardeningList.pp?category=실내농업">실내농업 관련 정보</a> </li>
                                             <li><a href="gardeningList.pp?category=기능별 텃밭">기능별 텃밭 정보</a> </li>
                                             <li><a href="makeInGarden.pp">실내정원 만들기</a> </li>
+                                            <li><a href="season.re">계절별 텃밭 가꾸는법</a> </li>
                                         </ul>
                                     </li>
-                                    <li><a href="about.html">체험활동</a></li>
+                                    <li><a href="moveMbtiTest.bo">작은농부 테스트</a></li>
                                     
                                     <li><a href="moveList.bo">커뮤니티</a></li>
                                     <li><a href="plist.bo">작물거래</a></li>
-                                    <li><a href="contact.html">공지사항</a></li>
+                                    <li><a href="noticeList.no">공지사항</a></li>
                                     <li><a href="qnaList.qa">1:1 문의</a></li>
                                 </ul>
 
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
 
                             </div>
                             <!-- Navbar End -->
