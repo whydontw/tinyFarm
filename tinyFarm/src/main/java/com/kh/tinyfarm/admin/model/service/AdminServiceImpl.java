@@ -77,8 +77,8 @@ public class AdminServiceImpl implements AdminService{
 	
 	//Today 통계
 	@Override
-	public int selectTodayCount(String category) {
-		return adminDao.selectTodayCount(sqlSession, category);
+	public int selectStaticCount(String tableName, String selectRange, String whereRange) {
+		return adminDao.selectStaticCount(sqlSession, tableName, selectRange, whereRange);
 	}
 
 	

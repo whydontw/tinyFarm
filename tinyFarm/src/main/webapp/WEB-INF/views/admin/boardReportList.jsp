@@ -317,7 +317,7 @@
                         
                         //신고글 내용 상세조회
                         function reportDetailInfo(refBno){
-                        	window.open("detail.bo?boardNo="+ refBno, '신고글', "width=1000, height=800");
+                        	window.open("detail.bo?boardNo="+ refBno, '신고글');
                         }
                         
 						

@@ -48,8 +48,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Admin</li>
+                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="main.ad">Admin</a></li>
                         </ol>
                     </nav>
                 </div>
