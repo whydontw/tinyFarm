@@ -36,14 +36,14 @@ h1, h2, h3, h4, h5, h6 {
 # Weather Card
 --------------------------------------------------------------*/
 .weather__card {
-  width: 630px;
-  padding: 15px 30px;
+  width: 400px;
   background-color: #EEEEEE;
   border-radius: 20px;
   color:#3C4048;
+  padding:20px;
 }
 .weather__card h2 {
-  font-size:120px;
+  font-size:70px;
   font-weight:700;
   color:#3C4048;
   line-height: .8;
@@ -61,8 +61,8 @@ h1, h2, h3, h4, h5, h6 {
   color:#9D9D9D;
 }
 .weather__card img {
-  width: 120px;
-  height: 120px;
+  width: 70px;
+  height: 70px;
 }
 .weather__card .weather__description {
   background-color: #fff;
@@ -88,6 +88,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: .9rem;
   padding-left: .5rem;
 }
+.weather__status{
+	height:50px;
+}
 /*--------------------------------------------------------------
 # Weather Forecast
 --------------------------------------------------------------*/
@@ -100,15 +103,20 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   color: #3C4048;
   font-size: 1rem;
-  padding: 5px 10px;
-}
 
+}
+.weather__forecast{
+	width:400px;
+}
+.out-container{
+	width:400px;
+}
 </style>
 
 </head>
 <body>
 	<!-- Weather -->
-	<div class="container mt-5">
+	<div class="out-container">
 		<div class="mb-30 text-center"><h3>🌱 오늘의 날씨</h3></div>
 		
 <!-- 		<div class="d-flex flex-row justify-content-center align-items-center"> -->
@@ -132,11 +140,11 @@ h1, h2, h3, h4, h5, h6 {
 					<span class="weather__description" id="todaySKY"></span>
 					<span class="weather__description" id="todayPTY"></span>
 				</div>
-				<div class="weather__status d-flex flex-row justify-content-center align-items-center mt-3">
-					<div class="p-4 d-flex justify-content-center align-items-center">
+				<div class="weather__status d-flex flex-row justify-content-center align-items-center">
+					<div class="d-flex justify-content-center align-items-center" style="margin-right:20px;">
 						<img src="${pageContext.request.contextPath}/resources/img/weather/RainyPercent.png">&nbsp; 습도 <span id="todayREH"></span>&nbsp;%
 					</div>
-					<div class="p-4 d-flex justify-content-center align-items-center">
+					<div class="d-flex justify-content-center align-items-center">
 						<img src="${pageContext.request.contextPath}/resources/img/weather/WindPercent.png">&nbsp; 풍속 <span id="todayWSD"></span>&nbsp;m/s
 					</div>
 				</div>
@@ -146,7 +154,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		<!-- Weather Forecast -->
 <!-- 		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-3" id="todayWeatherInfoArea"></div> -->
-		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-30" id="todayWeatherInfoArea"></div>
+		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center" id="todayWeatherInfoArea"></div>
 		
 	</div>
 	
@@ -375,10 +383,10 @@ h1, h2, h3, h4, h5, h6 {
 		        	
 		        perHours +=
 		            "<div class='p-1 d-flex flex-column justify-content-center align-items-center'>" +
-		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + " 예상" + "</span></div>" +
+		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + "</span></div>" +
 		            "<div class='mb-15 mt-15'>" + item.WeatherImg + "</div>" +
-		            "<div><span>" + item.T1H + "&deg;</span></div>" +
-		            "<div><span>💧 " + item.REH + "%</span></div>" +
+		            "<div><span style='margin-left:6px;'>" + item.T1H + "&deg;</span></div>" +
+		            "<div style='margin-top:10px;'><span>💧" + item.REH + "%</span></div>" +
 		            "</div>";
 				
 		    });
@@ -405,20 +413,6 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-
-
-
-	<!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
     
     
 </body>

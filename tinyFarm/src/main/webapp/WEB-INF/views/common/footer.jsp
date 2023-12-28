@@ -76,8 +76,8 @@
                         <div class="footer-nav">
                             <nav>
  								<ul>
-                                    <li><a href="#">공지</a></li>
-                                    <li><a href="#">1:1문의</a></li>
+                                    <li><a href="noticeList.no">공지</a></li>
+                                    <li><a href="qnaList.qa">1:1문의</a></li>
                                 </ul>
                             </nav>
                         </div>

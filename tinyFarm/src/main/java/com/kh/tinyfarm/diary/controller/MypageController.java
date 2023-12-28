@@ -643,67 +643,9 @@ public class MypageController {
 		
 		return result;
 	}
-/*	
-	//구매 검색 내역
-	@ResponseBody
-	@PostMapping(value="searchOrder.me",produces="application/json; charset=UTF-8")
-	public Map<String, Object> sellPage(int userNo,Date searchDate, Payment pm
-										,@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
-		
-		pm.setUserNo(userNo);
-		pm.setOrderDate(searchDate);
-		//페이징처리 된 게시글 조회하기
-		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
-		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
-		int listCount = diaryService.searchDateOrderCount(pm);
-		//한 페이지에서 보여줘야하는 게시글 개수 
-		int boardLimit = 10;
-		//페이징바 개수 (pageLimit)
-		int pageLimit = 5;
-		
-		//페이징 처리된 게시글 목록 조회하기
-		PageInfo oPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		ArrayList<Product> oList = diaryService.searchOrderList(pm);
-				
-		//map에 페이지 정보와 글정보 담기
-		result.put("oList", oList);
-		result.put("oPi", oPi);
-				
-		return result;
 	
-	}
 	
-	//판매 검색 내역
-	@ResponseBody
-	@PostMapping(value="searchSell.me",produces="application/json; charset=UTF-8")
-	public Map<String, Object> sellPage(int userNo,Date searchDate, Payment pm
-										,@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
-		
-		pm.setUserNo(userNo);
-		pm.setOrderDate(searchDate);
-		//페이징처리 된 게시글 조회하기
-		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
-		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
-		int listCount = diaryService.searchDateSellCount(pm);
-		//한 페이지에서 보여줘야하는 게시글 개수 
-		int boardLimit = 10;
-		//페이징바 개수 (pageLimit)
-		int pageLimit = 5;
-		
-		//페이징 처리된 게시글 목록 조회하기
-		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		ArrayList<Product> sList = diaryService.searchOrderList(pm);
-				
-		//map에 페이지 정보와 글정보 담기
-		result.put("sList", sList);
-		result.put("sPi", sPi);
-				
-		return result;
-		
-	}
-	*/
+	
+	
+	
 }

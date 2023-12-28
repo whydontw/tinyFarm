@@ -35,7 +35,7 @@
 	justify-content: space-around;
 }
 .boardContent{
-	width:800px;
+	width:700px;
 	word-wrap:break-word;
 }
 
@@ -94,76 +94,7 @@
 
 				<div class="col-12 col-md-4">
 					<div class="post-sidebar-area">
-
-						<!-- ##### Single Widget Area ##### -->
-						<div class="single-widget-area">
-							<form action="#" method="get" class="search-form">
-								<input type="search" name="search" id="widgetsearch"
-									placeholder="Search...">
-								<button type="submit">
-									<i class="icon_search"></i>
-								</button>
-							</form>
-						</div>
-
-						<!-- ##### Single Widget Area ##### -->
-						<div class="single-widget-area">
-							<!-- Title -->
-							<div class="widget-title">
-								<h4>Recent post</h4>
-							</div>
-
-							<!-- Single Latest Posts -->
-							<div class="single-latest-post d-flex align-items-center">
-								<div class="post-thumb">
-									<img src="resources/img/bg-img/30.jpg" alt="">
-								</div>
-								<div class="post-content">
-									<a href="#" class="post-title">
-										<h6>New Harris Bugg design for Bridgewater</h6>
-									</a> <a href="#" class="post-date">20 Jun 2018</a>
-								</div>
-							</div>
-
-							<!-- Single Latest Posts -->
-							<div class="single-latest-post d-flex align-items-center">
-								<div class="post-thumb">
-									<img src="resources/img/bg-img/31.jpg" alt="">
-								</div>
-								<div class="post-content">
-									<a href="#" class="post-title">
-										<h6>The designers will create a new kitchen garden</h6>
-									</a> <a href="#" class="post-date">20 Jun 2018</a>
-								</div>
-							</div>
-
-							<!-- Single Latest Posts -->
-							<div class="single-latest-post d-flex align-items-center">
-								<div class="post-thumb">
-									<img src="resources/img/bg-img/32.jpg" alt="">
-								</div>
-								<div class="post-content">
-									<a href="#" class="post-title">
-										<h6>SGD Members win Best of Houzz Design Award</h6>
-									</a> <a href="#" class="post-date">20 Jun 2018</a>
-								</div>
-							</div>
-
-							<!-- Single Latest Posts -->
-							<div class="single-latest-post d-flex align-items-center">
-								<div class="post-thumb">
-									<img src="resources/img/bg-img/33.jpg" alt="">
-								</div>
-								<div class="post-content">
-									<a href="#" class="post-title">
-										<h6>Shepherding Vegetables From Roof to Restaurant</h6>
-									</a> <a href="#" class="post-date">20 Jun 2018</a>
-								</div>
-							</div>
-						</div>
-
-						
-
+						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
 					</div>
 				</div>
 			</div>
@@ -194,7 +125,7 @@
 	                       					for(var i in result){
 	                       						var liDiv = $("<li class='feed_item'></li>");
 	                       						var boardHeaderDiv = $("<div class='boardHeader'></div>");
-	                       						var div1 = $("<div style='width:800px;'></div>");
+	                       						var div1 = $("<div style='width:700px;'></div>");
 	                       						var pDiv = $("<p></p>");
 	                       						var spanDiv1 = $("<span></span>");
 	                       						var boardContentDiv= $("<div class='boardContent'></div>");

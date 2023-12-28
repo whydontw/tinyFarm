@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,22 +40,28 @@ import com.kh.tinyfarm.publicPlant.model.vo.InGardenPlantList;
 import com.kh.tinyfarm.publicPlant.model.vo.PlantComment;
 
 
+
 @Controller
 public class publicPlantController {
 	
 	@Autowired
 	private PublicPlantService publicPlantService;
 	
+	//실내정원용 식물정보 리스트 가져오기
 	@RequestMapping("/inGardenPlantList.pp")
 	public String getInGardenPlantList(@RequestParam(value="currentPage",defaultValue = "1")int currentPage
 									  ,@RequestParam(value="sType",defaultValue = "sCntntsSj")String sType
 									  ,@RequestParam(value="sText",defaultValue = "")String sText
 									  ,Model model) throws IOException, ParserConfigurationException, SAXException {
+		
+		//식물 정보를 담을 리스트
 		ArrayList<InGardenPlantList> list = new ArrayList();
-		int listCount;
-		int pageLimit = 10;
-		int boardLimit = 8;
+		//페이지바 처리를 위한 변수
+		int listCount; //총 게시글 수
+		int pageLimit = 10; //페이지 번호의 최대 개수
+		int boardLimit = 8; //한 페이지 게시글 최대 개수
 		// apiKey - 농사로 Open API에서 신청 후 승인되면 확인 가능
+		
 		String apiKey = "20231128LKLLXWVMAXGGYTETEWAOBA";
 		// 서비스 명
 		String serviceName = "garden";
@@ -66,9 +73,10 @@ public class publicPlantController {
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + currentPage;
-		parameter += "&sType=" + sType;
-		parameter += "&sText=" + sText;
+		parameter += "&sType=" + sType; //검색 타입 (제목,내용 ..)
+		parameter += "&sText=" + sText; //검색값
 		parameter += "&numOfRows=8";
+		
 		// 서버와 통신
 		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);
 		
@@ -91,51 +99,49 @@ public class publicPlantController {
 			responseText += line;
 		}
 		
-		
-		// model.addAttribute("result",responseText);
-		
-			// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
+		// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
 
-			// XML 문자열을 Document 객체로 파싱
-			Document document = builder.parse(new InputSource(new StringReader(responseText)));
-			
-			// XML 요소를 검색하기 위해 XPath 또는 직접적인 노드 탐색 가능
-			NodeList cntntsNoList = document.getElementsByTagName("cntntsNo");
-			NodeList cntntsSjList = document.getElementsByTagName("cntntsSj");
-			NodeList rtnFileUrlList = document.getElementsByTagName("rtnFileUrl");
-			NodeList rtnImgSeCodeList = document.getElementsByTagName("rtnImgSeCode");
-			NodeList rtnThumbFileUrlList = document.getElementsByTagName("rtnThumbFileUrl");
-			
-			NodeList totalCount = document.getElementsByTagName("totalCount");
-			// CDATA 값 추출
-			for (int i = 0; i < cntntsNoList.getLength(); i++) {
-				Node node = cntntsNoList.item(i);
-				Node node2 = cntntsSjList.item(i);
-				Node node3 = rtnFileUrlList.item(i);
-				Node node4 = rtnImgSeCodeList.item(i);
-				Node node5 = rtnThumbFileUrlList.item(i);
+		// XML 문자열을 Document 객체로 파싱
+		Document document = builder.parse(new InputSource(new StringReader(responseText)));
+		
+		// XML 요소를 검색하기 위해 XPath 또는 직접적인 노드 탐색 가능
+		NodeList cntntsNoList = document.getElementsByTagName("cntntsNo");
+		NodeList cntntsSjList = document.getElementsByTagName("cntntsSj");
+		NodeList rtnFileUrlList = document.getElementsByTagName("rtnFileUrl");
+		NodeList rtnImgSeCodeList = document.getElementsByTagName("rtnImgSeCode");
+		NodeList rtnThumbFileUrlList = document.getElementsByTagName("rtnThumbFileUrl");
+		
+		NodeList totalCount = document.getElementsByTagName("totalCount");
+	
+		// CDATA 값 추출
+		for (int i = 0; i < cntntsNoList.getLength(); i++) {
+			Node node = cntntsNoList.item(i);
+			Node node2 = cntntsSjList.item(i);
+			Node node3 = rtnFileUrlList.item(i);
+			Node node4 = rtnImgSeCodeList.item(i);
+			Node node5 = rtnThumbFileUrlList.item(i);
 
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					Node childNode = node.getChildNodes().item(0);
-					Node childNode2 = node2.getChildNodes().item(0);
-					Node childNode3 = node3.getChildNodes().item(0);
-					Node childNode4 = node4.getChildNodes().item(0);
-					Node childNode5 = node5.getChildNodes().item(0);
-					InGardenPlantList igp = new InGardenPlantList();
-					igp.setCntntsNo(Integer.parseInt(childNode.getNodeValue()));
-					igp.setCntntsSj(childNode2.getNodeValue());
-					igp.setRtnFileUrlStr(childNode3.getNodeValue());
-					igp.setRtnFileUrl(childNode3.getNodeValue().split("\\|"));
-					igp.setRtnImgSeCode(childNode4.getNodeValue().split("\\|"));
-					igp.setRtnThumbFileUrl(childNode5.getNodeValue().split("\\|"));
-					list.add(igp);
-				}
-				
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Node childNode = node.getChildNodes().item(0);
+				Node childNode2 = node2.getChildNodes().item(0);
+				Node childNode3 = node3.getChildNodes().item(0);
+				Node childNode4 = node4.getChildNodes().item(0);
+				Node childNode5 = node5.getChildNodes().item(0);
+				InGardenPlantList igp = new InGardenPlantList();
+				igp.setCntntsNo(Integer.parseInt(childNode.getNodeValue()));
+				igp.setCntntsSj(childNode2.getNodeValue());
+				igp.setRtnFileUrlStr(childNode3.getNodeValue());
+				igp.setRtnFileUrl(childNode3.getNodeValue().split("\\|"));
+				igp.setRtnImgSeCode(childNode4.getNodeValue().split("\\|"));
+				igp.setRtnThumbFileUrl(childNode5.getNodeValue().split("\\|"));
+				list.add(igp);
 			}
 			
-			listCount = Integer.parseInt(totalCount.item(0).getChildNodes().item(0).getNodeValue());
+		}
+		
+		listCount = Integer.parseInt(totalCount.item(0).getChildNodes().item(0).getNodeValue());
 		
 		
 		
@@ -163,7 +169,7 @@ public class publicPlantController {
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + pageNo;
-		parameter += "&numOfRows=4";
+		parameter += "&numOfRows=8";
 
 		// 서버와 통신
 		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);

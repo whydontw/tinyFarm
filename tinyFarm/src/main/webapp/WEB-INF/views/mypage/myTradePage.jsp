@@ -320,16 +320,18 @@ border: none;
     		
 	});
 
-	//구매내역 날짜검색
-	$("#orderBtn").click(function(){
+	//날짜검색
+	$("#orderBtn").click(function (){
+	});
+	function order(page){
 		let date = $("#orderDate").val();
-		
 		$.ajax({
     		url : "searchOrder.me",
-    		type: "post",
+    		type : "post",
     		data : {
     			userNo : myNo,
-    			searchDate : date
+    			searchDate : date,
+    			currentPage : "1"
     		},
     		success : function(result){
     			curPage = result.sPi.currentPage;
@@ -339,51 +341,51 @@ border: none;
 	    		let sList = result.sList;
 	    		let str = ""; //게시글
 	    	    let pStr = ""; //페이징
-	    	    
 	    	    if(oList.length == 0){
 	    			str += "<tr>"
-		    			+ "<td colspan='5'>구매내역이 존재하지 않습니다.</td>"
+		    			+ "<td colspan='5'>해당 기간 구매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(oList, function(key, o){
 		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
 			   				+ "<td>"+o.productNo+"</td>"
-			   				+ "<td><img id='proImg' src='resources/profile/ham.png'></td>"
+			   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
 			   				+ "<td>"+o.productTitle+"</td>"
 			   				+ "<td>￦"+o.productPrice+"</td>"
 			   				+ "<td>"+o.salesStatus+"</td>"
-			   				+ "<td>"+o.userNo+"</td>"
 			   				+ "</tr>";
 		    			});
 	    		}
+	    	   
 	    		$("#orderList tbody").html(str); //구매내역 리스트 띄워주기
 	    		
 	    		//페이징 처리
     			if(startPage==1){ //시작이 1이면 이전버튼 비활성
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">이전</a></li>';
     			}else{
-    				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadBoardPage('+(startPage-5)+')">이전</a></li>';
+    				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="orderSearchPage('+(startPage-5)+')">이전</a></li>';
     			}
 	    		for(var i=startPage; i<endPage+1; i++){
 	    			if (i==curPage) { //현재페이지일때 current-page class 추가
-	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="loadBoardPage('+i+')">'+i+'</a></li>';
+	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="orderSearchPage('+i+')">'+i+'</a></li>';
 	    		    } else {
-	    		        pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadBoardPage('+i+')">'+i+'</a></li>';
+	    		        pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="orderSearchPage('+i+')">'+i+'</a></li>';
 	    		    }
 	    		}
 	    		if(endPage>=maxPage){ //마지막페이지가 최대페이지보다 크면 다음버튼 비활성
 	    			pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">다음</a></li>';
 	    		}else{
-    				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadBoardPage('+(startPage+5)+')">다음</a></li>';
+    				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="orderSearchPage('+(startPage+5)+')">다음</a></li>';
 	    		}
     			$("#orderPageArea>#orderPage").html(pStr);
     			
+    		
     		},error : function(){
-    			console.log("판매내역 ajax 통신 실패");
+    			console.log("구매내역 검색 ajax 통신 실패");
     		}
     	});
-	});
-	
+		
+	}
 	//판매내역 날짜검색
 	$("#sellBtn").click(function(){
 		let date = $("#sellDate").val();
