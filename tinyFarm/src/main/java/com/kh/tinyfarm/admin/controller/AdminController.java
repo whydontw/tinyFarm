@@ -55,18 +55,28 @@ public class AdminController {
 	public String adminMain(Model model) {
 		
 		//오늘의 통계
-		//1: MEMBER, 2:QNA, 3:PRODUCT, 4:BOARD
-		int mCount = adminService.selectTodayCount("member");
-		int qCount = adminService.selectTodayCount("qna");
-		int pCount = adminService.selectTodayCount("product");
-		int bCount = adminService.selectTodayCount("board");
+		int mCount = adminService.selectStaticCount("member", "count", "today");
+		int qCount = adminService.selectStaticCount("qna", "count", "today");
+		int pCount = adminService.selectStaticCount("product", "count", "today");
+		int pmCount = adminService.selectStaticCount("payment", "count", "today");
+		
+		int bCount = adminService.selectStaticCount("board", "count", "today");
+		int brCount = adminService.selectStaticCount("boardReply", "count", "today");
+		int	breCount = adminService.selectStaticCount("boardReport", "count", "today");
+		int rreCount = adminService.selectStaticCount("replyReport", "count", "today");
 		
 		HashMap<String, Integer> todayMap = new HashMap<String, Integer>();
 		
 		todayMap.put("mCount", mCount);
 		todayMap.put("qCount", qCount);
 		todayMap.put("pCount", pCount);
+		todayMap.put("pmCount", pmCount);
+		
+		
 		todayMap.put("bCount", bCount);
+		todayMap.put("brCount", brCount);
+		todayMap.put("breCount", breCount);
+		todayMap.put("rreCount", rreCount);
 
 		model.addAttribute("todayMap", todayMap);
 		
@@ -74,27 +84,108 @@ public class AdminController {
 		
 		
 		//회원가입 통계
-		int allCount = adminService.memberStaticCount("all");
+		int memberAllCount = adminService.selectStaticCount("member", "count", "all");
 
 		int activeCount = adminService.memberStaticCount("active");
-		int dropCount = allCount - activeCount;
+		int dropCount = memberAllCount - activeCount;
 		
 		int snsCount = adminService.memberStaticCount("sns");
-		int normalCount = allCount - snsCount;
+		int normalCount = memberAllCount - snsCount;
 		
 		
 		HashMap<String, Integer> mMap = new HashMap<String, Integer>();
 		
-		mMap.put("allCount", allCount);				//전체수
+		mMap.put("allCount", memberAllCount);				//전체수
 		mMap.put("activeCount", activeCount);		//활동회원수
 		mMap.put("dropCount", dropCount);			//비활동회원수
 		mMap.put("snsCount", snsCount);				//sns가입회원수
 		mMap.put("normalCount", normalCount);		//일반회원수
 		
-		mMap.put("normalPercentage", (int)(normalCount * 100 / allCount));
-		mMap.put("activePercentage", (int)(activeCount * 100 / allCount));
+		mMap.put("normalPercentage", (int)(normalCount * 100 / memberAllCount));
+		mMap.put("activePercentage", (int)(activeCount * 100 / memberAllCount));
 		
 		model.addAttribute("mMap", mMap);
+		
+		
+
+		//QNA 통계
+		int qnaAllCount = adminService.selectStaticCount("qna", "count", "all");
+		int qnaAnswerAllCount = adminService.selectStaticCount("qnaAnswer", "count", "all");
+		
+		HashMap<String, Integer> qnaMap = new HashMap<String, Integer>();
+		
+		qnaMap.put("qnaCount", qnaAllCount);				//전체수
+		qnaMap.put("qnaAnswerCount", qnaAnswerAllCount);
+		
+		model.addAttribute("qnaMap", qnaMap);
+		
+
+		
+		
+		//상품 통계
+		int productAllCount = adminService.selectStaticCount("product", "count", "all");
+		int productOnSaleCount = adminService.selectStaticCount("product", "count", "onSale");
+
+		int categoryCount1 = adminService.selectStaticCount("product", "count", "categoryNo__1");
+		int categoryCount2 = adminService.selectStaticCount("product", "count", "categoryNo__2");
+		int categoryCount3 = adminService.selectStaticCount("product", "count", "categoryNo__3");
+		
+		HashMap<String, Integer> productMap = new HashMap<String, Integer>();
+		
+		productMap.put("allCount", productAllCount);					//전체수
+		productMap.put("onSaleCount", productOnSaleCount);				//판매수
+
+		productMap.put("vegetable", categoryCount1);				
+		productMap.put("fruit", categoryCount2);				
+		productMap.put("grain", categoryCount3);				
+		
+		model.addAttribute("productMap", productMap);
+		
+		
+		
+		
+		//판매 통계
+		int paymentAllCount = adminService.selectStaticCount("payment", "count", "all");
+		int paymentMax = adminService.selectStaticCount("payment", "max", "all");
+		int paymentMin = adminService.selectStaticCount("payment", "min", "all");
+		int paymentAvg = adminService.selectStaticCount("payment", "avg", "all");
+		
+		
+		int paymentSum = adminService.selectStaticCount("payment", "sum", "all");
+		int paymentTodaySum = adminService.selectStaticCount("payment", "sum", "today");
+		int paymentTodayAvg = adminService.selectStaticCount("payment", "avg", "today");
+		
+		HashMap<String, Integer> paymentMap = new HashMap<String, Integer>();
+		
+		paymentMap.put("allCount", paymentAllCount);
+		paymentMap.put("max", paymentMax);
+		paymentMap.put("min", paymentMin);
+		paymentMap.put("avg", paymentAvg);
+		paymentMap.put("sum", paymentSum);
+		paymentMap.put("todaySum", paymentTodaySum);
+		paymentMap.put("todayAvg", paymentTodayAvg);
+
+		model.addAttribute("paymentMap", paymentMap);
+		
+		
+		
+		
+		//게시글 통계
+		int boardAllCount = adminService.selectStaticCount("board", "count", "all");
+		int boardReplyAllCount = adminService.selectStaticCount("boardReply", "count", "all");
+		int boardReportAllCount = adminService.selectStaticCount("boardReport", "count", "all");
+		int ReplyReportAllCount = adminService.selectStaticCount("replyReport", "count", "all");
+		
+		
+		HashMap<String, Integer> boardMap = new HashMap<String, Integer>();
+		
+		boardMap.put("boardCount", boardAllCount);
+		boardMap.put("boardReplyCount", boardReplyAllCount);
+		boardMap.put("boardReportCount", boardReportAllCount);
+		boardMap.put("replyReportCount", ReplyReportAllCount);
+		
+		model.addAttribute("boardMap", boardMap);
+		
 
 		return "admin/main";
 	}

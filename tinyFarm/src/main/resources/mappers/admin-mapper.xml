@@ -202,31 +202,95 @@
 			WHERE REPLY_NO =  #{replyNo}
 		</select>
 		
-		
-		
 
-  		
   		
   		<!-- ############################################################## -->
   		<!-- 통계 -->
-  		<select id="selectTodayCount" resultType="_int">
-  			SELECT COUNT(*)
-  			FROM
- 				<choose>
-			        <when test="category == 'member'">MEMBER</when>
-			        <when test="category == 'qna'">QNA</when>
-			        <when test="category == 'product'">PRODUCT</when>
-			        <otherwise>BOARD</otherwise>
-			    </choose>
-  			WHERE TO_DATE(
-  			  		<choose>
-				        <when test="category == 'member'">ENROLL_DATE</when>
-				        <when test="category == 'qna'">QNA_CREATEDATE</when>
-				        <when test="category == 'product'">REGI_DATE</when>
-				        <otherwise>CREATE_DATE</otherwise>
+  		<select id="selectStaticCount" resultType="_int">
+  			SELECT
+  				<if test="selectRange == 'count'">COUNT(*)</if>
+  				<if test="selectRange == 'max'">NVL(MAX(
+	  				<choose>
+				        <when test="tableName == 'payment'">PAYMENT_PRICE</when>
+				        <otherwise>*</otherwise>
 				    </choose>
-  			, 'YY/MM/DD') = TO_DATE(SYSDATE, 'YY/MM/DD')
+  				), 0)</if>
+  				<if test="selectRange == 'min'">NVL(MIN(
+	  				<choose>
+				        <when test="tableName == 'payment'">PAYMENT_PRICE</when>
+				        <otherwise>*</otherwise>
+				    </choose>  				
+  				), 0)</if>
+  				<if test="selectRange == 'avg'">NVL(AVG(
+	  				<choose>
+				        <when test="tableName == 'payment'">PAYMENT_PRICE</when>
+				        <otherwise>*</otherwise>
+				    </choose>
+  				), 0)</if>
+  				<if test="selectRange == 'sum'">NVL(SUM(
+	  				<choose>
+				        <when test="tableName == 'payment'">PAYMENT_PRICE</when>
+				        <otherwise>*</otherwise>
+				    </choose>
+  				), 0)</if>
+  			FROM
+  				<choose>
+			        <when test="tableName == 'member'">MEMBER</when>
+			        <when test="tableName == 'qna'">QNA</when>
+			        <when test="tableName == 'qnaAnswer'">QNA_ANSWER</when>
+			        <when test="tableName == 'product'">PRODUCT</when>
+			        <when test="tableName == 'payment'">PRODUCT_PAYMENT</when>
+			        <when test="tableName == 'board'">BOARD</when>
+			        <when test="tableName == 'boardReport'">BOARD_REPORT</when>
+			        <when test="tableName == 'boardReply'">BOARD_REPLY</when>
+			        <when test="tableName == 'replyReport'">REPLY_REPORT</when>
+			        <otherwise></otherwise>
+			    </choose>
+			WHERE 1=1
+			    <if test="whereRange == 'today'">
+		    	  	AND TO_DATE(
+	  			  		<choose>
+					        <when test="tableName == 'member'">ENROLL_DATE</when>
+					        <when test="tableName == 'qna'">QNA_CREATEDATE</when>
+					        <when test="tableName == 'qnaAnswer'">QNA_ANSWER_CREATEDATE</when>
+					        <when test="tableName == 'product'">REGI_DATE</when>
+					        <when test="tableName == 'payment'">ORDER_DATE</when>
+					        <otherwise>CREATE_DATE</otherwise>
+					    </choose>
+	  				, 'YY/MM/DD') = TO_DATE(SYSDATE, 'YY/MM/DD')
+			    </if>
+			    <if test="whereRange == 'onSale'">
+  			  		<choose>
+				        <when test="tableName == 'product'">AND SALES_STATUS = 'Y'</when>
+				        <when test="tableName == 'payment'">AND SALES_STATUS = 'Y'</when>
+				        <otherwise></otherwise>
+				    </choose>
+			    </if>
+			    <if test="whereRange == 'notSale'">
+  			  		<choose>
+				        <when test="tableName == 'product'">AND SALES_STATUS = 'N'</when>
+				        <when test="tableName == 'payment'">AND SALES_STATUS = 'N'</when>
+				        <otherwise></otherwise>
+				    </choose>
+			    </if>
+			    <if test="whereRange == 'notSale'">
+  			  		<choose>
+				        <when test="tableName == 'product'">AND SALES_STATUS = 'N'</when>
+				        <when test="tableName == 'payment'">AND SALES_STATUS = 'N'</when>
+				        <otherwise></otherwise>
+				    </choose>
+			    </if>
+			    <if test="whereRange == 'categoryNo__1'">
+  			  		AND CATEGORY_NO = 1
+			    </if>
+			    <if test="whereRange == 'categoryNo__2'">
+  			  		AND CATEGORY_NO = 2
+			    </if>
+			    <if test="whereRange == 'categoryNo__3'">
+  			  		AND CATEGORY_NO = 3
+			    </if>
   		</select>
+
 
 		
 		<select id="memberStaticCount" resultType="_int">
