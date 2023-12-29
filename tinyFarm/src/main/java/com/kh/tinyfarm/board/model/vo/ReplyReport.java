@@ -17,7 +17,7 @@ public class ReplyReport {
 	private int refRno;//	REF_RNO
 	private String category;//	CATEGORY
 	private String reportContent;//	REPORT_CONTENT
-	private Date createDate;//	CREATE_DATE
+	private String createDate;//	CREATE_DATE
 	private String status;//	STATUS
 	
 	

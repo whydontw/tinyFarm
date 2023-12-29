@@ -198,7 +198,6 @@
 	    </div>
         <div class="container">
         
-
             <div>
 				<!-- Single Portfolio Area -->
                 <div class="vegitable" style="margin:0 auto; padding-top:30px;">

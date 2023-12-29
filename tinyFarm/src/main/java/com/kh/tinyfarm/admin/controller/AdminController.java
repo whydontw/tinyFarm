@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.admin.model.service.AdminService;
 import com.kh.tinyfarm.board.model.service.BoardService;
+import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
@@ -50,7 +52,141 @@ public class AdminController {
 	
 	//메인 페이지
 	@GetMapping("/main.ad")
-	public String adminMain() {
+	public String adminMain(Model model) {
+		
+		//오늘의 통계
+		int mCount = adminService.selectStaticCount("member", "count", "today");
+		int qCount = adminService.selectStaticCount("qna", "count", "today");
+		int pCount = adminService.selectStaticCount("product", "count", "today");
+		int pmCount = adminService.selectStaticCount("payment", "count", "today");
+		
+		int bCount = adminService.selectStaticCount("board", "count", "today");
+		int brCount = adminService.selectStaticCount("boardReply", "count", "today");
+		int	breCount = adminService.selectStaticCount("boardReport", "count", "today");
+		int rreCount = adminService.selectStaticCount("replyReport", "count", "today");
+		
+		HashMap<String, Integer> todayMap = new HashMap<String, Integer>();
+		
+		todayMap.put("mCount", mCount);
+		todayMap.put("qCount", qCount);
+		todayMap.put("pCount", pCount);
+		todayMap.put("pmCount", pmCount);
+		
+		
+		todayMap.put("bCount", bCount);
+		todayMap.put("brCount", brCount);
+		todayMap.put("breCount", breCount);
+		todayMap.put("rreCount", rreCount);
+
+		model.addAttribute("todayMap", todayMap);
+		
+		
+		
+		
+		//회원가입 통계
+		int memberAllCount = adminService.selectStaticCount("member", "count", "all");
+
+		int activeCount = adminService.memberStaticCount("active");
+		int dropCount = memberAllCount - activeCount;
+		
+		int snsCount = adminService.memberStaticCount("sns");
+		int normalCount = memberAllCount - snsCount;
+		
+		
+		HashMap<String, Integer> mMap = new HashMap<String, Integer>();
+		
+		mMap.put("allCount", memberAllCount);				//전체수
+		mMap.put("activeCount", activeCount);		//활동회원수
+		mMap.put("dropCount", dropCount);			//비활동회원수
+		mMap.put("snsCount", snsCount);				//sns가입회원수
+		mMap.put("normalCount", normalCount);		//일반회원수
+		
+		mMap.put("normalPercentage", (int)(normalCount * 100 / memberAllCount));
+		mMap.put("activePercentage", (int)(activeCount * 100 / memberAllCount));
+		
+		model.addAttribute("mMap", mMap);
+		
+		
+
+		//QNA 통계
+		int qnaAllCount = adminService.selectStaticCount("qna", "count", "all");
+		int qnaAnswerAllCount = adminService.selectStaticCount("qnaAnswer", "count", "all");
+		
+		HashMap<String, Integer> qnaMap = new HashMap<String, Integer>();
+		
+		qnaMap.put("qnaCount", qnaAllCount);				//전체수
+		qnaMap.put("qnaAnswerCount", qnaAnswerAllCount);
+		
+		model.addAttribute("qnaMap", qnaMap);
+		
+
+		
+		
+		//상품 통계
+		int productAllCount = adminService.selectStaticCount("product", "count", "all");
+		int productOnSaleCount = adminService.selectStaticCount("product", "count", "onSale");
+
+		int categoryCount1 = adminService.selectStaticCount("product", "count", "categoryNo__1");
+		int categoryCount2 = adminService.selectStaticCount("product", "count", "categoryNo__2");
+		int categoryCount3 = adminService.selectStaticCount("product", "count", "categoryNo__3");
+		
+		HashMap<String, Integer> productMap = new HashMap<String, Integer>();
+		
+		productMap.put("allCount", productAllCount);					//전체수
+		productMap.put("onSaleCount", productOnSaleCount);				//판매수
+
+		productMap.put("vegetable", categoryCount1);				
+		productMap.put("fruit", categoryCount2);				
+		productMap.put("grain", categoryCount3);				
+		
+		model.addAttribute("productMap", productMap);
+		
+		
+		
+		
+		//판매 통계
+		int paymentAllCount = adminService.selectStaticCount("payment", "count", "all");
+		int paymentMax = adminService.selectStaticCount("payment", "max", "all");
+		int paymentMin = adminService.selectStaticCount("payment", "min", "all");
+		int paymentAvg = adminService.selectStaticCount("payment", "avg", "all");
+		
+		
+		int paymentSum = adminService.selectStaticCount("payment", "sum", "all");
+		int paymentTodaySum = adminService.selectStaticCount("payment", "sum", "today");
+		int paymentTodayAvg = adminService.selectStaticCount("payment", "avg", "today");
+		
+		HashMap<String, Integer> paymentMap = new HashMap<String, Integer>();
+		
+		paymentMap.put("allCount", paymentAllCount);
+		paymentMap.put("max", paymentMax);
+		paymentMap.put("min", paymentMin);
+		paymentMap.put("avg", paymentAvg);
+		paymentMap.put("sum", paymentSum);
+		paymentMap.put("todaySum", paymentTodaySum);
+		paymentMap.put("todayAvg", paymentTodayAvg);
+
+		model.addAttribute("paymentMap", paymentMap);
+		
+		
+		
+		
+		//게시글 통계
+		int boardAllCount = adminService.selectStaticCount("board", "count", "all");
+		int boardReplyAllCount = adminService.selectStaticCount("boardReply", "count", "all");
+		int boardReportAllCount = adminService.selectStaticCount("boardReport", "count", "all");
+		int ReplyReportAllCount = adminService.selectStaticCount("replyReport", "count", "all");
+		
+		
+		HashMap<String, Integer> boardMap = new HashMap<String, Integer>();
+		
+		boardMap.put("boardCount", boardAllCount);
+		boardMap.put("boardReplyCount", boardReplyAllCount);
+		boardMap.put("boardReportCount", boardReportAllCount);
+		boardMap.put("replyReportCount", ReplyReportAllCount);
+		
+		model.addAttribute("boardMap", boardMap);
+		
+
 		return "admin/main";
 	}
 	
@@ -87,7 +223,6 @@ public class AdminController {
 	public String qnaAnswerForm(int qnaNo, Model model) {
 
 		Qna qna = qnaService.selectQnaDetail(qnaNo);
-		System.out.println(qna);
 		
 		model.addAttribute("qna", qna);
 		
@@ -99,8 +234,6 @@ public class AdminController {
 	//QNA 답변 등록
 	@PostMapping("/qnaAnswer.ad")
 	public String qnaAnswerEnroll(Qna qnaAnswer, Model model, HttpSession session) {
-		
-		System.out.println(qnaAnswer);
 		
 		int result = qnaService.qnaAnswerEnroll(qnaAnswer);
 		
@@ -302,29 +435,48 @@ public class AdminController {
 	}
 	
 	
+	//신고 댓글 페이지
+	@GetMapping("/replyReportList.ad")
+	public String boardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model){
+		model.addAttribute("currentPage", currentPage);
+		return "admin/replyReportList";
+		
+	}
+	
+	
+	
 	//신고글 목록 조회하기
 	@ResponseBody
-	@GetMapping("selectBoardReportList.ad")
-	public  ResponseEntity<Map<String, Object>> selectBoardReportList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="category", defaultValue="0")int category, Model model) {
+	@GetMapping("selectReportList.ad")
+	public  ResponseEntity<Map<String, Object>> selectReportList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+																 @RequestParam(value="category", defaultValue="0") int category,
+																 String type,
+																 Model model) {
 
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("category", String.valueOf(category));
+		map.put("type", type);
+		
+		
 		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
-		int boardListCount = adminService.boardReportListCount();
+		int listCount = adminService.reportListCount(map);
+		
 
 		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
-		int boardLimit = 10;
+		int boardLimit = 5;
 		// 페이징 바 개수(pageLimit)
 		int pageLimit = 5;
 
-		PageInfo pi = Pagination.getPageInfo(boardListCount, currentPage, pageLimit, boardLimit);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
-	    ArrayList<BoardReport> brList = adminService.selectBoardReportList(pi, category);
-
+	    ArrayList<BoardReport> reportList = adminService.selectReportList(pi, map);
+	    
 	    
 	    // 데이터를 Map에 담아서 전송
 	    Map<String, Object> resultMap = new HashMap<>();
 	    
-	    resultMap.put("brList", brList);
+	    resultMap.put("reportList", reportList);
 	    resultMap.put("pi", pi);
 
 	    
@@ -332,39 +484,34 @@ public class AdminController {
 	    return ResponseEntity.ok(resultMap);
 		
 	}
-	
+
 	
 	
 	
 	//신고 취소, 게시글 삭제
 	@ResponseBody
-	@GetMapping("/boardReportStatus.ad")
-	public String boardReportStatus(String chkBoardReportList, String status, Model model, HttpSession session) {
-		
-		System.out.println("status" + status);
-		
-		int statusNm = 0;
-		
-		if(status.equals("cancel")) {
-			statusNm = 1;
-		}
+	@GetMapping("/reportStatus.ad")
+	public String reportStatus(String chkReportList, String status, String type, Model model, HttpSession session) {
 		
 		
-		String[] ckList = chkBoardReportList.split(",");
+		String[] ckList = chkReportList.split(",");
 		
-		ArrayList<Integer> brList = new ArrayList<>();
+		ArrayList<Integer> chkArrList = new ArrayList<>();
 		
 		for(int i = 0; i < ckList.length; i++) {
-			brList.add(i, Integer.parseInt(ckList[i]));
+			chkArrList.add(i, Integer.parseInt(ckList[i]));
 		}
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("status", statusNm);
-		map.put("brList", brList);
+		map.put("type", type);
+		map.put("status", status);
+		map.put("rList", chkArrList);
 
 		
-		int result = adminService.boardReportStatus(map);
+		int result = adminService.reportStatus(map);
+		
+		System.out.println("result " + result);
 		
 		String resultStr = "";
 		
@@ -379,15 +526,19 @@ public class AdminController {
 	}
 	
 	
-	//신고 게시글 페이지
-	@GetMapping("/replyReportList.ad")
-	public String boardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model){
-		model.addAttribute("currentPage", currentPage);
-		return "admin/replyReportList";
-		
+	
+	//회원 상세조회
+	@ResponseBody
+	@RequestMapping(value="reportDetailInfo.ad", produces = "application/json; charset=utf-8")
+	public HashMap<String, Object> reportDetailInfo(int replyNo) {
+		return adminService.reportDetailInfo(replyNo);
 	}
 	
 
+
+	
+	
+	
 	
 	
 }

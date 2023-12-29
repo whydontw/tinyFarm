@@ -30,6 +30,7 @@
  		FROM NOTICE N
  		JOIN MEMBER ON(NOTICE_WRITER = USER_NO)
  		WHERE N.STATUS = 'Y'
+ 		ORDER BY N.CREATE_DATE DESC
  		
  	</select>
  	<insert id="insertNotice" parameterType="notice">
@@ -57,6 +58,7 @@
  		JOIN MEMBER ON(NOTICE_WRITER = USER_NO)
  		WHERE N.STATUS = 'Y'
  		AND NOTICE_TYPE = '중요'
+ 		ORDER BY N.CREATE_DATE DESC
  		
  	</select>
  	

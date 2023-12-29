@@ -64,6 +64,36 @@
 	            margin-left :265px;
 	            background-color: black;
 	        }
+	          .link-icon {
+				position: relative;
+				display: inline-block;
+				width: auto;
+				font-size: 14px;
+				font-weight: 500;
+				color: #333;
+				margin-right: 10px;
+				padding-right:40px;
+				padding-top: 40px;
+				margin-top: -70px;
+			}
+			
+			.link-icon.kakao {
+				background-image:
+					url("<%=contextPath%>/resources/img/icon/icon-kakao.png");
+				background-repeat: no-repeat;
+			}
+			
+			.link-icon.twitter {
+				background-image:
+					url("<%=contextPath%>/resources/img/icon/icon-twitter.png");
+				background-repeat: no-repeat;
+			}
+			
+			.link-icon.link {
+				background-image:
+					url("<%=contextPath%>/resources/img/icon/icon-link.png");
+				background-repeat: no-repeat;
+			}
 		</style>
 </head>
 
@@ -219,14 +249,13 @@
                                 <li><a href="#">CACTUS</a></li>
                             </ol>
                             <!-- Share -->
-                            <div class="post-share">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            </div>
+                            <a href="season.re">
+                            	<button type="button" class="btn alazea-btn2" style="margin-top:50px">목록으로</button>
+                            </a>
                         </div>
-
+						<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();" style = "margin-left:5px"></a>
+						<a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();"></a>
+						<a id="btnlink" class="link-icon link" href="javascript:shareLink();"></a>	
                     
                     </div>
                 </div>
@@ -246,6 +275,56 @@
     <script src="js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+    
+     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	
+	<script>
+		function shareKakao() {
+			  // 사용할 앱의 JavaScript 키 설정
+			  Kakao.init('aef906bc476f983341072fc51f3c5b36');
+	
+			  // 카카오링크 버튼 생성
+			  Kakao.Link.createDefaultButton({
+			    container: '#btnKakao', // 카카오공유버튼ID
+			    objectType: 'feed',
+			    content: {
+			      title: "작은농장", // 보여질 제목
+			      description: "겨울 텃밭 가꾸는법", // 보여질 설명
+			      imageUrl:"https://ifh.cc/g/F5X0pk.jpg", // 콘텐츠 URL
+			      link: {
+			         mobileWebUrl: "http://localhost:8888/tinyfarm/winter.re",
+			         webUrl: "http://localhost:8888/tinyfarm/winter.re"
+			        }
+			  	  },
+			      social: {
+			        commentCount:123,  
+			        sharedCount: 54  
+			    }
+			  });
+			}
+	</script>
+	
+	<script>
+		function shareTwitter() {
+		    var sendText = "작은농장"; // 전달할 텍스트
+		    var sendUrl = "http://localhost:8888/tinyfarm/winter.re"; // 전달할 URL
+		    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+		}
+	</script>
+	
+	<script>
+		function shareLink(){
+			   var url = '';
+			   var textarea = document.createElement("textarea");
+			   document.body.appendChild(textarea);
+			   url = 'http://localhost:8888/tinyfarm/winter.re';
+			   textarea.value = url;
+			   textarea.select();
+			   document.execCommand("copy");
+			   document.body.removeChild(textarea);
+			   alert("링크가 복사되었습니다")
+			};
+	</script>
 </body>
 
 </html>

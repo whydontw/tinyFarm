@@ -70,7 +70,7 @@
                                 <p><h5><b>🌱 신고 댓글 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
-                                <select class="custom-select widget-title" id="selectRrCategory" onchange="selectRrCategory(this.value)">
+                                <select class="custom-select widget-title" id="selectReportCategory" onchange="selectReportCategory(this.value)">
                                   <option value="0" selected>CATEGORY:</option>
                                   <option value="1">스팸</option>
                                   <option value="2">욕설</option>
@@ -81,15 +81,16 @@
                         </div>
 
                         <!-- 표 작성 내역 -->
-                        <div class="clearfix mt-15 mb-15" id="replyReportListTable">
-                        	<div class="mb-15" id="replyReportListCurrentPage"></div>
+                        <div class="clearfix mt-15 mb-15" id="reportListTable">
+                        	<div class="mb-15" id="reportListCurrentPage"></div>
                             <table class="table table-responsive" align="center">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="12%">
                                     <col width="13%">
-                                    <col width="13%">
+                                    <col width="15%">
                                     <col width="auto%">
+                                    <col width="7%">
                                     <col width="5%">
                                 </colgroup>
                                 <thead>
@@ -98,7 +99,8 @@
                                         <th>카테고리</th>
                                         <th>신고ID</th>
                                         <th>신고일자</th>
-                                        <th>신고내역 상세</th>
+                                        <th>신고내용</th>
+                                        <th>상세</th>
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
@@ -107,22 +109,19 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" >
-                                <li onclick="replyReportStatus('cancel')"><a><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;&nbsp;신고취소</a></li>
-                                <li onclick="replyReportStatus('delete')"><a><i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;댓글 삭제</a></li>
+                                <li onclick="reportStatus('revoke')"><a><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;&nbsp;신고취소</a></li>
+                                <li onclick="reportStatus('delete')"><a><i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;댓글 삭제</a></li>
 <!--                            <li><a><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
                             </ol>
                         </div>
 
-                        
-						<%@ include file="memberDetail.jsp" %>
-						
 						<!-- ######### 검색 ######### -->
 	                    <div class="section-padding-100">
 		                    <div class="row">
 		                        <div class="col-12 mt-100">
 		                            <!-- ######### 페이징 바 #########-->
 		                            <nav aria-label="Page navigation">
-		                            	<ul class="pagination" id="replyReportListPagenation"></ul>
+		                            	<ul class="pagination" id="reportListPagenation"></ul>
 		                            </nav>
 		                        </div>
 		                    </div>
@@ -132,6 +131,85 @@
 	        </div>
 	    </section>
     <!-- ##### Blog Area End ##### -->
+    
+    
+    
+    
+    
+    <!-- Button trigger modal -->
+		<button type="button" id="replyDetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
+		
+		<!-- Modal -->
+		<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+		      
+			      <div class="col-12">
+						<div class="checkout_details_area clearfix">
+							<h5 class="py-2">🌱 신고글 상세 내역</h5>
+							<div class="clearfix  mx-auto">
+								<div>
+									<p><i class="fa fa-check"></i> 원글 정보</p>
+								</div>
+								<!-- <table class="table table-responsive" align="center" width="90%"> -->
+								<table class="table" align="center">
+									<colgroup>
+										<col width="5%">
+										<col width="10%">
+										<col width="15%">
+										<col width="20%">
+										<col width="15%">
+										<col width="auto%">
+									</colgroup>
+									<tr>
+										<th>No</th>
+										<td id="board__boardNo"></td>
+										<th>작성자</th>
+										<td id="board__boardWriter"></td>
+										<th>작성시간</th>
+										<td id="board__createDate"></td>
+									</tr>
+									<tr>
+										<th colspan="2">제목</th>
+										<td colspan="4" id="board__boardTitle"></td>
+									</tr>
+								</table>
+								<button type="button" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">MORE DETAIL ≫</button>
+							</div>
+							
+						</div>
+
+						<div class="comment_area clearfix">
+	                        	<div><p><i class="fa fa-check"></i> 신고 댓글 정보</p></div>
+	                            <ol>
+	                                <li class="single_comment_area">
+	                                    <div class="comment-wrapper d-flex">
+	                                        <!-- Comment Meta -->
+	                                        <div class="comment-author">
+	                                            <img id="reply__profileImage" alt="">
+	                                        </div>
+	                                        
+	                                        <!-- Comment Content -->
+	                                        <div class="comment-content" id="boardReplyReportCnt">
+	                                            <div class="d-flex align-items-center justify-content-between">
+	                                                <h5 id="reply__replyWriter"></h5>
+	                                                <span class="comment-date" id="reply__createDate"></span>
+	                                            </div>
+	                                            <p id="reply__replyContent"></p>
+	                                        </div>
+	                                    </div>
+	                                </li>
+	                            </ol>
+	                        </div>
+	                        <button type="button" class="btn alazea-btn mb-15  float-right" class="close" data-dismiss="modal" aria-label="Close">닫기</button>
+	                    </div>
+	                </div>
+			      </div>
+			    </div>
+			  </div>
+    
+    
 
 
 						<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -139,10 +217,10 @@
 					    	
                         $(function(){
                         	
-                        	selectReplyReportList(${currentPage}, 0);
+                        	selectReportList(${currentPage}, 0);
                         	
                         	//Modal 버튼 숨김
-                        	$("#memberdetailViewModal").hide();
+                        	$("#replyDetailViewModal").hide();
                         	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
@@ -153,16 +231,17 @@
                         
                         
                         //회원 리스트
-                        function selectReplyReportList(currentPage, category){
+                        function selectReportList(currentPage, category){
                         	
                         	$.ajax({
-                        		url: "selectReplyReportList.ad",
+                        		url: "selectReportList.ad",
                         		data: {
                         			currentPage: currentPage,
-                        			category : category
+                        			category : category,
+                        			type: "reply"
                         		},
                         		success: function(result){
-                        			makeReplyReportListTable(result, category);
+                        			ReportListTable(result, category);
                         		},error: function(){
                         			console.log("오류났수 ㅠㅠ");
                         		}
@@ -172,14 +251,14 @@
                         }
                         
                         
-                        function makeReplyReportListTable(result, category){
+                        function ReportListTable(result, category){
                         	
-                        	let rrList = result.rrList;
-                        	let rrPi = result.pi;
-                        	
-                			let str = "";
+                        	let reportList = result.reportList;
+                        	let reportPi = result.pi;
+
+                        	let str = "";
                 			
-                        	rrList.forEach((item) => {
+                        	reportList.forEach((item) => {
                         		
                         		let categoryStr = "";
                 				
@@ -201,84 +280,58 @@
 								}
                 				
                 				
-                				console.log("카테고리", item.category); 
-                				
-                				str += "<tr><td>" + item.reportNo + "</td>" + 
+                				str += "<tr class='align-items-center'><td>" + item.reportNo + "</td>" + 
 			                        	"<td>" + item.category + "</td>" +
 			                        	"<td>" + item.reportWriter + "</td>" +
 			                        	"<td>" + item.createDate + "</td>" +
-			                        	"<td><div class='single-widget-area'>" +
-			                            			"<div class='single-latest-post d-flex align-items-center mb-15'>" +
-// 						                                "<div class='post-thumb'>" +
-// 						                                    "<img src='${contextPath}/resources/img/bg-img/30.jpg' alt=''>" +
-// 						                                "</div>" +
-						                                "<div class='post-content'>" +
-						                                    "<a href='detail.bo?boardNo=" + item.refBno + "' class='post-title'>" +
-						                                        "<h6>" + item.boardTitle + "</h6>" +
-						                                    "</a>" +
-						                                    "<a class='post-date'>" + item.boardWriter + " / " + item.boardCreateDate + "</a>" +
-						                                "</div>" +
-						                            "</div>" +
-					                        		"<div class='p-2' style='background: #F9F9F9'> <span style='color:red'>[ 신고사유 상세 ]  </span>   <span>   " + item.reportContent +"</div>" + 
-					                            "</div>" +
-			                        		"</td>" +
-			                        	"<td><input type='checkbox' value=" + item.reportNo + " class='chkReplyReport'></td></tr>";
-                				
-                				
-//                 				str += "<tr><td>" + item.ㄱ데ㅐ + "</td>" +
-//                                  		"<td>" + item.userId + "</td>" +
-//                                  		"<td>" + item.userName + "</td>" +
-//                                  		"<td>" + item.phone + "</td>" +
-//                                  		"<td>" + item.email + "</td>" +
-//                                  		"<td>" + item.grade + "</td>" +
-//                                  		"<td>" + item.status + "</td>" +
-//                                  		"<td><a href='#' onclick='memberDetailInfo(" + item.userNo + ")'><i class='fa fa-search'></i></a></td>" +
-//                                			"<td><input type='checkbox' value=" + item.userNo + " class='chkReplyReport'></td></tr>"
+			                        	"<td>" + item.reportContent +"</div>" + 
+			                        	"<td><a href='#' onclick='reportDetailInfo(" + item.refRno + ")'><i class='fa fa-search'></i></a></td>" +
+			                        	"<td><input type='checkbox' value=" + item.reportNo + " class='checkBoxReport'></td></tr>";
                 				
                 			})
 
-                			$("#replyReportListTable table tbody").html(str);
+                			$("#reportListTable table tbody").html(str);
                         	
                         	
                         	//pagination
-                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectReplyReportList(" + (rrPi.currentPage - 1) + ", \"" + category + "\")'><i class='fa fa-angle-left'></i></a></li>"
-                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectReplyReportList(" + (rrPi.currentPage + 1) + ", \"" + category + "\")'><i class='fa fa-angle-right'></i></a></li>"
+                    		let beforePage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (reportPi.currentPage - 1) + ", \"" + category + "\")'><i class='fa fa-angle-left'></i></a></li>"
+                    		let afterPage = "<li class='page-item'><a class='page-link' onclick='selectReportList(" + (reportPi.currentPage + 1) + ", \"" + category + "\")'><i class='fa fa-angle-right'></i></a></li>"
                         	
                         	let paging = "";
                     		
                     		
-                    		if(rrPi.currentPage > 1){
+                    		if(reportPi.currentPage > 1){
                     			paging = beforePage;
                     		}
                     		
                     		
-                    		for(var i = 1; i <= rrPi.endPage; i++) {
-                        		paging += "<li class='page-item'><a class='page-link' onclick='selectReplyReportList(" + i + ", \"" + category + "\")'>" + i + "</a></li>";
+                    		for(var i = 1; i <= reportPi.endPage; i++) {
+                        		paging += "<li class='page-item'><a class='page-link' onclick='selectReportList(" + i + ", \"" + category + "\")'>" + i + "</a></li>";
                     		}
                         	
-                    		if(rrPi.currentPage < rrPi.maxPage){
+                    		if(reportPi.currentPage < reportPi.maxPage){
                        			paging += afterPage;
                        		}	
                         	
-                    		$("#replyReportListCurrentPage").text("현재 페이지: " + rrPi.currentPage);
-                			$("#replyReportListPagenation").html(paging);
+                    		$("#reportListCurrentPage").text("현재 페이지: " + reportPi.currentPage);
+                			$("#reportListPagenation").html(paging);
                         	
                         }
                         
                         
                         
                         //카테고리별 검색
-                        function selectRrCategory(category){
-                        	selectReplyReportList(1, category);
+                        function selectReportCategory(category){
+                        	selectReportList(1, category);
                         }
                         
                         
                         
-                        function replyReportStatus(status){
+                        function reportStatus(status){
                         	
                         	let statusMsg = "";
                         	
-                        	if(status == 'cancel'){
+                        	if(status == 'revoke'){
                         		statusMsg = "신고 일괄취소";
                         	}else{
                         		statusMsg = "게시글 삭제"
@@ -286,31 +339,32 @@
                         	
                         	if(confirm("선택한 건의 " + statusMsg + "를 하시겠습니까?")){
 
-                            let chkReplyReportList = "";
+                            let chkReportList = "";
 							
                             //체크 요소 접근
-                            $(".chkReplyReport:checked").each(function(index, item){
+                            $(".checkBoxReport:checked").each(function(index, item){
                             	
                                 if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkReplyReportList += item.value;
+                                	chkReportList += item.value;
                                 } else {								//첫번째 아니면 ,값 넣기
-                                	chkReplyReportList += "," + item.value;
+                                	chkReportList += "," + item.value;
                                 }
 
                             });
                             
 	                            //선택된 글 없을시
-	                            if(chkReplyReportList == null || chkReplyReportList == ""){
+	                            if(chkReportList == null || chkReportList == ""){
 	                            	alert("회원을 선택하세요");
 	                            }else{
 	                            	
 	                            
 									//선택된 글이 있으면
 	                            	$.ajax({
-		    							url: "replyReportStatus.ad",
+		    							url: "reportStatus.ad",
 		    							data: {
 		    								status : status,
-		    								chkReplyReportList : chkReplyReportList
+		    								chkReportList : chkReportList,
+		    								type : "reply"
 		    							},
 		    							success: function(result){
 		    								
@@ -318,7 +372,7 @@
 		    									alert("일괄 변경되었습니다.");
 		    									
 		    									$("input[type=checkbox]").prop("checked",false);
-		    									selectReplyReportList(${currentPage}, $("#selectRrCategory").val());
+		    									selectReportList(${currentPage}, $("#selectReportCategory").val());
 		    								}
 		    								
 		    							},
@@ -334,81 +388,53 @@
                         }
                         
                         
-//                         function memberDetailInfo(userNo){
-                        	
-//                         	$.ajax({
-//                         		url : "memberDetailInfo.ad",
-//                         		data: { userNo : userNo },
-//                         		success: function(result){
-                        			
-//                         			console.log(result);
-                        			
-//                         			$("#userNo_detail").val(result.userNo);
-//                         			$("#userId_detail").val(result.userId);
-//                         			$("#userName_detail").val(result.userName);
-//                         			$("#userEnrollDate_detail").val(result.enrollDate);
-//                         			$("#userStatus_detail").val(result.status);
-//                         			$("#userGrade_detail").val(result.grade);
-//                         			$("#userAddress_detail").val(result.address);
-//                         			$("#userPhone_detail").val(result.phone);
-                        			
-//                         			var imageSrc = "";
-                        			
-//                         			if(result.changeName == null){
-//                         				imageSrc = "${contextPath}/resources/img/icon/common_koongya.jpg";
-                        			
-//                         			}else{
-//                         				imageSrc = "${contextPath}/" + result.changeName;
-//                         			}
-                        			
-//                         			$("#profileImage").prop("src", imageSrc);
-                        			
-//                                 	$("#memberdetailViewModal").click();
-                                	
-//                         		},
-//                         		error: function(){
-//                         			alert("오류났수ㅜ");
-//                         		}
-
-//                         	})
-                        	
-//                         }
                         
-						
-//                         //회원 정보 변경
-//                         function memberInfoUpdate(){
+                        //신고글 내용 상세조회
+                        function reportDetailInfo(refRno){
+                        	
+                        	
+                        	console.log("refRno", refRno)
+                        	
+                        	$.ajax({
+                        		url : "reportDetailInfo.ad",
+                        		data: {
+                        			replyNo : refRno,
+                        		},
+                        		success: function(result){
+                        			
+                        			var bObj = result.boardObj;
+                        			var brObj = result.boardReplyObj;
+                        			
+                        			
+                        			$("#board__boardNo").text(bObj.boardNo);
+                        			$("#board__boardWriter").text(bObj.boardWriter);
+                        			$("#board__createDate").text(bObj.createDate);
+                        			$("#board__boardTitle").text(bObj.boardTitle);
+                        			
+	                    			$("#reply__replyWriter").text(brObj.replyWriter);
+	                    			$("#reply__createDate").text(brObj.createDate.toString());
+	                    			$("#reply__replyContent").text(brObj.replyContent);
+	                    			$("#reply__profileImage").prop("src", "${contextPath}/" + brObj.profile);
+                        			
+	                    			
+                        			$("#replyDetailViewModal").click();
+                        			
+                        			
+                        			$("#boardMoreDetailBtn").click(function(){
+                        			    window.open("detail.bo?boardNo=" + bObj.boardNo, "_blank");
+                        			});
+                        			
+                                	selectReportList(${currentPage}, $("#selectReportCategory").val());
+                                	
+                        			
+                        		},
+                        		error: function(){
+                        			alert("오류났수ㅜ");
+                        		}
 
-//                         	if(!confirm('회원 정보를 수정하겠습니까?')){
-//                         		return false;
-//                         	}
-                        	
-//                         	var userNo = $('#userNo_detail').val();
-//                         	var status = $('#userStatus_detail').val();
-//                         	var grade = $('#userGrade_detail').val();
-                        	
-                        	
-//                         	$.ajax({
-//                         		url : "memberInfoUpdate.ad",
-//                         		data: {
-//                         			userNo : userNo,
-//                         			status : status,
-//                         			grade : grade
-//                         		},
-//                         		success: function(result){
-                        			
-//                         			$("#userStatus_detail").val(result.status);
-//                         			$("#userGrade_detail").val(result.grade);
-                        			
-//                                 	selectReplyReportList(${currentPage});
-                        			
-//                         		},
-//                         		error: function(){
-//                         			alert("오류났수ㅜ");
-//                         		}
-
-//                         	})
-                        	
-//                         }
+                        	})
+                        }
+                        
                         
 					</script>
 

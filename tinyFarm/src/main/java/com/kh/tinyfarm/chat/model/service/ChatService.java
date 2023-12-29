@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.tinyfarm.chat.model.vo.ChatMessage;
 import com.kh.tinyfarm.chat.model.vo.ChatRoom;
@@ -23,4 +24,8 @@ public interface ChatService {
 	ArrayList<Member> searchUser(String search);
 
 	int deleteRoom(int chatRoomNo);
+
+	int updateConnectTime(HashMap map);
+
+	ArrayList<HashMap> selectNotReadMsg(String userId);
 }

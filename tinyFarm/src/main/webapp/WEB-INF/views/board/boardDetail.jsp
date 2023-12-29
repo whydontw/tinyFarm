@@ -66,6 +66,10 @@
         	display: flex;
         	justify-content: flex-end;
         }
+        .post-content{
+			width:800px;
+			word-wrap:break-word;
+		}
         </style>
 
 
@@ -468,6 +472,7 @@
         var originContent=$("#hiddenRContent").val();
         console.log(originContent);
         
+       
         var contentArea = document.getElementById("replyContent");
         contentArea.innerText = originContent;
         

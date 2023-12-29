@@ -69,12 +69,12 @@
 				
 				        <div class="row">
 						    <div class="col-6 col-md-9">
-						        <div class="form-group" style = "margin-left:390px"> 
+						        <div class="form-group" style = "margin-left:430px"> 
 						            <input type="text" class="form-control" id="userName" style="width:300px;" placeholder="Name" name="userName">
 						        </div>
 						    </div>
 						    <div class="col-9">
-						        <div class="form-group" style = "margin-left:390px">
+						        <div class="form-group" style = "margin-left:430px">
 						            <input type="text" class="form-control" id="phone" style="width:300px;" placeholder="Tel" name="phone">
 						        </div>
 						    </div>

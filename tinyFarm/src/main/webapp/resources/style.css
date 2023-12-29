@@ -23,6 +23,13 @@ Version: - v1.0
     font-style: normal;
 }
 
+  @font-face {
+			  font-family: 'LotteMartDream';
+			  font-style: normal;
+			  font-weight: 400;
+			  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+			}
+
 /* :: 3.0 Base CSS */
 * {
   margin: 0;
@@ -37,7 +44,7 @@ h2 {
   color: #303030;
   line-height: 1.3;
   font-weight: 500;
-  font-family:'Pretendard-Regular';
+  font-family:'LotteMartDream';
 }
 }
 h1,
@@ -258,7 +265,7 @@ img {
   background-position: center center;
   background-size: cover; }
   .bg-overlay::after {
-    background-color: rgba(17, 17, 17, 0.5);
+    background-color: rgba(17, 17, 17, 0.387);
     position: absolute;
     z-index: -1;
     top: 0;
@@ -315,6 +322,35 @@ img {
     font-weight: 600;
     background-color: transparent;
     box-shadow: none; }
+
+	.alazea-btn2 {
+	  -webkit-transition-duration: 400ms;
+	  transition-duration: 400ms;
+	  position: relative;
+	  z-index: 1;
+	  display: inline-block;
+	  min-width: 100px;
+	  height: 40px;
+	  color: #ffffff;
+	  background-color: #70c745;
+	  border: 2px solid #70c745;
+	  border-radius: 2px;
+	  padding: 0;
+	  font-size: 16px;
+	  text-align: center;
+	  text-transform: uppercase;
+	  font-weight: 600;
+	}
+	
+	.alazea-btn2.active,
+	.alazea-btn2:hover,
+	.alazea-btn2:focus {
+	  font-size: 16px;
+	  color: #70c745;
+	  font-weight: 600;
+	  background-color: transparent;
+	  box-shadow: none;
+	}
 
 /* :: 4.0 Header Area CSS */
 .header-area {
@@ -1864,7 +1900,7 @@ img {
   position: relative;
   z-index: 1; }
   .footer-area::after {
-    background-color: rgba(4, 43, 15, 0.8);
+    background-color: rgba(4, 43, 15, 0.416);
     position: absolute;
     z-index: -1;
     top: 0;

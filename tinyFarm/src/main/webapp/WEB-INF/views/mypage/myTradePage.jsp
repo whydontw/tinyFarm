@@ -413,16 +413,14 @@ thead {
 	//구매내역 날짜검색
     function loadOrderSearch(page){
     	let date = $("#orderDate").val(); //검색날짜
-    	
-   		$.ajax({
+		$.ajax({
     		url : "searchOrder.me",
     		type : "post",
     		data : {
     			userNo : myNo,
     		    searchDate : date,
     		    currentPage : page
-    		},
-    		success : function(result){
+    		},success : function(result){
     			$("#orderList tbody").empty();  //기존 리스트 비워주기
     		    curPage = result.oPi.currentPage;
     			startPage = result.oPi.startPage;
@@ -469,10 +467,17 @@ thead {
     		    		pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderSearch('+(startPage+5)+')">다음</a></li>';
     			    }
     		    	$("#orderPageArea>#orderPage").html(pStr);
+
+    		},error : function(){
+    			console.log("구매내역 검색 ajax 통신 실패");
     		}
     	});
    	}
 	
+=======
+		
+	}
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 	//판매내역 날짜검색
 	function loadSellSearch(page){
 		let date = $("#sellDate").val(); //String

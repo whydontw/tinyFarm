@@ -8,7 +8,7 @@
 </head>
 <body>
 		<!-- Button trigger modal -->
-		<button type="button" id="memberdetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
+		<button type="button" id="memberdetailViewModal" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
 		
 		<!-- Modal -->
 		<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

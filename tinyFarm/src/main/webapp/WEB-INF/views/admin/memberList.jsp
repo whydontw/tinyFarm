@@ -230,8 +230,6 @@
                     		}
                     		
                     		
-                           	console.log("페이징 searchId : ", searchId);
-                    		
                     		for(var i = 1; i <= mPi.endPage; i++) {
                         		paging += "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + i + ", \"" + searchId + "\")'>" + i + "</a></li>";
                     		}
@@ -378,7 +376,9 @@
                         			$("#userStatus_detail").val(result.status);
                         			$("#userGrade_detail").val(result.grade);
                         			
-                                	selectMemberList(${currentPage});
+                        			alert(${currentPage});
+                        			
+                                	selectMemberList(${currentPage}, $("#searchMemberId").val());
                         			
                         		},
                         		error: function(){

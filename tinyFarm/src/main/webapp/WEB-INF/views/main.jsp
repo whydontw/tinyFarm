@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="row justify-content-between">
-                <div class="col-12 col-lg-5">
+                <div class="col-12 col-lg-5"  style="margin-left:70px;">
                     <div class="alazea-service-area mb-100" style="margin-bottom: 0px;">
                         <!-- Single Service Area -->
                         <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
@@ -135,7 +135,8 @@
                             </div>
                         </div>
                         <!-- Single Service Area -->
-                        <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="300ms">
+                        <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="300ms"
+                        style="margin-top:80px;">
                             <!-- Icon -->
                             <div class="service-icon mr-30">
                                 <img src="resources/img/core-img/s2.png" alt="">
@@ -148,7 +149,8 @@
                             </div>
                         </div>
                         <!-- Single Service Area -->
-                        <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="500ms">
+                        <div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="500ms"
+                        style="margin-top:80px;">
                             <!-- Icon -->
                             <div class="service-icon mr-30">
                                 <img src="resources/img/core-img/s3.png" alt="">
@@ -162,13 +164,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
-                    <div class="alazea-video-area bg-overlay mb-100">
-                        <img style="height:460px;" src="resources/img/bg-img/23.jpg" alt="">
-                        <a href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" class="video-icon">
-                            <i class="fa fa-play" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                <div style="margin-right:120px;">
+                    	
+                   <jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
+                    
                 </div>
             </div>
         </div>
@@ -205,7 +204,7 @@
             <script>
 
 	            $(function(){
-	        		//getInGardenPlantListAjax();
+	        		getInGardenPlantListAjax();
 	        		$(".more-view-btn").click(function(){
 	        			getInGardenPlantListAjax();
 	        			
@@ -296,7 +295,8 @@
     </section>
     
     <!-- ##### Product Area End ##### -->
-    <jsp:include page="common/footer.jsp"/>
+    <%@include file="common/footer.jsp" %>
+    <%-- <jsp:include page="common/footer.jsp"/> --%>
     
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->

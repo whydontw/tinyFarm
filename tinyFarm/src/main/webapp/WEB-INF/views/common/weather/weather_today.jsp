@@ -109,10 +109,10 @@ h1, h2, h3, h4, h5, h6 {
 <body>
 	<!-- Weather -->
 	<div class="container mt-5">
-		<div class="mb-30"><h3>🌱 오늘의 날씨</h3></div>
+		<div class="mb-30 text-center"><h3>🌱 오늘의 날씨</h3></div>
 		
 <!-- 		<div class="d-flex flex-row justify-content-center align-items-center"> -->
-			<div class="weather__card" > <!-- style="background-image: url( '${pageContext.request.contextPath}/resources/img/bg-img/sky.jpg' );">  -->
+			<div class="weather__card mx-auto" > <!-- style="background-image: url( '${pageContext.request.contextPath}/resources/img/bg-img/sky.jpg' );">  -->
 				<div class="text-right">
 					<span id="updateWeatherHour" class="text-left"></span>&nbsp;&nbsp;
 					<a href="#" onclick="alert('현재 위치 및 시각을 기반으로 새로운 날씨 정보를 불러옵니다.'); getUserLocation()">
@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		<!-- Weather Forecast -->
 <!-- 		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-3" id="todayWeatherInfoArea"></div> -->
-		<div class="weather__forecast d-flex mt-30" id="todayWeatherInfoArea"></div>
+		<div class="weather__forecast d-flex flex-row justify-content-center align-items-center mt-30" id="todayWeatherInfoArea"></div>
 		
 	</div>
 	
@@ -321,7 +321,7 @@ h1, h2, h3, h4, h5, h6 {
 				}
 
 		        
-		        //- 강수형태(PTY) 코드 : (초단기) 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+		    	//- 강수형태(PTY) 코드 : (초단기) 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
 		        switch (item.PTY) {
 		            case "0":
 		            	
@@ -346,7 +346,13 @@ h1, h2, h3, h4, h5, h6 {
 		                item.PTY = '눈';
 		                break;
 		            case "5":
-		                item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
+		            	
+		        		if(date.getHours() > 6 && date.getHours() < 18){
+		        			item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
+		            	}else{
+		            		item.WeatherImg = imgSrc + "Rain_Light_Moon.png'>";
+		            	}
+		            	
 		                item.PTY = '빗방울';
 		                break;
 		            case "6":
@@ -363,11 +369,17 @@ h1, h2, h3, h4, h5, h6 {
 		        
 		        
 		        //맑지는 않은데 구름있거나 흐린 경우
-		        if(!(item.SKY == '맑음')){	//맑지 않음
+		        if(item.SKY != '맑음'){	//맑지 않음
 		        	
-		        	if(item.PTY == '구름많음'){
-		        		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
-		        	}else if(item.PTY == '흐림'){
+		        	if(item.SKY == '구름많음'){
+
+		        		if(date.getHours() > 6 && date.getHours() < 18){
+		            		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
+		            	}else{
+		            		item.WeatherImg = imgSrc + "Cloud_Moon.png'>";
+		            	}
+		        		
+		        	}else if(item.SKY == '흐림'){
 		        		item.WeatherImg = imgSrc + "Cloud.png'>";
 		        	}
 		        	
@@ -385,7 +397,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		    
 	        //현재날씨 넣기
-	        updateWeatherHour
+// 	        updateWeatherHour
 			$("#todayT1H").text(weatherList[0].T1H);
 			$("#todaySKY").text(weatherList[0].SKY);
 			$("#todayPTY").text(weatherList[0].PTY);

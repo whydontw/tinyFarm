@@ -31,7 +31,7 @@
 			height:500px;
 		}
 		#reviews{
-			width:600px;
+			width:700px;
 			margin:0 auto;
 		}
 		.comment-p{
@@ -53,6 +53,36 @@
 		}
 		.send-comment-btn-div h4{
 			margin:4px 0;
+		}
+		.plant-info{
+			width:900px;
+			margin:0 auto;
+		}
+		.plant-info-top,.plant-info-middle,.plant-info-bottom{
+			display:flex;
+			height:auto;
+			padding:30px 0;
+		}
+		.plant-info-top div,.plant-info-middle div,.plant-info-bottom div{
+			width:50%;
+			padding:0 10px;
+		}
+		.plant-info-top p,.plant-info-middle p,.plant-info-bottom p{
+			margin:0;
+		}
+		.plant-info-top b,.plant-info-middle b,.plant-info-bottom b{
+			color:#FF6C30;
+		}
+		.plant-info-top{
+			border-top: 1px solid black;
+			border-bottom: 1px solid #d4d4d4;
+		}
+		.plant-info-middle{
+		
+			border-bottom: 1px solid #d4d4d4;
+		}
+		.plant-info-bottom{
+			border-bottom: 1px solid black;
 		}
 	
 	</style>
@@ -221,51 +251,378 @@
                         <!-- Tab Content -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
-                                <div class="description_area" style="width:600px; margin:0 auto;">
-                                    <p><b>과 명</b></p>
-                                    <p>${fmlCodeNm}</p> <br> <br>
-                                    <p><b>조언 정보</b></p> 
-                                    <p>${adviseInfo}</p> <br> <br>
-                                    <p><b>성장 높이 정보</b></p> 
-                                    <p>${growthHgInfo}</p> <br> <br>
-                                    <p><b>성장 넓이 정보</b></p> 
-                                    <p>${growthAraInfo}</p> <br> <br>
-                                    <p><b>번식 시기 정보</b></p>
-                                    <p>${prpgtEraInfo}</p> <br> <br>
-                                    <p><b>생장속도</b></p>
-                                    <p>${grwtveCodeNm}</p> <br> <br>
-                                    <p><b>생육 온도</b></p> 
-                                    <p>${grwhTpCodeNm}</p> <br> <br>
-                                    <p><b>겨울 최저 온도</b></p>
-                                    <p>${winterLwetTpCodeNm}</p> <br> <br>
-                                    <p><b>습도</b></p> 
-                                    <p>${hdCodeNm}</p> <br> <br>
-                                    <p><b>비료 정보</b></p> 
-                                    <p>${frtlzrInfo}</p> <br> <br>
-                                    <p><b>토양 정보</b></p>
-                                    <p>${soilInfo}</p> <br> <br>
-                                    <p><b>물주기 봄</b></p> 
-                                    <p>${watercycleSprngCodeNm}</p> <br> <br>
-                                    <p><b>물주기 여름</b></p> 
-                                    <p>${watercycleSummerCodeNm}</p> <br> <br>
-                                    <p><b>물주기 가을</b></p> 
-                                    <p>${watercycleAutumnCodeNm}</p> <br> <br>
-                                    <p><b>물주기 겨울</b></p> 
-                                    <p>${watercycleWinterCodeNm}</p> <br> <br>
-                                    <p><b>특별관리 정보</b></p> 
-                                    <p>${speclmanageInfo}</p> <br> <br>
-                                    <p><b>기능성 정보</b></p>
-                                    <p>${fncltyInfo}</p> <br> <br>
-                                    <p><b>관리요구도</b></p> 
-                                    <p>${managedemanddoCodeNm}</p> <br> <br>
-                                    <p><b>분류명</b></p> 
-                                    <p>${clCodeNm}</p> <br> <br>
-                                    <p><b>생육형태명</b></p> 
-                                    <p>${grwhstleCodeNm}</p> <br> <br>
-                                    <p><b>실내정원구성</b></p>
-                                    <p>${indoorpsncpacompositionCodeNm}</p> <br> <br>
-                                    <p><b>생태명</b></p> 
-                                    <p>${eclgyCodeNm}</p> <br> <br>
+                                <div class="plant-info">
+                                	<%-- <div class="plant-info-top">
+	                                    <p><b>과 명&nbsp&nbsp&nbsp</b>${fmlCodeNm}</p>
+
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>조언 정보&nbsp&nbsp&nbsp</b>${adviseInfo}</p> 
+	                                    
+                                	
+                                	</div>
+                                	<div class="plant-info-middle"> 
+	                                	<p><b>성장 높이 정보&nbsp&nbsp&nbsp</b>${growthHgInfo}</p> 
+	                                     
+                                    </div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>성장 넓이 정보&nbsp&nbsp&nbsp</b>${growthAraInfo}</p> 	                                                                 	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>번식 시기 정보&nbsp&nbsp&nbsp</b>${prpgtEraInfo}</p>                          	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>생장속도&nbsp&nbsp&nbsp</b>${grwtveCodeNm}</p>                               	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>생육 온도&nbsp&nbsp&nbsp</b>${grwhTpCodeNm}</p> 
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>겨울 최저 온도&nbsp&nbsp&nbsp</b>${winterLwetTpCodeNm}</p>
+	                                   
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>습도&nbsp&nbsp&nbsp</b>${hdCodeNm}</p> 
+	                                
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>비료 정보&nbsp&nbsp&nbsp</b>${frtlzrInfo}</p> 
+	                                 
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>토양 정보&nbsp&nbsp&nbsp</b>${soilInfo}</p>
+	                             
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>물주기 봄&nbsp&nbsp&nbsp</b>${watercycleSprngCodeNm}</p> 
+	                                   
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>물주기 여름&nbsp&nbsp&nbsp</b>${watercycleSummerCodeNm}</p> 
+	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>물주기 가을&nbsp&nbsp&nbsp</b>${watercycleAutumnCodeNm}</p>  
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>물주기 겨울&nbsp&nbsp&nbsp</b>${watercycleWinterCodeNm}</p> 
+
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                    <p><b>특별관리 정보&nbsp&nbsp&nbsp</b>${speclmanageInfo}</p> 
+	                                
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>기능성 정보&nbsp&nbsp&nbsp</b>${fncltyInfo}</p>
+	                                  
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                    <p><b>관리요구도&nbsp&nbsp&nbsp</b>${managedemanddoCodeNm}</p> 
+	                                 
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>분류명&nbsp&nbsp&nbsp</b>${clCodeNm}</p> 
+	                                  
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>생육형태명&nbsp&nbsp&nbsp</b>${grwhstleCodeNm}</p> 
+	                                  
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                    <p><b>실내정원구성&nbsp&nbsp&nbsp</b>${indoorpsncpacompositionCodeNm}</p>
+	                                 
+	                                  
+                                	</div>
+                                  	<div class="plant-info-bottom">
+	                                    <p><b>생태명&nbsp&nbsp&nbsp</b>${eclgyCodeNm}</p> 
+                                    
+                                	
+                                	</div> --%>
+                                	
+                                	
+                                	<%-- <div class="plant-info-top">
+                                	
+	                                    <div>
+		                                    <p><b>과 명&nbsp&nbsp&nbsp</b>${fmlCodeNm}</p>
+	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>조언 정보&nbsp&nbsp&nbsp</b>${adviseInfo}</p> 
+		                                    
+	                                	
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div> 
+		                                	<p><b>성장 높이 정보&nbsp&nbsp&nbsp</b>${growthHgInfo}</p> 
+		                                     
+	                                    </div>
+	                                	<div>
+		                                    <p><b>성장 넓이 정보&nbsp&nbsp&nbsp</b>${growthAraInfo}</p> 	                                                                 	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>번식 시기 정보&nbsp&nbsp&nbsp</b>${prpgtEraInfo}</p>                          	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>생장속도&nbsp&nbsp&nbsp</b>${grwtveCodeNm}</p>                               	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>생육 온도&nbsp&nbsp&nbsp</b>${grwhTpCodeNm}</p> 
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>겨울 최저 온도&nbsp&nbsp&nbsp</b>${winterLwetTpCodeNm}</p>
+		                                   
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>습도&nbsp&nbsp&nbsp</b>${hdCodeNm}</p> 
+		                                
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>비료 정보&nbsp&nbsp&nbsp</b>${frtlzrInfo}</p> 
+		                                 
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>토양 정보&nbsp&nbsp&nbsp</b>${soilInfo}</p>
+		                             
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>물주기 봄&nbsp&nbsp&nbsp</b>${watercycleSprngCodeNm}</p> 
+		                                   
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>물주기 여름&nbsp&nbsp&nbsp</b>${watercycleSummerCodeNm}</p> 
+		
+	                                	</div>
+	                                	<div>
+		                                    <p><b>물주기 가을&nbsp&nbsp&nbsp</b>${watercycleAutumnCodeNm}</p>  
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>물주기 겨울&nbsp&nbsp&nbsp</b>${watercycleWinterCodeNm}</p> 
+	
+	                                	</div>
+	                                	<div>
+	                                	
+		                                    <p><b>특별관리 정보&nbsp&nbsp&nbsp</b>${speclmanageInfo}</p> 
+		                                
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                	<div>
+		                                    <p><b>기능성 정보&nbsp&nbsp&nbsp</b>${fncltyInfo}</p>
+		                                  
+	                                	
+	                                	</div>
+	                                	<div>
+	                                	
+		                                    <p><b>관리요구도&nbsp&nbsp&nbsp</b>${managedemanddoCodeNm}</p> 
+		                                 
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                	<div>
+		                                    <p><b>분류명&nbsp&nbsp&nbsp</b>${clCodeNm}</p>                               	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>생육형태명&nbsp&nbsp&nbsp</b>${grwhstleCodeNm}</p> 
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-bottom">
+                                	
+	                                	<div>
+		                                    <p><b>실내정원구성&nbsp&nbsp&nbsp</b>${indoorpsncpacompositionCodeNm}</p>
+		                                 
+		                                  
+	                                	</div>
+	                                  	<div>
+		                                    <p><b>생태명&nbsp&nbsp&nbsp</b>${eclgyCodeNm}</p> 
+	                                    
+	                                	
+	                                	</div>
+                                	</div> --%>
+                                	
+                                	<div class="plant-info-top">
+                                	
+	                                    <div>
+		                                    <p><b>과 명</b></p>
+		                                    <p>${fmlCodeNm}</p>
+	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>조언 정보</b></p>
+		                                    <p>${adviseInfo}</p>
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div> 
+		                                	<p><b>성장 높이 정보&nbsp&nbsp&nbsp</b></p> 
+		                                     <p>${growthHgInfo}</p>
+	                                    </div>
+	                                	<div>
+		                                    <p><b>성장 넓이 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${growthAraInfo}</p>	                                                                 	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>번식 시기 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${prpgtEraInfo}</p>                         	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>생장속도&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${grwtveCodeNm}</p>                               	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>생육 온도&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${grwhTpCodeNm}</p> 
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>겨울 최저 온도&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${winterLwetTpCodeNm}</p>
+		                                   
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>습도&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${hdCodeNm}</p> 
+		                                
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>비료 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${frtlzrInfo}</p> 
+		                                 
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>토양 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${soilInfo}</p>
+		                             
+	                                	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>물주기 봄&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${watercycleSprngCodeNm}</p> 
+		                                   
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>물주기 여름&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${watercycleSummerCodeNm}</p> 
+		
+	                                	</div>
+	                                	<div>
+		                                    <p><b>물주기 가을&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${watercycleAutumnCodeNm}</p>  
+	                                	
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+	                                	<div>
+		                                    <p><b>물주기 겨울&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${watercycleWinterCodeNm}</p> 
+	
+	                                	</div>
+	                                	<div>
+	                                	
+		                                    <p><b>특별관리 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${speclmanageInfo}</p> 
+		                                
+	                                	</div>
+                                	
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                	<div>
+		                                    <p><b>기능성 정보&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${fncltyInfo}</p>
+		                                  
+	                                	
+	                                	</div>
+	                                	<div>
+	                                	
+		                                    <p><b>관리요구도&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${managedemanddoCodeNm}</p> 
+		                                 
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-middle">
+                                	
+	                                	<div>
+		                                    <p><b>분류명&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${clCodeNm}</p>                               	
+	                                	</div>
+	                                	<div>
+		                                    <p><b>생육형태명&nbsp&nbsp&nbsp</b></p> 
+		                                    <p>${grwhstleCodeNm}</p>
+	                                	</div>
+                                	</div>
+                                	<div class="plant-info-bottom">
+                                	
+	                                	<div>
+		                                    <p><b>실내정원구성&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${indoorpsncpacompositionCodeNm}</p>
+		                                 
+		                                  
+	                                	</div>
+	                                  	<div>
+		                                    <p><b>생태명&nbsp&nbsp&nbsp</b></p>
+		                                    <p>${eclgyCodeNm}</p>
+	                                    
+	                                	
+	                                	</div>
+                                	</div>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="addi-info">

@@ -48,8 +48,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Admin</li>
+                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="main.ad">Admin</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -73,15 +73,15 @@
                             <div class="mb-0">
                                 <p><h5><b>🌱 답변 관리</b></h5></p>
                             </div>
-                            <div class="search_by_terms">
-                                <form action="#" method="post" class="form-inline">
-                                    <select class="custom-select widget-title">
-                                      <option selected>Show:</option>
-                                      <option value="1">미답변</option>
-                                      <option value="2">답변완료</option>
-                                    </select>
-                                </form>
-                            </div>
+<!--                             <div class="search_by_terms"> -->
+<!--                                 <form action="#" method="post" class="form-inline"> -->
+<!--                                     <select class="custom-select widget-title"> -->
+<!--                                       <option selected>Show:</option> -->
+<!--                                       <option value="1">미답변</option> -->
+<!--                                       <option value="2">답변완료</option> -->
+<!--                                     </select> -->
+<!--                                 </form> -->
+<!--                             </div> -->
                         </div>
 
                         <!-- 표 작성 내역 -->
