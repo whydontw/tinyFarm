@@ -11,4 +11,10 @@ public class BookRecomController {
 	   public String bookMain() {
 	       return "book/bookMain";  
 	   }
+	
+	//책 등록 페이지
+	@RequestMapping("bookInsert.re")
+	public String bookInsert() {
+		return "book/bookInsert";  
+	}
 }
