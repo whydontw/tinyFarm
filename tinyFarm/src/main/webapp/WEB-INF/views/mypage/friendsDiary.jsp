@@ -75,8 +75,8 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="diary.me">영농일지</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> 마이페이지</a></li>
+						<li class="breadcrumb-item"><a onclick="window.history.back();">뒤로가기</a></li>
 					</ol>
 					</nav>
 				</div>
@@ -123,10 +123,16 @@
 	        		,success: function(result){ //해당 날짜에 일지 있을시 새싹 이미지 띄우기
 	        			$.each(result,function(index,el){ //반복문 돌려서 날짜 뽑기
 			        	let startDate = moment(el.selectDate).format('YYYY-MM-DD');//날짜 형식 바꾸기
-	        				if(startDate != null){ //날짜가 존재하면
+	        			let open = el.selectOpen;
+	        				if(startDate != null && open =='Y'){ //날짜가 존재하면
 		        				events.push({
 		        					start: startDate,
 		        			        imageUrl: "resources/jisu/img/calender-icon.png"
+		        				});
+	        				}else if(startDate != null && open =='N'){
+	        					events.push({
+		        					start: startDate,
+		        					imageUrl: "resources/jisu/img/openN.png"
 		        				});
 	        				}
 	        			});
@@ -151,30 +157,34 @@
 							userNo:userNo
 						},
 						success:function(result){
-							//post방식으로 페이지 이동을 위한 준비
-							let diaryNo = result.diaryNo;
-							let selectDate = moment(result.selectDate).format('YYYY/MM/DD');
-							let form = document.createElement("form");
-							let obj; //넘겨받을 값 준비
-							//일지번호
-							obj = document.createElement("input");
-							obj.setAttribute("type","hidden");
-							obj.setAttribute("name","diaryNo");
-							obj.setAttribute("value",diaryNo);
-							form.appendChild(obj);
-							//일지날짜
-							obj = document.createElement("input");
-							obj.setAttribute("type","hidden");
-							obj.setAttribute("name","selectDate");
-							obj.setAttribute("value",selectDate);
-							//폼 형식 갖추기
-							form.appendChild(obj);
-							form.setAttribute("method","post");
-							form.setAttribute("action","view.di");
-							//body부분에 폼 추가
-							document.body.appendChild(form);
-							//전송!
-							form.submit();
+							if(result.selectOpen == 'N'){ //작성자가 비공개 설정시 뷰페이지 막기
+								alert("비공개 일지입니다.\n채팅을 통해 작성자에게 문의해보세요!"); //채팅기능 사용하도록 유도!
+							}else{ //공개 일지일시
+								//post방식으로 페이지 이동을 위한 준비
+								let diaryNo = result.diaryNo;
+								let selectDate = moment(result.selectDate).format('YYYY/MM/DD');
+								let form = document.createElement("form");
+								let obj; //넘겨받을 값 준비
+								//일지번호
+								obj = document.createElement("input");
+								obj.setAttribute("type","hidden");
+								obj.setAttribute("name","diaryNo");
+								obj.setAttribute("value",diaryNo);
+								form.appendChild(obj);
+								//일지날짜
+								obj = document.createElement("input");
+								obj.setAttribute("type","hidden");
+								obj.setAttribute("name","selectDate");
+								obj.setAttribute("value",selectDate);
+								//폼 형식 갖추기
+								form.appendChild(obj);
+								form.setAttribute("method","post");
+								form.setAttribute("action","fView.di");
+								//body부분에 폼 추가
+								document.body.appendChild(form);
+								//전송!
+								form.submit();
+							}
 						},error:function(){
 							console.log("일지불러오기 ajax 통신 실패");
 						}
