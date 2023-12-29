@@ -338,7 +338,6 @@ img {
 	  padding: 0;
 	  font-size: 16px;
 	  text-align: center;
-	  line-height: 40px; /* 조절된 값 */
 	  text-transform: uppercase;
 	  font-weight: 600;
 	}

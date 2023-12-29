@@ -175,7 +175,7 @@
 										<td colspan="4" id="board__boardTitle"></td>
 									</tr>
 								</table>
-								<button type="button" class="btn alazea-btn mb-15  float-right" id="boardMoreDetailBtn">MORE DETAIL ≫</button>
+								<button type="button" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">MORE DETAIL ≫</button>
 							</div>
 							
 						</div>
@@ -433,47 +433,8 @@
                         		}
 
                         	})
-                        	
-                        	
-                        	
-                        	
                         }
                         
-						
-//                         //회원 정보 변경
-//                         function memberInfoUpdate(){
-
-//                         	if(!confirm('회원 정보를 수정하겠습니까?')){
-//                         		return false;
-//                         	}
-                        	
-//                         	var userNo = $('#userNo_detail').val();
-//                         	var status = $('#userStatus_detail').val();
-//                         	var grade = $('#userGrade_detail').val();
-                        	
-                        	
-//                         	$.ajax({
-//                         		url : "memberInfoUpdate.ad",
-//                         		data: {
-//                         			userNo : userNo,
-//                         			status : status,
-//                         			grade : grade
-//                         		},
-//                         		success: function(result){
-                        			
-//                         			$("#userStatus_detail").val(result.status);
-//                         			$("#userGrade_detail").val(result.grade);
-                        			
-//                                 	selectReportList(${currentPage});
-                        			
-//                         		},
-//                         		error: function(){
-//                         			alert("오류났수ㅜ");
-//                         		}
-
-//                         	})
-                        	
-//                         }
                         
 					</script>
 

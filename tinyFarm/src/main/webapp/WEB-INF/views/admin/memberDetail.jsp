@@ -16,7 +16,7 @@
 		    <div class="modal-content">
 		      <div class="modal-body">
 		      
-			      <div class="col-12" style = "background-color:gray">
+			      <div class="col-12">
                     <div class="checkout_details_area clearfix">
                         <h5>🌱 회원 정보</h5>
                             <div class="row mt-15">

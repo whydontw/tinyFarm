@@ -23,7 +23,7 @@ public interface AdminService {
 
 	
 	//메인 통계(4)
-	int selectTodayCount(String category);
+	int selectStaticCount(String tableName, String selectRange, String whereRange);
 
 	
 	//회원 가입 비율

@@ -57,8 +57,13 @@ public class AdminDao {
 	
 
 	//main 오늘의 통계
-	public int selectTodayCount(SqlSessionTemplate sqlSession, String category) {
-		return sqlSession.selectOne("adminMapper.selectTodayCount", category);
+	public int selectStaticCount(SqlSessionTemplate sqlSession, String tableName, String selectRange, String whereRange) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("tableName", tableName);
+		map.put("selectRange", selectRange);
+		map.put("whereRange", whereRange);
+		return sqlSession.selectOne("adminMapper.selectStaticCount", map);
 	}
 
 	
@@ -77,6 +82,7 @@ public class AdminDao {
 	public BoardReply reportReplyDetailInfo(SqlSessionTemplate sqlSession, int replyNo) {
 		return sqlSession.selectOne("adminMapper.reportReplyDetailInfo", replyNo);
 	}
+
 
 	
 }
