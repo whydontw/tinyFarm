@@ -67,9 +67,9 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int deleteRoom(int chatRoomNo) {
+	public int deleteRoom(HashMap map) {
 		
-		return chatDao.deleteRoom(sqlSession,chatRoomNo);
+		return chatDao.deleteRoom(sqlSession,map);
 	}
 	//채팅방 접속 시간 업데이트
 	@Override
@@ -83,6 +83,18 @@ public class ChatServiceImpl implements ChatService{
 	public ArrayList<HashMap> selectNotReadMsg(String userId) {
 		// TODO Auto-generated method stub
 		return chatDao.selectNotReadMsg(sqlSession,userId);
+	}
+
+	@Override
+	public int checkStatusChatRoom(ChatRoom cr) {
+		// TODO Auto-generated method stub
+		return chatDao.checkStatusChatRoom(sqlSession,cr);
+	}
+
+	@Override
+	public int updateChatRoom(ChatRoom cr) {
+		// TODO Auto-generated method stub
+		return chatDao.updateChatRoom(sqlSession,cr);
 	}
 
 }

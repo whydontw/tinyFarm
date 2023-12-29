@@ -52,6 +52,7 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		//접속했을때
 		log.info("접속");
 		log.info("session : {}",session);
+		log.info("접속자의 아이디 : {}",((Member)session.getAttributes().get("loginUser")).getUserId());
 		log.info("접속 ! 현재 접속자 수 : {}",users.size());
 	}
 	/*
@@ -81,31 +82,19 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		
 		// 시간 세팅
 		chatMessage.setCreateDate( new Date( System.currentTimeMillis()));
-		System.out.println("chatMessage : "+chatMessage);
+		//System.out.println("chatMessage : "+chatMessage);
 		int result = chatService.insertChatMsg(chatMessage);
 
 		for(WebSocketSession ws : users) {
-			
-			/*
-			 * if(ws.getId().equals(session.getId())) { TextMessage newMessage = new
-			 * TextMessage("나 : "+message.getPayload());
-			 * 
-			 * ws.sendMessage(new TextMessage( new Gson().toJson(chatMessage)));
-			 * 
-			 * }else { TextMessage newMessage = new
-			 * TextMessage("상대방 : "+message.getPayload());
-			 * 
-			 * 
-			 * 
-			 * }
-			 */
 			// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
 			String id = ((Member)ws.getAttributes().get("loginUser")).getUserId(); //test123와 test1이 채팅jsp에 접속하면 users에는 두개가 담겨있음.
-			System.out.println("id : "+id);
+//			System.out.println("total id : "+id);
+//			System.out.println("보낸사람 id : "+chatMessage.getUserId());
+//			System.out.println("받는사람 id : "+chatMessage.getReceiveId());
 			//보낸사람 또는 받는사람중에 접속자가 있다면 
 			
 			if(id.equals(chatMessage.getUserId()) || id.equals(chatMessage.getReceiveId())) {
-				
+				System.out.println("채팅이 지금 가는 id : "+id);
 				ws.sendMessage( new TextMessage( new Gson().toJson(chatMessage) ));
 			}
 			

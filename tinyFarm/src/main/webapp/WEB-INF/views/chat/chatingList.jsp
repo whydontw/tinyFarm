@@ -22,7 +22,7 @@
 	width: 1100px;
 	height: auto;
 	margin: 0 auto;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 .chat-container-1 {
 	display: flex;
@@ -108,6 +108,11 @@
 	color: rgb(255, 255, 255);
 	transition: background-color 0.5s ease 0s, color 0.5s ease 0s
 }
+.chat-send-btn:hover{
+	background-color: white;
+	border:1px solid #70c745;
+	color:#70c745;
+}
 
 .chat-div {
 	/* background-color: #f3f3df; */
@@ -118,7 +123,7 @@
 }
 .chat-area {
 	/* background-color: #f3f3df; */
-	height: 75%;
+	height: 70%;
 	padding: 0px 20px;
 	border-radius: 10px;
 	overflow-y:auto;
@@ -519,10 +524,11 @@ div {
 
 				var userId = "${loginUser.userId}";
 				var createDate = $("<p class='createDate'></p>");
+				var currentChatRoomNo = $("#currentChatRoomNo").val();
 				createDate.text(new Date(messageData.createDate).toLocaleString());
 				
 				//온 메세지에 담긴 userId가 지금 로그인한 회원과 같다면(내가 보낸 채팅이라면) myDiv를 클래스로 가진 div를 채팅 공간에 넣기.
-				if (messageData.userId == userId) {
+				if ((messageData.userId == userId)&&(messageData.chatRoomNo == currentChatRoomNo)) {
 					var myDiv = $("<div class='myDiv'></div>"); //myDiv는 초록배경에 오른쪽으로 붙는 div
 					var myTextDiv = $("<div class='myTextDiv'></div>");
 					
@@ -531,7 +537,7 @@ div {
 					myDiv.append(myTextDiv);
 					$(".chat-area").append(myDiv);
 				
-				} else { //온 메세지에 담긴 userId가 지금 로그인한 회원과 다르다면(상대가 보낸 채팅이라면) otherDiv를 클래스로 가진 div를 채팅 공간에 넣기.
+				} else if((messageData.userId != userId)&&(messageData.chatRoomNo == currentChatRoomNo)){ //온 메세지에 담긴 userId가 지금 로그인한 회원과 다르다면(상대가 보낸 채팅이라면) otherDiv를 클래스로 가진 div를 채팅 공간에 넣기.
 					var otherDiv = $("<div class='otherDiv'></div>"); //otherDiv는 흰색배경에 왼쪽으로 붙는 div
 					var otherTextDiv = $("<div class='otherTextDiv'></div>");
 				
@@ -600,6 +606,8 @@ div {
 				socket.send(JSON.stringify(chatMessage));
 				//채팅 입력창 초기화				
 				text.value = "";
+				//이모지 닫기
+				outEmojiMode();
 			}			
 		}
 		//-------------------------웹 소켓 관련 변수/함수 끝----------------------------------------
@@ -795,7 +803,7 @@ div {
 		
 		//채팅방 삭제 메핑주소로 이동
 		function deleteRoom(){
-			location.href = "deleteRoom.ch?chatRoomNo="+$("#currentChatRoomNo").val();
+			location.href = "deleteRoom.ch?chatRoomNo="+$("#currentChatRoomNo").val()+"&userId=${loginUser.userId}";
 		}
 		
 		//채팅방 접속 시간 업데이트
@@ -835,8 +843,7 @@ div {
 								msgDiv.append(notReadMsgCount.text(result[j].COUNT));
 								break;
 							}
-						}
-						
+						}						
 					}
 				},
 				error : function(){
@@ -958,7 +965,10 @@ div {
 			$('.emoji-div').removeClass("hidden");
             $('.emoji-div').addClass("visible");
             $('.chat-area').css('height','auto');
-			$('.chat-area').css('min-height','350px');
+			$('.chat-area').css('min-height','30%');
+			$('.chat-area').css('max-height','40%');
+			//스크롤 최 하단으로 이동
+			$('.chat-area')[0].scrollTop = $('.chat-area')[0].scrollHeight;
 		}
 		function outEmojiMode(){
 			$('.emoji-div').empty();
