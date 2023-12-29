@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
   color:#9D9D9D;
 }
 .weather__card img {
-  width: 70px;
+  width: auto;
   height: 70px;
 }
 .weather__card .weather__description {
@@ -96,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 .weather__forecast img {
   height: 25px;
-  width: 25px;
+/*   width: 25px; */
   vertical-align:middle;
 }
 .weather__forecast span {
