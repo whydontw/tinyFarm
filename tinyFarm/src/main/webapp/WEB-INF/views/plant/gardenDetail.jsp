@@ -252,231 +252,7 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
                                 <div class="plant-info">
-                                	<%-- <div class="plant-info-top">
-	                                    <p><b>과 명&nbsp&nbsp&nbsp</b>${fmlCodeNm}</p>
-
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>조언 정보&nbsp&nbsp&nbsp</b>${adviseInfo}</p> 
-	                                    
                                 	
-                                	</div>
-                                	<div class="plant-info-middle"> 
-	                                	<p><b>성장 높이 정보&nbsp&nbsp&nbsp</b>${growthHgInfo}</p> 
-	                                     
-                                    </div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>성장 넓이 정보&nbsp&nbsp&nbsp</b>${growthAraInfo}</p> 	                                                                 	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>번식 시기 정보&nbsp&nbsp&nbsp</b>${prpgtEraInfo}</p>                          	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>생장속도&nbsp&nbsp&nbsp</b>${grwtveCodeNm}</p>                               	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>생육 온도&nbsp&nbsp&nbsp</b>${grwhTpCodeNm}</p> 
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>겨울 최저 온도&nbsp&nbsp&nbsp</b>${winterLwetTpCodeNm}</p>
-	                                   
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>습도&nbsp&nbsp&nbsp</b>${hdCodeNm}</p> 
-	                                
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>비료 정보&nbsp&nbsp&nbsp</b>${frtlzrInfo}</p> 
-	                                 
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>토양 정보&nbsp&nbsp&nbsp</b>${soilInfo}</p>
-	                             
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>물주기 봄&nbsp&nbsp&nbsp</b>${watercycleSprngCodeNm}</p> 
-	                                   
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>물주기 여름&nbsp&nbsp&nbsp</b>${watercycleSummerCodeNm}</p> 
-	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>물주기 가을&nbsp&nbsp&nbsp</b>${watercycleAutumnCodeNm}</p>  
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>물주기 겨울&nbsp&nbsp&nbsp</b>${watercycleWinterCodeNm}</p> 
-
-                                	</div>
-                                	<div class="plant-info-middle">
-                                	
-	                                    <p><b>특별관리 정보&nbsp&nbsp&nbsp</b>${speclmanageInfo}</p> 
-	                                
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>기능성 정보&nbsp&nbsp&nbsp</b>${fncltyInfo}</p>
-	                                  
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-                                	
-	                                    <p><b>관리요구도&nbsp&nbsp&nbsp</b>${managedemanddoCodeNm}</p> 
-	                                 
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>분류명&nbsp&nbsp&nbsp</b>${clCodeNm}</p> 
-	                                  
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>생육형태명&nbsp&nbsp&nbsp</b>${grwhstleCodeNm}</p> 
-	                                  
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                    <p><b>실내정원구성&nbsp&nbsp&nbsp</b>${indoorpsncpacompositionCodeNm}</p>
-	                                 
-	                                  
-                                	</div>
-                                  	<div class="plant-info-bottom">
-	                                    <p><b>생태명&nbsp&nbsp&nbsp</b>${eclgyCodeNm}</p> 
-                                    
-                                	
-                                	</div> --%>
-                                	
-                                	
-                                	<%-- <div class="plant-info-top">
-                                	
-	                                    <div>
-		                                    <p><b>과 명&nbsp&nbsp&nbsp</b>${fmlCodeNm}</p>
-	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>조언 정보&nbsp&nbsp&nbsp</b>${adviseInfo}</p> 
-		                                    
-	                                	
-	                                	</div>
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div> 
-		                                	<p><b>성장 높이 정보&nbsp&nbsp&nbsp</b>${growthHgInfo}</p> 
-		                                     
-	                                    </div>
-	                                	<div>
-		                                    <p><b>성장 넓이 정보&nbsp&nbsp&nbsp</b>${growthAraInfo}</p> 	                                                                 	
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>번식 시기 정보&nbsp&nbsp&nbsp</b>${prpgtEraInfo}</p>                          	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>생장속도&nbsp&nbsp&nbsp</b>${grwtveCodeNm}</p>                               	
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>생육 온도&nbsp&nbsp&nbsp</b>${grwhTpCodeNm}</p> 
-	                                	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>겨울 최저 온도&nbsp&nbsp&nbsp</b>${winterLwetTpCodeNm}</p>
-		                                   
-	                                	
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>습도&nbsp&nbsp&nbsp</b>${hdCodeNm}</p> 
-		                                
-	                                	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>비료 정보&nbsp&nbsp&nbsp</b>${frtlzrInfo}</p> 
-		                                 
-	                                	
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>토양 정보&nbsp&nbsp&nbsp</b>${soilInfo}</p>
-		                             
-	                                	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>물주기 봄&nbsp&nbsp&nbsp</b>${watercycleSprngCodeNm}</p> 
-		                                   
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>물주기 여름&nbsp&nbsp&nbsp</b>${watercycleSummerCodeNm}</p> 
-		
-	                                	</div>
-	                                	<div>
-		                                    <p><b>물주기 가을&nbsp&nbsp&nbsp</b>${watercycleAutumnCodeNm}</p>  
-	                                	
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-	                                	<div>
-		                                    <p><b>물주기 겨울&nbsp&nbsp&nbsp</b>${watercycleWinterCodeNm}</p> 
-	
-	                                	</div>
-	                                	<div>
-	                                	
-		                                    <p><b>특별관리 정보&nbsp&nbsp&nbsp</b>${speclmanageInfo}</p> 
-		                                
-	                                	</div>
-                                	
-                                	</div>
-                                	<div class="plant-info-middle">
-                                	
-	                                	<div>
-		                                    <p><b>기능성 정보&nbsp&nbsp&nbsp</b>${fncltyInfo}</p>
-		                                  
-	                                	
-	                                	</div>
-	                                	<div>
-	                                	
-		                                    <p><b>관리요구도&nbsp&nbsp&nbsp</b>${managedemanddoCodeNm}</p> 
-		                                 
-	                                	</div>
-                                	</div>
-                                	<div class="plant-info-middle">
-                                	
-	                                	<div>
-		                                    <p><b>분류명&nbsp&nbsp&nbsp</b>${clCodeNm}</p>                               	
-	                                	</div>
-	                                	<div>
-		                                    <p><b>생육형태명&nbsp&nbsp&nbsp</b>${grwhstleCodeNm}</p> 
-	                                	</div>
-                                	</div>
-                                	<div class="plant-info-bottom">
-                                	
-	                                	<div>
-		                                    <p><b>실내정원구성&nbsp&nbsp&nbsp</b>${indoorpsncpacompositionCodeNm}</p>
-		                                 
-		                                  
-	                                	</div>
-	                                  	<div>
-		                                    <p><b>생태명&nbsp&nbsp&nbsp</b>${eclgyCodeNm}</p> 
-	                                    
-	                                	
-	                                	</div>
-                                	</div> --%>
                                 	
                                 	<div class="plant-info-top">
                                 	
@@ -637,53 +413,103 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="reviews">
                             	<!-- Button trigger modal -->
-                            	<c:if test="${not empty loginUser.userId}">
-								
-	                                <div class="submit_a_review_area mt-50">
-	                                    <h4>소중한 의견을 남겨주세요</h4>
-	                                    	<!-- form태그를 없애고 싶었으나 bootstrap 템플릿 스타일 코드가 form .stars 이런식으로 적용되어있어서 둠. -->
-	                                    	<form action="#" style="margin-top:20px;">
-	                                        <div class="row">
-	                                            <div class="col-12 col-md-6">
-	                                                <div class="form-group">
-	                                                    <label for="name">아이디</label>
-	                                                    <input type="text" class="form-control" id="userId" value="${loginUser.userId}" readonly>
-	                                                </div>
-	                                            </div>
-	                                            <div class="col-12">
-	                                                <div class="form-group d-flex align-items-center">
-	                                                    <span class="mr-15">별점: </span>
-	                                                    <div class="stars">
-	                                                        <input type="radio" name="star" class="star-1" id="star-1" value="1">
-	                                                        <label class="star-1" for="star-1">1</label>
-	                                                        <input type="radio" name="star" class="star-2" id="star-2" value="2">
-	                                                        <label class="star-2" for="star-2">2</label>
-	                                                        <input type="radio" name="star" class="star-3" id="star-3" value="3">
-	                                                        <label class="star-3" for="star-3">3</label>
-	                                                        <input type="radio" name="star" class="star-4" id="star-4" value="4">
-	                                                        <label class="star-4" for="star-4">4</label>
-	                                                        <input type="radio" name="star" class="star-5" id="star-5" value="5" checked>
-	                                                        <label class="star-5" for="star-5">5</label>
-	                                                        <span></span>
-	                                                    </div>
-	                                                    
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="col-12">
-	                                                <div class="form-group">
-	                                                    <label for="comments">의견</label>
-	                                                    <textarea class="form-control" id="commentContent" rows="5" maxlength="200" data-max-length="150" style="resize: none;"></textarea>
-	                                                </div>
-	                                            </div>
-	                                            <div class="col-12 send-comment-btn-div">
-	                                                <button onclick="return false;" class="btn alazea-btn send-comment">의견 남기기</button>
-	                                            	<h4>총 <b class="commentCount"></b>개의 의견</h4>
-	                                            </div>
-	                                        </div>
-	                                       </form>
-	                                </div>
-								</c:if>
+                            	<c:choose>
+                            		<c:when test="${not empty loginUser.userId}">
+		                                <div class="submit_a_review_area mt-50">
+		                                    <h4>소중한 의견을 남겨주세요</h4>
+		                                    	<!-- form태그를 없애고 싶었으나 bootstrap 템플릿 스타일 코드가 form .stars 이런식으로 적용되어있어서 둠. -->
+		                                    	<form action="#" style="margin-top:20px;">
+		                                        <div class="row">
+		                                            <div class="col-12 col-md-6">
+		                                                <div class="form-group">
+		                                                    <label for="name">아이디</label>
+		                                                    <input type="text" class="form-control" id="userId" value="${loginUser.userId}" readonly>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-12">
+		                                                <div class="form-group d-flex align-items-center">
+		                                                    <span class="mr-15">별점: </span>
+		                                                    <div class="stars">
+		                                                        <input type="radio" name="star" class="star-1" id="star-1" value="1">
+		                                                        <label class="star-1" for="star-1">1</label>
+		                                                        <input type="radio" name="star" class="star-2" id="star-2" value="2">
+		                                                        <label class="star-2" for="star-2">2</label>
+		                                                        <input type="radio" name="star" class="star-3" id="star-3" value="3">
+		                                                        <label class="star-3" for="star-3">3</label>
+		                                                        <input type="radio" name="star" class="star-4" id="star-4" value="4">
+		                                                        <label class="star-4" for="star-4">4</label>
+		                                                        <input type="radio" name="star" class="star-5" id="star-5" value="5" checked>
+		                                                        <label class="star-5" for="star-5">5</label>
+		                                                        <span></span>
+		                                                    </div>
+		                                                    
+		                                                </div>
+		                                            </div>
+		
+		                                            <div class="col-12">
+		                                                <div class="form-group">
+		                                                    <label for="comments">의견</label>
+		                                                    <textarea class="form-control" id="commentContent" rows="5" maxlength="200" data-max-length="150" style="resize: none;"></textarea>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-12 send-comment-btn-div">
+		                                                <button onclick="return false;" class="btn alazea-btn send-comment">의견 남기기</button>
+		                                            	<h4>총 <b class="commentCount"></b>개의 의견</h4>
+		                                            </div>
+		                                        </div>
+		                                       </form>
+		                                </div>
+                            		
+                            		</c:when>
+                            		<c:otherwise>
+                            			<div class="submit_a_review_area mt-50">
+		                                    <h4>소중한 의견을 남겨주세요</h4>
+		                                    	<!-- form태그를 없애고 싶었으나 bootstrap 템플릿 스타일 코드가 form .stars 이런식으로 적용되어있어서 둠. -->
+		                                    	<form action="#" style="margin-top:20px;">
+		                                        <div class="row">
+		                                            <div class="col-12 col-md-6">
+		                                                <div class="form-group">
+		                                                    <label for="name">아이디</label>
+		                                                    <input type="text" class="form-control" id="userId" value="${loginUser.userId}" readonly>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-12">
+		                                                <div class="form-group d-flex align-items-center">
+		                                                    <span class="mr-15">별점: </span>
+		                                                    <div class="stars">
+		                                                        <input type="radio" name="star" class="star-1" id="star-1" value="1">
+		                                                        <label class="star-1" for="star-1">1</label>
+		                                                        <input type="radio" name="star" class="star-2" id="star-2" value="2">
+		                                                        <label class="star-2" for="star-2">2</label>
+		                                                        <input type="radio" name="star" class="star-3" id="star-3" value="3">
+		                                                        <label class="star-3" for="star-3">3</label>
+		                                                        <input type="radio" name="star" class="star-4" id="star-4" value="4">
+		                                                        <label class="star-4" for="star-4">4</label>
+		                                                        <input type="radio" name="star" class="star-5" id="star-5" value="5" checked>
+		                                                        <label class="star-5" for="star-5">5</label>
+		                                                        <span></span>
+		                                                    </div>
+		                                                    
+		                                                </div>
+		                                            </div>
+		
+		                                            <div class="col-12">
+		                                                <div class="form-group">
+		                                                    <label for="comments">의견</label>
+		                                                    <textarea class="form-control" id="commentContent" placeholder="로그인 후 이용 가능합니다." readonly rows="5" maxlength="200" data-max-length="150" style="resize: none;"></textarea>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-12 send-comment-btn-div">
+		                                                <button onclick="return false;" class="btn alazea-btn send-comment">의견 남기기</button>
+		                                            	<h4>총 <b class="commentCount"></b>개의 의견</h4>
+		                                            </div>
+		                                        </div>
+		                                       </form>
+		                                </div>
+                            		
+                            		</c:otherwise>
+                            	</c:choose>
+                            	
                                 <div class="reviews_area">						
                                     <ul>
                                         <li class="reviews_area-li">
@@ -772,8 +598,12 @@
     	$(".send-comment").click(function(){
     		var content = $("#commentContent").val();
     		var star = $('input[type="radio"][name="star"]:checked').val();
-    
-    		if(content == ""){
+    		var loginUser = "${loginUser.userId}";
+    		console.log(loginUser);
+    		if(loginUser == ""){
+    			alert("로그인 후 이용 가능합니다.");
+    		}
+    		else if(content == ""){
     			alert("의견을 작성해주세요");
     		}else {
 	    		$.ajax({
@@ -797,8 +627,8 @@
 		   				console.log("의견 작성 통신 실패");
 		   			}
 	    		});
-    			
-    		}    		
+    		}  
+    		  		
     	});
     	
     	//의견 가져오기

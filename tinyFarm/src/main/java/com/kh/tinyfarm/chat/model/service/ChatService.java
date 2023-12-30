@@ -23,9 +23,13 @@ public interface ChatService {
 
 	ArrayList<Member> searchUser(String search);
 
-	int deleteRoom(int chatRoomNo);
+	int deleteRoom(HashMap map);
 
 	int updateConnectTime(HashMap map);
 
 	ArrayList<HashMap> selectNotReadMsg(String userId);
+
+	int checkStatusChatRoom(ChatRoom cr);
+
+	int updateChatRoom(ChatRoom cr);
 }

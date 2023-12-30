@@ -49,7 +49,10 @@
 		}
 
 		.container{
-			max-width:1200px;
+			max-width:1300px;
+		}
+		.classy-menu{
+			width:1000px;
 		}
 		
 	</style>
@@ -153,7 +156,13 @@
                                     </li>
                                     <li><a href="moveMbtiTest.bo">작은농부 테스트</a></li>
                                     
-                                    <li><a href="moveList.bo">커뮤니티</a></li>
+                                    <li><a href="">커뮤니티</a>
+                                    	<ul class="dropdown">
+                                            <li><a href="moveList.bo">이야기해요</a></li>
+                                            <li><a href="experienceList.ex">체험활동</a></li>
+
+                                        </ul>
+                                    </li>
                                     <li><a href="plist.bo">작물거래</a></li>
                                     <li><a href="noticeList.no">공지사항</a></li>
                                     <li><a href="qnaList.qa">1:1 문의</a></li>

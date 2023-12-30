@@ -104,6 +104,8 @@
 								</button>
 							</form>
 						</div>
+						
+						
 						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
 					</div>
 				</div>
