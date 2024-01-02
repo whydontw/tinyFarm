@@ -333,7 +333,7 @@ h1, h2, h3, h4, h5, h6 {
 		        switch (item.PTY) {
 		            case "0":
 		            	
-		            	if(date.getHours() > 6 && date.getHours() < 18){
+		            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
 			                item.WeatherImg = imgSrc + "Sun.png'>";
 		            	}else{
 			                item.WeatherImg = imgSrc + "Moon.png'>";
@@ -355,7 +355,7 @@ h1, h2, h3, h4, h5, h6 {
 		                break;
 		            case "5":
 		            	
-		        		if(date.getHours() > 6 && date.getHours() < 18){
+		            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
 		        			item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
 		            	}else{
 		            		item.WeatherImg = imgSrc + "Rain_Light_Moon.png'>";
@@ -381,7 +381,7 @@ h1, h2, h3, h4, h5, h6 {
 		        	
 		        	if(item.SKY == '구름많음'){
 
-		        		if(date.getHours() > 6 && date.getHours() < 18){
+		        		if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
 		            		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
 		            	}else{
 		            		item.WeatherImg = imgSrc + "Cloud_Moon.png'>";
@@ -417,7 +417,12 @@ h1, h2, h3, h4, h5, h6 {
 			$("#updateWeatherHour").text((weatherList[0].fcstTime).substr(0,2) + ":00 기준");
 		    $("#todayWeatherInfoArea").html(perHours);
 
-			
+		
+		    
+		    
+		    //초록예보~
+		   	todayGreenCast(weatherList[0].T1H, weatherList[0].REH);
+		    
 		}
 
 	
