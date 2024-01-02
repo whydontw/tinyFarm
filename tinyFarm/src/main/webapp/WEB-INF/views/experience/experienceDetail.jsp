@@ -72,6 +72,15 @@
 			padding:20px;
 			border-bottom: 1px solid #d4d4d4;
 		}
+		
+		
+		.share-btn-div{
+			height:auto;
+			margin:20px 0;
+		}
+		.share-btn-div a{
+			padding:15px 15px 15px 0;
+		}
 	</style>
 	
 </head>
@@ -110,6 +119,7 @@
 				<p><b style="color:#FF6C30;">주제</b>&nbsp;&nbsp;${ex.thema}</p>
 			
 			</div>
+		
 			<div class="list-div">
 			  <ul class="list">
 			    <li class="locplc">
@@ -121,22 +131,36 @@
 			    <li class="url">
 			      <a href="${ex.url}">${ex.url}</a> <!-- 홈페이지 주소 -->
 			    </li>
-			  
+			   
 			  </ul>
+			  <!-- 공유하기 버튼 div -->
+			  <div class="share-btn-div">
+			  		<a id="btnKakao" class="kakao" href="javascript:shareKakao('${ex.cntntsNo}');"><img src="${contextPath}/resources/img/icon/icon-kakao.png"/></a>
+					<a id="btnTwitter" class="twitter" href="javascript:shareTwitter('${ex.cntntsNo}');"><img src="${contextPath}/resources/img/icon/icon-twitter.png"/></a>
+					<a id="btnlink" class="link" href="javascript:shareLink('${ex.cntntsNo}');"><img src="${contextPath}/resources/img/icon/icon-link.png"/></a>	
+			  </div>
 			</div>
+			<!-- 내용 -->
 			<div class="cn-div">
 				${ex.cn }
 			</div>
+			<!-- 지도 -->
 			<div class="map-div">
 				<h2 class="title">찾아오는 길</h2>
 				<div id="map" style="width:720px;height:600px;"></div>
 			</div>
+			<!-- 카카오 공유하기 -->
+			<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 			<script>
 				$(function(){
 					var title = '${ex.cntntsSj}';
 					var locplc = '${ex.locplc}';
+					var cntntsNo = '${ex.cntntsNo}';
 					getMap(title,locplc);
+					//맨 처츰에 카카오 공유 버튼 생성을 해야하기 때문에 페이지 로드시 한번 수행
+					shareKakao(cntntsNo);
 				});
+				//카카오 지도 api
 				function getMap(title,location){
 					
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -172,7 +196,49 @@
 					    } 
 					});    
 				}
-				
+				//카카오 공유
+				function shareKakao(cntntsNo) {
+				  // 사용할 앱의 JavaScript 키 설정
+				  Kakao.init('aef906bc476f983341072fc51f3c5b36');
+				  var imgUrl = "${ex.imgUrl1}";
+				  // 카카오링크 버튼 생성
+				  Kakao.Link.createDefaultButton({
+				    container: '#btnKakao', // 카카오공유버튼ID
+				    objectType: 'feed',
+				    content: {
+				      title: "작은농장", // 보여질 제목
+				      description: "농촌체험활동", // 보여질 설명
+				      imageUrl: imgUrl, // 콘텐츠 URL
+				      link: {
+				         mobileWebUrl: "http://localhost:8888/tinyfarm/experienceDetail.ex?cntntsNo="+cntntsNo,
+				         webUrl: "http://localhost:8888/tinyfarm/experienceDetail.ex?cntntsNo="+cntntsNo
+				        }
+				  	  },
+				      social: {
+				        commentCount: 51,  
+				        sharedCount: 223  
+				    }
+				  });
+				}
+				//트위터 공유
+				function shareTwitter(cntntsNo) {
+				    var sendText = "작은농장"; // 전달할 텍스트
+				    var sendUrl = "http://localhost:8888/tinyfarm/experienceDetail.ex?cntntsNo="+cntntsNo; // 전달할 URL
+				    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+				}
+				//링크 공유
+				function shareLink(cntntsNo){
+					   var url = '';
+					   var textarea = document.createElement("textarea");
+					   document.body.appendChild(textarea);
+					   url = "http://localhost:8888/tinyfarm/experienceDetail.ex?cntntsNo="+cntntsNo;
+					   textarea.value = url;
+					   textarea.select();
+					   document.execCommand("copy");
+					   document.body.removeChild(textarea);
+					   alert("링크가 복사되었습니다")
+					};
+			
 			</script>
 		</div>
 	</div>
