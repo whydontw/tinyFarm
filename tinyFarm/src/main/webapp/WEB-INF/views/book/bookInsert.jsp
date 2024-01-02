@@ -74,65 +74,76 @@
 	            <div class="row justify-content-between">
 	                <div class="col-12 col-lg-7 mx-auto">
 	                    <div class="checkout_details_area clearfix">
-	                        <h5 style= "font-size : 30px">도서등록</h5>
-	                        <form action="insert.me" method="post" enctype="multipart/form-data">
-		                           <div class="row">
-									    <div style="width: 290px; height: 290px; border: 1px solid #ccc; margin-top: 45px; margin-left:20px; margin-bottom: 20px; position: relative; overflow: hidden;">
-									        <!-- 이미지 표시 -->
-									        <img id="profileImage" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
- 											<div>    
-										        <!-- 파일 업로드 입력 폼 -->
-										       <input type="file" id="upfile" name="upfile" style="cursor: pointer; background-color:white; border:none; align:center" onchange="loadImg(this, 1)">
-										    </div>
-									    </div>
-									   
-									    <div id="file-name-display" style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%); text-align: center;"></div>
-									</div>
-	                                <div class="col-12 mb-4">
-	                                    <label for="enrollUserId" style = "margin-top:10px">아이디</label>
-	                                    <input type="text" class="form-control" id="enrollUserId" name = "userId" required>
-	                                	<div id="checkResult" style="font-size:0.8em; display :none;"></div>
+	                        <h5 style= "font-size : 30px; color:black">도서등록</h5>
+	                        <form action="insert.re" method="post" enctype="multipart/form-data">
+			                    <div class="row">
+							        <div class="col-md-6 mb-4">
+							            <div style="width: 310px; height: 380px; border: 1px solid #ccc; margin-top: 45px; margin-bottom: 20px; position: relative; overflow: hidden;">
+							                <!-- 이미지 표시 -->
+							                <img id="bookImage" src="<%= contextPath %>/resources/img/book/bookImage.jpg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+							                 </div>
+							                <div>
+							                    <!-- 파일 업로드 입력 폼 -->
+							                    <input type="file" id="upfile" name="upfile" style="cursor: pointer; background-color:white; border:none; align:center" onchange="loadImg(this, 1)">
+							                </div>
+							           
+							
+							            <div id="file-name-display" style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%); text-align: center;"></div>
+							        </div>
+							
+							        <div class="col-md-6 mb-4">
+							            <div class="row">
+							                <div class="col-md-12 mb-4">
+							                    <label for="bookTitle" style = "margin-top : 40px">책제목</label>
+							                    <input type="text" class="form-control" id="bookTitle" name ="bookTitle">
+							                </div>
+							
+							                <div class="col-md-12 mb-4">
+							                    <label for="bookAuthor" style="display:block; ">저자</label>
+							                    <input type="text" class="form-control" id="bookAuthor" name="bookAuthor">
+							                </div>
+							                
+							                
+							                <div class="col-md-12 mb-4">
+											    <label for="bookCategory">카테고리</label>
+											    <select class="form-control" id="bookCategory" name="bookCategory">
+											        <option value="" selected disabled>카테고리를 선택하세요</option>
+											        <option value="원예">원예</option>
+											        <option value="조경">조경</option>
+											        <option value="텃밭">텃밭</option>
+											    </select>
+											</div>
+											<div class="col-md-12 mb-4">
+							                    <label for="bookPrice" style="display:block; ">가격</label>
+							                    <input type="text" class="form-control" id="bookPrice" name="bookPrice">
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							    <div class="row">
+				                   <div class="col-md-6 mb-4">
+	                                    <label for="publisher">출판사</label>
+	                                    <input type="text" class="form-control" id="publisher" name="publisher" required>
 	                                </div>
+	                                <div class="col-md-6 mb-4">
+	                                    <label for="bookDate">발행일</label>
+	                                    <input type="date" class="form-control" id="bookDate" name="bookDate" required>
+	                                </div>       
+		                        </div>
 	                                <div class="col-12 mb-4">
-	                                    <label>비밀번호</label>
-	                                    <input type="password" class="form-control" id="password" min="0" name = "userPwd" required>
-	                                	<div id="pwdcheck_blank1" style="font-size: 0.8em;"></div>
+	                                    <label for="bookInfo" style = "margin-left:-15px">책소개</label>
+	                                    <input type="text" class="form-control" style ="width:680px; height:200px; margin-left :-15px" id="bookInfo" name="bookInfo" required>
 	                                </div>
-	                                <div class="col-12 mb-4">
-	                                    <label for="password">비밀번호 확인</label>
-	                                    <input type="password" class="form-control" id="password_check" name = "checkPwd" required>
-	                                    <div id="pwdcheck_blank2" style="font-size: 0.8em;"></div>
-	                                </div>
-	                                <div class="col-12 mb-4">
-	                                    <label for="userName">이름</label>
-	                                    <input type="text" class="form-control" id="userName" name="userName" required>
-	                                </div>
-	                                <div class="col-12 mb-4">
-	                                    <label for="email">이메일</label>
-	                                    <input type="email" class="form-control" id="email" name="email" placeholder = "email@example.com" required> 
-	                                </div>
-	                                <div class="col-12 mb-4">
-	                                    <label for="phone">전화번호</label>
-	                                    <input type="text" class="form-control" id="phone" name="phone"  placeholder = "휴대폰 번호(숫자만 입력)">
-	                                </div>
-	                               <div class="col-12 mb-4" style="position: relative;">
-									    <label for="address">주소</label>
-									    <input type="text" id="address" class="form-control" name="address" readonly>
-										<div class="button-group-area" id="address_kakao" style="position: absolute; top: 32px; right: 15px;">
-										    <a href="#" class="genric-btn primary mt-0" style="height: 46px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">주소검색</a>
-										</div>
-									</div>
-																		   
 	                            </div>
   								<div class="col-8 text-center" style = "margin-left:120px">
-                                    <button type="submit" class="btn alazea-btn mt-15">회원가입</button>
+                                    <button type="submit" class="btn alazea-btn mt-15">등록</button>
                                 </div>
 	                        </form>
 	                    </div>
 					
 						 <script>
 							 function loadImg(inputFile, num) {
-								    var profileImage = document.getElementById('profileImage');
+								    var bookImage = document.getElementById('bookImage');
 	
 								    if (inputFile.files.length == 1) {
 								        var reader = new FileReader();
@@ -141,31 +152,11 @@
 	
 								        reader.onload = function (e) {
 								            console.log(e.target.result);
-								            profileImage.src = e.target.result;
+								            bookImage.src = e.target.result;
 								        }
 								    } else {
 								        // 파일이 등록되지 않으면 기본 이미지로 설정
-								        profileImage = "<%= contextPath %>/resources/profile.jpg";
-								    }
-								}
-						</script>
-						
-						<script>
-							 function loadImg(inputFile, num) {
-								    var profileImage = document.getElementById('profileImage');
-	
-								    if (inputFile.files.length == 1) {
-								        var reader = new FileReader();
-	
-								        reader.readAsDataURL(inputFile.files[0]);
-	
-								        reader.onload = function (e) {
-								            console.log(e.target.result);
-								            profileImage.src = e.target.result;
-								        }
-								    } else {
-								        // 파일이 등록되지 않으면 기본 이미지로 설정
-								        profileImage = "<%= contextPath %>/resources/profile.jpg";
+								        bookImage = "<%= contextPath %>/resources/img/book/bookImage.jpg";
 								    }
 								}
 						</script>
