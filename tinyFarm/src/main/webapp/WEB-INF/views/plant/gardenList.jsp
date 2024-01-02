@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	
-    <section class="new-arrivals-products-area bg-gray section-padding-0-100">
+    <section class="new-arrivals-products-area section-padding-0-100">
     	<!-- ##### Single Widget Area ##### -->
   		
         <div class="container">

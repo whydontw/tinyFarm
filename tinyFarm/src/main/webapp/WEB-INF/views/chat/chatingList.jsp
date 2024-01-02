@@ -473,6 +473,7 @@ div {
 	<script>
 		//-------------------------페이지에 들어오는 순간 실행될 함수 시작----------------------------------------
 		$(function() {
+			headerDisconnect();
 			//chatingList.jsp에 들어오는 순간 웹 소켓에 접속하도록
 			connect();
 			//chatingList.jsp에 들어오는 순간 채팅 상대 리스트를 불러온다.
