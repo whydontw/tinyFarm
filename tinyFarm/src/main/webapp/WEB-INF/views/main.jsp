@@ -150,7 +150,7 @@ a, p, button {
 	</section>
 	<!-- ##### Hero Area End ##### -->
 	<!-- ##### Service Area Start ##### -->
-	<section class="our-services-area bg-gray section-padding-100-0">
+	<section class="our-services-area section-padding-100-0">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
@@ -230,7 +230,7 @@ a, p, button {
 	<!-- ##### Service Area End ##### -->
 	<input id="pageNo" type="hidden" value="1">
 
-	<section class="new-arrivals-products-area bg-gray section-padding-100">
+	<section class="new-arrivals-products-area section-padding-100">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">

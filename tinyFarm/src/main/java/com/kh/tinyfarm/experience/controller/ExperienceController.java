@@ -50,7 +50,7 @@ public class ExperienceController {
 		parameter += "&pageNo="+pageNo;
 		parameter += "&numOfRows=8";
 
-		int listCount = 100;
+		int listCount;
 		int pageLimit = 10;
 		int boardLimit = 8;
 		//검색 조건
@@ -100,7 +100,7 @@ public class ExperienceController {
 		NodeList telnos = doc.getElementsByTagName("telno");
 		NodeList thumbImgUrls = doc.getElementsByTagName("thumbImgUrl");
 		NodeList imgUrls = doc.getElementsByTagName("imgUrl");
-		
+		NodeList totalCount = doc.getElementsByTagName("totalCount");
 		
 		ArrayList<ExperienceListVo> list = new ArrayList();
 		
@@ -126,10 +126,12 @@ public class ExperienceController {
 			list.add(exVo);
 		}
 	
+		try{listCount = Integer.parseInt(totalCount.item(0).getFirstChild().getNodeValue());}catch(Exception e){listCount = 0;}
 		PageInfo pi = Pagination.getPageInfo(listCount, pageNo, pageLimit, boardLimit);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("sText",sText);
+		model.addAttribute("sType",sType);
 		System.out.println(size);
 		System.out.println(list);
 		return "experience/experienceList";
