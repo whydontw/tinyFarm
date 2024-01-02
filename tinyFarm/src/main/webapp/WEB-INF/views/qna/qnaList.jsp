@@ -103,8 +103,8 @@
                             </div>
                             <div class="search_by_terms">
                                 <form action="qnaList" method="post" class="form-inline">
-                                    <select class="custom-select widget-title" id="showPeriod">
-                                      <option selected>Show:</option>
+                                    <select class="custom-select widget-title" id="showPeriod" onchange="changePeriod(this.value)">
+                                      <option value="1">Show: ALL</option>
                                       <option value="7">지난 7일</option>
                                       <option value="30">지난 30일</option>
                                     </select>
@@ -117,7 +117,8 @@
 
                         <div class="clearfix mt-15 mb-15">
                         	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
-                            <table class="table table-responsive" align="center">
+                            <table class="table " align="center" width="100%"> <!-- table-responsive -->
+                            
                                 <colgroup>
                                     <col width="5%">
                                     <col width="auto%">
@@ -185,11 +186,20 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                            <button type="button" onclick="location.href='qnaForm.qa'" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">작성하기</button>
                         </div>
                         
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
                         	
                         <script type="text/javascript">
+                        
+	                        $(function(){
+	                        	
+	                        	console.log(${period})
+	                        	
+	                        	$("#showPeriod").val(${period});
+	                        })
+                        
                         
                         	//수정 form 이동
                         	function qnaUpdateBtn(qnaNo){
@@ -224,6 +234,15 @@
                             	}
                             	
                         	}
+                            
+                            
+                            function changePeriod(value){
+                            	location.href="qnaList.qa?currentPage=1&showPeriod=" + value;
+                            	
+                            }
+                            
+                            
+                           
 			            	
 			            </script>
                         
@@ -257,16 +276,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage-1}&showPeriod=${period}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${i}&showPeriod=${period}">${i}</a></li>
 									</c:forEach>
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="qnaList.qa?currentPage=${pi.currentPage+1}&showPeriod=${period}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>
