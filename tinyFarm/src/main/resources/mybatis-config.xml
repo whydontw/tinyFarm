@@ -35,6 +35,7 @@
 		<typeAlias type="com.kh.tinyfarm.notice.model.vo.Notice" alias="notice"/>
 		<typeAlias type="com.kh.tinyfarm.mbti.model.vo.InGardenMbti" alias="inGardenMbti"/>
 		
+		<typeAlias type = "com.kh.tinyfarm.common.model.vo.Book" alias ="book"/>
 	
 
 	</typeAliases>
