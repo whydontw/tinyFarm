@@ -150,7 +150,7 @@ a, p, button {
 	</section>
 	<!-- ##### Hero Area End ##### -->
 	<!-- ##### Service Area Start ##### -->
-	<section class="our-services-area bg-gray section-padding-100-0">
+	<section class="our-services-area section-padding-100-0">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">

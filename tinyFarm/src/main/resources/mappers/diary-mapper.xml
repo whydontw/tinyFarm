@@ -77,7 +77,7 @@
 	  	<result column="CHANGE_NAME" property="changeName"/>
   	</resultMap>
   	
-  	<resultMap type="payment" id="paymentResultSet">
+  	<resultMap type="payments" id="paymentResultSet">
 	  	<result column="PAYMENT_NO" property="paymentNo"/>
 	  	<result column="PAYMENT_METHOD" property="paymentMethod"/>
 	  	<result column="PAYMENT_PRICE" property="paymentPrice"/>
@@ -333,7 +333,7 @@
   	</select>
   	
   	<!-- 구매내역 목록 -->
-  	<select id="myOrderList" parameterType="payment" resultMap="paymentResultSet,productResultSet">
+  	<select id="myOrderList" parameterType="payments" resultMap="paymentResultSet,productResultSet">
   		SELECT PAYMENT_NO,ORDER_DATE, P.PRODUCT_TITLE,PAYMENT_METHOD, PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
@@ -358,7 +358,7 @@
   	</select>
   	
 	<!-- 거래내역 검색 주문 개수 --> 
-  	<select id="searchDateOrderCount" resultType="_int" parameterType="payment">
+  	<select id="searchDateOrderCount" resultType="_int" parameterType="payments">
   		SELECT COUNT(PAYMENT_NO)
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
@@ -368,7 +368,7 @@
   	</select>
   	
   	<!-- 주문리스트 검색 -->
-  	<select id="searchOrderList" parameterType="payment" resultMap="paymentResultSet">
+  	<select id="searchOrderList" parameterType="payments" resultMap="paymentResultSet">
   		SELECT PP.PAYMENT_NO,PP.ORDER_DATE, P.PRODUCT_TITLE,PP.PAYMENT_METHOD,PP.PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
