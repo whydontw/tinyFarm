@@ -73,11 +73,13 @@
             
             	<%@ include file="admin_nav.jsp" %>
 
-
+						
 				<div class="col-12 col-md-9">
 					<!-- <div class="row"> -->
 					<%-- <%@ include file="/WEB-INF/views/common/weather/weather_today.jsp" %> --%>
-
+					
+					<div class="text-right breadcrumb-item"><a href="#" onclick="alert('뿡')"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;PDF DOWNLOAD</a></div>
+					
 					<section class="cool-facts-area bg-img ">
 						<!-- style="background-image: url(${contextPath }/resources/img/bg-img/cool-facts.png);"> -->
 						<div class="container">
@@ -88,9 +90,6 @@
 										<i class="fa fa-check" aria-hidden="true"></i> 오늘의 통계
 									</h5>
 								</div>
-								<!--  <div><p>Quisque orci quam, vulputate non commodo finibus, molestie ac ante. Duis in sceleri quesem. Nulla sit amet varius nunc. Maecenas dui, tempeu ullam corper in.</p></div> -->
-
-
 								<div class="d-flex col-12 col-lg-12">
 
 									<div class="col-12 col-sm-3">
@@ -202,6 +201,11 @@
 					</section>
 
 
+
+
+					<h6 class="py-2 text-center">
+						<i class="fa fa-caret-down" aria-hidden="true"></i> 부문별 상세 통계
+					</h6>
 
 					<!-- 회원 -->
 					<section class="cool-facts-area bg-img staticsSection" id="mStatics"> 
