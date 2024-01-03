@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,34 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int deleteRoom(int chatRoomNo) {
+	public int deleteRoom(HashMap map) {
 		
-		return chatDao.deleteRoom(sqlSession,chatRoomNo);
+		return chatDao.deleteRoom(sqlSession,map);
+	}
+	//채팅방 접속 시간 업데이트
+	@Override
+	public int updateConnectTime(HashMap map) {
+		// TODO Auto-generated method stub
+		return chatDao.updateConnectTime(sqlSession,map);
+	}
+	
+	//내가 읽지 않은 메세지의 수를 세서 채팅방 번호와 함께 가져온다
+	@Override
+	public ArrayList<HashMap> selectNotReadMsg(String userId) {
+		// TODO Auto-generated method stub
+		return chatDao.selectNotReadMsg(sqlSession,userId);
+	}
+
+	@Override
+	public int checkStatusChatRoom(ChatRoom cr) {
+		// TODO Auto-generated method stub
+		return chatDao.checkStatusChatRoom(sqlSession,cr);
+	}
+
+	@Override
+	public int updateChatRoom(ChatRoom cr) {
+		// TODO Auto-generated method stub
+		return chatDao.updateChatRoom(sqlSession,cr);
 	}
 
 }

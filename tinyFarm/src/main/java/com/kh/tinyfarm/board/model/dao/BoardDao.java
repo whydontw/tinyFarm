@@ -9,11 +9,24 @@ import org.springframework.stereotype.Repository;
 import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
+import com.kh.tinyfarm.board.model.vo.BoardReport;
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Repository
 public class BoardDao {
 
+	
+	
+	//게시글리스트
+	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList");
+	}
+
+	
+	/*
+	
 	//게시글 리스트 총 개수 
 	public int boardListCount(SqlSessionTemplate sqlSession) {
 		
@@ -29,7 +42,7 @@ public class BoardDao {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", null, rowBounds);
 	}
-	
+	*/
 	//게시글 상세보기 전 조회수 증가 메소드
 	public int boardIncreaseCount(SqlSessionTemplate sqlSession, int boardNo) {
 		
@@ -73,9 +86,9 @@ public class BoardDao {
 	}
 	
 	//댓글 수정
-	public int updateReply(SqlSessionTemplate sqlSession, int replyNo) {
+	public int updateReply(SqlSessionTemplate sqlSession, BoardReply br) {
 		
-		return sqlSession.update("boardMapper.updateReply", replyNo);
+		return sqlSession.update("boardMapper.updateReply",br);
 	}
 
 	//댓글 삭제
@@ -83,7 +96,23 @@ public class BoardDao {
 		
 		return sqlSession.delete("boardMapper.deleteReply", replyNo);
 	}
+	
+	
+	//유저가 좋아요했는지 안했는지 확인
+	/*
+	 * public int findLike(SqlSessionTemplate sqlSession, BoardLike br) {
+	 * 
+	 * return sqlSession.selectOne("boardMapper.findLike", br); }
+	 */	
+	
 
+	public ArrayList<BoardLike> findLike(SqlSessionTemplate sqlSession, BoardLike br) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("boardMapper.findLike", br);
+	}
+	
+	
+	
 	//좋아요수 증가
 	public int likeIncreaseCount(SqlSessionTemplate sqlSession, BoardLike bl) {
 		
@@ -94,6 +123,34 @@ public class BoardDao {
 		
 		return sqlSession.insert("boardMapper.doLike", bl);
 	}
+
+	
+	//좋아요 취소누르면 카운트 감소
+	public int likeDecreaseCount(SqlSessionTemplate sqlSession, BoardLike bl) {
+
+		return sqlSession.update("boardMapper.likeDecreaseCount", bl);
+	}
+
+	//좋아요 취소
+	public int cancelLike(SqlSessionTemplate sqlSession, BoardLike bl) {
+
+		return sqlSession.delete("boardMapper.cancelLike", bl);
+	}
+
+
+	//게시글 신고하기 기능
+	public int boardReport(SqlSessionTemplate sqlSession, BoardReport bp) {
+
+		return sqlSession.insert("boardMapper.boardReport", bp);
+	}
+
+	//댓글 신고
+	public int replyReport(SqlSessionTemplate sqlSession, ReplyReport rp) {
+		System.out.println(rp);
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.replyReport", rp);
+	}
+
 
 	
 

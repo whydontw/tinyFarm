@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.chat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,10 +45,22 @@ public class ChatController {
 	@RequestMapping(value="insertChatRoom.ch",produces="text/html; charset=UTF-8")
 	public String insertChatRoom(ChatRoom cr) {
 		System.out.println(cr);
+		//채팅방이 아예 DB에 존재하지 않는지 확인
 		int count = chatService.checkExistChatRoom(cr);
+		//채팅방이 존재하지만 현재 사용자가 채팅방을 나간 상태(N)인지 확인
+		int sCount = chatService.checkStatusChatRoom(cr);
 		int result = 0;
-		if(count > 0) { //이미 채팅방이 존재한다면
+
+		if(count > 0 && sCount > 0) { //이미 채팅방이 DB에 존재하고 상태가 Y라면 나가지 않은 채팅방이 있다는 뜻
+			
 			return "NNNYY";
+		}else if(count > 0 && sCount == 0) { //이미 채팅방이 DB에 존재하고 상태가 N라면 혼자 나간 채팅방을 있다는 뜻이므로 상태를 Y로 바꿔주는 작업
+			result = chatService.updateChatRoom(cr);
+			if(result > 0) { //상태 업데이트에 성공하면
+				return "NNNNY";
+			}else {
+				return "NNNNN";
+			}
 		}else {//채팅방이 없다면 추가
 			result = chatService.insertChatRoom(cr);
 			
@@ -69,6 +82,27 @@ public class ChatController {
 		return list;
 	}
 	
+	
+	@RequestMapping("updateConnectTime.ch")
+	public void updateConnectTime(String userId,String chatRoomNo){
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("chatRoomNo", chatRoomNo);
+		int result = chatService.updateConnectTime(map);
+		if(result > 0) {
+			System.out.println("업데이트 성공");
+		}else {
+			System.out.println("업데이트 실패");
+		}	
+	}
+	@ResponseBody
+	@RequestMapping(value="selectNotReadMsg.ch",produces = "application/json; charset=UTF-8")
+	public ArrayList<HashMap> selectNotReadMsg(String userId){
+		ArrayList<HashMap> list = chatService.selectNotReadMsg(userId);
+		System.out.println(list);
+		return list;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="selectChatMsg.ch",produces = "application/json; charset=UTF-8")
 	public ArrayList<ChatMessage> selectChatMsg(HttpSession session,String chatRoomNo){
@@ -81,10 +115,12 @@ public class ChatController {
 	}
 	
 	@RequestMapping("deleteRoom.ch")
-	public String deleteRoom(String chatRoomNo,HttpSession session) {
-		System.out.println("안녕");
-		int result = chatService.deleteRoom(Integer.parseInt(chatRoomNo));
-		System.out.println("result : "+result);
+	public String deleteRoom(String chatRoomNo,String userId,HttpSession session) {
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("chatRoomNo", chatRoomNo);
+		map.put("userId", userId);
+		int result = chatService.deleteRoom(map);
+
 		if(result >0) {
 			session.setAttribute("alertMsg", "채팅방 삭제가 완료됐습니다");
 			return "redirect:chatList.ch";

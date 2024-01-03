@@ -1,7 +1,5 @@
 package com.kh.tinyfarm.diary.model.vo;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,12 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class Diary {
 	private int diaryNo;
-	private int categoryNo;
+	private String categoryNo; //조회시엔 이름으로
 	private int diaryWriter;
-	private Date selectDate;
+	private String selectDate;
 	private String diaryTitle;
 	private String diaryContent;
 	private String selectOpen;
 	private String createDate;
 	private String status;
+	
 }
+
+

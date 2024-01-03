@@ -20,7 +20,26 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="resources/style.css">
 	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<style>
+		table {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+		    border-radius: 5px;
+		}
+		thead {
+	        font-weight: bold;
+	        color: #fff;
+        	background-color: #70c745;
+        }
+		.single-widget-area .widget-title {
+		    width: 100%;
+		    position: relative;
+		    margin-left: 10%;
+		}
 		#boardList>table thead tr:hover,
 		#replyList>table thead tr:hover,
 		#followingTableContainer>table thead tr:hover,
@@ -32,21 +51,26 @@
 		#followingTableContainer>table tbody tr:hover,
 		#followerTableContainer>table tbody tr:hover{ 
 			cursor: pointer; 
+			background-color: #e9f0e6;
 		}
 		.page-item.current-page a{
 		    background-color: #70c745;
 		}
-		ul{
-			position: absolute;
-			text-align: left;
+		#boardCount, #replyCount{
+			font-size: 13px;
+		}
+		#followingCount, #followerCount{
+			font-weight: lighter;
 		}
 	</style>
 </head>
 
 <body>
+	<jsp:include page="/WEB-INF/views/member/memberModal.jsp"></jsp:include>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
-
     <!-- ##### nav 그림 + 페이지 설명 ##### -->
+
+    
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
 		<div
@@ -77,7 +101,7 @@
                     <div class="row">
                     	<div id="boardList">
                     		<div class="widget-title">
-                                <h4>게시글</h4>
+                                <h4>게시글 <span id="boardCount"></span></h4>
                             </div>
                             <!-- 게시글 테이블 -->
                     		<table>
@@ -104,15 +128,15 @@
                     	
                     	<div id="replyList">
                     		<div class="widget-title">
-                                <h4>댓글</h4>
+                                <h4>댓글 <span id="replyCount"></span></h4>
                             </div>
                             <!-- 댓글 테이블 -->
                     		<table>
                     			<thead>
                     				<tr>
-                    					<td style="width: 15%">게시글번호</td>
+                    					<td style="width: 10%">글번호</td>
                     					<td style="width: 60%">댓글내용</td>
-                    					<td style="width: 15%">작성일</td>
+                    					<td style="width: 20%">작성일</td>
                     					<td style="width: 10%">좋아요</td>
                     				</tr>
                     			</thead>
@@ -143,7 +167,9 @@
         								<div id="followingTableContainer">
 		                            	 <table id="following">
 											<thead>
-												<tr><td>Following List</td></tr>
+												<tr>
+													<td>Following List&nbsp;&nbsp;[&nbsp;<span id="followingCount"></span>&nbsp;]</td>
+												</tr>
 											</thead>
 											<tbody>
 											</tbody>
@@ -160,7 +186,9 @@
         								<div id="followerTableContainer">
 		                            	 <table id="follower">
 											<thead>
-												<tr><td>Follower List</td></tr>
+												<tr>
+													<td>Follower List&nbsp;&nbsp;[&nbsp;<span id="followerCount"></span>&nbsp;]</td>
+												</tr>
 											</thead>
 											<tbody>
 											</tbody>
@@ -180,7 +208,21 @@
     
     <script>
     	let myId = "${loginUser.userId}"; //로그인한 회원 아이디
-    	
+	    let curPage = 0;
+	    let startPage = 0;
+	    let endPage = 0;
+		let maxPage0;
+	    	
+		// 게시글 테이블의 날짜 포맷팅
+		function formatDateForBoard(dateString) {
+		    return moment(dateString).format("YYYY-MM-DD");
+		}
+
+		// 댓글 테이블의 날짜 포맷팅
+		function formatDateForReply(dateString) {
+		    return moment(dateString).format("YYYY-MM-DD");
+		}
+		
     	//게시글 영역
 	    function loadBoardPage(page){ //페이지 로드 할 함수
 	    	$.ajax({
@@ -191,32 +233,35 @@
 	    			currentPage : page
 	    		},
 	    		success : function(result){
-	    			let str = ""; //게시글
-	    			let pStr = ""; //페이징 
-	    			let curPage = result.bPi.currentPage;
-	    			let startPage = result.bPi.startPage;
-	    			let endPage = result.bPi.endPage;
-	    			let maxPage = result.bPi.maxPage;
+	    			curPage = result.bPi.currentPage;
+	    			startPage = result.bPi.startPage;
+	    			endPage = result.bPi.endPage;
+	    			maxPage = result.bPi.maxPage;
 	    			let bList = result.bList;
-	    			
+	    			let count = result.bPi.listCount;
+	    			let str = ""; //게시글
+	    		    let pStr = ""; //페이징 
+	    		    let nStr = ""; //다음페이지
+	    		    
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(bList == null){
+	    			if(bList.length == 0){
 	    				str += "<tr>"
 		    				+ "<td colspan='5'>게시글이 존재하지 않습니다.</td>"
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(bList, function(key, b){
-		    				//str += '<tr onclick="location.href=\'detail.bo?bno=\' + '+b.boardNo+'">' 
-		    				str += "<tr>"
+		    				let date = new Date(b.createDate);
+		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+b.boardNo+'">'  //클릭시 해당 게시글로 이동
 			    				+ "<td>"+b.boardNo+"</td>"
 			    				+ "<td>"+b.boardTitle+"</td>"
-			    				+ "<td>"+b.createDate+"</td>"
+			    				+ "<td>"+formatDateForBoard(b.createDate)+"</td>"
 			    				+ "<td>"+b.count+"</td>"
 			    				+ "<td>"+b.likeCount+"</td>"
 			    				+ "</tr>";
 		    			});
 	    			}
 	    			$("#boardList tbody").html(str); //게시글 리스트 띄워주기
+	    			$("#boardList #boardCount").html(count+"개"); //게시글 수 띄워주기
 	    			
 	    			//페이징 처리
 	    			if(startPage==1){ //시작이 1이면 이전버튼 비활성
@@ -253,14 +298,15 @@
 	    			currentPage : page
 	    		},
 	    		success : function(result){
-	    			let str = ""; //게시글
-	    			let pStr = ""; //페이징 
-	    			let curPage = result.rPi.currentPage;
-	    			let startPage = result.rPi.startPage;
-	    			let endPage = result.rPi.endPage;
-	    			let maxPage = result.rPi.maxPage;
+	    			curPage = result.rPi.currentPage;
+	    			startPage = result.rPi.startPage;
+	    			endPage = result.rPi.endPage;
+	    			maxPage = result.rPi.maxPage;
 	    			let rList = result.rList;
-					console.log(rList);
+	    			let count = result.rPi.listCount;
+	    			let str = ""; //게시글
+	    		    let pStr = ""; //페이징 
+	    			
 	    			//게시글 리스트 추가해주기위한 작업
 	    			if(rList.length == 0){
 	    				str += "<tr>"
@@ -268,15 +314,16 @@
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(rList, function(key, r){
-		    				str += '<tr onclick="location.href=\'detail.bo?bno=\' + '+r.refBno+'">'
+		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+r.refBno+'">'
 			    				+ "<td>"+r.refBno+"</td>"
 			    				+ "<td>"+r.replyContent+"</td>"
-			    				+ "<td>"+r.createDate+"</td>"
+			    				+ "<td>"+formatDateForReply(r.createDate)+"</td>"
 			    				+ "<td>"+r.likeCount+"</td>"
 			    				+ "</tr>";
 		    			});
 	    			}
-	    			$("#replyList tbody").html(str); //게시글 리스트 띄워주기
+	    			$("#replyList tbody").html(str); //댓글 리스트 띄워주기
+	    			$("#replyList #replyCount").html(count+"개"); //댓글 수 띄워주기
 	    			
 	    			//페이징 처리
 	    			if(startPage==1){ //시작이 1이면 이전버튼 비활성
@@ -313,29 +360,31 @@
 	    		type: "post",
 	    		data : {
 	    			userId : myId,
-	    			currentPage : page
+	    			curPage : page
 	    		},
 	    		success : function(result){
-	    			let str = ""; //게시글
-	    			let pStr = ""; //이전페이지
-	    			let nStr = ""; //다음페이지
-	    			let curPage = result.fiPi.currentPage;
-	    			let startPage = result.fiPi.startPage;
-	    			let endPage = result.fiPi.endPage;
-	    			let maxPage = result.fiPi.maxPage;
+	    			curPage = result.fiPi.currentPage;
+	    			startPage = result.fiPi.startPage;
+	    			endPage = result.fiPi.endPage;
+	    			maxPage = result.fiPi.maxPage;
 	    			let fiList = result.fiList;
+	    			let count = result.fiPi.listCount; //팔로잉 수
+	    			let str = ""; //게시글
+	    		    let pStr = ""; //페이징 
+	    		    let nStr = ""; //다음페이지
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(fiList == null){
+	    			if(fiList.length == 0){
 	    				str += "<tr>"
-		    				+ "<td>친구를 만들어보세요!</td>"
+		    				+ "<td colspan='2'>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
-	    			}else{
+	    			}else{ 
 		    			$.each(fiList, function(key, fi){
-		    				str += "<tr><td>"+fi.followingId+"</td></tr>";
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td>'+fi.followingId+'</td></tr>';
 		    			});
 	    			}
 	    				
 	    			$("#followingTableContainer tbody").html(str); //팔로잉 리스트 띄워주기
+	    			$("#followingTableContainer #followingCount").html(count);
 	    			
 	    			//페이징 처리
 	    			if(startPage == maxPage){ //시작과 최대가 같으면
@@ -358,7 +407,96 @@
 	    			
 	    			$("#fiPrePage").html(pStr);
 	    			$("#fiNextPage").html(nStr);
-	    				
+
+	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달
+	    			$("#followingTableContainer tbody tr").on('click', function () {
+	    			    // 클릭한 행에서 followingId 값을 가져옴
+	    			    let userId = $(this).find('td:first').text();
+	    			    // 모달 열기 및 정보 표시 함수 호출
+		    			$.ajax({
+		    				url: "getFollowingInfo.me",
+		    				type: 'post',
+		    				data: { followingId: userId },
+		    				success: function (m) {
+		    			 		if(m.userId != null){
+		    			        	if(m.changeName != null){ //유저 프로필 사진
+			    			        	$("#followImg").attr("src",m.changeName);
+		    			        	}else{ //없으면 기본사진
+		    			        		$("#followImg").attr("src","resources/profile.jpg");
+		    			        	}
+		    			        $("#userNo").text(m.userNo);
+		    			        if(m.changeName == null){ //사진 없을경우 기본이미지
+		    			        	$("#profileImage").attr("src","resources/profile.jpg");
+		    			        }else{
+			    			        $("#profileImage").attr("src",m.changeName); //프로필 사진
+		    			        }
+		    			        $("#userId").text(m.userId); //아이디
+		    			        $("#userName").text(m.userName); //이름
+		    			        $("#userGrade").text(m.grade); //등급
+		    			           	 	
+		    			      	//팔로우 여부 체크
+		    					$(function(){
+		    						let followingId = $("#userId").text();
+		    						let userNo = ${loginUser.userNo};
+		    							$.ajax({
+		    								url : "followChk.me",
+		    								data : {
+		    									followingId : followingId,
+		    									userNo : userNo
+		    								},
+		    								success : function(result){
+		    									if(result=='YY'){
+		    										$("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+		    									}
+		    								},error : function(){
+		    									console.log("팔로우 확인 실패");
+		    								}
+		    							});
+		    						});
+		    			        
+		    			       	 $(".btn1").click();
+		    			        
+		    			 		}else{
+		    			 			swal({
+							    		title : "회원정보 없음",
+							    		text : "해당 회원 정보가 존재하지 않습니다. \n목록에서 제거하시겠습니까?",
+							    		showCancelButton : true,
+							    		confirmButtonClass : "btn-danger",
+							    		confirmButtonText : "예",
+							    		cancelButtonText : "아니오",
+							    		closeOnConfirm : false,
+							    		closeOnCancel : true
+							    	}, function(isConfirm) {
+							    		if(isConfirm){ //예 누를시 폼 전송
+							    			let followingId = userId;
+							    			let form = document.createElement("form");
+							    			let obj; //넘겨받을 값 준비
+							    			//폼 준비
+							    			obj = document.createElement("input");
+							    			obj.setAttribute("type","hidden");
+							    			obj.setAttribute("name","followingId");
+							    			obj.setAttribute("value",followingId);
+							    			//폼 형식 갖추기
+							    			form.appendChild(obj);
+							    			form.setAttribute("method","post");
+							    			form.setAttribute("action","deleteNonUser.me");
+							    			//body부분에 폼 추가
+							    			document.body.appendChild(form);
+							    			form.submit();
+							    			
+							    		}else{
+							    			return false;
+							    		}
+							    	});
+		    			 		}
+		    			 	}, error: function () {
+		    			 		console.log('following modal ajax 통신실패');
+		    			    }
+		    			});
+	    			    
+	    			    
+	    			    
+	    			});
 	    		},error : function(){
 	    			console.log("팔로잉 ajax 통신 실패");
 	    		}
@@ -375,27 +513,28 @@
 	    			currentPage : page
 	    		},
 	    		success : function(result){
+	    			curPage = result.fwPi.currentPage;
+	    			startPage = result.fwPi.startPage;
+	    			endPage = result.fwPi.endPage;
+	    			maxPage = result.fwPi.maxPage;
+	    			let fwList = result.fwList; //팔로워 목록
+	    			let count = result.fwPi.listCount; //팔로워 수
 	    			let str = ""; //게시글
-	    			let pStr = ""; //이전페이지
-	    			let nStr = ""; //다음페이지
-	    			let curPage = result.fwPi.currentPage;
-	    			let startPage = result.fwPi.startPage;
-	    			let endPage = result.fwPi.endPage;
-	    			let maxPage = result.fwPi.maxPage;
-	    			let fwList = result.fwList;
+	    		    let pStr = ""; //페이징 
+	    		    let nStr = ""; //다음페이지
 	    			//게시글 리스트 추가해주기위한 작업
-	    			if(fwList == null){
+	    			if(fwList.length == 0){
 	    				str += "<tr>"
-		    				+ "<td>친구를 만들어보세요!</td>"
+		    				+ "<td colspan='2'>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(fwList, function(key, fw){
-		    				str += "<tr><td>"+fw.userId+"</td></tr>";
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td colspan="2">'+fw.userId+'</td></tr>';
 		    			});
 	    			}
-	    				
-	    			$("#followerTableContainer tbody").html(str); //팔로잉 리스트 띄워주기
 	    			
+	    			$("#followerTableContainer tbody").html(str); //팔로잉 리스트 띄워주기
+	    			$("#followerTableContainer #followerCount").html(count);
 	    			//페이징 처리
 	    			if(startPage == maxPage){ //시작과 최대가 같으면
 	    				pStr += '<a href="javascript:void(0)" onclick="window.alert(\'첫번째 페이지입니다.\'); return false;">&lt;</a>';
@@ -405,19 +544,75 @@
 		    			if(curPage==1){ //현재페이지랑 시작페이지 같으면
 		    				pStr += '<a href="javascript:void(0)" onclick="window.alert(\'첫번째 페이지입니다.\'); return false;">&lt;</a>';
 		    			}else{
-		    				pStr += '<a href="javascript:void(0)" onclick="loadFollowingPage('+(curPage-1)+')">&lt;</a>';
+		    				pStr += '<a href="javascript:void(0)" onclick="loadFollowerPage('+(curPage-1)+')">&lt;</a>';
 		    			}
 		    			
 			    		if(curPage==maxPage){ //현재페이지랑 끝페이지 같으면
 			    			nStr += '<a href="javascript:void(0)" onclick="window.alert(\'마지막 페이지입니다.\'); return false;">&gt;</a>';
 			    		}else{
-			    			nStr += '<a href="javascript:void(0)" onclick="loadFollowingPage('+(curPage+1)+')">&gt;</a>';
+			    			nStr += '<a href="javascript:void(0)" onclick="loadFollowerPage('+(curPage+1)+')">&gt;</a>';
 			    		}
 	    			}
 	    			
 	    			$("#fwPrePage").html(pStr);
 	    			$("#fwNextPage").html(nStr);
 	    				
+	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달
+	    			$("#followerTableContainer tbody tr").on("click", function () {
+	    			    // 클릭한 행에서 Id 값을 가져옴
+	    			    let userId = $(this).find('td:first').text();
+	    			    
+	    			    $.ajax({
+		    				url: "getFollowingInfo.me",
+		    				type: 'post',
+		    				data: { followingId: userId },
+		    				success: function (m) {
+		    			 		if(m.userId != null){
+		    			        	if(m.changeName != null){ //유저 프로필 사진
+			    			        	$("#followImg").attr("src",m.changeName);
+		    			        	}else{ //없으면 기본사진
+		    			        		$("#followImg").attr("src","resources/profile.jpg");
+		    			        	}
+		    			        $("#userNo").text(m.userNo);	
+		    			        if(m.changeName == null){ //사진 없을경우 기본이미지
+		    			        	$("#profileImage").attr("src","resources/profile.jpg");
+		    			        }else{
+			    			        $("#profileImage").attr("src",m.changeName); //프로필 사진
+		    			        }
+		    			        $("#userId").text(m.userId); //아이디
+		    			        $("#userName").text(m.userName); //이름
+		    			        $("#userGrade").text(m.grade); //등급
+		    			           	 	
+		    			        
+		    			      	//팔로우 여부 체크
+		    					$(function(){
+		    						let followingId = $("#userId").text();
+		    						let userNo = ${loginUser.userNo};
+		    						
+		    						$.ajax({
+		    							url : "followChk.me",
+		    							data : {
+		    								followingId : followingId,
+		    								userNo : userNo
+		    							},
+		    							success : function(result){
+		    								if(result=='YY'){
+		    									$("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+		    								}
+		    							},error : function(){
+		    								console.log("팔로우 확인 실패");
+		    							}
+		    						});
+		    					});
+		    			      
+		    			        $(".btn1").click();
+		    			 		}
+		    			 	}, error: function () {
+		    			 		console.log('following modal ajax 통신실패');
+		    			    }
+		    			});
+	    			    
+	    			});
 	    		},error : function(){
 	    			console.log("팔로워 ajax 통신 실패");
 	    		}

@@ -99,7 +99,7 @@
 									</div>
 									<div class="col-12 ">
                                          <button type="button" class="btn alazea-btn mt-15  float-right" onclick="location.href='qnaList.qa'">목록</button>
-										 <button type="submit" class="btn alazea-btn mt-15 mr-15 float-right" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
+										 <button type="submit" class="btn alazea-btn-orange mt-15 mr-15 float-right" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
                                      </div>
 								</div>
 							</form>

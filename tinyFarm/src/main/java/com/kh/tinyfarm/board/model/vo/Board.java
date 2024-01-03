@@ -18,10 +18,11 @@ public class Board {
 	private String boardContent;
 	private int count;
 	private int likeCount;
-	private Date createDate;
+	private String createDate;
 	private String status;
 
 	private String titleImg;
 	private String profile;
-	
+	private int replyCount;
+	private String email;
 }

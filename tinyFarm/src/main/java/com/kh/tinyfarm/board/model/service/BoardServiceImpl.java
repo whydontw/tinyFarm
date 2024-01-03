@@ -10,17 +10,40 @@ import com.kh.tinyfarm.board.model.dao.BoardDao;
 import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
+import com.kh.tinyfarm.board.model.vo.BoardReport;
+import com.kh.tinyfarm.board.model.vo.ReplyReport;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	
+	/*
+	//게시글 리스트
+		@Override
+		public ArrayList<Board> selectBoardList(int userNo) {
+
+			return boardDao.selectBoardList(sqlSession,userNo);
+		}
+*/
+	
+	
 	@Autowired
 	private BoardDao boardDao;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	
+	//게시글 리스트
+		@Override
+		public ArrayList<Board> selectBoardList() {
+
+			return boardDao.selectBoardList(sqlSession);
+		}
+
+	
+	/*
 	//게시글 리스트 총 개수
 	@Override
 	public int boardListCount() {
@@ -34,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardDao.selectBoardList(sqlSession,pi);
 	}
-	
+	*/
 	//게시글 상세보기 전 조회수 증가 메소드
 	@Override
 	public int boardIncreaseCount(int boardNo) {
@@ -85,9 +108,9 @@ public class BoardServiceImpl implements BoardService {
 
 	//댓글 수정
 	@Override
-	public int updateReply(int replyNo) {
+	public int updateReply(BoardReply br) {
 		
-		return boardDao.updateReply(sqlSession,replyNo);
+		return boardDao.updateReply(sqlSession,br);
 	}
 
 	//댓글 삭제
@@ -97,6 +120,21 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.deleteReply(sqlSession,replyNo);
 	}
 
+	
+	//유저가 좋아요했는지 안했는지 확인
+	/*
+	 * @Override public int findLike(BoardLike br) {
+	 * 
+	 * return boardDao.findLike(sqlSession,br); }
+	 */
+	@Override
+	public ArrayList<BoardLike> findLike(BoardLike br) {
+		
+		return boardDao.findLike(sqlSession,br);
+	}
+
+	
+	
 	//좋아요 수 증가
 	@Override
 	public int likeIncreaseCount(BoardLike bl) {
@@ -111,28 +149,35 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.doLike(sqlSession,bl);
 	}
 
-	
-
-
-	
-	/*
-	//게시글 등록
+	//좋아요 취소 누르면 카운트 감소
 	@Override
-	public int insertBoard(Board b, List<MultipartFile> fileList) {
+	public int likeDecreaseCount(BoardLike bl) {
 		
-		System.out.println("serviceImpl작동되는지 확인용");
-		int result1= boardDao.insertBoard(sqlSession,b);
-		int result2= boardDao.insertAttachment(sqlSession,fileList);
-		
-		
-		
-		if(result1*result2>0) {
-			System.out.println("등록성공");
-		}else {
-			System.out.println("등록실패");
-		}
-		return result1*result2;
+		return boardDao.likeDecreaseCount(sqlSession,bl);
 	}
-	*/
+
+	//좋아요 취소
+	@Override
+	public int cancelLike(BoardLike bl) {
+
+		return boardDao.cancelLike(sqlSession,bl);
+	}
+
+	//신고하기 기능
+	@Override
+	public int boardReport(BoardReport bp) {
+		
+		return boardDao.boardReport(sqlSession,bp);
+	}
+
+	//댓글 신고
+	@Override
+	public int replyReport(ReplyReport rp) {
+		// TODO Auto-generated method stub
+		return boardDao.replyReport(sqlSession,rp);
+	}
+
+	
+	
 	
 }

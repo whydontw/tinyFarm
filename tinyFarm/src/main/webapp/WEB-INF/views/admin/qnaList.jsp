@@ -48,8 +48,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Admin</li>
+                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="main.ad">Admin</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -74,11 +74,11 @@
                                 <p><h5><b>🌱 답변 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
-                                <form action="#" method="post" class="form-inline">
-                                    <select class="custom-select widget-title">
-                                      <option selected>Show:</option>
-                                      <option value="1">미답변</option>
-                                      <option value="2">답변완료</option>
+                                <form action="#" method="post" class="form-inline" >
+                                    <select class="custom-select widget-title" id="answerYn" onchange="changeAnswerYn(this.value)">
+                                      <option value="2">Show: ALL</option>
+                                      <option value="0">미답변</option>
+                                      <option value="1">답변완료</option>
                                     </select>
                                 </form>
                             </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="single-widget-area float-right">
                             <ol class="popular-tags d-flex flex-wrap" onclick="checkQnaDelete()">
-                                <li><a href="#"><i class="fa fa-times">&nbsp;&nbsp;선택 삭제</i></a></li>
+                                <li><a href="#"><i class="fa fa-times">&nbsp;&nbsp;문의내역 삭제</i></a></li>
                             </ol>
                         </div>
                         
@@ -139,6 +139,11 @@
                         
 					    	
                         $(function(){
+                        	
+                        	
+                        	console.log("답변개수", ${answerYn})
+                        	
+                        	$("#answerYn").val(${answerYn});
                         	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
@@ -151,9 +156,6 @@
                         
                     	//등록 form 이동
                     	function qnaAnswerEnrollBtn(qnaNo){
-                    		
-                    		console.log(qnaNo);
-                    		alert(qnaNo);
                     		
                     		var formObj = $("<form>");		//태그 생성하기
                     		
@@ -190,7 +192,7 @@
                         
                         function checkQnaDelete(){
                         	
-                        	if(confirm("선택 내역을 삭제하시겠습니까?")){
+                        	if(confirm("선택 문의내역을 삭제하시겠습니까?")){
 
                             let chkQnaList = "";
 							
@@ -229,6 +231,11 @@
                             
                         }
                         
+                        
+                        function changeAnswerYn(value){
+                        	location.href = "qnaList.ad?currentPage=1&answerYn=" + value;
+                        }
+                        
 					    </script>
                         
                         
@@ -260,18 +267,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${pi.currentPage-1}&answerYn=${answerYn}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
-                                
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${i}&answerYn=${answerYn}">${i}</a></li>
 									</c:forEach>
 									
-				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${pi.currentPage+1}&answerYn=${answerYn}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>

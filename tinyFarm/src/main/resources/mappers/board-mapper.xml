@@ -12,6 +12,8 @@
 		  	<result column="COUNT" property="count"/>
 		  	<result column="LIKE_COUNT" property="likeCount"/>
 		  	<result column="CREATE_DATE" property="createDate"/>
+		  	<result column="CHANGE_NAME"  property="profile"/>
+		  	<result column="REPLY_COUNT" property="replyCount"/>
   	</resultMap>
   	
   	<resultMap type="boardReply" id="boardReplyResultSet">
@@ -36,6 +38,16 @@
   		<result column="USER_NO" property="userNo"/>
   	</resultMap>
   	
+  	<resultMap type="boardReport" id="boardReportResultSet">
+  		<result column="REPORT_NO" property="reportNo"/>
+  		<result column="REPORT_WRITER" property="reportWriter"/>
+  		<result column="REF_BNO" property="refBno"/>
+  		<result column="CATEGORY" property="category"/>
+  		<result column="REPORT_CONTENT" property="reportContent"/>
+  		<result column="CREATE_DATE" property="createDate"/>
+  		<result column="STATUS" property="status"/>
+  	</resultMap>
+  	
   	
   	<select id="boardListCount" resultType="_int">
   		SELECT COUNT(*) COUNT
@@ -44,17 +56,38 @@
   	</select>
   	
   	<select id="selectBoardList" parameterType="_int" resultMap="boardResultSet">
-  		
+  		<!-- 가져온 데이터 USER_ID를 BOARD_WRITER로 별칭으로 변경한 후 resultMap를 이용해 BOARD_WRITER에 이름을 가진 걸 VO객체에 boardWriter에다가 저장   -->
+  		<!--  
   		SELECT BOARD_NO
-		        ,USER_ID BOARD_WRITER <!-- 가져온 데이터 USER_ID를 BOARD_WRITER로 별칭으로 변경한 후 resultMap를 이용해 BOARD_WRITER에 이름을 가진 걸 VO객체에 boardWriter에다가 저장   -->
+		        ,USER_ID BOARD_WRITER 
 		        ,BOARD_CONTENT
 		        ,B.COUNT
-		        ,LIKE_COUNT
+		        ,B.LIKE_COUNT
 		        ,B.CREATE_DATE
+		        ,M.CHANGE_NAME
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		ORDER BY B.CREATE_DATE DESC
+	-->
+		SELECT B.BOARD_NO
+		        , M.USER_ID AS BOARD_WRITER 
+		        , B.BOARD_CONTENT
+		        , B.COUNT
+		        , B.LIKE_COUNT
+		        , B.CREATE_DATE
+		        , M.CHANGE_NAME
+		        ,(SELECT COUNT(*)
+		           FROM BOARD_REPLY
+		           WHERE REF_BNO = B.BOARD_NO) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
+		ORDER BY B.CREATE_DATE DESC
+	
   	</select>
+  	
+  	
+ 
+  	
   	
   	
   	<update id="boardIncreaseCount" parameterType="_int">
@@ -72,6 +105,7 @@
 		        ,B.COUNT
 		        ,LIKE_COUNT
 		        ,B.CREATE_DATE
+		        ,EMAIL
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		WHERE B.STATUS='Y'
@@ -84,7 +118,7 @@
             ,BOARD_TITLE
             ,BOARD_CONTENT)
 		VALUES (SEQ_BNO.NEXTVAL,
-		        2,
+		        #{boardWriter},
 		        #{boardTitle},    
 		        #{boardContent})
   	</insert>
@@ -126,11 +160,11 @@
                     ,REPLY_CONTENT)
 		VALUES(SEQ_BRNO.NEXTVAL
 		    ,#{refBno}   <!-- view에서 보낸 데이터 -->
-		    ,3
+		    ,#{replyWriter}
 		    ,#{replyContent})
   	</insert>
   	
-  	<update id="updateReply" parameterType="_int">
+  	<update id="updateReply">
   		UPDATE BOARD_REPLY
 		SET REPLY_CONTENT= #{replyContent}
 		WHERE REPLY_NO = #{replyNo}
@@ -144,6 +178,19 @@
   	</delete>
   	
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ좋아요영역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  	<!-- 
+ 	<select id="findLike" resultType="_int" >
+ 		SELECT COUNT(*)
+		FROM BOARD_LIKE
+		WHERE REF_BNO = #{refBno} 
+		AND USER_NO = #{userNo}
+ 	</select>
+  	 -->
+  	 <select id="findLike" parameterType="_int" resultMap="boardLikeResultSet">
+  	 	SELECT REF_BNO
+		FROM BOARD_LIKE
+		WHERE USER_NO = #{userNo}
+  	 </select>
   	
   	<update id="likeIncreaseCount">
   		UPDATE BOARD
@@ -157,6 +204,51 @@
 		VALUES(#{refBno},#{userNo})
   	</insert>
   	
+  	<update id="likeDecreaseCount">
+	  	UPDATE BOARD
+		SET LIKE_COUNT = CASE WHEN LIKE_COUNT > 0 THEN LIKE_COUNT - 1 ELSE 0 END
+		WHERE BOARD_NO = #{refBno}
+		AND STATUS = 'Y'
+  	</update>
+  	
+  	<delete id="cancelLike">
+  		DELETE BOARD_LIKE
+		WHERE REF_BNO = #{refBno}
+		AND USER_NO = #{userNo}
+  	</delete>
+  	
+  	<insert id="boardReport">
+  		INSERT INTO BOARD_REPORT(REPORT_NO
+                        ,REPORT_WRITER
+                        ,REF_BNO
+                        ,CATEGORY
+                        ,REPORT_CONTENT)
+		VALUES(SEQ_BRNO.NEXTVAL
+			      ,#{reportWriter}
+			      ,#{refBno}
+			      ,#{category}
+			      ,#{reportContent})
+  	</insert>
+   
+  	<insert id="replyReport" parameterType="replyReport">
+  		INSERT INTO REPLY_REPORT(REPORT_NO
+                        ,REPORT_WRITER
+                        ,REF_RNO
+                        ,CATEGORY
+                        ,REPORT_CONTENT)
+		VALUES(SEQ_RRNO.NEXTVAL
+			      ,#{reportWriter}
+			      ,#{refRno}
+			      ,#{category}
+			      ,#{reportContent})
+  	</insert>
+  	
+  	
+  	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ팔로우하기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+  	<insert id="">
+  		INSERT INTO FOLLOW(USER_ID,FOLLOWING_ID)
+		VALUES(#{userNo},#{boardWriter}   <!-- 로그인유저번호 / 게시판작성자아이디 -->
+  	</insert>
   	
   	
   </mapper>

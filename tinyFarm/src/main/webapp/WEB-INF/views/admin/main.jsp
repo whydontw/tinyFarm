@@ -22,6 +22,12 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="${contextPath }/resources/style.css">
+    
+    <style type="text/css">
+    	.display__none{
+			 display: none
+    	}
+    </style>
 </head>
 <body>
     <!-- Preloader -->
@@ -32,136 +38,10 @@
         </div>
     </div>
 
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
 
-        <!-- ***** Top Header Area ***** -->
-        <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="top-header-content d-flex align-items-center justify-content-between">
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta">
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
-                                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +1 234 122 122</span></a>
-                            </div>
+   
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-                            <!-- Top Header Content -->
-                            <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Login -->
-                                <div class="login">
-                                    <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
-                                </div>
-                                <!-- Cart -->
-                                <div class="cart">
-                                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">(1)</span></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ***** Navbar Area ***** -->
-        <div class="alazea-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-                        <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand"><img src="${contextPath }/resources/img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Navbar Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="shop.html">Shop</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="shop.html">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="portfolio.html">Portfolio</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="single-portfolio.html">Portfolio Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-post.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-
-                                <!-- Search Icon -->
-                                <div id="searchIcon">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Navbar End -->
-                        </div>
-                    </nav>
-
-                    <!-- Search Form -->
-                    <div class="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type keywords &amp; press enter...">
-                            <button type="submit" class="d-none"></button>
-                        </form>
-                        <!-- Close Icon -->
-                        <div class="closeIcon"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
 
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
@@ -193,344 +73,436 @@
             
             	<%@ include file="admin_nav.jsp" %>
 
-                
-                <div class="col-12 col-md-9">
-                    <!-- <div class="row"> -->
-                        
-                        <section class="about-us-area">
-                            <div class="container">
-                                <div class="row justify-content-between">
-                                    <div class="col-12 col-lg-12">
-                                        <!-- Section Heading -->
-                                        <div class="section-heading">
-                                            <h2>ABOUT US</h2>
-                                            <p>We are leading in the plants service fields.</p>
-                                        </div>
-                                        <!-- <div><p>Quisque orci quam, vulputate non commodo finibus, molestie ac ante. Duis in sceleri quesem. Nulla sit amet varius nunc. Maecenas dui, tempeu ullam corper in.</p></div> -->
-                    
-                                        <!-- Progress Bar Content Area -->
-                                        <div class="alazea-progress-bar mb-50">
-                                            <!-- Single Progress Bar -->
-                                            <div class="single_progress_bar">
-                                                <p>Office plants</p>
-                                                <div id="bar1" class="barfiller">
-                                                    <div class="tipWrap">
-                                                        <span class="tip"></span>
-                                                    </div>
-                                                    <span class="fill" data-percentage="80"></span>
-                                                </div>
-                                            </div>
-                    
-                                            <!-- Single Progress Bar -->
-                                            <div class="single_progress_bar">
-                                                <p>Field manager</p>
-                                                <div id="bar2" class="barfiller">
-                                                    <div class="tipWrap">
-                                                        <span class="tip"></span>
-                                                    </div>
-                                                    <span class="fill" data-percentage="70"></span>
-                                                </div>
-                                            </div>
-                    
-                                            <!-- Single Progress Bar -->
-                                            <div class="single_progress_bar">
-                                                <p>Landscape design</p>
-                                                <div id="bar3" class="barfiller">
-                                                    <div class="tipWrap">
-                                                        <span class="tip"></span>
-                                                    </div>
-                                                    <span class="fill" data-percentage="85"></span>
-                                                </div>
-                                            </div>
-                    
-                                            <!-- Single Progress Bar -->
-                                            <div class="single_progress_bar">
-                                                <p>Garden Care</p>
-                                                <div id="bar4" class="barfiller">
-                                                    <div class="tipWrap">
-                                                        <span class="tip"></span>
-                                                    </div>
-                                                    <span class="fill" data-percentage="65"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+						
+				<div class="col-12 col-md-9">
+					<!-- <div class="row"> -->
+					<%-- <%@ include file="/WEB-INF/views/common/weather/weather_today.jsp" %> --%>
+					
+					<div class="text-right breadcrumb-item"><a href="#" onclick="alert('뿡')"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;PDF DOWNLOAD</a></div>
+					
+					<section class="cool-facts-area bg-img ">
+						<!-- style="background-image: url(${contextPath }/resources/img/bg-img/cool-facts.png);"> -->
+						<div class="container">
+							<div class="row col-12 col-lg-12">
+								<div class="section-heading">
+									<h2>사이트 통계</h2>
+									<h5 class="py-2">
+										<i class="fa fa-check" aria-hidden="true"></i> 오늘의 통계
+									</h5>
+								</div>
+								<div class="d-flex col-12 col-lg-12">
 
-                        <section class="about-us-area section-padding-100-0">
-                            <div class="container">
-                                <div class="row justify-content-between">
-                                    <div class="col-12">
-                                        <!-- Section Heading -->
-                                        <div class="section-heading">
-                                            <h2>ABOUT US</h2>
-                                            <p>We are leading in the plants service fields.</p>
-                                        </div>
-                                        <p>Quisque orci quam, vulputate non commodo finibus, molestie ac ante. Duis in sceleri quesem. Nulla sit amet varius nunc. Maecenas dui, tempeu ullam corper in.</p>
-                                    </div>
-                    
-                                    <div class="col-12">
-                                        <div class="alazea-benefits-area">
-                                            <div class="row">
-                                                <!-- Single Benefits Area -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="single-benefits-area">
-                                                        <img src="${contextPath }/resources/img/core-img/b1.png" alt="">
-                                                        <h5>Quality Products</h5>
-                                                        <p>Intiam eu sagittis est, at commodo lacini libero. Praesent dignissim sed odio vel aliquam manta lagorn.</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <!-- Single Benefits Area -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="single-benefits-area">
-                                                        <img src="${contextPath }/resources/img/core-img/b2.png" alt="">
-                                                        <h5>Perfect Service</h5>
-                                                        <p>Intiam eu sagittis est, at commodo lacini libero. Praesent dignissim sed odio vel aliquam manta lagorn.</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <!-- Single Benefits Area -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="single-benefits-area">
-                                                        <img src="${contextPath }/resources/img/core-img/b3.png" alt="">
-                                                        <h5>100% Natural</h5>
-                                                        <p>Intiam eu sagittis est, at commodo lacini libero. Praesent dignissim sed odio vel aliquam manta lagorn.</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <!-- Single Benefits Area -->
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="single-benefits-area">
-                                                        <img src="${contextPath }/resources/img/core-img/b4.png" alt="">
-                                                        <h5>Environmentally friendly</h5>
-                                                        <p>Intiam eu sagittis est, at commodo lacini libero. Praesent dignissim sed odio vel aliquam manta lagorn.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="mStatics">
+													<h6 class="py-2">신규 가입</h6>
+													<h2><span class="counter">${todayMap.mCount}</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<!-- <i class="fa fa-comment fa-lg"></i> -->
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="qStatics">
+													<h6 class="py-2">신규 문의</h6>
+													<h2><span class="counter">${todayMap.qCount}</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
 
-                        <section class="cool-facts-area bg-img section-padding-100-0">
-                            <!-- style="background-image: url(${contextPath }/resources/img/bg-img/cool-facts.png);"> -->
-                            <div class="container">
-                                <div class="row col-12 col-lg-12">
-                        
-                                    <!-- Section Heading -->
-                                    <div class="section-heading">
-                                        <h2>ABOUT US</h2>
-                                        <p>We are leading in the plants service fields.</p>
-                                    </div>
-                                    <div><p>Quisque orci quam, vulputate non commodo finibus, molestie ac ante. Duis in sceleri quesem. Nulla sit amet varius nunc. Maecenas dui, tempeu ullam corper in.</p></div>
-                        
-                                    <!-- Single Cool Facts Area -->
-                                    <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
-                                            <div class="cf-icon">
-                                                <img src="${contextPath }/resources/img/core-img/cf1.png" alt="">
-                                            </div>
-                                            <div class="cf-content">
-                                                <h2><span class="counter">20</span></h2>
-                                                <h6>AWARDS</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <!-- Single Cool Facts Area -->
-                                    <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
-                                            <div class="cf-icon">
-                                                <img src="${contextPath }/resources/img/core-img/cf2.png" alt="">
-                                            </div>
-                                            <div class="cf-content">
-                                                <h2><span class="counter">70</span></h2>
-                                                <h6>PROJECTS</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <!-- Single Cool Facts Area -->
-                                    <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
-                                            <div class="cf-icon">
-                                                <img src="${contextPath }/resources/img/core-img/cf3.png" alt="">
-                                            </div>
-                                            <div class="cf-content">
-                                                <h2><span class="counter">30</span>+</h2>
-                                                <h6>HAPPY CLIENTS</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <!-- Single Cool Facts Area -->
-                                    <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
-                                            <div class="cf-icon">
-                                                <img src="${contextPath }/resources/img/core-img/cf4.png" alt="">
-                                            </div>
-                                            <div class="cf-content">
-                                                <h2><span class="counter">80</span>K+</h2>
-                                                <h6>REVENUE</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                </div>
-                            </div>
-                        </section>
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<!-- <i class="fa fa-lemon-o fa-lg"></i> -->
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="pStatics">
+													<h6 class="py-2">신규 상품</h6>
+													<h2><span class="counter">${todayMap.pCount}</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
 
-                </div>
-            </div>
-        </div>
+									<div class="col-12 col-sm-3">
+										<div
+											class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<!-- <i class="fa fa-pencil fa-lg" aria-hidden="true"></i> -->
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="pmStatics">
+													<h6 class="py-2">신규 주문</h6>
+													<h2><span class="counter">${todayMap.pmCount}</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="d-flex col-12 col-lg-12">
+
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="bStatics">
+													<h6 class="py-2">신규 게시글</h6>
+													<h2><span class="counter">${todayMap.bCount}</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<!-- <i class="fa fa-comment fa-lg"></i> -->
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="bStatics">
+													<h6 class="py-2">신규 신고글</h6>
+													<h2><span class="counter">${todayMap.breCount }</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-12 col-sm-3">
+										<div class="single-cool-fact d-flex align-items-center justify-content-center mb-100">
+											<div class="pr-3">
+												<!-- <i class="fa fa-lemon-o fa-lg"></i> -->
+												<img src="${contextPath }/resources/img/core-img/statics.png" alt="">
+											</div>
+											<div class="cf-content text-center">
+												<a href="#" onclick="showStatics(this.name)" name="bStatics">
+													<h6 class="py-2">신규 신고댓글</h6>
+													<h2><span class="counter">${todayMap.rreCount }</span></h2>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+
+
+
+					<h6 class="py-2 text-center">
+						<i class="fa fa-caret-down" aria-hidden="true"></i> 부문별 상세 통계
+					</h6>
+
+					<!-- 회원 -->
+					<section class="cool-facts-area bg-img staticsSection" id="mStatics"> 
+						<div class="container">
+
+							<div class="py-3">
+								<div class="section-heading mt-2">
+									<h6 class="py-1">🌱 전체 상세통계</h6>
+								</div>
+								<div class="clearfix mt-15" id="">
+									<table class="table" width="100%">
+										<colgroup>
+											<col width="20%">
+											<col width="20%">
+											<col width="20%">
+											<col width="20%">
+											<col width="20%">
+										</colgroup>
+										<thead>
+											<tr align="center">
+												<th>전체 회원수</th>
+												<th>활동 회원수</th>
+												<th>탈퇴/활중 회원수</th>
+												<th>가입 회원수(일반)</th>
+												<th>가입 회원수(소셜)</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr align="center">
+												<td>${mMap.allCount }</td>
+												<td>${mMap.activeCount }</td>
+												<td>${mMap.dropCount }</td>
+												<td>${mMap.normalCount }</td>
+												<td>${mMap.snsCount }</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</section>
+
+
+					<!-- QNA -->
+					<section class="cool-facts-area bg-img staticsSection" id="qStatics">
+						<div class="container">
+
+							<div class="py-3">
+								<div class="section-heading mt-2">
+									<h6 class="py-1">🌱 전체 상세통계</h6>
+								</div>
+								<div class="clearfix mt-15" id="">
+									<table class="table" width="100%">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+										</colgroup>
+										<thead>
+											<tr align="center">
+												<th>전체 문의사항수</th>
+												<th>신규 문의사항수</th>
+												<th>미답변</th>
+												<th>답변완료</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr align="center">
+												<td>${qnaMap.qnaCount }</td>
+												<td>${todayMap.qCount }</td>
+												<td>${qnaMap.qnaCount - qnaMap.qnaAnswerCount}</td>
+												<td>${qnaMap.qnaAnswerCount }</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</section>
+
+
+					<!-- 상품 -->
+					<section class="cool-facts-area bg-img staticsSection" id="pStatics">
+						<div class="container">
+
+							<div class="py-3">
+								<div class="section-heading mt-2">
+									<h6 class="py-1">🌱 전체 상세통계</h6>
+								</div>
+								<div class="clearfix mt-15" id="">
+									<table class="table" width="100%">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+										</colgroup>
+										<tbody>
+											<tr align="center">
+												<th>전체 상품수</th>
+												<th>신규 등록 상품수</th>
+												<th>판매가능 상품수</th>
+												<th>판매완료 상품수</th>
+											</tr>
+											<tr align="center">
+												<td>${productMap.allCount }</td>
+												<td>${todayMap.pCount }</td>
+												<td>${productMap.onSaleCount }</td>
+												<td>${productMap.allCount - productMap.onSaleCount }</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="py-3">
+								<div class="section-heading">
+									<h6 class="py-1">🌱 상품 카테고리 비율</h6>
+								</div>
+								<div class="alazea-progress-bar mb-50">
+									<!-- Single Progress Bar -->
+									<div class="single_progress_bar">
+										<p class="pb-3">채소</p>
+										<div id="bar1" class="barfiller">
+											<div class="tipWrap">
+												<span class="tip"></span>
+											</div>
+											<span class="fill" data-percentage="${ productMap.vegetable * 100 / productMap.allCount }"></span>
+										</div>
+									</div>
+									<!-- Single Progress Bar -->
+									<div class="single_progress_bar">
+										<p class="pb-3">과일</p>
+										<div id="bar2" class="barfiller">
+											<div class="tipWrap">
+												<span class="tip"></span>
+											</div>
+											<span class="fill" data-percentage="${ productMap.fruit * 100 / productMap.allCount }"></span>
+										</div>
+									</div>
+									<div class="single_progress_bar">
+										<p class="pb-3">곡물</p>
+										<div id="bar3" class="barfiller">
+											<div class="tipWrap">
+												<span class="tip"></span>
+											</div>
+											<span class="fill" data-percentage="${ productMap.grain * 100 / productMap.allCount }"></span>
+										</div>
+									</div>
+									<div class="single_progress_bar">
+										<p class="pb-3">기타</p>
+										<div id="bar4" class="barfiller">
+											<div class="tipWrap">
+												<span class="tip"></span>
+											</div>
+											<span class="fill" data-percentage="0"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</section>
+					
+					
+					<!-- 결제 -->
+					<section class="cool-facts-area bg-img staticsSection" id="pmStatics">
+						<div class="container">
+
+							<div class="py-3">
+								<div class="section-heading mt-2">
+									<h6 class="py-1">🌱 전체 상세통계</h6>
+								</div>
+								<div class="clearfix mt-15" id="">
+									<table class="table" width="100%">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+										</colgroup>
+										<tbody>
+											<tr align="center">
+												<th>전체 결제수</th>
+												<th>일일 결제수</th>
+												<th>일일 누적 결제금액</th>
+												<th>일일 평균 결제금액</th>
+											</tr>
+											<tr align="center">
+												<td>${paymentMap.allCount }</td>
+												<td>${todayMap.pmCount }</td>
+												<td>${paymentMap.todayAvg} ₩</td>
+												<td>${paymentMap.todaySum} ₩</td>
+											</tr>
+											<tr align="center">
+												<th>최고 결제금액</th>
+												<th>최저 결제금액</th>
+												<th>평균 결제금액</th>
+												<th>누적 결제금액</th>
+											</tr>
+											<tr align="center">
+												<td>${paymentMap.max} ₩</td>
+												<td>${paymentMap.min} ₩</td>
+												<td>${paymentMap.avg} ₩</td>
+												<td>${paymentMap.sum} ₩</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</section>
+					
+					
+					<!-- 게시판/댓글 -->
+					<section class="cool-facts-area bg-img staticsSection" id="bStatics">
+						<div class="container">
+
+							<div class="py-3">
+								<div class="section-heading mt-2">
+									<h6 class="py-1">🌱 전체 상세통계</h6>
+								</div>
+								<div class="clearfix mt-15" id="">
+									<table class="table" width="100%">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+										</colgroup>
+										<tbody>
+											<tr align="center">
+												<th>전체 게시글수</th>
+												<th>전체 댓글수</th>
+												<th>전체 신고 게시글수</th>
+												<th>전체 신고 댓글수</th>
+											</tr>
+											<tr align="center">
+												<td>${boardMap.boardCount }</td>
+												<td>${boardMap.boardReplyCount }</td>
+												<td>${boardMap.boardReportCount }</td>
+												<td>${boardMap.replyReportCount }</td>
+											</tr>
+											<tr align="center">
+												<th>일일 게시글수</th>
+												<th>일일 댓글수</th>
+												<th>일일 신고 게시글수</th>
+												<th>일일 신고 댓글수</th>
+											</tr>
+											<tr align="center">
+												<td>${todayMap.bCount }</td>
+												<td>${todayMap.brCount }</td>
+												<td>${todayMap.breCount }</td>
+												<td>${todayMap.rreCount }</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</section>
+					
+					
+					
+					<script type="text/javascript">
+						$(function(){
+							$(".staticsSection").hide();
+						})
+						
+						
+						function showStatics(data){
+							$(".staticsSection").hide();
+							$("#" + data).show();
+						}
+					</script>
+					
+					
+					
+					
+					
+				</div>
+             </div>
+         </div>
     </section>
     <!-- ##### Blog Area End ##### -->
 
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area bg-img" style="background-image: url(${contextPath }/resources/img/bg-img/3.jpg);">
-        <!-- Main Footer Area -->
-        <div class="main-footer-area">
-            <div class="container">
-                <div class="row">
 
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="footer-logo mb-30">
-                                <a href="#"><img src="${contextPath }/resources/img/core-img/logo.png" alt=""></a>
-                            </div>
-                            <p>Lorem ipsum dolor sit samet, consectetur adipiscing elit. India situs atione mantor</p>
-                            <div class="social-info">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>QUICK LINK</h5>
-                            </div>
-                            <nav class="widget-nav">
-                                <ul>
-                                    <li><a href="#">Purchase</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="#">Payment</a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Return</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Orders</a></li>
-                                    <li><a href="#">Policities</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>BEST SELLER</h5>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="${contextPath }/resources/img/bg-img/4.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Cactus Flower</a>
-                                    <p>$10.99</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Best Seller Products -->
-                            <div class="single-best-seller-product d-flex align-items-center">
-                                <div class="product-thumbnail">
-                                    <a href="shop-details.html"><img src="${contextPath }/resources/img/bg-img/5.jpg" alt=""></a>
-                                </div>
-                                <div class="product-info">
-                                    <a href="shop-details.html">Tulip Flower</a>
-                                    <p>$11.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Footer Widget -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-footer-widget">
-                            <div class="widget-title">
-                                <h5>CONTACT</h5>
-                            </div>
-
-                            <div class="contact-information">
-                                <p><span>Address:</span> 505 Silk Rd, New York</p>
-                                <p><span>Phone:</span> +1 234 122 122</p>
-                                <p><span>Email:</span> info.deercreative@gmail.com</p>
-                                <p><span>Open hours:</span> Mon - Sun: 8 AM to 9 PM</p>
-                                <p><span>Happy hours:</span> Sat: 2 PM to 4 PM</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Bottom Area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="border-line"></div>
-                    </div>
-                    <!-- Copywrite Text -->
-                    <div class="col-12 col-md-6">
-                        <div class="copywrite-text">
-                            <p>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Footer Nav -->
-                    <div class="col-12 col-md-6">
-                        <div class="footer-nav">
-                            <nav>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Service</a></li>
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     
-    
-	<script>
-	    function userDetail(){
-	        window.open('popup.html', 'pop01', 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no')
-	    }
-	</script>
+ 
+ 
+ 	<script type="text/javascript">
+			
+		</script>
+ 
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->

@@ -10,14 +10,18 @@ import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
+import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Payments;
+import com.kh.tinyfarm.product.model.vo.Product;
 
 
 
 
 @Repository
 public class DiaryDao {
+
 	//회원정보 수정
 	public int updateMember(SqlSession sqlSession,Member m) {
 		return sqlSession.update("diaryMapper.updateMember", m);
@@ -87,12 +91,9 @@ public class DiaryDao {
 
 	//팔로워 목록
 	public ArrayList<Member> myFollowerList(SqlSession sqlSession,String userId,PageInfo fwPi) {
-		
 		int limit = fwPi.getPageLimit();
 		int offset = (fwPi.getCurrentPage() - 1) * limit;
-
 		RowBounds rowbounds = new RowBounds(offset, limit);
-		
 		return (ArrayList)sqlSession.selectList("diaryMapper.myFollowerList",userId,rowbounds);
 	}
 	
@@ -100,13 +101,132 @@ public class DiaryDao {
 	public int insertDiary(SqlSession sqlSession,Diary d) {
 		return sqlSession.insert("diaryMapper.insertDiary",d);
 	}
+	//일지 목록 불러오기
 	public ArrayList<Diary> selectDiaryList(SqlSession sqlSession, int userNo) {
 		return (ArrayList)sqlSession.selectList("diaryMapper.selectDiaryList", userNo);
 	}
+	//일지 번호추출
+	public Diary selectDiary(SqlSession sqlSession, Diary d) {
+		return sqlSession.selectOne("diaryMapper.selectDiary",d);
+	}
+	//해당 번호의 일지 불러오기
+	public Diary viewDiary(SqlSession sqlSession,int diaryNo) {
+		return sqlSession.selectOne("diaryMapper.viewDiary",diaryNo);
+	}
+	//일지 존재여부
+	public int existDiary(SqlSession sqlSession, Diary d) {
+		return sqlSession.selectOne("diaryMapper.existDiary",d);
+	}
+	//일지 삭제
+	public int deleteDiary(SqlSession sqlSession, int diaryNo) {
+		return sqlSession.delete("diaryMapper.deleteDiary",diaryNo);
+	}
+	//카테고리 이름뽑기
+	public DiaryCategory selectCategory(SqlSession sqlSession, String cNo) {
+		return sqlSession.selectOne("diaryMapper.selectCategory",cNo);
+	}
+	//일지수정
+	public int updateDiary(SqlSession sqlSession, Diary d) {
+		return sqlSession.update("diaryMapper.updateDiary", d);
+	}
+	//일지개수
+	public int diaryListCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.diaryListCount",userNo);
+	}
+	//등급 새싹으로 변경
+	public int gradeShoot(SqlSession sqlSession, int userNo) {
+		return sqlSession.update("diaryMapper.gradeShoot", userNo);
+	}
+	//등급 잎새로 변경
+	public int gradeLeaf(SqlSession sqlSession, int userNo) {
+		return sqlSession.update("diaryMapper.gradeLeaf", userNo);
+	}
+	//등급 열매로 변경
+	public int gradeFruit(SqlSession sqlSession, int userNo) {
+		return sqlSession.update("diaryMapper.gradeFruit", userNo);
+	}
+	//등급 씨앗으로 변경
+	public int gradeSeed(SqlSession sqlSession, int userNo) {
+		return sqlSession.update("diaryMapper.gradeSeed", userNo);
+	}
+	//구매내역 카운트
+	public int orderListCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.orderCount",userNo);
+	}
+	//구매목록
+	public ArrayList<Product> myOrderList(SqlSession sqlSession, int userNo, PageInfo oPi) {
+		int limit = oPi.getPageLimit();
+		int offset = (oPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.myOrderList",userNo,rowbounds);
+	}
+	//판매내역 카운트
+	public int sellListCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.sellCount",userNo);
+	}
+	//판매목록
+	public ArrayList<Product> mySellList(SqlSession sqlSession, int userNo, PageInfo sPi) {
+		int limit = sPi.getPageLimit();
+		int offset = (sPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.mySellList",userNo,rowbounds);
+	}
+	//주문날짜 검색 카운트
+	public int searchDateOrderCount(SqlSession sqlSession, Payments pm) {
+		return sqlSession.selectOne("diaryMapper.searchDateOrderCount",pm);
+	}
+	
+	//주문날짜 검색 리스트
+	public ArrayList searchOrderList(SqlSession sqlSession, Payments pm,  PageInfo soPi) {
+		int limit = soPi.getPageLimit();
+		int offset = (soPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.searchOrderList",pm,rowbounds);
+	}
+	
+	//판매날짜 검색 카운트
+	public int searchDateSellCount(SqlSession sqlSession, Product p) {
+		return sqlSession.selectOne("diaryMapper.searchDateSellCount",p);
+	}
+	
+	//판매날짜 검색 리스트
+	public ArrayList searchSellList(SqlSession sqlSession, Product p,  PageInfo ssPi) {
+		int limit = ssPi.getPageLimit();
+		int offset = (ssPi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("diaryMapper.searchSellList",p,rowbounds);
+	}
 
-	
-	
-	
-
+	//팔로우 유저 정보
+	public Member selectFollowInfo(SqlSession sqlSession, String followingId) {
+		return sqlSession.selectOne("memberMapper.loginMember",followingId);
+	}
+	//팔로우 걸기
+	public int followUser(SqlSession sqlSession, Follow f) {
+		return sqlSession.insert("diaryMapper.followUser",f);
+	}
+	//팔로우 취소
+	public int unfollowUser(SqlSession sqlSession, Follow f) {
+		return sqlSession.delete("diaryMapper.unfollowUser",f);
+	}
+	//카카오 로그인 유저정보 조회
+	public Member selectMember(SqlSession sqlSession, String userId) {
+		return sqlSession.selectOne("diaryMapper.selectMember",userId);
+	}
+	//찜내역 수
+	public int wishCount(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.wishCount",userNo);
+	}
+	//찜내역
+	public ArrayList<Product> selectWish(SqlSession sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("diaryMapper.selectWish",userNo);
+	}
+	//팔로우 유무 확인
+	public int followCheck(SqlSession sqlSession, Follow f) {
+		return sqlSession.selectOne("diaryMapper.followCheck",f);
+	}
+	public Member selectFollowMember(SqlSession sqlSession, String statusYFiId) {
+		return sqlSession.selectOne("diaryMapper.selectFollowMember",statusYFiId);
+	}
 
 }

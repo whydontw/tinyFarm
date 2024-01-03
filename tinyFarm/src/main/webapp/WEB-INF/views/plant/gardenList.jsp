@@ -21,6 +21,11 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
+		.plantImg{
+			width:250px;
+			height:250px;
+			border-radius: 10px;
+		}
 		.searchContainer{
 			margin-bottom:50px;
 			display:flex;
@@ -61,7 +66,7 @@
 			align-items: center;
 		 	width:30px;
 		 	height:25px;
-			
+			background-color:transparent;
 		 	border:none;
 		 	align-content: center;
 		}
@@ -69,8 +74,6 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
-	<!-- ##### Product Area Start ##### -->
-	<a href="chatList.ch">채팅</a>
 	<!-- ##### nav 그림 + 페이지 설명 ##### -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
@@ -85,9 +88,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="#">실내정원용 식물</a></li>
+						<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
 					
 					</ol>
 					</nav>
@@ -96,7 +99,7 @@
 		</div>
 	</div>
 	
-    <section class="new-arrivals-products-area bg-gray section-padding-0-100">
+    <section class="new-arrivals-products-area section-padding-0-100">
     	<!-- ##### Single Widget Area ##### -->
   		
         <div class="container">
@@ -134,7 +137,7 @@
 				                	<input type="submit" class="submitBtn" hidden>
 			                        <!-- Product Image -->
 			                        <div class="product-img">
-			                            <img class="plantImg" src="${p.rtnFileUrl[0]}" style="width:250px; height:250px;">
+			                            <img class="plantImg" src="${p.rtnFileUrl[0]}">
 			                        </div>
 			                        <!-- Product Info -->
 			                        <div class="product-info mt-15 text-center">
@@ -188,7 +191,7 @@
 		                        <button  class='btn btn-sm' disabled>이전</button>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}&sText=${sText}'">이전</button>
+		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}'">이전</button>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
