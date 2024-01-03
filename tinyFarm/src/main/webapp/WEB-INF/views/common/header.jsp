@@ -225,10 +225,28 @@ a, p {
 											<li><a href="#">권장 도서</a></li>
 											<li><a href="experienceList.ex">체험활동</a></li>
 
+<<<<<<< HEAD
+    <!-- nav 바 뒤 그림부분 시작-->
+	
+    <!-- nav 바 뒤 그림부분 끝 -->
+  
+     <script type="text/javascript">
+    
+    	const alertMsg = "${alertMsg}";
+
+    	
+    	if(alertMsg != null && alertMsg != ""){
+    		alert(alertMsg);
+    		<c:remove var="alertMsg" scope="session" />
+    	}
+    	
+    </script>
+=======
 										</ul>
 									</li>
 									<li><a href="qnaList.qa">1:1 문의</a></li>
 								</ul>
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 
 
 							</div>

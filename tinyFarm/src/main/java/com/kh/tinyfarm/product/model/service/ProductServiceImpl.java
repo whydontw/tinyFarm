@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
+import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.dao.ProductDao;
 import com.kh.tinyfarm.product.model.vo.Category;
+import com.kh.tinyfarm.product.model.vo.Like;
+import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Service
@@ -92,11 +95,47 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.deleteProduct(sqlSession, pno);
 	}
 
+
+	//상품 결제 시 상품 상태 변경
+	@Override
+	public int productStatus(Payments pm) {
+
+		return productDao.productStatus(sqlSession, pm);
+	}
+
+
+	//상품 좋아요 등록
+	@Override
+	public int insertLike(Like like) {
+		
+		return productDao.insertLike(sqlSession, like);
+	}
+
+	//상품 좋아요 해제
+	@Override
+	public int removeLike(Like like) {
+		
+		return productDao.removeLike(sqlSession, like);
+	}
+
+	
+	//상품 좋아요 여부 조회	
+	@Override
+	public int selectLikeYn(Product product) {
+		return productDao.selectLikeYn(sqlSession, product);
+	}
+
+
+	//상품 좋아요 조회
+	/*
+	 * @Override public Product selectLike(int pno) {
+	 * 
+	 * return productDao.selectLike(sqlSession, pno); }
+	 * 
+	 */
+
 	
 	
-
-
-
 
 
 

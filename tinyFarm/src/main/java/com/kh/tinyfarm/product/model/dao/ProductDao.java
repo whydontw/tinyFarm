@@ -3,12 +3,16 @@ package com.kh.tinyfarm.product.model.dao;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.product.model.vo.Category;
+import com.kh.tinyfarm.product.model.vo.Like;
+import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Repository //퍼시스턴스 레이어, DB나 파일같은 외부 I/O 작업을 처리함
@@ -80,6 +84,67 @@ public class ProductDao {
 		return sqlSession.delete("productMapper.deleteProduct", pno);
 	}
 
+	//상품 결제 시 상품 상태 변경
+	public int productStatus(SqlSessionTemplate sqlSession, Payments pm) {
+
+		return sqlSession.update("productMapper.productStatus", pm);
+	}
+	
+	//상품 좋아요 등록
+	
+	public int insertLike(SqlSessionTemplate sqlSession, Like like) {
+		
+		Product p = new Product();
+		p.setProductNo(like.getProductNo());
+		int likeCount = 0;
+		
+		//해당 상품에 좋아요 +1
+		sqlSession.update("productMapper.likeUp", p);
+		
+		//좋아요 테이블에 등록
+		int result = sqlSession.insert("productMapper.likeSave", like);
+		
+		if(result == 1) {
+			likeCount = sqlSession.selectOne("productMapper.likeCount", like.getProductNo());
+		}
+		return likeCount;
+	
+	}
+
+	//상품 좋아요 해제
+	public int removeLike(SqlSessionTemplate sqlSession, Like like) {
+		
+		Product p = new Product();
+		p.setProductNo(like.getProductNo());
+		int likeCount = 0;
+		
+		//해당 상품에 좋아요 -1
+		sqlSession.update("productMapper.likedown", p);
+		
+		//좋아요 테이블에 등록
+		int result = sqlSession.insert("productMapper.likeRemove", like);
+		
+		if(result == 1) {
+			likeCount = sqlSession.selectOne("productMapper.likeCount", like.getProductNo());
+		}
+		return likeCount;
+	}
+
+	
+	//좋아요 여부 조회하기
+	public int selectLikeYn(SqlSessionTemplate sqlSession, Product product) {
+		
+		return sqlSession.selectOne("productMapper.selectLikeYn", product);
+	}
+
+	/*
+	 * //상품 좋아요 조회 public Product selectLike(SqlSessionTemplate sqlSession2, int
+	 * pno) {
+	 * 
+	 * return sqlSession2.selectOne("productMapper.selectLike", pno); }
+	 */
+
+	 
 
 
 
