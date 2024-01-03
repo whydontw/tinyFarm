@@ -163,6 +163,12 @@
 		WHERE M.USER_ID=#{userId}
 	</select>
 		
+	<!-- 팔로잉 유저 상태값 확인 -->
+	<select id="selectFollowMember" resultMap="memberResultSet">
+		SELECT USER_NO, STATUS
+		FROM MEMBER
+		WHERE USER_ID=#{statusYFiId}
+	</select>	
 	
 	<!-- 팔로워수 -->
 	<select id="fwerListCount" parameterType="follow" resultType="_int"> 
@@ -170,6 +176,7 @@
 		FROM FOLLOW F
 		JOIN MEMBER M USING(USER_NO)
 		WHERE FOLLOWING_ID = #{userId}
+		AND M.STATUS = 'Y'
 	</select>
 	
 	<!-- 팔로워 목록 -->
@@ -178,13 +185,24 @@
 		FROM MEMBER M
 		LEFT JOIN FOLLOW USING(USER_NO)
 		WHERE FOLLOWING_ID=#{userId}
+		AND M.STATUS = 'Y'
 	</select>
+	<!-- 팔로잉여부 체크 -->
+	<select id="followCheck" parameterType="follow" resultType="_int">
+		SELECT COUNT(*)
+		FROM FOLLOW
+		WHERE USER_NO = #{userNo}
+		AND FOLLOWING_ID = #{followingId}
+	</select>
+	<!-- 팔로우 하기 -->
+	<insert id="followUser">
+		INSERT INTO FOLLOW(USER_NO,FOLLOWING_ID)
+		VALUES(#{userNo},#{followingId})
+	</insert>
 	<!-- 팔로우 끊기 -->
 	<delete id="unfollowUser" parameterType="follow">
 		DELETE FOLLOW 
-		WHERE USER_NO = (SELECT USER_NO
-		                        FROM MEMBER
-		                        WHERE USER_ID=#{userId})
+		WHERE USER_NO = #{userNo}
 		AND FOLLOWING_ID=#{followingId}
   	</delete>
   	
@@ -204,14 +222,12 @@
        WHERE USER_ID=#{userId}
        AND R.STATUS='Y'
     </select>
-  
   	<!-- 달력 -->
 	<select id="selectDiaryList" parameterType="diary" resultMap="diaryResultSet">
 		SELECT SELECT_DATE, SELECT_OPEN
 		FROM DIARY_BOARD
 		WHERE DIARY_WRITER = #{userNo}
-	</select>  
-  
+	</select>
   	<!-- 일지등록 -->
   	<insert id="insertDiary" parameterType="diary">
   		INSERT INTO DIARY_BOARD (DIARY_NO
@@ -313,8 +329,9 @@
   		SELECT COUNT(PAYMENT_NO)
   		FROM PRODUCT_PAYMENT
   		WHERE USER_NO=#{userNo}
-  		AND STATUS='Y'
+  		AND SALES_STATUS='Y'
   	</select>
+  	
   	<!-- 구매내역 목록 -->
   	<select id="myOrderList" parameterType="payment" resultMap="paymentResultSet,productResultSet">
   		SELECT PAYMENT_NO,ORDER_DATE, P.PRODUCT_TITLE,PAYMENT_METHOD, PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
@@ -330,9 +347,10 @@
   		FROM PRODUCT
   		WHERE USER_NO=#{userNo}
   	</select>
+  	
   	<!-- 판매내역 목록 -->
   	<select id="mySellList" parameterType="product" resultMap="productResultSet">
-  		SELECT P.PRODUCT_NO,PRODUCT_TITLE,P.PRODUCT_PRICE,REGI_DATE,SALES_STATUS,M.USER_NAME
+  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
 		FROM PRODUCT P
 		LEFT JOIN PRODUCT_PAYMENT PP ON(P.PRODUCT_NO=PP.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(M.USER_NO=PP.USER_NO)
@@ -348,9 +366,10 @@
 		WHERE PP.USER_NO=#{userNo}
   		AND ORDER_DATE LIKE '%'||#{orderDate}||'%'
   	</select>
-  	<!-- 리스트 -->
+  	
+  	<!-- 주문리스트 검색 -->
   	<select id="searchOrderList" parameterType="payment" resultMap="paymentResultSet">
-  		SELECT PAYMENT_NO,ORDER_DATE, P.PRODUCT_TITLE,PAYMENT_METHOD, PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
+  		SELECT PP.PAYMENT_NO,PP.ORDER_DATE, P.PRODUCT_TITLE,PP.PAYMENT_METHOD,PP.PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(P.USER_NO=M.USER_NO)
@@ -358,6 +377,7 @@
 		AND ORDER_DATE LIKE '%'||#{orderDate}||'%'
 		ORDER BY ORDER_DATE
   	</select>
+  	
  	<!-- 거래내역 검색 판매내역 --> 
   	<select id="searchDateSellCount" resultType="_int" parameterType="product">
   		SELECT COUNT(PRODUCT_NO)
@@ -365,9 +385,9 @@
   		WHERE USER_NO=#{userNo}
   		AND REGI_DATE LIKE '%'||#{regiDate}||'%'
   	</select>
-  	<!-- 리스트 -->
+  	<!-- 판매리스트 검색 -->
   	<select id="searchSellList" parameterType="product" resultMap="productResultSet">
-  		SELECT P.PRODUCT_NO,PRODUCT_TITLE,P.PRODUCT_PRICE,REGI_DATE,SALES_STATUS,M.USER_NAME
+  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
 		FROM PRODUCT P
 		LEFT JOIN PRODUCT_PAYMENT PP ON(P.PRODUCT_NO=PP.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(M.USER_NO=PP.USER_NO)
@@ -377,11 +397,6 @@
   	</select>
   	
   	<!-- 찜목록 -->
- <!--  	<select id="wishCount" resultType="_int">
-  		SELECT COUNT(PRODUCT_NO)
-		FROM PRODUCT_LIKE
-		WHERE USER_NO = #{userNo}
-  	</select> -->
   	<select id="selectWish" parameterType="product" resultMap="productResultSet">
   		SELECT P.PRODUCT_NO, PRODUCT_TITLE, PRODUCT_PRICE
 		FROM PRODUCT P

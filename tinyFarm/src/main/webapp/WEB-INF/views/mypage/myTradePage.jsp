@@ -113,8 +113,9 @@ thead {
 
 #wishListTableContainer table tbody {
 	display: block;
-	height: 450px;
-	overflow: scroll;
+	max-height: 450px;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	text-align: left;
 	font-size: 14px;
 	text-overflow: ellipsis;
@@ -126,6 +127,18 @@ thead {
 
 #wishTable tbody tr {
 	border-bottom: 1px solid grey;
+}
+
+/* 찜내역 스크롤바 css */
+#wishListTableContainer table tbody::-webkit-scrollbar{
+	width: 7px;
+}
+#wishListTableContainer table tbody::-webkit-scrollbar-thumb{
+	 background: #70c745;
+    border-radius: 100px;
+}
+#wishListTableContainer table tbody::-webkit-scrollbar-track{
+background-color: none;
 }
 
 #orderDate, #sellDate {
@@ -155,11 +168,13 @@ thead {
 	width: 20%;
 	text-align: center;
 }
-
 #wishImg {
 	width: 80%;
 	height: 80%;
 	padding: 10px 0px 10px 10px;
+}
+#wishCount,#orderCount,#sellCount{
+	font-size: 14px;
 }
 </style>
 </head>
@@ -196,7 +211,7 @@ thead {
                     <div class="row">
                     	<div id="orderList">
                     		<div class="widget-title">
-                                <h4>구매내역</h4>
+                                <h4>구매내역<span id="orderCount"></span></h4>
                             </div>
                             <div class="dateSearch">
                             	<input type="text" id="orderDate" placeholder="검색날짜">
@@ -227,7 +242,7 @@ thead {
                     	
                     	<div id="sellList">
                     		<div class="widget-title">
-                                <h4>판매내역</h4>
+                                <h4>판매내역<span id="sellCount"></span></h4>
                             </div>
                             <div class="dateSearch">
                             	<input type="text" id="sellDate" placeholder="검색날짜">
@@ -262,7 +277,7 @@ thead {
                         <div class="single-widget-area">
                             <div id="wishList">
 	                            <div class="widget-title">
-	                                <h4>찜내역</h4>
+	                                <h4>찜내역<span id="wishCount"></span></h4>
 	                            </div>
 	        					<div id="wishListTableContainer">
 			                    	<table id="wishTable">
@@ -284,10 +299,12 @@ thead {
 	<script>
 			
 	let myNo = ${loginUser.userNo}; //로그인유저 번호 미리 추출
-	let curPage = 0;
-    let startPage = 0;
-    let endPage = 0;
-	let maxPage0;
+	let curPage = 0; //현재페이지
+    let startPage = 0; //시작페이지
+    let endPage = 0; //마지막페이지
+	let maxPage = 0; //최대페이지
+	let count = 0; //개수
+	
 	//구매내역
 	function loadOrderPage(page){
     	$.ajax({
@@ -298,14 +315,17 @@ thead {
     			currentPage : page
     		},
     		success : function(result){
+	    		let oList = result.oList; //리스트
+	    		let str = ""; //게시글
+	    	    let pStr = ""; //페이징
+	    	    let cStr = ""; //개수
     			curPage = result.oPi.currentPage;
 	    		startPage = result.oPi.startPage;
 	    		endPage = result.oPi.endPage;
 	    		maxPage = result.oPi.maxPage;
-	    		let oList = result.oList;
-	    		let str = ""; //게시글
-	    	    let pStr = ""; //페이징
-	    	    if(oList.length == 0){
+				count = oList.length;
+	    	    
+	    	    if(count == 0){
 	    			str += "<tr>"
 		    			+ "<td colspan='6'>구매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
@@ -322,8 +342,11 @@ thead {
 			   				+ "</tr>";
 		    			});
 	    		}
+	    	    
+	    	    cStr = "("+count+")";
+	    	    
 	    		$("#orderList tbody").html(str); //구매내역 리스트 띄워주기
-	    		
+	    		$("#orderCount").html(cStr);
 	    			
 	    		//페이징 처리
     			if(startPage==1){ //시작이 1이면 이전버튼 비활성
@@ -361,15 +384,16 @@ thead {
     			currentPage : page
     		},
     		success : function(result){
+	    		let sList = result.sList;
+	    		let str = ""; //게시글
+	    	    let pStr = ""; //페이징
     			curPage = result.sPi.currentPage;
 	    		startPage = result.sPi.startPage;
 	    		endPage = result.sPi.endPage;
 	    		maxPage = result.sPi.maxPage;
-	    		let sList = result.sList;
-	    		let str = ""; //게시글
-	    	    let pStr = ""; //페이징
+	    		count = sList.length;
 	    	    
-	    	    if(sList.length == 0){
+	    	    if(count == 0){
 	    			str += "<tr>"
 		    			+ "<td colspan='6'>판매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
@@ -385,8 +409,12 @@ thead {
 			   				+ "</tr>";
 		    			});
 	    		}
-	    		$("#sellList tbody").html(str); //게시글 리스트 띄워주기
-	    			
+	    	    
+	    	    //cStr 문구 작성
+	    	    cStr = "("+count+")";
+	    	    
+	    		$("#sellList tbody").html(str); //판매내역 리스트 띄워주기
+	    		$("#sellCount").html(cStr);	//판매내역 수
 	    		//페이징 처리
     			if(startPage==1){ //시작이 1이면 이전버튼 비활성
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">이전</a></li>';
@@ -422,13 +450,15 @@ thead {
     		    currentPage : page
     		},success : function(result){
     			$("#orderList tbody").empty();  //기존 리스트 비워주기
+    			let oList = result.oList;
+    			let str = ""; //게시글
+    			let pStr = ""; //페이징
+    			let cStr = ""; //개수
     		    curPage = result.oPi.currentPage;
     			startPage = result.oPi.startPage;
     			endPage = result.oPi.endPage;
     			maxPage = result.oPi.maxPage;
-    			let oList = result.oList;
-    			let str = ""; //게시글
-    			let pStr = ""; //페이징
+    			count = oList.length;
     				if(oList.length == 0){
     			    	str += "<tr>"
     				    	+ "<td colspan='5'>해당 기간 구매내역이 존재하지 않습니다.</td>"
@@ -445,9 +475,13 @@ thead {
 				   				+ "</tr>";
     				    	});
     			    	}
-    				  
+    					
+    					//구매내역 개수
+    					cStr = "("+count+")";
+    				
+    					//화면에 보여주기
     			    	$("#orderList tbody").html(str); //구매내역 리스트 띄워주기
-    			    		
+    			    	$("#orderCount").html(cStr); //개수
     			    //페이징 처리
     		    	if(startPage==1){ //시작이 1이면 이전버튼 비활성
     		    		pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">이전</a></li>';
@@ -473,11 +507,7 @@ thead {
     		}
     	});
    	}
-	
-=======
-		
-	}
->>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
+
 	//판매내역 날짜검색
 	function loadSellSearch(page){
 		let date = $("#sellDate").val(); //String
@@ -497,9 +527,12 @@ thead {
 		    	endPage = result.sPi.endPage;
 		    	maxPage = result.sPi.maxPage;
 		    	let sList = result.sList;
+		    	let count = sList.length;
 		    	let str = ""; //게시글
 		        let pStr = ""; //페이징
-		        if(sList.length == 0){
+		        let cStr = ""; //개수
+		        
+		        if(count == 0){
 		    		str += "<tr>"
 			   			+ "<td colspan='5'>해당 기간 판매내역이 존재하지 않습니다.</td>"
 			   			+ "</tr>";
@@ -515,8 +548,12 @@ thead {
 		   				+ "</tr>";
 			   		});
 		    	}
+		        
+		      	//cStr에 판매내역 개수
+    			cStr = "("+count+")";
+		      	
 		    	$("#sellList tbody").html(str); //게시글 리스트 띄워주기
-		    	
+		    	$("#sellCount").html(cStr);
 		    	//페이징 처리
 	    		if(startPage==1){ //시작이 1이면 이전버튼 비활성
 	    			pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">이전</a></li>';
@@ -541,7 +578,7 @@ thead {
     	});
 	}
 	
-    $(function(){ //초기 페이지 로딩은 1페이지여야 한다
+    $(function(){ //초기 페이지 로딩은 1페이지
 		loadOrderPage(1); //구매내역
     	loadSellPage(1); //판매내역
     	loadOrderSearch(1); //구매검색내역
@@ -556,24 +593,37 @@ thead {
     			userNo : myNo
     		},
     		success : function(result){ //wishList
-    			let wishList = result.wishList;
+    			let wishList = result.wishList; //찜내역
+    			let count = wishList.length; //찜개수
     			let str = "";
-    			$.each(wishList, function(key, w){
-    				console.log(w.productNo);
-    				str += "<tr>"
-    					+ "<td id='imgTd'><img id='wishImg' alt='제품이미지' src='resources/상추.jpg'></td>"
-						+ "<td>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
-						+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
-    					+ "</tr>";
-    			});
+    			let cStr = "";
+    			//개수 0이면
+    			if(count == 0){
+    				str += "<span id='noWish'>찜내역이 없습니다.</span>";
+    			}else{ //있으면 목록 뽑아주기
+	    			$.each(wishList, function(key, w){
+	    				console.log(w.productNo);
+	    				str += "<tr>"
+	    					+ "<td id='imgTd'><img id='wishImg' alt='제품이미지' src='resources/상추.jpg'></td>"
+							+ "<td>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
+							+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
+	    					+ "</tr>";
+	    			});
+    			}
     			
+    			//cStr에 찜내역 개수
+    			cStr = "("+count+")";
+    			
+    			//화면에 보여주기
     			$("#wishTable tbody").html(str);
+    			$("#wishCount").html(cStr);
     		},error : function(){
     			console.log("찜목록 ajax 요청 실패");
     		}
     		
     	});
     });
+    
 	</script>
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

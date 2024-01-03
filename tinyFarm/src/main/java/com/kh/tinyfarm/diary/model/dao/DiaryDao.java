@@ -21,7 +21,6 @@ import com.kh.tinyfarm.product.model.vo.Product;
 
 @Repository
 public class DiaryDao {
-	
 
 	//회원정보 수정
 	public int updateMember(SqlSession sqlSession,Member m) {
@@ -174,7 +173,6 @@ public class DiaryDao {
 	}
 	//주문날짜 검색 카운트
 	public int searchDateOrderCount(SqlSession sqlSession, Payments pm) {
-		System.out.println("Dao 확인 : "+pm.getOrderDate());
 		return sqlSession.selectOne("diaryMapper.searchDateOrderCount",pm);
 	}
 	
@@ -183,8 +181,6 @@ public class DiaryDao {
 		int limit = soPi.getPageLimit();
 		int offset = (soPi.getCurrentPage() - 1) * limit;
 		RowBounds rowbounds = new RowBounds(offset, limit);
-		
-		System.out.println("Dao 확인 : "+pm.getOrderDate());
 		return (ArrayList)sqlSession.selectList("diaryMapper.searchOrderList",pm,rowbounds);
 	}
 	
@@ -205,6 +201,10 @@ public class DiaryDao {
 	public Member selectFollowInfo(SqlSession sqlSession, String followingId) {
 		return sqlSession.selectOne("memberMapper.loginMember",followingId);
 	}
+	//팔로우 걸기
+	public int followUser(SqlSession sqlSession, Follow f) {
+		return sqlSession.insert("diaryMapper.followUser",f);
+	}
 	//팔로우 취소
 	public int unfollowUser(SqlSession sqlSession, Follow f) {
 		return sqlSession.delete("diaryMapper.unfollowUser",f);
@@ -213,15 +213,20 @@ public class DiaryDao {
 	public Member selectMember(SqlSession sqlSession, String userId) {
 		return sqlSession.selectOne("diaryMapper.selectMember",userId);
 	}
+	//찜내역 수
 	public int wishCount(SqlSession sqlSession, int userNo) {
 		return sqlSession.selectOne("diaryMapper.wishCount",userNo);
 	}
+	//찜내역
 	public ArrayList<Product> selectWish(SqlSession sqlSession, int userNo) {
 		return (ArrayList)sqlSession.selectList("diaryMapper.selectWish",userNo);
 	}
-	
-	
-	
-
+	//팔로우 유무 확인
+	public int followCheck(SqlSession sqlSession, Follow f) {
+		return sqlSession.selectOne("diaryMapper.followCheck",f);
+	}
+	public Member selectFollowMember(SqlSession sqlSession, String statusYFiId) {
+		return sqlSession.selectOne("diaryMapper.selectFollowMember",statusYFiId);
+	}
 
 }

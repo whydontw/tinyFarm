@@ -196,6 +196,13 @@ public class DiaryServiceImpl implements DiaryService {
 	public Member selectFollowerInfo(String followingId) {
 		return diaryDao.selectFollowInfo(sqlSession,followingId);
 	}
+	
+	//팔로우 걸기
+	@Override
+	public int followUser(Follow f) {
+		return diaryDao.followUser(sqlSession,f);
+	}
+
 	//팔로우 취소
 	@Override
 	public int unfollowUser(Follow f) {
@@ -231,12 +238,22 @@ public class DiaryServiceImpl implements DiaryService {
 	public ArrayList<Product> searchSellList(Product p, PageInfo ssPi) {
 		return (ArrayList)diaryDao.searchSellList(sqlSession,p, ssPi);
 	}
-
+	
+	//찜목록
 	@Override
 	public ArrayList<Product> selectWish(int userNo) {
 		return (ArrayList)diaryDao.selectWish(sqlSession,userNo);
 	}
+	//팔로우 여부 확인
+	@Override
+	public int followCheck(Follow f) {
+		return diaryDao.followCheck(sqlSession,f);
+	}
 
+	@Override
+	public Member selectFollowMember(String statusYFiId) {
+		return diaryDao.selectFollowMember(sqlSession,statusYFiId);
+	}
 	
 	
 

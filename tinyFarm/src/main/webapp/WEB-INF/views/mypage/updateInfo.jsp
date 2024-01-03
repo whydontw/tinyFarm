@@ -186,7 +186,7 @@
 	            <div class="row justify-content-between">
 	                <div class="col-12 col-lg-7 mx-auto">
 	                        <h5>정보 수정</h5>
-	                        <form action="update.me" method="post" enctype="multipart/form-data">
+	                        <form action="update.me" method="post" enctype="multipart/form-data" onsubmit="return updateme();">
 			                    <div class="checkout_details_area clearfix">
 		                           <div class="row">
 									     <label for="reUpfile" id="picText">프로필 사진</label>
@@ -295,7 +295,7 @@
 	                        		 <div class="mr-sm-2 top"><p class="delNum">🌱 작성한 영농일지</p> <p>0 개 </p></div>
 	                        	</c:when>
 	                        	<c:otherwise>
-		                            <div class="mr-sm-2 top"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
+		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
 	                        	</c:otherwise>
                         	</c:choose>
 	                        	
@@ -326,7 +326,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                     	<div id="texet-area">
-    	                	<input type="text" id="delText" name="delText" placeholder="글자만 입력해주세요.">
+    	                	<input type="text" id="delText" name="delText" placeholder="탈퇴하겠습니다.">
                     	</div>
                         <button type="button" class="btn-click" onclick="deleteUser();">탈퇴하기</button>
                     </div>
@@ -395,23 +395,34 @@
 		    	success : function(result){
 		    		if(result=="YYYYY"){
 		    			alert("비밀번호 변경 성공");
-		    			currentPwd = "";
-		    			wantPwd ="";
-		    			chkPWd="";
-		    			
+			    		currentPwd = "";
+			    		wantPwd ="";
+			    		chkPWd="";
 		    			//성공시 모달창 닫기
-		    			$("#pwdModal").off();
+			    		$("#updatePwdForm").off(); 
+
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");
 				    	$("#userPwd").focus();
 				    }else{
 		    			alert("비밀번호 변경 실패. 다시 시도해주세요.");
 		    		}
+		    		
 		    	},error : function(){
 		    		console.log("비번변경 ajax 통신오류");
 		    	}
 		    });
 		};
+		
+		//정보수정 클릭시 실행
+		//카카오톡 로그인 유저의 경우 회원정보 수정 막기
+		function updateme(){
+			let userPwd = "${loginUser.userPwd}";
+			if(userPwd == ""){ 
+				alert("카카오톡 로그인 회원은 정보변경이 불가합니다.\n카카오톡에서 변경 부탁드립니다.");
+				return false;
+			}
+		}
 		
 		//회원탈퇴
 		function deleteUser(){

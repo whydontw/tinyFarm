@@ -68,7 +68,7 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>영농일지</h2>
+			<h2>${f.userName}님의 영농일지</h2>
 		</div>
 		<div class="container">
 			<div class="row">

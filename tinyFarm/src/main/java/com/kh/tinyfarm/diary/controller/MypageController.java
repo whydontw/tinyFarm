@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +107,7 @@ public class MypageController {
 									,ModelAndView mv) {
 
 		Member preUser = (Member) session.getAttribute("loginUser"); // 기존 사진정보를 위해 회원정보 session에서 가져오기
+		
 		//새로운 프로필 사진 첨부시
 		if (!reUpfile.getOriginalFilename().equals("")) {
 
@@ -281,24 +284,24 @@ public class MypageController {
 	//팔로잉 목록 조회
 	@ResponseBody
 	@PostMapping(value = "followingPage.me", produces = "application/json; charset=UTF-8")
-	public Map<String, Object> followingList(String userId, Follow f,
-			@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
+	public Map<String, Object> followingList(String userId,int curPage) {
 		
 		//결과값 담을 변수 설정
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result=new HashMap<String, Object>();
 		
 		//현재 페이지 정보
-		int currentPage = Integer.parseInt(cp);
+		int currentPage=curPage;
 		//전체 팔로잉 수
-		int listCount = diaryService.fwingListCount(userId);
+		int listCount=diaryService.fwingListCount(userId);
 		//한 페이지에서 보여줘야하는 팔로잉 수  (followingLimit)
-		int boardLimit = 5;
+		int boardLimit=5;
 		//페이징바 개수
-		int pageLimit = 5;
-
+		int pageLimit=5;
+		
 		//페이징 처리된 팔로잉 목록 조회하기
 		PageInfo fiPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Follow> fiList = diaryService.myFollowingList(userId, fiPi);
+		
 		//map에 페이지 정보와 팔로잉유저 정보 담기
 		result.put("fiList", fiList);
 		result.put("fiPi", fiPi);
@@ -327,6 +330,7 @@ public class MypageController {
 		//페이징 처리된 팔로워 목록 조회하기
 		PageInfo fwPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Member> fwList = diaryService.myFollowerList(userId, fwPi);
+		
 		//map에 페이지 정보와 팔로워 정보 담기
 		result.put("fwList", fwList);
 		result.put("fwPi", fwPi);
@@ -348,37 +352,103 @@ public class MypageController {
 		Member m = diaryService.selectFollowerInfo(followerId); //팔로우 한 유저 아이디 정보 가져오기
 		return m;
 	}
+	//팔로우 확인
+	@ResponseBody
+	@RequestMapping("followChk.me")
+	public String followCheck(int userNo,String followingId) {
+		
+		Follow f = new Follow();
+		f.setUserNo(userNo);
+		f.setFollowingId(followingId);
+		
+		int result = diaryService.followCheck(f);
+		
+		if(result==1) {
+			return "YY";
+		}else {
+			return "NN";
+		}
+	}
+	//팔로우
+	@RequestMapping("follow.me")
+	public String followUser(String followingId,HttpSession session, HttpServletRequest request) {
+		//로그인 유저 정보
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		
+		Follow f = new Follow(userNo, followingId);
+		
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
+		
+		int result = diaryService.followUser(f);
+		
+		if(result>0) {	
+			session.setAttribute("alertMsg", "팔로우 완료!");
+		}else {
+			session.setAttribute("alertMsg", "팔로우 실패. 다시 확인해주세요.");
+		}
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
+		
+	}
 	
 	//언팔로우
 	@PostMapping("unfollow.me")
-	public String unfollowUser(String followingId,HttpSession session) {
+	public String unfollowUser(String followingId,HttpSession session, HttpServletRequest request) {
 		
 		//로그인 유저 정보
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		String userId = loginUser.getUserId();
+		int userNo = loginUser.getUserNo();
 		
-		Follow f = new Follow(userId, followingId);
+		Follow f = new Follow(userNo, followingId);
+		
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
 		
 		int result = diaryService.unfollowUser(f);
-		
 		//언팔 결과 확인 후 활동내역 페이지 유지
 		if(result>0) {
 			session.setAttribute("alertMsg", "팔로우 취소가 완료되었습니다.");
-			return "redirect:/active.me";
 		}else {
 			session.setAttribute("alertMsg", "다시 시도해주세요.");
-			return "redirect:/active.me";
 		}
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
 	}
 	
+	//존재하지 않는 회원 목록에서 삭제
+	@PostMapping("deleteNonUser.me")
+	public String deleteNonUser(String followingId,HttpSession session, HttpServletRequest request) {
+		
+		//로그인 유저 회원정보
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		
+		Follow f = new Follow(userNo, followingId);
+		int result = diaryService.unfollowUser(f);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "삭제 완료");
+		}else {
+			session.setAttribute("alertMsg", "다시 시도해주세요.");
+		}
+		
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
+		
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
+	}
+	//유저 영농일지 보기
 	@PostMapping("follow.di")
 	public String followDiaryView(String followingId, Model model) {
 		//해당 유저 아이디로 userNo 추출 후 해당 유저 영농일지 페이지 띄우기
 		//(영농일지 파트 전체 userNo 사용해서 작업했기 때문에 No로 진행했습니다.)
 		Member f = diaryService.selectMember(followingId);
-		
 		//팔로우 유저 번호 추출
 		int userNo = f.getUserNo();
+		
 		f.setUserNo(userNo);
 		
 		//유저 정보 담기
@@ -419,7 +489,7 @@ public class MypageController {
 		//일지 유무(0 or 1)
 		int count = diaryService.existDiary(d);
 
-		if (count>1) {//일지가 한개라도 있으면
+		if (count==1) {//일지가 한개라도 있으면
 			return "YY";
 		} else {//없으면
 			return "NN";
@@ -714,8 +784,6 @@ public class MypageController {
 										@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
 		
 		String date = searchDate.substring(2,7).replace("-", "/"); //DB형식에 날짜 맞추기(yy/MM)
-		System.out.println(searchDate);
-		System.out.println(date);
 		Payments pm = new Payments();
 		pm.setUserNo(userNo);
 		pm.setOrderDate(date);
@@ -723,7 +791,6 @@ public class MypageController {
 		//게시글 조회하기
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		System.out.println(cp);
 		//페이징 처리
 		int currentPage = Integer.parseInt(cp);
 		int listCount = diaryService.searchDateOrderCount(pm);
@@ -734,7 +801,6 @@ public class MypageController {
 		PageInfo soPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Payments> oList = diaryService.searchOrderList(pm, soPi);
 		
-		System.out.println(soPi);
 		//map에 페이지 정보와 글정보 담기
 		result.put("oList", oList);
 		result.put("oPi", soPi);
@@ -754,7 +820,6 @@ public class MypageController {
 		p.setUserNo(userNo);
 		p.setRegiDate(date);
 		
-		System.out.println("처리 전 p : "+p);
 		//페이징처리 된 게시글 조회하기
 		Map<String, Object> result = new HashMap<String, Object>();
 		//현재 페이지 정보 (currentPage)
@@ -769,7 +834,6 @@ public class MypageController {
 		//페이징 처리된 게시글 목록 조회하기
 		PageInfo ssPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.searchSellList(p, ssPi);
-		System.out.println(sList);
 		
 		//map에 페이지 정보와 글정보 담기
 		result.put("sList", sList);
@@ -778,6 +842,7 @@ public class MypageController {
 		return result;
 	}
 	
+	//찜내역
 	@ResponseBody
 	@GetMapping(value="wishList.me",produces="application/json; charset=UTF-8")
 	public Map<String, Object> wishListPage(int userNo) {
@@ -787,5 +852,11 @@ public class MypageController {
 		result.put("wishList", wishList);
 		return result;
 	}
+	
+	@GetMapping("modal.me")
+	public String loadModal() {
+		return "member/memberModal";
+	}
+
 	
 }

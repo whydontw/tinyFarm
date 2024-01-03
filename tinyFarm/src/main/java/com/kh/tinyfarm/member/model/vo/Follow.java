@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Follow {
-	private String userId;
+	private int userNo;
 	private String followingId;
 }
