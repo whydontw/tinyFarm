@@ -15,7 +15,9 @@
     <title>마이페이지</title>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
-	
+    <!-- alert창 cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <!-- Core Stylesheet -->
 	 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -166,13 +168,24 @@
        });
        
        $("#backBtn").click(function(){
-    	   let alert = window.confirm("이전 페이지로 이동하시겠습니까?\n수정 중인 내용이 사라집니다.");
-	       	if(alert){
-	           	window.history.back();
-	       	}else{
-	       		return false;
-	       	} 
-       });
+    		swal({
+    			title : "일지 수정 취소",
+    			text : "이전 페이지로 이동하시겠습니까?\n수정 중인 내용이 사라집니다.",
+    			type : "warning",
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+    		}, function(isConfirm) {
+    			if (isConfirm) {
+    				window.history.back();
+    			}else{
+    				return false;
+    			}
+    		});
+      });
        
        function updateDiary(){
     	   let diaryTitle = $("#diaryTitle").val();
@@ -180,17 +193,17 @@
     	   let openVal = $("input[name=selectOpen]:checked").val();
     	   
     	   if(diaryTitle==""){
-    		   alert("제목을 입력해주세요.");
-    		   $("#diaryTitle").focus;
+    		   swal("error", "제목을 입력해주세요.", "error");
+    		   $(this).focus;
     		   return false;
     	   }
     	   if(diaryContent==""){
-    		   alert("내용을 입력해주세요.");
-    		   $("#diaryContent").focus;
+    		   swal("error", "내용을 입력해주세요.", "error");
+    		   $(this).focus;
     		   return false;
     	   }
     	   if(openVal==null){
-    		   alert("공개여부를 선택해주세요.");
+    		   swal("error", "공개여부를 선택해주세요.", "error");
     		   return false;
     	   }
     	   

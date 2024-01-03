@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% String contextPath = request.getContextPath(); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,9 +89,22 @@
 		.modal-header{
 			background-color: #98d479;
 			color: #fff;
+			font-size: 25px;
 		}
-		#pwd-area{
-			margin-right: 20%;
+		.modal-content.main{
+			width: 60%;
+			margin: auto;
+		}
+		#pwdModal.modal-content{
+			border: none;
+		}
+		#deleteModal.modal-content{
+			border: none;
+			font-size: 14px;
+		}
+		#texet-area{
+			width: 70%;
+			border: none;
 		}
 		.btn-click{
 			width: 80px;
@@ -99,6 +113,7 @@
 			border: none;
 			color: #fff;
 		}
+		
 		.btn-click:hover{
 			background-color: #a4c992;	
 			border: none;	
@@ -106,12 +121,36 @@
 		.btn-click:checked, .btn-click:after{
 			border: none;
 		}
-		#delPwd{
-			width: 100%;
+		.kaUser{
+			color: red;
+			font-size: 15px;
+		}
+		#delText{
+			width: 90%;
 			height: 40px;
 			border: 1px solid #c9cdc6;
 			padding-left: 5px;
+			font-size: 13px;
 		}
+		#delWarn{
+			color: red;
+			text-align: center;
+			margin-top: 2%;
+			margin-bottom: 3%;
+		}
+		#deleteModal .mr-sm-2{
+			display: flex;
+		}
+		#deleteModal .mr-sm-2 p{
+			font-size: 14px;
+		}
+		.delNum{
+			width: 150px;
+		}
+		.mr-sm-2.top{
+			margin-top: 5%;
+		}
+		
 	</style>
 
 
@@ -147,7 +186,7 @@
 	            <div class="row justify-content-between">
 	                <div class="col-12 col-lg-7 mx-auto">
 	                        <h5>정보 수정</h5>
-	                        <form action="update.me" method="post" enctype="multipart/form-data">
+	                        <form action="update.me" method="post" enctype="multipart/form-data" onsubmit="return updateme();">
 			                    <div class="checkout_details_area clearfix">
 		                           <div class="row">
 									     <label for="reUpfile" id="picText">프로필 사진</label>
@@ -232,7 +271,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button class="btn-click" onclick="updatePwd();">수정하기</button>
+                        <div class="kaUser"></div> <button class="btn-click" onclick="updatePwd();">수정하기</button>
                     </div>
             </div>
         </div>
@@ -242,10 +281,10 @@
 	<!-- 회원탈퇴 버튼 클릭 시 보여질 Modal -->
  	<div class="modal fade" id="deleteForm">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content main">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">회원탈퇴</h4>
+                    <div class="modal-title">회원탈퇴</div>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                     <!-- Modal body -->
@@ -253,39 +292,43 @@
                         <div id="center">
                         	<c:choose>
 	                        	<c:when test="${diaryCount eq 0 }">
-	                        		<p class="mr-sm-2">작성한 영농일지 : 0개</p> 
+	                        		 <div class="mr-sm-2 top"><p class="delNum">🌱 작성한 영농일지</p> <p>0 개 </p></div>
 	                        	</c:when>
 	                        	<c:otherwise>
-		                            <p class="mr-sm-2">작성한 영농일지 : ${diaryCount } 개</p> 
+		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
 	                        	</c:otherwise>
                         	</c:choose>
 	                        	
 	                        <c:choose>	
 	                        	<c:when test="${boardCount eq 0 }">
-	                        		<p class="mr-sm-2">작성한 게시글 수 : 0개</p> 
+	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p> <p>0 개 </p></div>
 	                        	</c:when>
 	                        	<c:otherwise>
-		                            <p class="mr-sm-2">작성한 게시글 수 : ${boardCount } 개</p> 
+	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p><p>${boardCount } 개 </p></div>
 	                        	</c:otherwise>
 	                        </c:choose>	
 	                        <c:choose>	
 	                        	<c:when test="${replyCount eq 0}">
-	                        		<p class="mr-sm-2">작성한 댓글 수 : 0개</p> 
+	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>0 개 </p></div>
 	                        	</c:when>
 	                        	<c:otherwise>
-		                            <p class="mr-sm-2">작성한 댓글 수 : ${replyCount } 개</p> 
+		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>${replyCount } 개 </p></div>
 	                        	</c:otherwise>
                         	</c:choose>
-                            <p class="mr-sm-2">작은농장과 함께한 일수 : ${date }일</p>
-                            <p>탈퇴 후 복구할 수 없습니다. <br>탈퇴하시려면 비밀번호 입력 후 버튼을 클릭해주세요.</p>
+                        	<div class="mr-sm-2"><p class="delNum">🌱 함께한 일수 </p> <p>${date } 일 </p></div>
+                            <div id="delWarn">
+                            탈퇴 후 복구할 수 없습니다. <br>
+                            '&nbsp;&nbsp;탈퇴하겠습니다.&nbsp;&nbsp;' <br>
+                            작성 후 버튼을 클릭해주세요.
+                            </div>
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                    	<div id="pwd-area">
-    	                	<input type="password" id="delPwd" name="delPwd" placeholder="비밀번호 입력">
+                    	<div id="texet-area">
+    	                	<input type="text" id="delText" name="delText" placeholder="탈퇴하겠습니다.">
                     	</div>
-                        <button class="btn-click" onclick="location.href='delete.me'">탈퇴하기</button>
+                        <button type="button" class="btn-click" onclick="deleteUser();">탈퇴하기</button>
                     </div>
             </div>
         </div>
@@ -324,8 +367,11 @@
 			let chkPWd = $("#upPwdChk").val(); //변경비번확인
 			let pwdReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 			
-			console.log(currentPwd);
-			console.log(wantPwd);		
+			//카카오 로그인 회원 변경 막기 (pwd 값 null)
+			if(${loginUser.userPwd eq null}){
+				alert("카카오 로그인 회원은 변경 불가능합니다.");
+				return false;
+			}
 			
 			//변경비번 일치하지 않을경우
 			if(wantPwd != chkPWd){
@@ -349,37 +395,73 @@
 		    	success : function(result){
 		    		if(result=="YYYYY"){
 		    			alert("비밀번호 변경 성공");
-		    			currentPwd = "";
-		    			wantPwd ="";
-		    			chkPWd="";
-		    			
+			    		currentPwd = "";
+			    		wantPwd ="";
+			    		chkPWd="";
 		    			//성공시 모달창 닫기
-		    			$("#pwdModal").off();
+			    		$("#updatePwdForm").off(); 
+
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");
 				    	$("#userPwd").focus();
-		    		}else{
+				    }else{
 		    			alert("비밀번호 변경 실패. 다시 시도해주세요.");
 		    		}
+		    		
 		    	},error : function(){
 		    		console.log("비번변경 ajax 통신오류");
 		    	}
 		    });
 		};
+		
+		//정보수정 클릭시 실행
+		//카카오톡 로그인 유저의 경우 회원정보 수정 막기
+		function updateme(){
+			let userPwd = "${loginUser.userPwd}";
+			if(userPwd == ""){ 
+				alert("카카오톡 로그인 회원은 정보변경이 불가합니다.\n카카오톡에서 변경 부탁드립니다.");
+				return false;
+			}
+		}
+		
+		//회원탈퇴
+		function deleteUser(){
+			let delText = $("#delText").val(); //탈퇴 문구 입력값 가져오기
+			$.ajax({
+				url: "delete.me",
+				data: {
+					text:delText
+				},
+				success:function(result){
+					console.log(result);
+					if(result=='YY'){
+						alert("그동안 저희 사이트를 이용해주셔서 감사합니다.");
+						//탈퇴 후 메인페이지
+						window.location.href='<%=contextPath%>'; 
+					}else if(result=='NY'){ //문구 틀렸을시
+						alert("탈퇴문구를 정확하게 입력해주세요.");
+					}else{ //탈퇴 실패
+						alert("회원 탈퇴 실패");
+					}
+				},error:function(){
+					console.log("회원탈퇴 ajax 실패");
+				}
+			});
+		}
 	</script>
 	
-	<!-- 주소변경 -->
+	<!-- 주소변경 카카오 지도 API-->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     function addrSearch() {
         new daum.Postcode({
             oncomplete: function(data) {
-                var addr = ''; // 주소 변수
+                var addr = ''; //주소 변수
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                if (data.userSelectedType === 'R') { //사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                } else { // 사용자가 지번 주소를 선택했을 경우
                     addr = data.jibunAddress;
                 }
 

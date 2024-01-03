@@ -91,7 +91,7 @@ a, p {
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="insert.di">영농일지 작성</a></li>
+							<li class="breadcrumb-item"><a href="javascript:void(0)">영농일지 작성</a></li>
 						</ol>
 					</nav>
 				</div>

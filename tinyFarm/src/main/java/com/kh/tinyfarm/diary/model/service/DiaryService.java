@@ -2,7 +2,6 @@ package com.kh.tinyfarm.diary.model.service;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.kh.tinyfarm.board.model.vo.Board;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
@@ -11,16 +10,19 @@ import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 public interface DiaryService {
-
+	
+	//회원정보
 	int updateMember(Member m);
 
 	int updatePwd(Member m);
 
 	int deleteMember(String userId);
 
+	//활동내역
 	int boardListCount(String userId);
 
 	int replyListCount(String userId);
@@ -37,6 +39,18 @@ public interface DiaryService {
 
 	ArrayList<Member> myFollowerList(String userId, PageInfo fwPi);
 
+	//팔로우
+	int followUser(Follow f);
+	
+	int unfollowUser(Follow f);
+	
+	Member selectMember(String userId);
+	
+	Member selectFollowingInfo(String followingId);
+	
+	Member selectFollowerInfo(String followingId);
+	
+	//영농일지
 	int insertDiary(Diary d);
 
 	ArrayList<Diary> selectDiaryList(int userNo);
@@ -55,6 +69,7 @@ public interface DiaryService {
 
 	int diaryListCount(int userNo);
 	
+	//회원등급
 	int gradeSeed(int userNo);
 
 	int gradeShoot(int userNo);
@@ -63,23 +78,33 @@ public interface DiaryService {
 
 	int gradeFruit(int userNo);
 
+	//거래내역
+	//구매
 	int orderListCount(int userNo);
 
-	ArrayList<Product> myOrderList(int userNo, PageInfo oPi);
-
+	ArrayList<Payments> myOrderList(int userNo, PageInfo oPi);
+	
+	//구매검색
+	int searchDateOrderCount(Payments pm);
+	
+	ArrayList<Payments> searchOrderList(Payments pm,PageInfo soPi);
+	
+	//판매
 	int sellListCount(int userNo);
 
-	ArrayList<Product> mySellrList(int userNo, PageInfo sPi);
+	ArrayList<Product> mySellList(int userNo, PageInfo ssPi);
+	
+	//판매검색
+	int searchDateSellCount(Product p);
+	
+	ArrayList<Product> searchSellList(Product p,PageInfo ssPi);
 
-	Member selectFollowInfo(String followingId);
+	//찜목록
+	ArrayList<Product> selectWish(int userNo);
 
-	int unfollowUser(Follow following);
+	//팔로우 여부 확인
+	int followCheck(Follow f);
 
-//	int searchDateOrderCount(Payment pm);
-//	
-//	ArrayList<Product> searchOrderList(Payment pm);
-//	
-//	int searchDateSellCount(Payment pm);
-//	
-//	ArrayList<Product> searchSellList(Payment pm);
+	Member selectFollowMember(String statusYFiId);
+
 }

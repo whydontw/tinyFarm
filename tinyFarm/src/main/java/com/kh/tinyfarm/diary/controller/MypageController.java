@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +34,7 @@ import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.service.MemberService;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Controller
@@ -49,7 +52,12 @@ public class MypageController {
 
 	//마이페이지
 	@GetMapping("mypage.me")
-	public String mypage() {
+	public String mypage(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
+		//아이디로 회원정보 조회
+		Member m = diaryService.selectMember(userId);
+		session.setAttribute("loginUser", m);
 		return "mypage/mypage";
 	}
 
@@ -66,7 +74,9 @@ public class MypageController {
 		
 		Date today = new Date();
 		f= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		try {
+			//가입날부터의 일수 구하기 (가입날부터 1일~♡)
 			Date enroll = f.parse(enrollDate);
 			
 			long difference = today.getTime() - enroll.getTime();
@@ -75,7 +85,9 @@ public class MypageController {
 			
 			int boardCount = diaryService.boardListCount(userId); //게시글 수
 			int replyCount = diaryService.replyListCount(userId); //댓글 수
-			int diaryCount = diaryService.diaryListCount(userNo);
+			int diaryCount = diaryService.diaryListCount(userNo); //영농일지 수
+			
+			//model에 데이터 넣어주기
 			model.addAttribute("boardCount", boardCount);
 			model.addAttribute("replyCount", replyCount);
 			model.addAttribute("diaryCount", diaryCount);
@@ -83,6 +95,7 @@ public class MypageController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
 		return "mypage/updateInfo";
 	}
 
@@ -94,6 +107,7 @@ public class MypageController {
 									,ModelAndView mv) {
 
 		Member preUser = (Member) session.getAttribute("loginUser"); // 기존 사진정보를 위해 회원정보 session에서 가져오기
+		
 		//새로운 프로필 사진 첨부시
 		if (!reUpfile.getOriginalFilename().equals("")) {
 
@@ -139,7 +153,7 @@ public class MypageController {
 			//암호화 작업 - 스크립트로 조건처리 하고 넘어왔으니 바로 암호화
 			String encPwd = bcryptPasswordEncoder.encode(updatePwd);
 			
-			loginUser.setUserPwd(encPwd);
+			loginUser.setUserPwd(encPwd); //새로운 비밀번호 넣어주기
 			
 			int result = diaryService.updatePwd(loginUser);
 			
@@ -150,44 +164,32 @@ public class MypageController {
 			} else { //실패
 				return "NNNNN";
 			}
-		} else { //비밀번호 일치하지 않음
+		}else { //비밀번호 일치하지 않음
 			//YY두개(리턴값 3개로 나누려다 보니 이렇게 됐습니다 YY의 의미는 없습니다 ..)
 			return "NNNYY";
 		}
-
 	}
 
 	//회원탈퇴
+	@ResponseBody
 	@GetMapping("delete.me")
-	public String deleteMember(String userPwd
-								,HttpSession session
-								,Model model) {
-
+	public String deleteMember(String text
+								,HttpSession session) {
+		
 		Member loginUser = ((Member) session.getAttribute("loginUser")); //세션에서 로그인 정보 추출
-
 		String userId = loginUser.getUserId(); //회원 아이디 추출
-		String loginUserPwd = loginUser.getUserPwd(); //회원 비밀번호 추출
-
-		if (bcryptPasswordEncoder.matches(userPwd, loginUserPwd)) { //비밀번호 일치 확인
-
+		
+		
+		if (text.equals("탈퇴하겠습니다.")) { //탈퇴 입력문구 확인
 			int result = diaryService.deleteMember(userId);
-
 			if (result > 0) { //탈퇴 성공
-
-				session.setAttribute("alertMsg", "그동안 저희 사이트를 이용해주셔서 감사합니다.");
-				//세션에 있는 로그인 정보 지우기
 				session.removeAttribute("loginUser");
-				return "redirect:/"; //메인으로 위임
-
-			} else { //탈퇴 실패
-				model.addAttribute("errorMsg", "회원 탈퇴 실패");
-				return "common/errorPage"; //에러페이지로 이동
+				return "YY";
+			}else {
+				return "NN"; //실패
 			}
-
-		} else {//비밀번호 잘못입력
-
-			session.setAttribute("alertMsg", "비밀번호를 잘못입력하셨습니다.");
-			return "redirect:mypage.me"; //마이페이지 유지
+		} else {//문구 잘못입력
+			return "NY";
 		}
 
 	}
@@ -201,9 +203,11 @@ public class MypageController {
 		int ranNum = (int) (Math.random() * 90000 + 10000);
 
 		String ext = originName.substring(originName.lastIndexOf("."));
-
+		
+		//변경이름
 		String changeName = currentTime + ranNum + ext;
-
+		
+		//저장주소
 		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
 
 		try {
@@ -215,7 +219,7 @@ public class MypageController {
 		return changeName;
 	}
 
-	//활동내역
+	//활동내역 페이지 위임
 	@GetMapping("active.me")
 	public String myboard() {
 		return "mypage/myActivePage";
@@ -226,15 +230,16 @@ public class MypageController {
 	@PostMapping(value = "boardPage.me", produces = "application/json; charset=UTF-8")
 	public Map<String, Object> myBoardList(String userId, Board b,
 			@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
+		
 		//페이징처리 된 게시글 조회하기
 		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
+		//현재 페이지 정보
 		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
+		//전체 게시글 개수
 		int listCount = diaryService.boardListCount(userId);
-		//한 페이지에서 보여줘야하는 게시글 개수 (boardLimit)X
+		//한 페이지에서 보여줘야하는 게시글 개수 (boardLimit)
 		int boardLimit = 5;
-		//페이징바 개수 (pageLimit)
+		//페이징바 개수
 		int pageLimit = 5;
 
 		//페이징 처리된 게시글 목록 조회하기
@@ -253,22 +258,23 @@ public class MypageController {
 	@PostMapping(value = "replyPage.me", produces = "application/json; charset=UTF-8")
 	public Map<String, Object> myreplyList(String userId, BoardReply r,
 			@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
-		//페이징처리 된 게시글 조회하기
+		
+		//페이징처리 된 댓글 조회하기
 		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
+		//현재 페이지 정보
 		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
+		//전체 댓글 수
 		int listCount = diaryService.replyListCount(userId);
-		//한 페이지에서 보여줘야하는 게시글 개수 (replyLimit)
+		//한 페이지에서 보여줘야하는 댓글 수 (replyLimit)
 		int boardLimit = 5;
 		//페이징바 개수 (pageLimit)
 		int pageLimit = 5;
 
-		//페이징 처리된 게시글 목록 조회하기
+		//페이징 처리된 댓글 목록 조회하기
 		PageInfo rPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<BoardReply> rList = diaryService.myReplyList(userId, rPi);
 
-		//map에 페이지 정보와 글정보 담기
+		//map에 페이지 정보와 댓글정보 담기
 		result.put("rList", rList);
 		result.put("rPi", rPi);
 
@@ -278,23 +284,25 @@ public class MypageController {
 	//팔로잉 목록 조회
 	@ResponseBody
 	@PostMapping(value = "followingPage.me", produces = "application/json; charset=UTF-8")
-	public Map<String, Object> followingList(String userId, Follow f,
-			@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
-		//페이징처리 된 게시글 조회하기
-		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
-		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
-		int listCount = diaryService.fwingListCount(userId);
-		//한 페이지에서 보여줘야하는 게시글 개수
-		int boardLimit = 5;
-		//페이징바 개수 (pageLimit)
-		int pageLimit = 5;
-
-		//페이징 처리된 게시글 목록 조회하기
+	public Map<String, Object> followingList(String userId,int curPage) {
+		
+		//결과값 담을 변수 설정
+		Map<String, Object> result=new HashMap<String, Object>();
+		
+		//현재 페이지 정보
+		int currentPage=curPage;
+		//전체 팔로잉 수
+		int listCount=diaryService.fwingListCount(userId);
+		//한 페이지에서 보여줘야하는 팔로잉 수  (followingLimit)
+		int boardLimit=5;
+		//페이징바 개수
+		int pageLimit=5;
+		
+		//페이징 처리된 팔로잉 목록 조회하기
 		PageInfo fiPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Follow> fiList = diaryService.myFollowingList(userId, fiPi);
-		//map에 페이지 정보와 글정보 담기
+		
+		//map에 페이지 정보와 팔로잉유저 정보 담기
 		result.put("fiList", fiList);
 		result.put("fiPi", fiPi);
 
@@ -306,53 +314,148 @@ public class MypageController {
 	@PostMapping(value = "followerPage.me", produces = "application/json; charset=UTF-8")
 	public Map<String, Object> followerList(String userId, Follow f,
 			@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
-		//페이징처리 된 게시글 조회하기
+		
+		//결과값 담을 변수 설정
 		Map<String, Object> result = new HashMap<String, Object>();
-		//현재 페이지 정보 (currentPage)
+		
+		//현재 페이지 정보
 		int currentPage = Integer.parseInt(cp);
-		//전체 게시글 개수 (listCount)
+		//전체 팔로워 수
 		int listCount = diaryService.fwerListCount(userId);
-		//한 페이지에서 보여줘야하는 게시글 개수
+		//한 페이지에서 보여줘야하는 팔로워수 (followerLimit)
 		int boardLimit = 5;
-		//페이징바 개수 (pageLimit)
+		//페이징바 개수
 		int pageLimit = 5;
 
-		//페이징 처리된 게시글 목록 조회하기
+		//페이징 처리된 팔로워 목록 조회하기
 		PageInfo fwPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Member> fwList = diaryService.myFollowerList(userId, fwPi);
-		//map에 페이지 정보와 글정보 담기
+		
+		//map에 페이지 정보와 팔로워 정보 담기
 		result.put("fwList", fwList);
 		result.put("fwPi", fwPi);
-
+		
 		return result;
 	}
 	
-	//팔로잉&팔로워 클릭시 모달창 정보
+	//팔로잉 모달창 정보
 	@ResponseBody
-	@PostMapping(value = "getFollowInfo.me", produces = "application/json; charset=UTF-8")
-	public Member getFollowInfo(String followingId) {
-		Member m = diaryService.selectFollowInfo(followingId); //팔로우 한 유저 아이디 정보 가져오기
+	@PostMapping(value = "getFollowingInfo.me", produces = "application/json; charset=UTF-8")
+	public Member getFollowingInfo(String followingId) {
+		Member m = diaryService.selectFollowingInfo(followingId); //팔로우 한 유저 아이디 정보 가져오기
 		return m;
+	}
+	//팔로워 모달창 정보
+	@ResponseBody
+	@PostMapping(value = "getFollowerInfo.me", produces = "application/json; charset=UTF-8")
+	public Member getFollowerInfo(String followerId) {
+		Member m = diaryService.selectFollowerInfo(followerId); //팔로우 한 유저 아이디 정보 가져오기
+		return m;
+	}
+	//팔로우 확인
+	@ResponseBody
+	@RequestMapping("followChk.me")
+	public String followCheck(int userNo,String followingId) {
+		
+		Follow f = new Follow();
+		f.setUserNo(userNo);
+		f.setFollowingId(followingId);
+		
+		int result = diaryService.followCheck(f);
+		
+		if(result==1) {
+			return "YY";
+		}else {
+			return "NN";
+		}
+	}
+	//팔로우
+	@RequestMapping("follow.me")
+	public String followUser(String followingId,HttpSession session, HttpServletRequest request) {
+		//로그인 유저 정보
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		
+		Follow f = new Follow(userNo, followingId);
+		
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
+		
+		int result = diaryService.followUser(f);
+		
+		if(result>0) {	
+			session.setAttribute("alertMsg", "팔로우 완료!");
+		}else {
+			session.setAttribute("alertMsg", "팔로우 실패. 다시 확인해주세요.");
+		}
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
+		
 	}
 	
 	//언팔로우
-	@GetMapping("unfollow.me")
-	public String unfollowUser(String followId,HttpSession session) {
+	@PostMapping("unfollow.me")
+	public String unfollowUser(String followingId,HttpSession session, HttpServletRequest request) {
 		
+		//로그인 유저 정보
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		String userId = loginUser.getUserId();
+		int userNo = loginUser.getUserNo();
 		
-		Follow following = new Follow(userId, followId);
+		Follow f = new Follow(userNo, followingId);
 		
-		int result = diaryService.unfollowUser(following);
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
 		
+		int result = diaryService.unfollowUser(f);
+		//언팔 결과 확인 후 활동내역 페이지 유지
 		if(result>0) {
 			session.setAttribute("alertMsg", "팔로우 취소가 완료되었습니다.");
-			return "redirect:/active.me";
 		}else {
 			session.setAttribute("alertMsg", "다시 시도해주세요.");
-			return "redirect:/active.me";
 		}
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
+	}
+	
+	//존재하지 않는 회원 목록에서 삭제
+	@PostMapping("deleteNonUser.me")
+	public String deleteNonUser(String followingId,HttpSession session, HttpServletRequest request) {
+		
+		//로그인 유저 회원정보
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo = loginUser.getUserNo();
+		
+		Follow f = new Follow(userNo, followingId);
+		int result = diaryService.unfollowUser(f);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "삭제 완료");
+		}else {
+			session.setAttribute("alertMsg", "다시 시도해주세요.");
+		}
+		
+		//이전페이지
+		String before = (String)request.getHeader("Referer");
+		
+		//이전페이지(보고있던 페이지)로 리턴
+		return "redirect:"+before;
+	}
+	//유저 영농일지 보기
+	@PostMapping("follow.di")
+	public String followDiaryView(String followingId, Model model) {
+		//해당 유저 아이디로 userNo 추출 후 해당 유저 영농일지 페이지 띄우기
+		//(영농일지 파트 전체 userNo 사용해서 작업했기 때문에 No로 진행했습니다.)
+		Member f = diaryService.selectMember(followingId);
+		//팔로우 유저 번호 추출
+		int userNo = f.getUserNo();
+		
+		f.setUserNo(userNo);
+		
+		//유저 정보 담기
+		model.addAttribute("f", f);
+		
+		//해당 유저의 영농일지 페이지 위임 (달력페이지)
+		return "mypage/friendsDiary";
 	}
 		
 	
@@ -368,6 +471,7 @@ public class MypageController {
 	public ArrayList<Diary> calendarImgLoad(Diary d, int userNo) {
 		// 회원이 작성한 영농일지 리스트 뽑기
 		ArrayList<Diary> dList = diaryService.selectDiaryList(userNo);
+		
 		return dList;
 	}
 
@@ -377,13 +481,15 @@ public class MypageController {
 	public String existDiary(Diary d, Date date, int userNo) {
 		f = new SimpleDateFormat("YYYY/MM/dd");
 
+		//유저번호와 작성날짜 Diary 객체에 담아 조회하기
 		String selectDate = f.format(date);
 		d.setDiaryWriter(userNo);
 		d.setSelectDate(selectDate);
-
+		
+		//일지 유무(0 or 1)
 		int count = diaryService.existDiary(d);
 
-		if (count == 1) {//일지가 있으면
+		if (count==1) {//일지가 한개라도 있으면
 			return "YY";
 		} else {//없으면
 			return "NN";
@@ -412,14 +518,17 @@ public class MypageController {
 		if (result>0) {
 			int diaryCount = diaryService.diaryListCount(userNo);
 			//씨앗, 새싹(7개), 잎새(14개), 열매(30개)
-			//글 작성 후 개수 바로 카운트
+			
+			//글 작성 직후 개수 카운트
 			if(diaryCount==7 || diaryCount==14 || diaryCount==30) {
+				//등업조건일 경우 등업문구 띄우기
 				Member changeGrade = updateGrade(session);
 				session.setAttribute("loginUser", changeGrade);
 				session.setAttribute("alertMsg", "축하합니다!회원등급이 \\n"+m.getGrade()+"에서 "
 												+changeGrade.getGrade()+"로 변경되었습니다!\\n"
 												+ "앞으로도 열심히 일지를 작성해주세요!");
 			}else {
+				//등업아닐시엔 일반 메세지
 				session.setAttribute("alertMsg", "일지 작성 성공");
 			}
 			return "redirect:/diary.me";
@@ -438,17 +547,17 @@ public class MypageController {
 		int diaryCount = diaryService.diaryListCount(userNo);
 		int grade = 0;
 		//등급 올라가는 경우
-		if(diaryCount==7) {
+		if(diaryCount==7) { //새싹
 			grade = diaryService.gradeShoot(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m); // 기존 회원정보 조회메소드 활용
 			}
-		}else if(diaryCount==14){
+		}else if(diaryCount==14){ //잎새
 			grade = diaryService.gradeLeaf(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m);
 			}
-		}else if(diaryCount==30){
+		}else if(diaryCount==30){ //열매
 			grade = diaryService.gradeFruit(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m); 
@@ -456,24 +565,22 @@ public class MypageController {
 		}
 		
 		//등급이 내려가는 경우
-		if(diaryCount==6) {
+		if(diaryCount==6) {//씨앗으로
 			grade = diaryService.gradeSeed(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m);
 			}
-		}else if(diaryCount==13) {
+		}else if(diaryCount==13) { //새싹으로
 			grade = diaryService.gradeShoot(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m);
 			}
-		}else if(diaryCount==29){
+		}else if(diaryCount==29){ //잎새로
 			grade = diaryService.gradeLeaf(userNo);
 			if(grade>0) {
 				changeGrade = memberService.loginMember(m);
 			}
 		}
-		
-		
 		return changeGrade;
 	}
 
@@ -524,6 +631,7 @@ public class MypageController {
 
 		f = new SimpleDateFormat("YYYY/MM/dd");
 		String selectDate = f.format(date);
+		
 
 		// 뽑고자 하는 일지 Diary에 담아주기
 		d.setDiaryWriter(userNo);
@@ -531,6 +639,9 @@ public class MypageController {
 
 		Diary diaryOne = diaryService.selectDiary(d);
 
+		String open = diaryOne.getSelectOpen();
+		
+		diaryOne.setSelectOpen(open);
 		return diaryOne;
 	}
 
@@ -555,6 +666,29 @@ public class MypageController {
 
 		return "mypage/diaryViewPage";
 	}
+	
+	//영농일지 뷰페이지로 넘기기
+		@PostMapping("fView.di")
+		public String followDiaryView(Integer diaryNo, Date selectDate, Model model) {
+
+			Diary d = diaryService.viewDiary(diaryNo);
+
+			// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
+			f = new SimpleDateFormat("YYYY/MM/dd");
+			String date = f.format(selectDate);
+
+			String cNo = d.getCategoryNo();
+			DiaryCategory dc = diaryService.selectCategory(cNo);
+
+			// d에 바꾼 값 넣어주기
+			d.setSelectDate(date); // 날짜형식변경
+			d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
+
+			model.addAttribute("d", d);
+
+			return "mypage/followDiaryView";
+		}
+
 
 	//영농일지 삭제
 	@GetMapping("delete.di")
@@ -601,13 +735,13 @@ public class MypageController {
 		//전체 게시글 개수 (listCount)
 		int listCount = diaryService.orderListCount(userNo);
 		//한 페이지에서 보여줘야하는 게시글 개수 
-		int boardLimit = 10;
+		int boardLimit = 5;
 		//페이징바 개수 (pageLimit)
 		int pageLimit = 5;
 		
 		//페이징 처리된 게시글 목록 조회하기
 		PageInfo oPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		ArrayList<Product> oList = diaryService.myOrderList(userNo, oPi);
+		ArrayList<Payments> oList = diaryService.myOrderList(userNo, oPi);
 		
 		//map에 페이지 정보와 글정보 담기
 		result.put("oList", oList);
@@ -616,7 +750,7 @@ public class MypageController {
 		return result;
 	}
 
-	//구매내역
+	//판매내역
 	@ResponseBody
 	@PostMapping(value="sellPage.me",produces="application/json; charset=UTF-8")
 	public Map<String, Object> sellPage(int userNo
@@ -629,14 +763,13 @@ public class MypageController {
 		//전체 게시글 개수 (listCount)
 		int listCount = diaryService.sellListCount(userNo);
 		//한 페이지에서 보여줘야하는 게시글 개수 
-		int boardLimit = 10;
+		int boardLimit = 5;
 		//페이징바 개수 (pageLimit)
 		int pageLimit = 5;
 		
 		//페이징 처리된 게시글 목록 조회하기
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		ArrayList<Product> sList = diaryService.mySellrList(userNo, sPi);
-		
+		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
 		result.put("sList", sList);
 		result.put("sPi", sPi);
@@ -644,8 +777,86 @@ public class MypageController {
 		return result;
 	}
 	
+	//구매 검색 내역
+	@ResponseBody
+	@PostMapping(value="searchOrder.me",produces="application/json; charset=UTF-8")
+	public Map<String, Object> searchOrderPage(@RequestParam int userNo, @RequestParam String searchDate,
+										@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
+		
+		String date = searchDate.substring(2,7).replace("-", "/"); //DB형식에 날짜 맞추기(yy/MM)
+		Payments pm = new Payments();
+		pm.setUserNo(userNo);
+		pm.setOrderDate(date);
+		
+		//게시글 조회하기
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		//페이징 처리
+		int currentPage = Integer.parseInt(cp);
+		int listCount = diaryService.searchDateOrderCount(pm);
+		int boardLimit = 5;
+		int pageLimit = 5;
+		
+		//페이징 처리된 게시글 목록 조회하기
+		PageInfo soPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		ArrayList<Payments> oList = diaryService.searchOrderList(pm, soPi);
+		
+		//map에 페이지 정보와 글정보 담기
+		result.put("oList", oList);
+		result.put("oPi", soPi);
+				
+		return result;
+	}
 	
+	//판매 검색 내역
+	@ResponseBody
+	@PostMapping(value="searchSell.me",produces="application/json; charset=UTF-8")
+	public Map<String, Object> sellSearchPage(@RequestParam int userNo, @RequestParam String searchDate,
+											@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
+		
+		String date = searchDate.substring(2,7).replace("-", "/"); //DB형식에 날짜 맞추기(yy/MM)
+		
+		Product p = new Product();
+		p.setUserNo(userNo);
+		p.setRegiDate(date);
+		
+		//페이징처리 된 게시글 조회하기
+		Map<String, Object> result = new HashMap<String, Object>();
+		//현재 페이지 정보 (currentPage)
+		int currentPage = Integer.parseInt(cp);
+		//전체 게시글 개수 (listCount)
+		int listCount = diaryService.searchDateSellCount(p);
+		//한 페이지에서 보여줘야하는 게시글 개수 
+		int boardLimit = 5;
+		//페이징바 개수 (pageLimit)
+		int pageLimit = 5;
+		
+		//페이징 처리된 게시글 목록 조회하기
+		PageInfo ssPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		ArrayList<Product> sList = diaryService.searchSellList(p, ssPi);
+		
+		//map에 페이지 정보와 글정보 담기
+		result.put("sList", sList);
+		result.put("sPi", ssPi);
+				
+		return result;
+	}
 	
+	//찜내역
+	@ResponseBody
+	@GetMapping(value="wishList.me",produces="application/json; charset=UTF-8")
+	public Map<String, Object> wishListPage(int userNo) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		ArrayList<Product> wishList = diaryService.selectWish(userNo);
+		result.put("wishList", wishList);
+		return result;
+	}
 	
+	@GetMapping("modal.me")
+	public String loadModal() {
+		return "member/memberModal";
+	}
+
 	
 }
