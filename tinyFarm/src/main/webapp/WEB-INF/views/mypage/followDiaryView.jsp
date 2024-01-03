@@ -81,8 +81,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">일지보기</a></li>
+                            <li class="breadcrumb-item"><a onclick="window.go(-2);"><i class="fa fa-home"></i> 팔로우 목록보기</a></li>
+                            <li class="breadcrumb-item"><a onclick="window.go(-1);">달력보기</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -114,8 +114,6 @@
 	                        <div id="diaryContent">${d.diaryContent }</div>
 	                    </div>
 	                    <div class="btn-area">
-	                        <button id="updateBtn" class="btn-green">수정</button>
-	                        <button id="delBtn" class="btn-green">삭제</button>
 	                        <button id="backBtn" class="btn-green">뒤로가기</button>
 	                    </div>
                 	</div>
@@ -128,19 +126,6 @@
     $('#diaryContent').summernote("destroy");
 
         $(function () {
-            $("#delBtn").click(function () {
-                let warn = window.confirm("삭제 후 되돌릴 수 없습니다.\n등급 기준에 따라 등급이 하락할 수도 있습니다.\n정말로 삭제하시겠습니까?");
-                if (warn) {
-                    location.href = "delete.di?diaryNo="+${d.diaryNo};
-                } else {
-                    return false;
-                }
-            });
-            
-            $("#updateBtn").click(function(){
-            	location.href="updatePage.di?diaryNo="+${d.diaryNo};
-            });
-            
             $("#backBtn").click(function(){
             	let alert = window.confirm("이전페이지로 이동하시겠습니까?");
             	if(alert){

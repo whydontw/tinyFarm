@@ -73,15 +73,15 @@
                             <div class="mb-0">
                                 <p><h5><b>🌱 답변 관리</b></h5></p>
                             </div>
-<!--                             <div class="search_by_terms"> -->
-<!--                                 <form action="#" method="post" class="form-inline"> -->
-<!--                                     <select class="custom-select widget-title"> -->
-<!--                                       <option selected>Show:</option> -->
-<!--                                       <option value="1">미답변</option> -->
-<!--                                       <option value="2">답변완료</option> -->
-<!--                                     </select> -->
-<!--                                 </form> -->
-<!--                             </div> -->
+                            <div class="search_by_terms">
+                                <form action="#" method="post" class="form-inline" >
+                                    <select class="custom-select widget-title" id="answerYn" onchange="changeAnswerYn(this.value)">
+                                      <option value="2">Show: ALL</option>
+                                      <option value="0">미답변</option>
+                                      <option value="1">답변완료</option>
+                                    </select>
+                                </form>
+                            </div>
                         </div>
 
                         <!-- 표 작성 내역 -->
@@ -139,6 +139,11 @@
                         
 					    	
                         $(function(){
+                        	
+                        	
+                        	console.log("답변개수", ${answerYn})
+                        	
+                        	$("#answerYn").val(${answerYn});
                         	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
@@ -226,6 +231,11 @@
                             
                         }
                         
+                        
+                        function changeAnswerYn(value){
+                        	location.href = "qnaList.ad?currentPage=1&answerYn=" + value;
+                        }
+                        
 					    </script>
                         
                         
@@ -257,18 +267,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${pi.currentPage-1}&answerYn=${answerYn}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
-                                
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${i}&answerYn=${answerYn}">${i}</a></li>
 									</c:forEach>
 									
-				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="${contextPath }/admin/qnaList?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="${contextPath }/qnaList.ad?currentPage=${pi.currentPage+1}&answerYn=${answerYn}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                     
                                 </ul>

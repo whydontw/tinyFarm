@@ -194,10 +194,14 @@ public class AdminController {
 	
 	//QNA 목록
 	@GetMapping("/qnaList.ad")
-	public String selectQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+	public String selectQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="answerYn", defaultValue="2") int answerYn, Model model) {
+		
+		HashMap<String, Integer> qMap = new HashMap<String, Integer>();
+		qMap.put("answerYn", answerYn);
+		
 		
 		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
-		int qnaListCount = qnaService.qnaListCount();
+		int qnaListCount = qnaService.qnaListCount(qMap);
 
 		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
 		int boardLimit = 5;
@@ -207,11 +211,15 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(qnaListCount, currentPage, pageLimit, boardLimit);
 
 		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
-		ArrayList<Qna> qList = qnaService.selectQnaList(pi);
+		ArrayList<Qna> qList = qnaService.selectQnaList(pi, qMap);
+		
+		
+		System.out.println("답변여부" + answerYn);
 		
 
 		model.addAttribute("qList", qList);
 		model.addAttribute("pi", pi);
+		model.addAttribute("answerYn", answerYn);
 
 
 		return "admin/qnaList";
