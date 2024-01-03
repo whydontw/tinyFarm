@@ -95,7 +95,7 @@
     <!-- ##### Breadcrumb Area End ##### -->
     
 	<!-- 작물 검색 -->
-    <div class="pccontainer" align="center">
+    <!-- <div class="pccontainer" align="center">
 		<div>
 			<table class="psearch-area">
 				<tr id=psearch>
@@ -115,7 +115,7 @@
 				</tr>
 			</table>
 		</div>
-	</div>
+	</div> -->
 	
 	<br><br>
     
@@ -147,11 +147,12 @@
                                         <a href="<%=request.getContextPath()%>/pdetail.bo?pno=${p.productNo}">
                                         	<img src="${p.filePath}${p.changeName}" alt="" id="pimg">
                                         </a>
-                                        
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">결제하기</a>
-                                        </div>
+                                        <c:if test="${not empty loginUser}">
+	                                        <div class="product-meta" style="padding-left: 50px; width: 320px;">
+	                                            <!-- <a href="#" class="wishlist-btn" id="rec_update"><i class="icon_heart_alt"></i></a> -->
+	                                            <a href="<%=request.getContextPath()%>/porder.bo?pno=${p.productNo}" class="add-to-cart-btn">즉시구매</a>
+	                                        </div>
+                                        </c:if>
                                         
                                     </div>
 
@@ -209,6 +210,7 @@
 
     </section>
     <!-- ##### Shop Area End ##### -->
+                     
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
