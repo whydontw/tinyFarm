@@ -19,6 +19,7 @@
 			<result column = "BOOK_COUNT" property="bookCount"/>
 		</resultMap>
 		
+		
 		<insert id = "insertBook" parameterType="book">
 		INSERT INTO BOOK (  BOOK_NO
 							, BOOK_ORIGIN_NAME
@@ -43,5 +44,55 @@
 								, #{bookInfo}
 							)
 		</insert>
+		
+		
+		<!-- 책 개수 -->
+	  	<select id="bookListCount" resultType="_int">
+	  		SELECT COUNT(*)
+			FROM BOOK
+			<choose>
+				<when test="bookCategory == '원예'">
+					WHERE BOOK_CATEGORY LIKE '원예'
+				</when>
+				<when test="bookCategory == '조경'">
+					WHERE BOOK_CATEGORY LIKE '조경'
+				</when>
+				<when test="bookCategory == '텃밭'">
+					WHERE BOOK_CATEGORY LIKE '텃밭'
+				</when>
+				<otherwise></otherwise>
+			</choose>
+	  	</select>
+	  	
+	  	
+	  	<select id="selectBookList" resultMap="bookResultSet">
+	  		SELECT * FROM BOOK
+	  		ORDER BY
+	  		<choose>
+				<when test="orderByStandard == 'byHits'">
+					BOOK_COUNT DESC
+				</when>
+				<when test="orderByStandard == 'byHighPrice'">
+					BOOK_PRICE DESC
+				</when>
+				<when test="orderByStandard == 'byLowPrice'">
+					BOOK_PRICE ASC
+				</when>
+				<otherwise>
+					<!-- 최신 등록순 -->
+					BOOK_DATE DESC
+				</otherwise>
+			</choose>
+	  	</select>
+		
+		
+		
+		
+		
+		<select id="bookDetail" resultMap="bookResultSet">
+			SELECT * BOOK
+			WHERE BOOK_NO = #{bookNo}
+		</select>
+		
 		
  	</mapper>
