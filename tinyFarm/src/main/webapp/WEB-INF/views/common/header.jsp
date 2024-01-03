@@ -170,8 +170,7 @@
      <script type="text/javascript">
     
     	const alertMsg = "${alertMsg}";
-    	
-    	console.log(alertMsg);
+
     	
     	if(alertMsg != null && alertMsg != ""){
     		alert(alertMsg);

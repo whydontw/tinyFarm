@@ -32,11 +32,11 @@ public class Product {
 	private int count;
 	private String regiDate;
 	private String modiDate;
-	private String status;
 	private String salesStatus;
 	private String filePath;
 	private String changeName;
 	private String originName;
+	private int likeCount;
 	
 	
 

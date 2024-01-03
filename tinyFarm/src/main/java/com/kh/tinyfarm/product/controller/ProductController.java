@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.reflection.SystemMetaObject;
@@ -17,13 +16,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
+import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.service.ProductService;
 import com.kh.tinyfarm.product.model.vo.Category;
+import com.kh.tinyfarm.product.model.vo.Like;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 @Controller
@@ -50,12 +52,6 @@ public class ProductController {
 		
 		ArrayList<Product> list = productservice.selectList(pi);
 		
-//		System.out.println("출력");
-		
-//		for(Product p : list) {
-//			System.out.println(p.getChangeName());
-//		}
-		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
@@ -64,14 +60,34 @@ public class ProductController {
 	
 	//상품 상세조회
 	@GetMapping("pdetail.bo")
-	public String selectProduct(int pno, Model model) {
+	public String selectProduct(int pno, Model model, HttpSession session) {
 		
 		int result = productservice.increaseCount(pno);
-					
+				
 		if(result>0) {
+			
+			//오렌지에 대한 모든 정보
 			Product p = productservice.selectProduct(pno);
 			
+			int userNo = 0;
+			
+			if((Member) session.getAttribute("loginUser") != null) {
+				
+				userNo = ((Member) session.getAttribute("loginUser")).getUserNo();
+			}
+			
+			Product product = new Product();
+			product.setProductNo(pno);
+			product.setUserNo(userNo);
+			
+			int likeResult = productservice.selectLikeYn(product);
+			
+			
+			System.out.println(p);
+			
 			model.addAttribute("p",p);
+			model.addAttribute("likeNo", likeResult);
+			
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 조회 실패");
@@ -100,12 +116,9 @@ public class ProductController {
 		int presult = productservice.insertProduct(p);
 		int aresult = 0;
 		
-		System.out.println("인서트 p : "+p);
-		
 		if(!upfile.getOriginalFilename().equals("")) {
 			
 			Attachment a = new Attachment();
-			System.out.println("a(인서트) : "+a);
 			
 			String changeName = saveFile(upfile,session);
 			
@@ -171,7 +184,6 @@ public class ProductController {
 		
 		Product p = productservice.selectProduct(pno);
 		
-		System.out.println("pno : "+pno);
 		ArrayList <Category> clist = productservice.selectCategoryList();
 	
 		model.addAttribute("p",p);
@@ -186,23 +198,18 @@ public class ProductController {
 		
 		int presult = productservice.updateProduct(p);
 		int aresult = 0;
-		System.out.println("p : "+p);
 		
 		//게시글에 이미 첨부파일이 있는 경우 or 없는 경우
 		//파일이 담겨 넘어왔다면(새로운 첨부파일이 있는 경우)
 		if(!reUpFile.getOriginalFilename().equals("")) {
 			
-			System.out.println(reUpFile.getOriginalFilename());
-			
 			Attachment a = new Attachment();
-			System.out.println("a1 : "+a);
 			
 			String changeName = saveFile(reUpFile, session);
 			
 			//기존에 파일이 있다면
 			if(!p.getChangeName().equals("")) {
-				
-				System.out.println("a2 : "+a);
+			
 				//new File 객체로 해당 경로에 있는 파일(업로드되어있던)을 delete 메소드로 지우기
 				new File(session.getServletContext().getRealPath(p.getChangeName())).delete();
 			}
@@ -214,8 +221,6 @@ public class ProductController {
 			a.setFilePath("resources/uploadFiles/");
 			a.setRefNo(p.getProductNo());
 			
-			System.out.println("잘 넣었나보자 " + a);
-			
 			aresult = productservice.updateAttachment(a);
 		} 
 		
@@ -223,8 +228,8 @@ public class ProductController {
 		//update - DML
 		
 		
-		if(presult>0) {//수정 성공
-			session.setAttribute("alertmsg","게시글 수정 성공");
+		if((presult*aresult)>0) {//수정 성공
+			session.setAttribute("alertMsg","게시글 수정 성공");
 			return "redirect:pdetail.bo?pno="+p.getProductNo();
 		}else {
 			session.setAttribute("alertMsg","게시글 수정 실패");
@@ -233,6 +238,7 @@ public class ProductController {
 		
 	}
 	
+	//상품 삭제
 	@RequestMapping("pdelete.bo")
 	public String deleteProduct(int pno, String filePath, HttpSession session) {
 		
@@ -252,13 +258,49 @@ public class ProductController {
 		return "redirect:plist.bo";
 		
 	}
-		
 	
+	//상품 주문
+	@RequestMapping("porder.bo")
+	public String orderProduct(int pno, Model model) {
 		
-		
-		
+		Product selectProduct = productservice.selectProduct(pno);
+
+		model.addAttribute("p", selectProduct);
+
+		return "product/ProductOrderForm";
+	}
 	
+	//상품 좋아요 등록
+	@ResponseBody
+	@RequestMapping(value = "likeInsert.bo")
+	public int insertLike(@RequestParam int pno, HttpSession session) {
+		
+		Like like = new Like();
+
+		like.setProductNo(pno);
+		like.setUserNo(((Member) session.getAttribute("loginUser")).getUserNo());
+		
+		int p = productservice.insertLike(like);
+		
+		return p;
+	}
 	
+	//상품 좋아요 해제
+	@ResponseBody
+	@RequestMapping(value = "likeRemove.bo")
+	public int removeLike(@RequestParam int pno, HttpSession session) {
+		
+		Like like = new Like();
+
+		like.setProductNo(pno);
+		like.setUserNo(((Member) session.getAttribute("loginUser")).getUserNo());
+		
+		int p = productservice.removeLike(like);
+		
+		
+		return p;
+	}
+
 	
 	
 	

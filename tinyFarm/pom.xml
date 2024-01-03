@@ -7,6 +7,15 @@
 	<name>tinyFarm</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	
+	<!-- 결제 repositories -->
+	<repositories>
+  		<repository>
+    		<id>jitpack.io</id>
+    		<url>https://jitpack.io</url>
+  		</repository>
+	</repositories>
+
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
@@ -254,6 +263,19 @@
 			<artifactId>commons-email</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<!-- 결제(import) -->
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.14</version>
+		</dependency>
+				 
+
+
+
+
+
 
 	</dependencies>
     <build>
