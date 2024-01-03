@@ -2,6 +2,7 @@ package com.kh.tinyfarm.qna.model.service;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.qna.model.vo.Qna;
@@ -13,15 +14,15 @@ public interface QnaService {
 	int qnaEnroll(Qna qna);
 
 	//QNA 총 개수
-	int qnaListCount();
+	int qnaListCount(HashMap<String, Integer> qMap);
 
 	
 	//##################################################
 	//QNA 글 목록
-	ArrayList<Qna> selectQnaList(PageInfo pi);
+	ArrayList<Qna> selectQnaList(PageInfo pi, HashMap<String, Integer> qMap);
 
 	//QNA 글 목록(USER)
-	ArrayList<Qna> selectMyQnaList(PageInfo pi, int userNo);
+	ArrayList<Qna> selectMyQnaList(PageInfo pi, HashMap<String, Integer> qMap);
 	//##################################################
 
 	

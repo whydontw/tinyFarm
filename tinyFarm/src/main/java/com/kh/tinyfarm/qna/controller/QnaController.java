@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.qna.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -54,7 +55,7 @@ public class QnaController {
 		
 		//사용자 QNA 목록
 		@GetMapping("/qnaList.qa")
-		public String selectMyQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+		public String selectMyQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="showPeriod", defaultValue="1") int showPeriod, Model model, HttpSession session) {
 			
 			Member m = null;
 			
@@ -65,13 +66,18 @@ public class QnaController {
 				session.setAttribute("alertMsg", "로그인을 해주세요");
 				return "redirect:loginGo.me";
 			}
-			
-			
+
 			int userNo = m.getUserNo();
+			
+			HashMap<String, Integer> qMap = new HashMap<String, Integer>();
+			qMap.put("userNo", userNo);
+			qMap.put("showPeriod", showPeriod);
+			
+			
 			
 			
 			// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
-			int qnaListCount = qnaService.qnaListCount();
+			int qnaListCount = qnaService.qnaListCount(qMap);
 	
 			// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
 			int boardLimit = 5;
@@ -80,10 +86,12 @@ public class QnaController {
 	
 			PageInfo pi = Pagination.getPageInfo(qnaListCount, currentPage, pageLimit, boardLimit);
 	
-			ArrayList<Qna> qList = qnaService.selectMyQnaList(pi, userNo);
+			
+			ArrayList<Qna> qList = qnaService.selectMyQnaList(pi, qMap);
 			
 			model.addAttribute("qList", qList);
 			model.addAttribute("pi", pi);
+			model.addAttribute("period", showPeriod);
 	
 			return "qna/qnaList";
 		}

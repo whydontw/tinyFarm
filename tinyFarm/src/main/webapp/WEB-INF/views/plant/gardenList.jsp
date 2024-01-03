@@ -21,6 +21,11 @@
 		.plantImg,.plantName:hover{
 			cursor : pointer;
 		}
+		.plantImg{
+			width:250px;
+			height:250px;
+			border-radius: 10px;
+		}
 		.searchContainer{
 			margin-bottom:50px;
 			display:flex;
@@ -94,7 +99,7 @@
 		</div>
 	</div>
 	
-    <section class="new-arrivals-products-area bg-gray section-padding-0-100">
+    <section class="new-arrivals-products-area section-padding-0-100">
     	<!-- ##### Single Widget Area ##### -->
   		
         <div class="container">
@@ -132,7 +137,7 @@
 				                	<input type="submit" class="submitBtn" hidden>
 			                        <!-- Product Image -->
 			                        <div class="product-img">
-			                            <img class="plantImg" src="${p.rtnFileUrl[0]}" style="width:250px; height:250px;">
+			                            <img class="plantImg" src="${p.rtnFileUrl[0]}">
 			                        </div>
 			                        <!-- Product Info -->
 			                        <div class="product-info mt-15 text-center">

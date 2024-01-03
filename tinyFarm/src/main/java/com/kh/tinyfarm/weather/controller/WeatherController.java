@@ -56,7 +56,6 @@ public class WeatherController {
 
 		URL requestUrl = new URL(url);
 		
-		System.out.println(requestUrl);
 		
 		HttpURLConnection urlCon = (HttpURLConnection)requestUrl.openConnection(); 
 		
@@ -74,8 +73,6 @@ public class WeatherController {
 		br.close();
 		urlCon.disconnect();
 
-		
-		System.out.println(responseStr);
 		return responseStr;
 		
 	}

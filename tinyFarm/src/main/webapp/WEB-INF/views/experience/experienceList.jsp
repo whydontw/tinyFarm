@@ -18,25 +18,31 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous">
 	<style>
-		.plantImg,.plantName:hover{
+		.exImg:hover,.exName:hover{
 			cursor : pointer;
 		}
+		.exImg{
+			 width:100%;
+			 height:250px;
+			 border-radius: 10px;
+		}
 		.searchContainer{
-			margin-bottom:50px;
 			display:flex;
 			justify-content: flex-end;
+			margin:0 auto;
+			
 		}
 		.searchOutDiv{
-			width: 235px;
+			width: 320px;
 			height:35px;
-		
+			margin-bottom:30px;
 			/* margin-top: 15px;
 			margin-bottom: 15px; */
 			vertical-align:middle;
 			border: 2px #70c745 solid ;
 		}
 		.searchOutDiv input{
-			width: 200px;
+			width: 210px;
 			height: 20px;
 			border-style: none;
 			padding:10px;
@@ -46,7 +52,7 @@
 		.searchInDiv{
 			display:flex;
 			align-items:center;
-			width:420px;
+			width:310px;
 			height:20px;
 			margin:0 auto;
 			margin:5px auto;
@@ -65,6 +71,12 @@
 		 	border:none;
 		 	align-content: center;
 		}
+		#sType{
+			border:none;
+			outline:none;
+			
+		}
+		
 	</style>
 </head>
 <body>
@@ -94,7 +106,7 @@
 		</div>
 	</div>
 	
-    <section class="new-arrivals-products-area bg-gray section-padding-0-100">
+    <section class="new-arrivals-products-area section-padding-0-100">
     	<!-- ##### Single Widget Area ##### -->
   		
         <div class="container">
@@ -110,6 +122,11 @@
         	<div class="searchContainer">
 		        <div class="searchOutDiv">
 		        	<div class="searchInDiv">
+						<select id="sType">
+							<option value="sCntntsSj">제목명</option>
+							<option value="sLocplc">지역명</option>
+							<option value="sThema">주제명</option>
+						</select>
 			  			<input type="search" id="searchInput" placeholder="search..">
 				  		<button id="searchBtn" onclick="search();"><img src="${contextPath}/resources/img/icon/search.svg"></button>       	
 			        	
@@ -117,7 +134,7 @@
 		        	
 		  			
 		  		</div> 
-        	</div>
+		    </div>
 
 			 <div class="row itemRow">
 				<c:forEach items="${list}" var="li">
@@ -125,17 +142,17 @@
 		                <div class="col-12 col-sm-6 col-lg-3">
 		                    <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
 			                	
-				                <form action="detailInGarden.pp" method="post">
-
+				                <form action="experienceDetail.ex">
+									<input type="hidden" name="cntntsNo" value="${li.cntntsNo}">
 				                	<input type="submit" class="submitBtn" hidden>
 			                        <!-- Product Image -->
-			                        <div class="product-img">
-			                            <img class="plantImg" src="${li.imgUrl}" style="width:250px; height:250px;">
+			                        <div class="ex-img-div">
+			                            <img class="exImg" src="${li.imgUrl}">
 			                        </div>
 			                        <!-- Product Info -->
 			                        <div class="product-info mt-15 text-center">
 	
-			                            <p class="plantName">{li.cntntsSj}</p>
+			                            <p class="exName">${li.cntntsSj}</p>
 			                        </div>
 			                    </form>
 		                    </div>
@@ -153,16 +170,16 @@
 		                        <button  class='btn btn-sm' disabled>이전</button>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}&sText=${sText}'">이전</button>
+		                        <button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}&sText=${sText}&sType=${sType}'">이전</button>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='inGardenPlantList.pp?currentPage=${i}&sText=${sText}'">${i}</button>
+		                			<button class='btn btn-sm active' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${i}&sText=${sText}'">${i}</button>
+		                			<button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
@@ -171,7 +188,7 @@
 		                        <button  class='btn btn-sm' disabled>다음</button>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}&sText=${sText}'">다음</button>
+		                        <button  class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage+1}&sText=${sText}&sType=${sType}'">다음</button>
 		                    </c:otherwise>
 		                </c:choose>
 					</c:when>
@@ -181,16 +198,16 @@
 		                        <button  class='btn btn-sm' disabled>이전</button>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage-1}'">이전</button>
+		                        <button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}'">이전</button>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
+		                			<button class='btn btn-sm active' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${i}'">${i}</button>
+		                			<button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
@@ -210,6 +227,19 @@
 
         </div>
     </section>
+    <script>
+	    $(".exImg").click(function(){
+	    	
+			$(this).parents("form").children(".submitBtn").click();
+		});
+	    function search(){
+    		var input = document.getElementById("searchInput");
+    		var selectEl = document.getElementById("sType");
+    		var selectValue = selectEl.options[selectEl.selectedIndex].value;
+    		location.href = "experienceList.ex?sText="+input.value+"&sType="+selectValue;
+    		
+    	}
+    </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     <!-- ##### Product Area End ##### -->
 </body>

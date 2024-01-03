@@ -203,6 +203,15 @@
                 					item.status = '활동중지';
                 				}
                 				
+                				if(item.email == null){
+                					item.email = '-';
+                				}
+                				
+                				if(item.phone == null){
+                					item.phone = '-';
+                				}
+                				
+                				
                 				str += "<tr><td>" + item.userNo + "</td>" +
                                  		"<td>" + item.userId + "</td>" +
                                  		"<td>" + item.userName + "</td>" +
@@ -328,17 +337,7 @@
                         			$("#userGrade_detail").val(result.grade);
                         			$("#userAddress_detail").val(result.address);
                         			$("#userPhone_detail").val(result.phone);
-                        			
-                        			var imageSrc = "";
-                        			
-                        			if(result.changeName == null){
-                        				imageSrc = "${contextPath}/resources/img/icon/common_koongya.jpg";
-                        			
-                        			}else{
-                        				imageSrc = "${contextPath}/" + result.changeName;
-                        			}
-                        			
-                        			$("#profileImage").prop("src", imageSrc);
+                        			$("#profileImage").prop("src", "${contextPath}/" + result.changeName);
                         			
                                 	$("#memberdetailViewModal").click();
                                 	
@@ -375,8 +374,6 @@
                         			
                         			$("#userStatus_detail").val(result.status);
                         			$("#userGrade_detail").val(result.grade);
-                        			
-                        			alert(${currentPage});
                         			
                                 	selectMemberList(${currentPage}, $("#searchMemberId").val());
                         			
