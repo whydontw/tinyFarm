@@ -58,8 +58,8 @@
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
 						<div class="post-content">
-							<a href="boardReportList.ad" class="post-title"><h6>신고 게시글 관리</h6></a>
-							<a href="replyReportList.ad" class="post-title"><h6>신고 댓글 관리</h6></a>
+							<a href="boardList.ad" class="post-title"><h6>게시글 관리</h6></a>
+							<a href="replyList.ad" class="post-title"><h6>댓글 관리</h6></a>
 						</div>
 					</div>
 				</div>

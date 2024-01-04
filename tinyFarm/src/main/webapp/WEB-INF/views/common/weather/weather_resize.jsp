@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
   color:#9D9D9D;
 }
 .weather__card img {
-  width: 70px;
+  width: auto;
   height: 70px;
 }
 .weather__card .weather__description {
@@ -96,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 .weather__forecast img {
   height: 25px;
-  width: 25px;
+/*   width: 25px; */
   vertical-align:middle;
 }
 .weather__forecast span {
@@ -333,7 +333,7 @@ h1, h2, h3, h4, h5, h6 {
 		        switch (item.PTY) {
 		            case "0":
 		            	
-		            	if(date.getHours() > 6 && date.getHours() < 18){
+		            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
 			                item.WeatherImg = imgSrc + "Sun.png'>";
 		            	}else{
 			                item.WeatherImg = imgSrc + "Moon.png'>";
@@ -354,7 +354,13 @@ h1, h2, h3, h4, h5, h6 {
 		                item.PTY = '눈';
 		                break;
 		            case "5":
-		                item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
+		            	
+		            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
+		        			item.WeatherImg = imgSrc + "Rain_Light_Sun.png'>";
+		            	}else{
+		            		item.WeatherImg = imgSrc + "Rain_Light_Moon.png'>";
+		            	}
+		            	
 		                item.PTY = '빗방울';
 		                break;
 		            case "6":
@@ -371,16 +377,22 @@ h1, h2, h3, h4, h5, h6 {
 		        
 		        
 		        //맑지는 않은데 구름있거나 흐린 경우
-		        if(!(item.SKY == '맑음')){	//맑지 않음
+		        if(item.SKY != '맑음'){	//맑지 않음
 		        	
-		        	if(item.PTY == '구름많음'){
-		        		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
-		        	}else if(item.PTY == '흐림'){
+		        	if(item.SKY == '구름많음'){
+
+		        		if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
+		            		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
+		            	}else{
+		            		item.WeatherImg = imgSrc + "Cloud_Moon.png'>";
+		            	}
+		        		
+		        	}else if(item.SKY == '흐림'){
 		        		item.WeatherImg = imgSrc + "Cloud.png'>";
 		        	}
 		        	
 		        }
-		        	
+		        
 		        perHours +=
 		            "<div class='p-1 d-flex flex-column justify-content-center align-items-center'>" +
 		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + "</span></div>" +
@@ -393,7 +405,7 @@ h1, h2, h3, h4, h5, h6 {
 		
 		    
 	        //현재날씨 넣기
-	        updateWeatherHour
+// 	        updateWeatherHour
 			$("#todayT1H").text(weatherList[0].T1H);
 			$("#todaySKY").text(weatherList[0].SKY);
 			$("#todayPTY").text(weatherList[0].PTY);
@@ -405,7 +417,12 @@ h1, h2, h3, h4, h5, h6 {
 			$("#updateWeatherHour").text((weatherList[0].fcstTime).substr(0,2) + ":00 기준");
 		    $("#todayWeatherInfoArea").html(perHours);
 
-			
+		
+		    
+		    
+		    //초록예보~
+		   	todayGreenCast(weatherList[0].T1H, weatherList[0].REH);
+		    
 		}
 
 	

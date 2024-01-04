@@ -35,7 +35,20 @@
   	<select id="qnaListCount" resultType="_int">
   		SELECT COUNT(*)
 		FROM QNA LEFT JOIN QNA_ANSWER USING(QNA_NO)
+		<if test="showPeriod == 7">
+			WHERE QNA_CREATEDATE >= SYSDATE - 7
+		</if>
+		<if test="showPeriod == 30">
+			WHERE QNA_CREATEDATE >= SYSDATE - 30
+		</if>
+		<if test="answerYn == 0">
+			WHERE QNA_ANSWER_CREATEDATE IS NULL
+		</if>
+		<if test="answerYn == 1">
+			WHERE QNA_ANSWER_CREATEDATE IS NOT NULL
+		</if>
   	</select>
+  	
   	
   	<!-- ############### 추후 동적 SQL 합쳐기 ############### -->
   	<!-- 관리자 - QNA 리스트 조회 -->
@@ -51,8 +64,15 @@
 			FROM QNA
 			JOIN MEMBER USING(USER_NO)
 			LEFT JOIN QNA_ANSWER USING(QNA_NO)
+			<if test="answerYn == 0">
+				WHERE QNA_ANSWER_CREATEDATE IS NULL
+			</if>
+			<if test="answerYn == 1">
+				WHERE QNA_ANSWER_CREATEDATE IS NOT NULL
+			</if>
 			ORDER BY QNA_NO DESC
 	</select>
+	
 	
   	<!-- 사용자 - QNA 리스트 조회 -->
 	<select id="selectMyQnaList" resultMap="qnaResultMap">
@@ -68,6 +88,12 @@
 			JOIN MEMBER USING(USER_NO)
 			LEFT JOIN QNA_ANSWER USING(QNA_NO)
 			WHERE USER_NO = #{userNo}
+			<if test="showPeriod == 7">
+				AND QNA_CREATEDATE >= SYSDATE - 7
+			</if>
+			<if test="showPeriod == 30">
+				AND QNA_CREATEDATE >= SYSDATE - 30
+			</if>
 			ORDER BY QNA_NO DESC
 	</select>
 	  	<!-- ############### 추후 동적 SQL 합쳐기 ############### -->

@@ -20,10 +20,11 @@
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/scss/style.css">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     
 
+    
+ 
 </head>
 
 <body>
@@ -110,27 +111,80 @@
 
                             <div class="cart--area d-flex flex-wrap align-items-center" style="padding-top: 50px;">
                                 <!-- 찜, 문의하기, 구매하기 버튼 -->
-                                <div>
-                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15"><i class="icon_heart_alt"></i> 찜</button>
-                                </div>
+                                <c:choose>
+				                    <c:when test="${not empty loginUser}">
+				                    	<c:choose>
+				                    		<c:when test="${likeNo == 0}">
+				                    		<!-- 빈하트일때 -->
+					                    		<div>
+	                                			<a idx="${p.productNo}" href="javascript:"
+	                                				class="btn alazea-btn ml-15${p.productNo}" id="rec_update">
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+														<path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+													</svg>
+	                                				${p.likeCount}</a>
+	                                    		<!-- <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15" onclick="loginRequest();"><i class="bi bi-suit-heart"></i> 찜</button> -->
+                                				</div>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    		<!-- 꽉찬 하트일때 -->
+				                    			<div>
+                                				<a idx="${p.productNo}" href="javascript:" class="btn alazea-btn ml-15${p.productNo}" id="rec_update">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+  													<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+												</svg>
+                                				${p.likeCount}</a>
+                                    			<!-- <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15" id="rec_update"><i class="bi bi-suit-heart"></i> 찜</button> -->
+                                				</div>
+				                    		</c:otherwise>
+				                    	</c:choose>
+                                	</c:when>
+                                	
+                                	<c:otherwise>
+                                	<div>
+                             			<a href="javascript:" class="btn alazea-btn ml-15 notlogin" onclick="loginRequest();">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+											<path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+										</svg>
+                             			${p.likeCount}</a>
+                                 		<!-- <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15" onclick="loginRequest();"><i class="bi bi-suit-heart"></i> 찜</button> -->
+                            		</div>	
+                                	</c:otherwise>
+                                </c:choose>
+                                <span id="likeCount">${likeCount}</span>
+                                
+                                
+                                
                                 <div>
                                     <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 문의하기</button>
                                 </div>
-                                <form class="cart clearfix d-flex align-items-center" method="post">
-                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">구매하기</button>
-                                </form>
+                                <c:choose>
+				                    <c:when test="${empty loginUser}">
+                                		<div>
+                                    		<button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15" onclick="loginRequest();">구매하기</button>
+                                		</div>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<div>
+                                    		<button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15" onclick="location.href='<%=request.getContextPath()%>/porder.bo?pno=${p.productNo}'">구매하기</button>
+                                		</div>
+                                	</c:otherwise>
+                                </c:choose> 
+
                             </div>
                             
                         	<br>
 
-							<!-- 로그인한 유저가 글을 작성한 유저 아이디와 동일하거나 admin일 경우 글 수정 삭제가 가능-->	
+							
 							<!-- 수정/삭제 -->
 							<div class="pdubtn" align="center">
-						
+								
+								<c:if test="${not empty loginUser}">
 									<div align="center" id="bottondiv">
 										<a type="submit" name="addtocart" id="deleteBtn" value="5" class="btn alazea-btn-gray ml-15">삭제하기</a>
 		                            	<a type="submit" name="addtocart" id="" value="5" class="btn alazea-btn-orange ml-15" href="pupdate.bo?pno=${p.productNo}">수정하기</a>
 									</div>
+								</c:if>
 
                         	</div>
                         </div>
@@ -185,23 +239,123 @@
            		
            		
            	});
-           
+           	
+
            
 	</script>
+	
+   	
+   	<!-- 추천 기능에 쓰이는 함수들 -->
+	<script>
+		$("#rec_update").click(function(){
+			
+			//pno를 idx로 전달받아 저장
+			let pno = $(this).attr('idx');
+			
+			
+			//빈하트 눌렀을때
+			if($(this).children('svg').attr('class') == "bi bi-suit-heart"){
+
+
+				$.ajax({
+					url : 'likeInsert.bo',
+					type : 'get',
+					data : {
+						pno
+					},
+					success : function(p){
+						
+						var likeCnt = p;
+						
+						console.log("하트추가 성공");
+						console.log("p : ", p);
+						
+						
+						console.log("디스 " , $(this));
+						
+						
+						$("#rec_update").html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">'+
+								'<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/></svg>  ' + likeCnt);
+						console.log("this : "+this);
+						
+						console.log("꽉찬하트로 바뀌이이");
+						console.log("likecount: "+ likeCnt);
+						
+						
+					},
+					error : function(){
+						console.log('서버 에러');
+					}
+				});
+				
+
+				/* 
+				$('rec_update'+pno).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">'+
+				'<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/></svg>'+ likeCnt);
+				console.log("pno : "+$('rec_update'+pno)); */
+
+			//꽉찬 하트 눌렀을때
+			}else if($(this).children('svg').attr('class') == "bi bi-suit-heart-fill"){
+				console.log("꽉찬하트 click"+pno);
+				
+			 	$.ajax({
+					url : 'likeRemove.bo',
+					type : 'get',
+					data : {
+						pno
+					},
+					success : function(p){
+						
+						var likeCnt = p;
+/* 						let likeCount = p.likeCount;
+						$('#likeCount'+pno).text(likeCount); */
+						
+						console.log("하트 삭제 성공");
+						console.log("p : ", p);
+						
+					 	//빈하트로 바꾸기
+					 	
+					 	$("#rec_update").html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">'+
+						'<path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/></svg>  '+likeCnt);
+						
+						
+					},
+					error : function(){
+						console.log('서버 에러');
+					}
+				});
+			 	console.log("빈하트로 바꾸기");
+			 	
+
+				
+		
+			
+/* 				$('rec_update'+pno).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">'+
+				'<path d=""m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/></svg>'+ likeCnt);
+				console.log("pno : "+$('rec_update'+pno)); */
+				
+			}
+					
+		});
+		
+
+	</script>
+
+
+
+
+	
+	<!-- 찜기능 로그인 전(로그인 유도) 스크립트 -->	 
+	<script>
+	function loginRequest(){
+  			alert("로그인 후 이용해주세요.");
+  			location.href="loginGo.me";
+  				return false;
+			}
+	</script>
+   	
             
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
     <!-- ##### All Javascript Files ##### -->
@@ -215,6 +369,10 @@
     <script src="js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+    
+    
+    
+    
 </body>
 
 </html>

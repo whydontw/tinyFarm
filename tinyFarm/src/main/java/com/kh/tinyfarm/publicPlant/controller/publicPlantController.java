@@ -154,7 +154,8 @@ public class publicPlantController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/inGardenPlantListAjax.pp", produces = "application/json; charset=UTF-8")
-	public ArrayList<InGardenPlantList> getInGardenPlantList(int pageNo) throws IOException {
+	public ArrayList<InGardenPlantList> getInGardenPlantList(@RequestParam(value="pageNo",defaultValue = "1")int pageNo
+															,@RequestParam(value="ignSeasonChkVal",defaultValue = "073001")String ignSeasonChkVal) throws IOException {
 		ArrayList<InGardenPlantList> list = new ArrayList();
 		
 		// apiKey - 농사로 Open API에서 신청 후 승인되면 확인 가능
@@ -164,11 +165,12 @@ public class publicPlantController {
 
 		// 오퍼레이션 명
 		String operationNameList = "gardenList";
-
+	
 		// XML 받을 URL 생성
 		String parameter = "/" + serviceName + "/" + operationNameList;
 		parameter += "?apiKey=" + apiKey;
 		parameter += "&pageNo=" + pageNo;
+		parameter += "&ignSeasonChkVal=" + ignSeasonChkVal; //꽃피는 계절 코드 봄 073001 여름 073002 가을 073003 겨울 073004
 		parameter += "&numOfRows=8";
 
 		// 서버와 통신

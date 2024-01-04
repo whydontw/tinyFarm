@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+	<mapper namespace = "bookMapper" >
+	
+		<resultMap type = "book" id = "bookResultSet">
+			<result column = "BOOK_NO" property="bookNo"/>
+			<result column = "BOOK_TITLE" property="bookTitle"/>
+			<result column = "BOOK_CATEGORY" property="bookCategory"/>
+			<result column = "BOOK_INFO" property="bookInfo"/>
+			<result column = "BOOK_AUTHOR" property="bookAuthor"/>
+			<result column = "PUBLISHER" property="publisher"/>
+			<result column = "BOOK_PRICE" property="bookPrice"/>
+			<result column = "BOOK_ORIGIN_NAME" property="bookOriginName"/>
+			<result column = "BOOK_CHANGE_NAME" property="bookChangeName"/>
+			<result column = "BOOK_DATE" property="bookDate"/>
+			<result column = "BOOK_COUNT" property="bookCount"/>
+		</resultMap>
+		
+		
+		<insert id = "insertBook" parameterType="book">
+		INSERT INTO BOOK (  BOOK_NO
+							, BOOK_ORIGIN_NAME
+							, BOOK_CHANGE_NAME
+							, BOOK_TITLE
+							, BOOK_AUTHOR
+							, BOOK_CATEGORY
+							, BOOK_PRICE
+							, PUBLISHER
+							, BOOK_DATE
+							, BOOK_INFO
+							) VALUES (
+								SEQ_BKNO.NEXTVAL
+								, #{bookOriginName}
+								, #{bookChangeName}
+								, #{bookTitle}
+								, #{bookAuthor}
+								, #{bookCategory}
+								, #{bookPrice}
+								, #{publisher}
+								, #{bookDate}
+								, #{bookInfo}
+							)
+		</insert>
+		
+		
+		<!-- 책 개수 -->
+	  	<select id="bookListCount" resultType="_int">
+	  		SELECT COUNT(*)
+			FROM BOOK
+			<choose>
+				<when test="bookCategory == '원예'">
+					WHERE BOOK_CATEGORY LIKE '원예'
+				</when>
+				<when test="bookCategory == '조경'">
+					WHERE BOOK_CATEGORY LIKE '조경'
+				</when>
+				<when test="bookCategory == '텃밭'">
+					WHERE BOOK_CATEGORY LIKE '텃밭'
+				</when>
+				<otherwise></otherwise>
+			</choose>
+	  	</select>
+	  	
+	  	
+	  	<select id="selectBookList" resultMap="bookResultSet">
+	  		SELECT * FROM BOOK
+	  		ORDER BY
+	  		<choose>
+				<when test="orderByStandard == 'byHits'">
+					BOOK_COUNT DESC
+				</when>
+				<when test="orderByStandard == 'byHighPrice'">
+					BOOK_PRICE DESC
+				</when>
+				<when test="orderByStandard == 'byLowPrice'">
+					BOOK_PRICE ASC
+				</when>
+				<otherwise>
+					<!-- 최신 등록순 -->
+					BOOK_DATE DESC
+				</otherwise>
+			</choose>
+	  	</select>
+		
+		
+		
+		
+		
+		<select id="bookDetail" resultMap="bookResultSet">
+			SELECT * BOOK
+			WHERE BOOK_NO = #{bookNo}
+		</select>
+		
+		
+ 	</mapper>

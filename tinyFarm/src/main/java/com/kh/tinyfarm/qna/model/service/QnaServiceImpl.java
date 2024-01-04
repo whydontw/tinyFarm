@@ -2,6 +2,7 @@ package com.kh.tinyfarm.qna.model.service;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +32,22 @@ public class QnaServiceImpl implements QnaService {
 	
 	//QNA 총 개수
 	@Override
-	public int qnaListCount() {
-		return qnaDao.qnaListCount(sqlSession);
+	public int qnaListCount(HashMap<String, Integer> qMap) {
+		return qnaDao.qnaListCount(sqlSession, qMap);
 	}
 
 	
 	//###########################################################
 	//QNA 글 목록
 	@Override
-	public ArrayList<Qna> selectQnaList(PageInfo pi) {
-		return qnaDao.selectQnaList(sqlSession, pi);
+	public ArrayList<Qna> selectQnaList(PageInfo pi, HashMap<String, Integer> qMap) {
+		return qnaDao.selectQnaList(sqlSession, pi, qMap);
 	}
 	
 	//사용자 QNA 글 목록
 	@Override
-	public ArrayList<Qna> selectMyQnaList(PageInfo pi, int userNo) {
-		return qnaDao.selectMyQnaList(sqlSession, pi, userNo);
+	public ArrayList<Qna> selectMyQnaList(PageInfo pi, HashMap<String, Integer> qMap) {
+		return qnaDao.selectMyQnaList(sqlSession, pi, qMap);
 	}
 	//###########################################################
 

@@ -203,6 +203,15 @@
                 					item.status = '활동중지';
                 				}
                 				
+                				if(item.email == null){
+                					item.email = '-';
+                				}
+                				
+                				if(item.phone == null){
+                					item.phone = '-';
+                				}
+                				
+                				
                 				str += "<tr><td>" + item.userNo + "</td>" +
                                  		"<td>" + item.userId + "</td>" +
                                  		"<td>" + item.userName + "</td>" +
@@ -229,8 +238,6 @@
                     			paging = beforePage;
                     		}
                     		
-                    		
-                           	console.log("페이징 searchId : ", searchId);
                     		
                     		for(var i = 1; i <= mPi.endPage; i++) {
                         		paging += "<li class='page-item'><a class='page-link' onclick='selectMemberList(" + i + ", \"" + searchId + "\")'>" + i + "</a></li>";
@@ -330,17 +337,7 @@
                         			$("#userGrade_detail").val(result.grade);
                         			$("#userAddress_detail").val(result.address);
                         			$("#userPhone_detail").val(result.phone);
-                        			
-                        			var imageSrc = "";
-                        			
-                        			if(result.changeName == null){
-                        				imageSrc = "${contextPath}/resources/img/icon/common_koongya.jpg";
-                        			
-                        			}else{
-                        				imageSrc = "${contextPath}/" + result.changeName;
-                        			}
-                        			
-                        			$("#profileImage").prop("src", imageSrc);
+                        			$("#profileImage").prop("src", "${contextPath}/" + result.changeName);
                         			
                                 	$("#memberdetailViewModal").click();
                                 	

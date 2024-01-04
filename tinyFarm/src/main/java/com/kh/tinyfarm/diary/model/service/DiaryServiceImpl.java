@@ -15,6 +15,7 @@ import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
 import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
+import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
 
 
@@ -172,7 +173,7 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 	//주문내역 리스트
 	@Override
-	public ArrayList<Product> myOrderList(int userNo, PageInfo oPi) {
+	public ArrayList<Payments> myOrderList(int userNo, PageInfo oPi) {
 		return (ArrayList)diaryDao.myOrderList(sqlSession,userNo,oPi);
 	}
 	//판매내역 수
@@ -182,41 +183,79 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 	//판매내역 리스트
 	@Override
-	public ArrayList<Product> mySellrList(int userNo, PageInfo sPi) {
+	public ArrayList<Product> mySellList(int userNo, PageInfo sPi) {
 		return (ArrayList)diaryDao.mySellList(sqlSession,userNo,sPi);
 	}
-	//팔로우 정보
+	//팔로잉 정보
 	@Override
-	public Member selectFollowInfo(String followingId) {
+	public Member selectFollowingInfo(String followingId) {
 		return diaryDao.selectFollowInfo(sqlSession,followingId);
 	}
-	//팔로우 취소
+	//팔로워 정보
 	@Override
-	public int unfollowUser(Follow following) {
-		return diaryDao.unfollowUser(sqlSession,following);
+	public Member selectFollowerInfo(String followingId) {
+		return diaryDao.selectFollowInfo(sqlSession,followingId);
+	}
+	
+	//팔로우 걸기
+	@Override
+	public int followUser(Follow f) {
+		return diaryDao.followUser(sqlSession,f);
 	}
 
-	/* 거래내역 날짜검색
+	//팔로우 취소
 	@Override
-	public int searchDateOrderCount(Payment pm) {
+	public int unfollowUser(Follow f) {
+		return diaryDao.unfollowUser(sqlSession,f);
+	}
+	
+	//카카오 로그인을 위한 유저 정보
+	@Override
+	public Member selectMember(String userId) {
+		return diaryDao.selectMember(sqlSession,userId);
+	}
+
+	//주문내역 날짜검색
+	@Override
+	public int searchDateOrderCount(Payments pm) {
 		return diaryDao.searchDateOrderCount(sqlSession,pm);
 	}
 	
+	//주문내역 날짜검색 리스트
 	@Override
-	public ArrayList<Product> searchOrderList(Payment pm, PageInfo oPi) {
-		return (ArrayList)diaryDao.searchOrderList(sqlSession,pm);
+	public ArrayList<Payments> searchOrderList(Payments pm, PageInfo soPi) {
+		return (ArrayList)diaryDao.searchOrderList(sqlSession,pm, soPi);
+	}
+	
+	//판매내역 날짜검색
+	@Override
+	public int searchDateSellCount(Product p) {
+		return diaryDao.searchDateSellCount(sqlSession,p);
+	}
+	
+	//판매내역 날짜검색 리스트
+	@Override
+	public ArrayList<Product> searchSellList(Product p, PageInfo ssPi) {
+		return (ArrayList)diaryDao.searchSellList(sqlSession,p, ssPi);
+	}
+	
+	//찜목록
+	@Override
+	public ArrayList<Product> selectWish(int userNo) {
+		return (ArrayList)diaryDao.selectWish(sqlSession,userNo);
+	}
+	//팔로우 여부 확인
+	@Override
+	public int followCheck(Follow f) {
+		return diaryDao.followCheck(sqlSession,f);
 	}
 
 	@Override
-	public int searchDateSellCount(Payment pm) {
-		return diaryDao.searchDateSellCount(sqlSession,pm);
+	public Member selectFollowMember(String statusYFiId) {
+		return diaryDao.selectFollowMember(sqlSession,statusYFiId);
 	}
-
-	@Override
-	public ArrayList<Product> searchSellList(Payment pm) {
-		return (ArrayList)diaryDao.searchSellList(sqlSession,pm);
-	}
-	*/
+	
+	
 
 
 }

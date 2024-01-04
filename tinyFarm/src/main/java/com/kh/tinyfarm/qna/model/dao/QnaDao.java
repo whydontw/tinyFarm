@@ -3,6 +3,7 @@ package com.kh.tinyfarm.qna.model.dao;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -22,29 +23,29 @@ public class QnaDao {
 
 	
 	//QNA 총 개수
-	public int qnaListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("qnaMapper.qnaListCount");
+	public int qnaListCount(SqlSessionTemplate sqlSession, HashMap<String, Integer> qMap) {
+		return sqlSession.selectOne("qnaMapper.qnaListCount", qMap);
 	}
 
 	//QNA 글 목록
-	public ArrayList<Qna> selectQnaList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Qna> selectQnaList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Integer> qMap) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("qnaMapper.selectQnaList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("qnaMapper.selectQnaList", qMap, rowBounds);
 	}
 	
 	
 	//사용자 QNA 글 목록(USER)
-	public ArrayList<Qna> selectMyQnaList(SqlSessionTemplate sqlSession, PageInfo pi, int userNo) {
+	public ArrayList<Qna> selectMyQnaList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Integer> qMap) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("qnaMapper.selectMyQnaList", userNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("qnaMapper.selectMyQnaList", qMap, rowBounds);
 	}
 
 	

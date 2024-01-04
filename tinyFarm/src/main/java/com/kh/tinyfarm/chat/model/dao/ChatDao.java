@@ -33,6 +33,11 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.checkExistChatRoom", cr);
 	}
 	
+	//채팅방은 존재하지만 현재 회원이 해당 채팅방 상태가 N인지 확인
+	public int checkStatusChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chatMapper.checkStatusChatRoom", cr);
+	}
 	//채팅 메세지 테이블에 넣기
 	public int insertChatMsg(SqlSessionTemplate sqlSession, ChatMessage chatMessage) {
 		
@@ -51,9 +56,9 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectSearchUserList",search);
 	}
 
-	public int deleteRoom(SqlSessionTemplate sqlSession, int chatRoomNo) {
+	public int deleteRoom(SqlSessionTemplate sqlSession, HashMap map) {
 		
-		int result = sqlSession.delete("chatMapper.deleteRoom", chatRoomNo);
+		int result = sqlSession.delete("chatMapper.deleteRoom", map);
 
 		return result;
 	}
@@ -69,6 +74,14 @@ public class ChatDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("chatMapper.selectNotReadMsg", userId);
 	}
+	
+	//채팅방 상태 Y로 업데이트
+	public int updateChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.update("chatMapper.updateChatRoom", cr);
+	}
+	
+	
 	
 	
 
