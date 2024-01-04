@@ -95,4 +95,11 @@
 		</select>
 		
 		
+		<update id="increaseCount">
+			UPDATE BOOK SET
+			BOOK_COUNT = BOOK_COUNT + 1
+			WHERE BOOK_NO = #{bookNo}
+		</update>
+		
+		
  	</mapper>

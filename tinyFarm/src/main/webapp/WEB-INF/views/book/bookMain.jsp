@@ -70,23 +70,57 @@
                         </div>
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
-<!--                             <form action="#" method="post" class="form-inline" id=""> -->
-                                <select class="custom-select widget-title" id="orderByStandard">
-                                  <option value ="byEnrolldate">Show: 최신등록순</option>
-                                  <option value="byHits">조회순</option>
-                                  <option value="byHighPrice">최고가격순</option>
-                                  <option value="byLowPrice">최저가격순</option>
-                                </select>
-                                <select class="custom-select widget-title" id="bookShowCount">
-                                  <option value="9">Show: 9</option>
-                                  <option value="12">12</option>
-                                  <option value="15">15</option>
-                                </select>
-<!--                             </form> -->
+<!--                      <form action="#" method="post" class="form-inline" id=""> -->
+                            <select class="custom-select widget-title" id="orderByStandard">
+                              <option value ="byEnrolldate">Show: 최신등록순</option>
+                              <option value="byHits">조회순</option>
+                              <option value="byHighPrice">최고가격순</option>
+                              <option value="byLowPrice">최저가격순</option>
+                            </select>
+                            <select class="custom-select widget-title" id="bookShowCount">
+                              <option value="6">Show: 6</option>
+                              <option value="12">12</option>
+                              <option value="15">15</option>
+                            </select>
+<!--                       </form> -->
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <script type="text/javascript">
+            
+   				$(function(){
+
+					var orbs = "${bookMap.orderByStandard}";			
+					var bsc = ${bookMap.bookShowCount};			
+					var bcy = "${bookMap.bookCategory}";			
+   					
+					
+   					alert(orbs);
+   					alert(bsc);
+					
+   					$("#orderByStandard").val(orbs);
+   		   			$("#bookShowCount").val(bsc);
+   		   			$("input[name=bookCategory]").val(bcy);
+   		   			
+   		   			$("#orderByStandard").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + $("#orderByStandard").val()  + "&bookShowCount=" + bsc;
+   		   			})
+   		   			
+   		   			$("#bookShowCount").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&bookShowCount=" + $("#bookShowCount").val();
+   		   			})		
+   		   			
+//    		   			$("#orderByStandard").change(function(){
+//    		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&bookShowCount=" + $("#bookShowCount").val();
+//    		   			})		
+   		   			
+   				})
+            
+            
+   				
+            </script>
 
             <div class="row">
                 <!-- Sidebar Area -->
@@ -125,16 +159,16 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img">
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}"><img src="img/bg-img/40.png" alt=""></a>
+	                                    <div class="">
+	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}"><img src="${contextPath }/${bl.bookChangeName }" alt=""></a>
 	                                        <!-- Product Tag -->
 	                                        <c:if test="${bl.bookCount > 10 }">
 	                                        	<div class="product-tag sale-tag"><a href="#">Hot</a></div>
 	                                        </c:if>
 	                                        <div class="product-meta d-flex">
-	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	<!--                                        <a href="cart.html" class="add-to-cart-btn">Add to cart</a> -->
-	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+<!-- 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a> -->
+<!--                                        <a href="cart.html" class="add-to-cart-btn">Add to cart</a> -->
+<!-- 	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
 	                                        </div>
 	                                    </div>
 	                                    <!-- Product Info -->
@@ -149,26 +183,34 @@
 							</c:forEach>
 							
                         </div>
-
-                        <!-- Pagination -->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                
-			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-left"></i></a></li>
-									</c:if>
-                                    
-                                    <!-- paging 개수 -->
-                                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}">${i}</a></li>
-									</c:forEach>
-				                    
-				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-right"></i></a></li>
-									</c:if>
-                                    
-                                </ul>
-                        </nav>
+						
+						<c:if test="${loginUser.userId == 'admin'}">
+							<section>
+								<button type="button" onclick="location.href='bookInsert.re'" class="btn alazea-btn-orange mb-15  float-right" id="">등록</button>
+							</section>
+						</c:if>
+						
+						<section>
+	                        <!-- Pagination -->
+	                        <nav aria-label="Page navigation">
+	                            <ul class="pagination ">
+	                                
+				                        <c:if test="${pi.currentPage > 1}">
+				                            <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-left"></i></a></li>
+										</c:if>
+	                                    
+	                                    <!-- paging 개수 -->
+	                                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
+		                                    <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}">${i}</a></li>
+										</c:forEach>
+					                    
+					                     <c:if test="${pi.currentPage < pi.maxPage}">
+				                            <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-right"></i></a></li>
+										</c:if>
+	                                    
+	                                </ul>
+	                        </nav>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -177,19 +219,6 @@
     
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
    	
-   	<script type="text/javascript">
-   		
-   		$(function(){
-   			
-   			$("#orderByStandard").val(bookMap.orderByStandard);
-   			$("#bookShowCount").val(bookMap.bookShowCount);
-   			$("input[name=bookCategory]").val(bookMap.bookCategory);
-   			
-   			
-   			
-   			
-   		})
-   	</script>
 
   	<!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
