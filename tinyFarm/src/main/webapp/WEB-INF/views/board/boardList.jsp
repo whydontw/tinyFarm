@@ -115,6 +115,7 @@
 	<script>
                        	$(function(){
                        		selectBoardList();
+                       		time();
                        	});
                       </script>
 
@@ -152,13 +153,52 @@
 	                       						var replyCount = $("<span id='rcount'></span>");
 	                       						var hiddenBno2 = $("<input type='hidden' name='boardNo' id='hiddenBno'>");
 	                       						var heartIcon = $("<img>");
-	                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none;'>좋아요</button>");
+	                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none; background-color:white;'>좋아요</button>");
 	                       						var spanDiv2 = $("<span id='likeCount'></span>");
 	                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
 	                       						
 	                       						profileStr.attr("src",result[i].profile);
-	                       						spanDiv1.text(new Date(result[i].createDate).toLocaleString());
-	                       						//spanDiv1.text(result[i].createDate);
+	                       						
+	                       						
+	                       			            var today = new Date();
+	                       				        console.log("today: " + today);
+	                       			
+	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+	                       				        var dateParts = dateString.split(/[- :]/);
+	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
+	                       				        console.log("timeValue: " + timeValue);
+	                       				        
+	                       				     
+	                       			
+	                       				        const timeDifference = today - timeValue; // 밀리초 단위의 차이
+	                       				        const seconds = Math.floor(timeDifference / 1000);
+	                       				        const minutes = Math.floor(seconds / 60);
+	                       				        const hours = Math.floor(minutes / 60);
+	                       				        const days = Math.floor(hours / 24);
+	                       			
+	                       				        let msg = "";
+	                       			
+	                       			                   
+	                       				        if (days > 0 && days <= 7) {
+	                       				            msg = days + "일 전";
+	                       				        } else if (days > 7) {
+	                       				            // 날짜 형식으로 표시
+	                       				            const year = timeValue.getFullYear();
+	                       				            const month = timeValue.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+	                       				            const day = timeValue.getDate();
+	                       			
+	                       				            msg = year + ". " + month + ". " + day;
+	                       				        } else if (hours > 0) {
+	                       				            msg = hours + "시간 전";
+	                       				        } else if (minutes > 0) {
+	                       				            msg = minutes + "분 전";
+	                       				        } else {
+	                       				            msg = "방금 전";
+	                       				        }
+	                       			
+	                       				        console.log(msg);
+	                       				    	spanDiv1.text(msg);
+	                       	                   
 	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
 	                       						div1.append(pDiv);
 	                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
@@ -182,6 +222,10 @@
 	                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
 	                       						
 	                       						$(".feed_items").append(liDiv);
+	                       					
+	                       					 
+	                       						
+	                       						
 	                       					
 	                       						
 	                       						/*
@@ -353,7 +397,47 @@
                             	}
                             }
                           
-                          
+                        	//시간표시
+                        	function time(){
+                        		 var today = new Date();
+                        	        console.log("today: " + today);
+
+                        	        var dateString = "${boardInfo.createDate}"; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+                        	        var dateParts = dateString.split(/[- :]/);
+                        	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
+                        	        console.log("timeValue: " + timeValue);
+
+                        	        const timeDifference = today - timeValue; // 밀리초 단위의 차이
+                        	        const seconds = Math.floor(timeDifference / 1000);
+                        	        const minutes = Math.floor(seconds / 60);
+                        	        const hours = Math.floor(minutes / 60);
+                        	        const days = Math.floor(hours / 24);
+
+                        	        let msg = "";
+
+                        	        if (days > 0 && days <= 7) {
+                        	            msg = days + "일 전";
+                        	        } else if (days > 7) {
+                        	            // 날짜 형식으로 표시
+                        	            const year = timeValue.getFullYear();
+                        	            const month = timeValue.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                        	            const day = timeValue.getDate();
+
+                        	            msg = year + ". " + month + ". " + day;
+                        	        } else if (hours > 0) {
+                        	            msg = hours + "시간 전";
+                        	        } else if (minutes > 0) {
+                        	            msg = minutes + "분 전";
+                        	        } else {
+                        	            msg = "방금 전";
+                        	        }
+
+                        	        console.log(msg);
+                        	        //document.getElementById("boardCreateDate").innerText = msg;
+                        	        $("#boardCreateDate").append(msg)
+                        		
+                        		
+                        	}
                             
                        </script>
 

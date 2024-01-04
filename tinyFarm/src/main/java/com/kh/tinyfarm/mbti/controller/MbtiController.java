@@ -84,21 +84,21 @@ public class MbtiController {
 				NodeList cntntsSjList = document.getElementsByTagName("cntntsSj");
 				NodeList rtnFileUrlList = document.getElementsByTagName("rtnFileUrl");
 				NodeList rtnImgSeCodeList = document.getElementsByTagName("rtnImgSeCode");
-				
+				NodeList rtnThumbFileUrlList = document.getElementsByTagName("rtnThumbFileUrl");
 				//for (int j = 0; j < cntntsNoList.getLength(); j++) {
 					int j=0;
 					Node node = cntntsNoList.item(j);
 					Node node2 = cntntsSjList.item(j);
 					Node node3 = rtnFileUrlList.item(j);
 					Node node4 = rtnImgSeCodeList.item(j);
-
+					Node node5 = rtnThumbFileUrlList.item(j);
 
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Node childNode = node.getChildNodes().item(0); 
 						Node childNode2 = node2.getChildNodes().item(0);
 						Node childNode3 = node3.getChildNodes().item(0);
 						Node childNode4 = node4.getChildNodes().item(0);
-						
+						Node childNode5 = node5.getChildNodes().item(0);
 						
 						
 						GardenFile gp = new GardenFile();
@@ -106,7 +106,7 @@ public class MbtiController {
 						gp.setCntntsSj(childNode2.getNodeValue());
 						gp.setRtnFileUrl(childNode3.getNodeValue().split("\\|"));
 						gp.setRtnImgSeCode(childNode4.getNodeValue().split("\\|"));
-
+						gp.setRtnThumbFileUrl(childNode5.getNodeValue().split("\\|"));
 						
 						list.add(gp);
 					}
