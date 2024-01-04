@@ -90,7 +90,7 @@
 		
 		
 		<select id="bookDetail" resultMap="bookResultSet">
-			SELECT * BOOK
+			SELECT * FROM BOOK
 			WHERE BOOK_NO = #{bookNo}
 		</select>
 		
