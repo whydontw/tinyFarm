@@ -97,8 +97,8 @@
 					var bcy = "${bookMap.bookCategory}";			
    					
 					
-   					alert(orbs);
-   					alert(bsc);
+//    					alert(orbs);
+//    					ALERT(BSC);
 					
    					$("#orderByStandard").val(orbs);
    		   			$("#bookShowCount").val(bsc);
@@ -112,9 +112,6 @@
    		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&bookShowCount=" + $("#bookShowCount").val();
    		   			})		
    		   			
-//    		   			$("#orderByStandard").change(function(){
-//    		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&bookShowCount=" + $("#bookShowCount").val();
-//    		   			})		
    		   			
    				})
             
@@ -126,7 +123,6 @@
                 <!-- Sidebar Area -->
                 <div class="col-12 col-md-4 col-lg-3">
                     <div class="shop-sidebar-area">
-
 
                         <!-- Shop Widget -->
                         <div class="shop-widget catagory mb-50">
@@ -151,11 +147,18 @@
 
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
+                
+               		<c:if test="${loginUser.userId == 'admin'}">
+               		<div class="mx-auto">
+						<button type="button" onclick="location.href='bookInsert.re'" class="btn alazea-btn-orange mb-15 floot-left" id="">등록</button>
+					</div>
+					</c:if>
+                
                     <div class="shop-products-area">
                         <div class="row">
 
 							<c:forEach var="bl" items="${bookList }">
-                            <!-- Single Product Area -->
+                               <!-- Single Product Area -->
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
@@ -181,34 +184,30 @@
 	                                </div>
 	                            </div>
 							</c:forEach>
-							
                         </div>
 						
-						<c:if test="${loginUser.userId == 'admin'}">
-							<section>
-								<button type="button" onclick="location.href='bookInsert.re'" class="btn alazea-btn-orange mb-15  float-right" id="">등록</button>
-							</section>
-						</c:if>
+						
+
+						
+
 						
 						<section>
 	                        <!-- Pagination -->
 	                        <nav aria-label="Page navigation">
 	                            <ul class="pagination ">
-	                                
-				                        <c:if test="${pi.currentPage > 1}">
-				                            <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-left"></i></a></li>
-										</c:if>
-	                                    
-	                                    <!-- paging 개수 -->
-	                                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-		                                    <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}">${i}</a></li>
-										</c:forEach>
-					                    
-					                     <c:if test="${pi.currentPage < pi.maxPage}">
-				                            <li class="page-item mx-auto"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-right"></i></a></li>
-										</c:if>
-	                                    
-	                                </ul>
+			                        <c:if test="${pi.currentPage > 1}">
+			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-left"></i></a></li>
+									</c:if>
+                                    
+                                    <!-- paging 개수 -->
+                                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
+	                                    <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}">${i}</a></li>
+									</c:forEach>
+				                    
+				                     <c:if test="${pi.currentPage < pi.maxPage}">
+			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-right"></i></a></li>
+									</c:if>
+                                </ul>
 	                        </nav>
                         </section>
                     </div>

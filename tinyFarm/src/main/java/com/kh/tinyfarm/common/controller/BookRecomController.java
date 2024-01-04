@@ -39,7 +39,11 @@ public class BookRecomController {
 								@RequestParam(value="bookShowCount", defaultValue="6") int bookShowCount,	//보여지는 개수
 								@RequestParam(value="bookCategory", defaultValue="all") String bookCategory,	//책 카테고리(where)
 								Model model) {
-					
+			
+		
+			System.out.println("정렬 순서: " + orderByStandard);
+		
+		
 			HashMap<String, String> bookMap = new HashMap<>();
 			bookMap.put("orderByStandard", orderByStandard);
 			bookMap.put("bookShowCount", String.valueOf(bookShowCount));
@@ -58,6 +62,8 @@ public class BookRecomController {
 			
 			// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
 			ArrayList<Book> bookList = bookService.selectBookList(pi, bookMap);
+			
+			
 			
 			
 			for(Book b : bookList) {
