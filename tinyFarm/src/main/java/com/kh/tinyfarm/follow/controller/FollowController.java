@@ -15,13 +15,12 @@ public class FollowController {
 	
 	@RequestMapping("insertFollow.fw")
 	public String insertFollow(int boardNo,Follow fw) {
+		
 		System.out.println("fw :"+fw);
-	
 		int result =followService.insertFollow(fw);
 		System.out.println(result);
 		
 		if(result>0) {	
-		
 			return "redirect:detail.bo?boardNo="+boardNo;
 		}else {
 		
