@@ -222,7 +222,7 @@ a, p {
 									<li><a href="plist.bo">작물거래</a></li>
 									<li><a href="">추천</a>
 										<ul class="dropdown">
-											<li><a href="#">권장 도서</a></li>
+											<li><a href="bookMain.re">권장 도서</a></li>
 											<li><a href="experienceList.ex">체험활동</a></li>
 										</ul>
 									</li>

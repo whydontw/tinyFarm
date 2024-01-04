@@ -1,13 +1,18 @@
-package com.kh.tinyfarm.member.model.vo;
+package com.kh.tinyfarm.follow.model.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 public class Follow {
-	private int userNo;
+	
+	private String userId;
 	private String followingId;
+	private int userNo;
+	private int boardNo;
 }

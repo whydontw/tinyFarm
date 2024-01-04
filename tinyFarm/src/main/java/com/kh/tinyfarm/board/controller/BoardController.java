@@ -18,13 +18,17 @@ import com.kh.tinyfarm.board.model.vo.BoardLike;
 import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
 import com.kh.tinyfarm.board.model.vo.ReplyReport;
+import com.kh.tinyfarm.follow.model.service.FollowService;
+import com.kh.tinyfarm.follow.model.vo.Follow;
+import com.kh.tinyfarm.member.model.vo.Member;
 
 
 @Controller
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	
+	@Autowired
+	private FollowService followService;
 	
 	
 	@RequestMapping("moveList.bo")
@@ -45,14 +49,30 @@ public class BoardController {
 	
 	
 	@RequestMapping("detail.bo")
-	public String boardDetail(int boardNo,Model model) {
+	public String boardDetail(int boardNo,Model model,HttpSession session) {
 		//조회수 증가랑 bno넘겨서 detail정보 가져오기 그 후 가져온 객체를 detailview에 보내기
 		int result = boardService.boardIncreaseCount(boardNo);
-		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNo =loginUser.getUserNo();
+		System.out.println("로그인한 회원번호 : "+userNo);
 		if(result>0) {
 			Board boardInfo = boardService.boardDetail(boardNo);
 			model.addAttribute("boardInfo", boardInfo);
-			//System.out.println("boardInfo : "+boardInfo);
+			System.out.println("boardInfo : "+boardInfo);
+			
+			System.out.println("boardNo : "+boardNo);
+			
+			Follow fw = new Follow();
+			//fw = new Follow(null, null, userNo,boardNo);
+			fw.setBoardNo(boardNo);
+			fw.setUserNo(userNo);
+		
+			System.out.println("fw : "+fw);
+			
+			
+			int isFollow = followService.selectFollow(fw);
+			model.addAttribute("isFollow", isFollow);
+			System.out.println("isFollow : "+isFollow);
 			
 		}else {
 			return "common/errorPage";

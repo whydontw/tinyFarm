@@ -56,19 +56,7 @@
   	</select>
   	
   	<select id="selectBoardList" parameterType="_int" resultMap="boardResultSet">
-  		<!-- 가져온 데이터 USER_ID를 BOARD_WRITER로 별칭으로 변경한 후 resultMap를 이용해 BOARD_WRITER에 이름을 가진 걸 VO객체에 boardWriter에다가 저장   -->
-  		<!--  
-  		SELECT BOARD_NO
-		        ,USER_ID BOARD_WRITER 
-		        ,BOARD_CONTENT
-		        ,B.COUNT
-		        ,B.LIKE_COUNT
-		        ,B.CREATE_DATE
-		        ,M.CHANGE_NAME
-		FROM BOARD B
-		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
-		ORDER BY B.CREATE_DATE DESC
-	-->
+  		
 		SELECT B.BOARD_NO
 		        , M.USER_ID AS BOARD_WRITER 
 		        , B.BOARD_CONTENT
@@ -106,6 +94,7 @@
 		        ,LIKE_COUNT
 		        ,B.CREATE_DATE
 		        ,EMAIL
+		        ,CHANGE_NAME
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		WHERE B.STATUS='Y'
@@ -178,14 +167,7 @@
   	</delete>
   	
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ좋아요영역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-  	<!-- 
- 	<select id="findLike" resultType="_int" >
- 		SELECT COUNT(*)
-		FROM BOARD_LIKE
-		WHERE REF_BNO = #{refBno} 
-		AND USER_NO = #{userNo}
- 	</select>
-  	 -->
+
   	 <select id="findLike" parameterType="_int" resultMap="boardLikeResultSet">
   	 	SELECT REF_BNO
 		FROM BOARD_LIKE
