@@ -17,7 +17,7 @@
 		
 
 		<typeAlias type = "com.kh.tinyfarm.member.model.vo.Member" alias ="member"/>
-		<typeAlias type = "com.kh.tinyfarm.member.model.vo.Follow" alias="follow"/>
+		<typeAlias type = "com.kh.tinyfarm.follow.model.vo.Follow" alias="follow"/>
 		<typeAlias type="com.kh.tinyfarm.diary.model.vo.Diary" alias="diary"/>
 		<typeAlias type="com.kh.tinyfarm.diary.model.vo.DiaryCategory" alias="diaryCategory"/>
 		<typeAlias type = "com.kh.tinyfarm.qna.model.vo.Qna" alias ="qna"/>
@@ -33,6 +33,7 @@
 		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Payments" alias="payments"/>
 		<typeAlias type= "com.kh.tinyfarm.product.model.vo.Like" alias="like"/>
 
+		
 		
 		<typeAlias type="com.kh.tinyfarm.publicPlant.model.vo.PlantComment" alias="plantComment"/>
 		<typeAlias type="com.kh.tinyfarm.notice.model.vo.Notice" alias="notice"/>

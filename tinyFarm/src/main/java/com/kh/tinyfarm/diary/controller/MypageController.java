@@ -31,8 +31,8 @@ import com.kh.tinyfarm.common.template.Pagination;
 import com.kh.tinyfarm.diary.model.service.DiaryService;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
+import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.service.MemberService;
-import com.kh.tinyfarm.member.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;
@@ -376,7 +376,9 @@ public class MypageController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
 		
-		Follow f = new Follow(userNo, followingId);
+		Follow f = new Follow();
+		f.setUserNo(userNo);
+		f.setFollowingId(followingId);
 		
 		//이전페이지
 		String before = (String)request.getHeader("Referer");
@@ -401,7 +403,9 @@ public class MypageController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
 		
-		Follow f = new Follow(userNo, followingId);
+		Follow f = new Follow();
+		f.setUserNo(userNo);
+		f.setFollowingId(followingId);
 		
 		//이전페이지
 		String before = (String)request.getHeader("Referer");
@@ -425,7 +429,9 @@ public class MypageController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo = loginUser.getUserNo();
 		
-		Follow f = new Follow(userNo, followingId);
+		Follow f = new Follow();
+		f.setUserNo(userNo);
+		f.setFollowingId(followingId);
 		int result = diaryService.unfollowUser(f);
 		
 		if(result>0) {

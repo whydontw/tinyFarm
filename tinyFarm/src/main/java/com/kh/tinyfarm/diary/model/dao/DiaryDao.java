@@ -11,7 +11,7 @@ import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
-import com.kh.tinyfarm.member.model.vo.Follow;
+import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.vo.Payments;
 import com.kh.tinyfarm.product.model.vo.Product;

@@ -106,6 +106,7 @@
 		        ,LIKE_COUNT
 		        ,B.CREATE_DATE
 		        ,EMAIL
+		        ,CHANGE_NAME
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		WHERE B.STATUS='Y'
