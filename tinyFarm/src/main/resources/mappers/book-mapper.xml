@@ -73,10 +73,10 @@
 					BOOK_COUNT DESC
 				</when>
 				<when test="orderByStandard == 'byHighPrice'">
-					BOOK_PRICE DESC
+					TO_NUMBER(BOOK_PRICE) DESC
 				</when>
 				<when test="orderByStandard == 'byLowPrice'">
-					BOOK_PRICE ASC
+					TO_NUMBER(BOOK_PRICE)
 				</when>
 				<otherwise>
 					<!-- 최신 등록순 -->
