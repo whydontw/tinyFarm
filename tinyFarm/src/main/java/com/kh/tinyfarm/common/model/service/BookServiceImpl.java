@@ -1,11 +1,15 @@
 package com.kh.tinyfarm.common.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.tinyfarm.common.model.dao.BookDao;
 import com.kh.tinyfarm.common.model.vo.Book;
+import com.kh.tinyfarm.common.model.vo.PageInfo;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -25,4 +29,40 @@ public class BookServiceImpl implements BookService {
 	public int insertBook(Book b) {
 		return bookDao.insertBook(sqlSession, b);
 	}
+
+	
+	
+	//책 개수
+	@Override
+	public int bookListCount(HashMap<String, String> bookMap) {
+		return bookDao.bookListCount(sqlSession, bookMap);
+	}
+
+	//책 목록
+	@Override
+	public ArrayList<Book> selectBookList(PageInfo pi, HashMap<String, String> bookMap) {
+		return bookDao.selectBookList(sqlSession, pi, bookMap);
+	}
+
+	
+	
+	//책 상세 조회
+	@Override
+	public Book bookDetail(int bookNo) {
+		return bookDao.bookDetail(sqlSession, bookNo);
+	}
+
+	
+	//조회수 증가
+	@Override
+	public int increaseCount(int bookNo) {
+		return bookDao.increaseCount(sqlSession, bookNo);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

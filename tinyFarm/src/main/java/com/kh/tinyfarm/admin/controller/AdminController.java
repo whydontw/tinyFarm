@@ -6,10 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.admin.model.service.AdminService;
 import com.kh.tinyfarm.board.model.service.BoardService;
-import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.board.model.vo.BoardReport;
+import com.kh.tinyfarm.common.model.service.BookService;
+import com.kh.tinyfarm.common.model.vo.Book;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.common.template.Pagination;
 import com.kh.tinyfarm.member.model.service.MemberService;
@@ -44,6 +43,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private BookService bookService;
 	
 	
 
@@ -545,6 +547,41 @@ public class AdminController {
 
 
 	
+	
+	
+	
+	
+	// ###################################################################
+	// 도서관리
+	
+//	@ResponseBody
+//	@GetMapping("/selectBookList.ad")
+//	public  ResponseEntity<Map<String, Object>> selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, String bookCategory, Model model) {
+//
+//		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
+//		int memberListCount = memberService.memberListCount(bookCategory);
+//
+//		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
+//		int boardLimit = 5;
+//		// 페이징 바 개수(pageLimit)
+//		int pageLimit = 5;
+//
+//		PageInfo pi = Pagination.getPageInfo(memberListCount, currentPage, pageLimit, boardLimit);
+//
+//		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
+//	    ArrayList<Book> bookList = bookService.selectBookList(pi, bookCategory);
+//
+//	    
+//	    // 데이터를 Map에 담아서 전송
+//	    Map<String, Object> resultMap = new HashMap<>();
+//	    resultMap.put("bookList", bookList);
+//	    resultMap.put("pi", pi);
+//
+//	    
+//	    // ResponseEntity로 감싸서 전송
+//	    return ResponseEntity.ok(resultMap);
+//		
+//	}
 	
 	
 	
