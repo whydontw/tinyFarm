@@ -36,7 +36,7 @@ public class BookRecomController {
 	@RequestMapping("bookMain.re")
 	public String selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 								@RequestParam(value="orderByStandard", defaultValue="byEnrolldate") String orderByStandard,	//정
-								@RequestParam(value="bookShowCount", defaultValue="9") int bookShowCount,	//보여지는 개수
+								@RequestParam(value="bookShowCount", defaultValue="6") int bookShowCount,	//보여지는 개수
 								@RequestParam(value="bookCategory", defaultValue="all") String bookCategory,	//책 카테고리(where)
 								Model model) {
 					
@@ -58,6 +58,11 @@ public class BookRecomController {
 			
 			// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
 			ArrayList<Book> bookList = bookService.selectBookList(pi, bookMap);
+			
+			
+			for(Book b : bookList) {
+				System.out.println(b);
+			}
 			
 			
 			model.addAttribute("bookList", bookList);
@@ -130,29 +135,24 @@ public class BookRecomController {
 	}
 
 	
-	
+
 	//책 상세조회
 	@GetMapping("bookDetail.re")
 	public String bookDetail(int bookNo, Model model) {
 		
-		
 		int result = bookService.increaseCount(bookNo);
+		System.out.println("책 조회수 1 증가: " + result);
 		
-		Book book = bookService.bookDetail(bookNo);
+		Book book = null;
+		
+		if(result > 0) {
+			book = bookService.bookDetail(bookNo);
+		}
 
 		model.addAttribute("book", book);
-		
 		return "book/bookDetail";
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
