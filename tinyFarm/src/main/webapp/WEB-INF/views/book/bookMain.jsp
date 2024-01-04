@@ -89,40 +89,6 @@
                 </div>
             </div>
             
-            <script type="text/javascript">
-            
-   				$(function(){
-
-					var orbs = "${bookMap.orderByStandard}";			
-					var bsc = ${bookMap.showBookCount};			
-					var bcy = "${bookMap.bookCategory}";
-					
-					
-   					$("#orderByStandard").val(orbs);
-   		   			$("#showBookCount").val(bsc);
-					
-					$("input[name=bookCategory][value=" + bcy + "]").prop("checked", "checked");
-
-   		   			
-   		   			$("#orderByStandard").change(function(){
-   		   				location.href="bookMain.re?orderByStandard=" + $("#orderByStandard").val()  + "&showBookCount=" + bsc+ "&bookCategory=" + bcy;
-   		   			})
-   		   			
-   		   			$("#showBookCount").change(function(){
-   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + $("#showBookCount").val() + "&bookCategory=" + bcy;
-   		   			})
-   		   			
-   		   			$("input[name=bookCategory]").change(function(){
-   		   				
-   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + bsc + "&bookCategory=" + $("input[name=bookCategory]:checked").val();
-   		   			})
-   		   			
-   		   			
-   				})
-            
-            
-   				
-            </script>
 
             <div class="row">
                 <!-- Sidebar Area -->
@@ -169,22 +135,13 @@
 	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
 	                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
 	                                        </a>
-	                                        <!-- Product Tag -->
-	                                        <c:if test="${bl.bookCount > 10 }">
-	                                        	<div class="product-tag sale-tag"><a href="#">Hot</a></div>
-	                                        </c:if>
-	                                        <div class="product-meta d-flex">
-<!-- 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a> -->
-<!--                                        <a href="cart.html" class="add-to-cart-btn">Add to cart</a> -->
-<!-- 	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a> -->
-	                                        </div>
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
 	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
 	                                            <p>[ ${bl.bookCategory} ] ${bl.bookTitle }</p>
 	                                        </a>
-	                                        <h6>${bl.bookPrice }</h6>
+	                                        <h6>${bl.bookPrice } ₩</h6>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -217,6 +174,40 @@
     </section>
     
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+   	
+   	
+   	<script type="text/javascript">
+            
+   				$(function(){
+
+					var orbs = "${bookMap.orderByStandard}";			
+					var bsc = ${bookMap.showBookCount};			
+					var bcy = "${bookMap.bookCategory}";
+					
+					
+   					$("#orderByStandard").val(orbs);
+   		   			$("#showBookCount").val(bsc);
+					
+					$("input[name=bookCategory][value=" + bcy + "]").prop("checked", "checked");
+
+   		   			
+   		   			$("#orderByStandard").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + $("#orderByStandard").val()  + "&showBookCount=" + bsc+ "&bookCategory=" + bcy;
+   		   			})
+   		   			
+   		   			$("#showBookCount").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + $("#showBookCount").val() + "&bookCategory=" + bcy;
+   		   			})
+   		   			
+   		   			$("input[name=bookCategory]").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + bsc + "&bookCategory=" + $("input[name=bookCategory]:checked").val();
+   		   			})
+   		   			
+   				})
+   				
+            </script>
+   	
+   	
    	
 
   	<!-- ##### All Javascript Files ##### -->
