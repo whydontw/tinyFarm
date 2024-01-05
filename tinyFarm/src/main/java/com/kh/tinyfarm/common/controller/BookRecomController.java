@@ -35,14 +35,18 @@ public class BookRecomController {
 	//책 추천 메인페이지
 	@RequestMapping("bookMain.re")
 	public String selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
-								@RequestParam(value="orderByStandard", defaultValue="byEnrolldate") String orderByStandard,	//정
-								@RequestParam(value="bookShowCount", defaultValue="6") int bookShowCount,	//보여지는 개수
-								@RequestParam(value="bookCategory", defaultValue="all") String bookCategory,	//책 카테고리(where)
-								Model model) {
-					
+								 @RequestParam(value="orderByStandard", defaultValue="byEnrolldate") String orderByStandard,	//정
+								 @RequestParam(value="showBookCount", defaultValue="6") int showBookCount,						//보여지는 개수
+							 	 @RequestParam(value="bookCategory", defaultValue="all") String bookCategory,					//책 카테고리(where)
+								 Model model) {
+			
+		
+			System.out.println("bookCategory: " + bookCategory);
+		
+		
 			HashMap<String, String> bookMap = new HashMap<>();
 			bookMap.put("orderByStandard", orderByStandard);
-			bookMap.put("bookShowCount", String.valueOf(bookShowCount));
+			bookMap.put("showBookCount", String.valueOf(showBookCount));
 			bookMap.put("bookCategory", bookCategory);
 			
 			
@@ -50,7 +54,7 @@ public class BookRecomController {
 			int bookListCount = bookService.bookListCount(bookMap);
 			
 			// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
-			int boardLimit = bookShowCount;
+			int boardLimit = showBookCount;
 			// 페이징 바 개수(pageLimit)
 			int pageLimit = 5;
 			
@@ -58,11 +62,6 @@ public class BookRecomController {
 			
 			// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
 			ArrayList<Book> bookList = bookService.selectBookList(pi, bookMap);
-			
-			
-			for(Book b : bookList) {
-				System.out.println(b);
-			}
 			
 			
 			model.addAttribute("bookList", bookList);
@@ -111,8 +110,12 @@ public class BookRecomController {
 		}
 	}
 	
+	
+	
+	
 	// 파일명 수정 모듈
 	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
 		String BookOriginName = upfile.getOriginalFilename();
 
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -150,6 +153,7 @@ public class BookRecomController {
 		}
 
 		model.addAttribute("book", book);
+		
 		return "book/bookDetail";
 		
 	}

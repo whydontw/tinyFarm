@@ -11,6 +11,7 @@ import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
+import com.kh.tinyfarm.diary.model.vo.DiaryLike;
 import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.vo.Payments;
@@ -225,8 +226,30 @@ public class DiaryDao {
 	public int followCheck(SqlSession sqlSession, Follow f) {
 		return sqlSession.selectOne("diaryMapper.followCheck",f);
 	}
+	//상태값 Y인 팔로우 회원
 	public Member selectFollowMember(SqlSession sqlSession, String statusYFiId) {
 		return sqlSession.selectOne("diaryMapper.selectFollowMember",statusYFiId);
+	}
+	//영농일지 좋아요 정보
+	public DiaryLike selectLike(SqlSession sqlSession, DiaryLike dl) {
+		return sqlSession.selectOne("diaryMapper.selectLike",dl);
+	}
+	//영농일지 좋아요 수
+	public int countLike(SqlSession sqlSession, Integer diaryNo) {
+		return sqlSession.selectOne("diaryMapper.countLike", diaryNo);
+	}
+	//영농일지 작성자 정보
+	public Member selectDiaryWriter(SqlSession sqlSession, int userNo) {
+		return sqlSession.selectOne("diaryMapper.selectDiaryWriter",userNo);
+	}
+	//영농일지 좋아요수 증가
+	public int LikeCount(SqlSession sqlSession, DiaryLike dLike) {
+		return sqlSession.insert("diaryMapper.LikeCount",dLike);
+	}
+	
+	//영농일지 종아요 취소
+	public int unLikeCount(SqlSession sqlSession, DiaryLike dLike) {
+		return sqlSession.delete("diaryMapper.unLikeCount",dLike);
 	}
 
 }
