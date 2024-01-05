@@ -60,19 +60,19 @@ public class BoardController {
 			model.addAttribute("boardInfo", boardInfo);
 			System.out.println("boardInfo : "+boardInfo);
 			
-			System.out.println("boardNo : "+boardNo);
+			//System.out.println("boardNo : "+boardNo);
 			
 			Follow fw = new Follow();
 			//fw = new Follow(null, null, userNo,boardNo);
 			fw.setBoardNo(boardNo);
 			fw.setUserNo(userNo);
 		
-			System.out.println("fw : "+fw);
+			//System.out.println("fw : "+fw);
 			
 			
 			int isFollow = followService.selectFollow(fw);
 			model.addAttribute("isFollow", isFollow);
-			System.out.println("isFollow : "+isFollow);
+			//System.out.println("isFollow : "+isFollow);
 			
 		}else {
 			return "common/errorPage";
@@ -90,8 +90,9 @@ public class BoardController {
 	@PostMapping("insert.bo")
 	public String boardInsert(Board b,HttpSession session) {
 		
+		System.out.println("Board : "+b);
 		int result = boardService.insertBoard(b);
-		
+		System.out.println("result : "+result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글 작성이 성공하셨습니다.");
 			return "redirect:moveList.bo";
@@ -255,7 +256,7 @@ public class BoardController {
 	//게시글 신고
 	@PostMapping("report.bo")
 	public String boardReport(BoardReport bp,HttpSession session) {
-		//System.out.println("bp : "+bp);
+		System.out.println("bp : "+bp);
 		
 		int result =boardService.boardReport(bp);
 		

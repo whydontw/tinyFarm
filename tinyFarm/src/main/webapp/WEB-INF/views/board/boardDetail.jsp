@@ -109,9 +109,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">함께 이야기해요</a></li>
+							<li class="breadcrumb-item"><a href="moveList.bo">이야기해요</a></li>
 							<li class="breadcrumb-item active" aria-current="page">이야기
 								공간</li>
 						</ol>
@@ -153,8 +153,27 @@
 							</div>
 						</div>
 
+						   <!-- 해시태그 -->
+                        <div class="post-tags-share d-flex justify-content-between align-items-center">
+                            <!-- Tags -->
+                            <ol class="popular-tags d-flex align-items-center flex-wrap">
+                                <li><span>Tag:</span></li>
+                                <c:forEach items="${boardInfo.hashTag }" var="ht">
+	                                <li><a href="#" id="hashTag">해시1</a></li>                            	
+                                </c:forEach>      
+                            </ol>
+                      
+                            <!-- Share -->
+                            <div class="post-share">
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
 
-						<!-- Leave A Comment -->
+
+						<!-- 댓글창 -->
 						<div class="leave-comment-area clearfix">
 							<div class="comment-form">
 								<h4 class="headline">
@@ -210,17 +229,17 @@
 										<img src="${boardInfo.profile}" alt="${boardInfo.profile}">
 									</div>
 									<div class="author-name">
-										<h5>${boardInfo.boardWriter }</h5>
+										<h5>${boardInfo.userName }</h5>
 										<p>${boardInfo.email }</p>
 									</div>
 								</div>
 								<br>
 
 								<p>
-									"안녕하세요! 나는 '${boardInfo.boardWriter}'이라고 해요.<br>여러분과 소통하며
+									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며
 									새로운 친구들을 만나고 싶어요!"
 								</p>
-
+						
 								<c:choose>
 									<c:when test="${isFollow eq 1}">
 										<form action="deleteFollow.fw">
@@ -229,7 +248,16 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-											<button type="submit" class="btn alazea-btn" id="unfollowBtn">언팔로우</button>
+												
+												
+											<c:choose>
+												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
+												
+												</c:when>
+												<c:otherwise>
+													<button type="submit" class="btn alazea-btn" id="unfollowBtn">언팔로우</button>
+												</c:otherwise>
+											</c:choose>
 										</form>
 									</c:when>
 									<c:otherwise>
@@ -239,7 +267,16 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-											<button type="submit" class="btn alazea-btn" id="followBtn">팔로우</button>
+												
+												<c:choose>
+												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
+												
+												</c:when>
+												<c:otherwise>
+													<button type="submit" class="btn alazea-btn" id="followBtn">팔로우</button>
+												</c:otherwise>
+											</c:choose>
+											
 										</form>
 									</c:otherwise>
 								</c:choose>
@@ -335,6 +372,19 @@
 	</div>
 
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+
+	<!-- 해시태그 -->
+	<script>
+    var hashTags = ${boardInfo.hashTag};
+    
+    for (var i = 0; i < hashTags.length; i++) {
+        var value = hashTags[i].value;
+        console.log(value); // 뽑아낸 값 사용 예시 (콘솔에 출력)
+        var hashTagArea = append
+    }
+</script>
+
+
 
 	<script>
     function replyList(){
@@ -574,11 +624,11 @@
     
     function updateReply(el){
         var refRno = $("#hiddenRno").val();
-        console.log(refRno); //내가 클릭한 댓글의 replyNo가 나옴
+       // console.log(refRno); //내가 클릭한 댓글의 replyNo가 나옴
         //console.log(giveRno(el)); //이렇게 해도 내가 클릭한 댓글의 replyNo가 나옴
         
         var originContent=$("#hiddenRContent").val();
-        console.log(originContent);
+       // console.log(originContent);
         
        
         var contentArea = document.getElementById("replyContent");

@@ -34,11 +34,11 @@
 	flex-direction: row;
 	justify-content: space-around;
 }
-.boardContent{
-	width:700px;
-	word-wrap:break-word;
-}
 
+.boardContent {
+	width: 700px;
+	word-wrap: break-word;
+}
 </style>
 
 
@@ -53,7 +53,7 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>함께 이야기해요</h2>
+			<h2>이야기해요</h2>
 		</div>
 
 		<div class="container">
@@ -61,9 +61,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">함께이야기해요</li>
+							<li class="breadcrumb-item active" aria-current="page">이야기해요</li>
 						</ol>
 					</nav>
 				</div>
@@ -77,7 +77,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-8">
-					<div style="display:flex; justify-content:flex-end;">
+					<div style="display: flex; justify-content: flex-end;">
 						<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
 							style="width: 25px; height: 25px;"></a>
 					</div>
@@ -104,7 +104,62 @@
 								</button>
 							</form>
 						</div>
-						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
+						<jsp:include
+							page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
+
+
+
+						<div class="col-12 col-lg-7 mt-50">
+							<div class="alazea-service-area mb-100"
+								style="margin-bottom: 0px;">
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="100ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s1.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__temp">
+										<h5></h5>
+										<h6></h6>
+									</div>
+								</div>
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="300ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s2.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__moi">
+										<h5></h5>
+										<h6></h6>
+									</div>
+								</div>
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="500ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s3.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__reco">
+										<h5>텃밭에 추천해요!</h5>
+										<h6></h6>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>
@@ -439,6 +494,69 @@
                         		
                         	}
                             
+                        	function todayGreenCast(todayGreenTemp, todayGreenMoi){
+            		   			
+            		   			if(todayGreenTemp < 10){
+            						
+            		   				$("#weather__temp > h5").text("식물 냉해주의보!")
+            						$("#weather__temp > h6").html("<p>햇빛이 잘 드는 곳에서 충분한 햇볕을 받게 해주고 난방 시설을 이용하여 식물의 환경을 따뜻하게 유지하세요.</p><p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있으니 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   			
+            		   			}else if(todayGreenTemp < 18){
+            		   				
+            		   				$("#weather__temp > h5").text("대부분의 실내 식물이 잘 성장하고 번식할 수 있는 이상적인 조건!")
+            						$("#weather__temp > h6").html("<p>햇빛이 잘 드는 곳으로 이동하여 햇빛을 받게 해주세요.</p><p>일교차 온도를 유의하여 온도를 일관되게 해주세요.</p>") //")<p>낮은 온도에서 실내 습도가 낮아질 수 있습니다. 적절한 수분 공급을 해주세요.</p><p>");
+            		   				
+            		   			}else if(todayGreenTemp < 26){
+
+            		   				$("#weather__temp > h5").text("식물이 좋아하는 온도!")
+            						$("#weather__temp > h6").html("<p>환기를 잘 해주고 비료를 공급해 주세요.</p><p>난방을 이용하여 환경을 따뜻하게 유지하세요.</p>") //"<p>적절한 물을 공급하고 습도를 유지하세요.</p><p>");
+            		 	   			
+            		   			}else{
+
+            		   				$("#weather__temp > h5").text("식물이 자라기에 온도가 높네요!")
+            						$("#weather__temp > h6").html("<p>온실의 온도를 낮춰주세요. 환기가 도움이 됩니다.</p><p>햇빛이 뜨거우면 실내로 옮겨 주거나 가림막을 사용해 주세요.</p>") //"<p>토양이 마르기 전에 물을 주세요.</p><p>");
+            		   				
+            		   			}
+            		   			
+            		   			if(todayGreenMoi < 40){
+            		   				$("#weather__moi > h5").text("건조주의보!")
+            						$("#weather__moi > h6").html("<p>건조한 공기에 노출되면 토양이 빠르게 마릅니다. 수분을 공급해주세요.</p><p>작은 식물들이 모여있으면 수분 손실을 늦출 수 있어요!</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   				
+            		   			}else if(todayGreenMoi >= 15 && todayGreenMoi <= 60){
+            		   				$("#weather__moi > h5").text("식물이 크기에 촉촉한 습도!")
+            						$("#weather__moi > h6").html("<p>대부분의 실내 식물들이 좋아하는 습도예요!</p><p>옆에서 잘 관찰하며 촉촉하게 케어 해주세요!</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");   				
+            		   				
+            		   			}else if(todayGreenMoi < 75){
+            		   				$("#weather__moi > h5").text("과습주의보!")
+            						$("#weather__moi > h6").html("<p>높은 습도는 곰팡이 및 기타 질병의 발생 가능성을 증가시켜요!</p><p>배수와 통풍에 신경 써주고 토양에 곰팡이가 피는지 관찰하세요.</p>") //"<p></p><p>");
+            		   			}else{
+            		   				$("#weather__moi > h5").text("과습경보!")
+            						$("#weather__moi > h6").html("<p>높은 습도는 곰팡이 및 기타 질병의 발생 가능성을 증가시켜요!</p><p>배수와 통풍에 신경 써주고 토양에 곰팡이가 피는지 관찰하세요.</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   				
+            		   			}
+            		   			
+            		   			var mon = new Date().getMonth() + 1;
+            		   			
+            		   			if(mon >= 3 && mon <= 5){
+            		   				$("#weather__reco > h5").text("봄 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>상추 / 방울토마토 / 아스파라거스 / 브로콜리 /감자</p>")
+            		   			}if(mon >= 6 && mon <= 8){
+            		   				$("#weather__reco > h5").text("여름 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>토마토 / 오이 / 고추 / 수박 / 케일 / 바질 / 파프리카</p>")
+            		   				
+            		   			}if(mon >= 9 && mon <= 10){
+            		   				$("#weather__reco > h5").text("가을 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>배추 / 무 / 갓 / 대파 / 마늘 / 상추 / 케일 / 루꼴라</p>")
+            		   				
+            		   			}else{
+            		   				$("#weather__reco > h5").text("겨울 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>시금치 / 봄동 / 상추 / 갓 / 쑥갓 / 돌산갓 / 케일 / 청경채</p>")
+            		   				
+            		   			}
+            		   			
+            		   		}
+                        	
+                        	
                        </script>
 
 

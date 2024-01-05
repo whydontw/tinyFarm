@@ -9,11 +9,13 @@
 		  	<result column="BOARD_WRITER" property="boardWriter"/>
 		  	<result column="BOARD_TITLE" property="boardTitle"/>
 		  	<result column="BOARD_CONTENT" property="boardContent"/>
+		  	<result column="HASHTAG" property="hashTag"/>
 		  	<result column="COUNT" property="count"/>
 		  	<result column="LIKE_COUNT" property="likeCount"/>
 		  	<result column="CREATE_DATE" property="createDate"/>
 		  	<result column="CHANGE_NAME"  property="profile"/>
 		  	<result column="REPLY_COUNT" property="replyCount"/>
+		  	<result column="USER_NAME" property="userName"/>	  	
   	</resultMap>
   	
   	<resultMap type="boardReply" id="boardReplyResultSet">
@@ -95,6 +97,8 @@
 		        ,B.CREATE_DATE
 		        ,EMAIL
 		        ,CHANGE_NAME
+		        ,USER_NAME
+		        ,HASHTAG
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		WHERE B.STATUS='Y'
@@ -105,11 +109,13 @@
   		INSERT INTO BOARD(BOARD_NO
             ,BOARD_WRITER 
             ,BOARD_TITLE
-            ,BOARD_CONTENT)
+            ,BOARD_CONTENT
+            ,HASHTAG)
 		VALUES (SEQ_BNO.NEXTVAL,
 		        #{boardWriter},
 		        #{boardTitle},    
-		        #{boardContent})
+		        #{boardContent},
+		        #{hashTag})
   	</insert>
   
   	<update id="boardUpdate">

@@ -20,9 +20,11 @@ public class Board {
 	private int likeCount;
 	private String createDate;
 	private String status;
-
+	private String hashTag;
+	
 	private String titleImg;
 	private String profile;
 	private int replyCount;
 	private String email;
+	private String userName;
 }
