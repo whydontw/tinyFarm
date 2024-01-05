@@ -562,7 +562,6 @@
 		    				type: 'post',
 		    				data: { followingId: userId },
 		    				success: function (m) {
-		    			 			
 		    			        if(m.changeName == null){ //사진 없을경우 기본이미지
 		    			        	$("#profileImage").attr("src","resources/profile.jpg");
 		    			        }else{
@@ -594,7 +593,7 @@
 		    					});
 		    			      
 		    			        $(".btn1").click();
-		    			 		}
+		    			 		
 		    			 	}, error: function () {
 		    			 		console.log('following modal ajax 통신실패');
 		    			    }

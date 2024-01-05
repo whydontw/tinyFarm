@@ -728,6 +728,7 @@ public class MypageController {
 		
 		//좋아요 정보 가져오기
 		DiaryLike like = diaryService.selectLike(dl);
+		System.out.println(like);
 		
 		//좋아요 수
 		int likeCount = diaryService.countLike(diaryNo);
