@@ -37,7 +37,7 @@
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item"><a href="${contextPath}/gardeningList.pp?category=${category}">텃밭 가꾸기</a></li>
-						<li class="breadcrumb-item active" aria-current="page">상세정보</li>
+						<li class="breadcrumb-item active"><a href="#">상세정보</a></li>
 					</ol>
 					</nav>
 				</div>

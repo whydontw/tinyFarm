@@ -191,4 +191,10 @@
 		GROUP BY CHAT_ROOM_NO
   	</select>
   	
+  	<select id="getUserId" resultType="string">
+  		SELECT USER_ID
+  		FROM MEMBER
+  		WHERE USER_NO = #{userNo}
+  		AND STATUS = 'Y'	
+  	</select>
   </mapper>

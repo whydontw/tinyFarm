@@ -78,7 +78,7 @@
 				<div class="d-flex justify-content-start" style="margin-top: -85px;">
 					<button type="button" id="followBtn" class="btn alazea-btn2" onclick="followUser();"
 						style="margin-bottom: 20px; margin-left: 290px;">팔로우</button>
-					<button type="button" class="btn alazea-btn2" onclick="location.href='chatList.ch';"
+					<button type="button" class="btn alazea-btn2" onclick="goChat();"
 						style="margin-left: 3px">1:1 채팅</button>
 					<button type="button" id="diarybtn" class="btn alazea-btn2" style="margin-left: 3px">일지보기</button>
 				</div>
@@ -142,7 +142,39 @@
 	    		}
 	    	});
 	    }
-	    
+
+	    function showDiary(){
+	    	let followingId= $("#userId").text();
+	    	let followingName = $("#userName").text();
+	    	
+	    	console.log(followingId);
+	    	let alert = window.confirm(followingName+"님의 영농일지를 구경하시겠습니까?");
+	    	let form = document.createElement("form");
+			let obj; //넘겨받을 값 준비
+	    	
+	    	if(alert){//예 누를시
+	    		obj = document.createElement("input");
+				obj.setAttribute("type","hidden");
+				obj.setAttribute("name","followingId");
+				obj.setAttribute("value",followingId);
+				//폼 형식 갖추기
+				form.appendChild(obj);
+				form.setAttribute("method","post");
+				form.setAttribute("action","follow.di");
+				//body부분에 폼 추가
+				document.body.appendChild(form);
+				//전송!
+				form.submit();
+	    		
+	    	}
+	    }
+	    //채팅방 이동
+	    function goChat(){
+	    	var userId = $("#userId").text();
+	    	console.log(userId);
+	    	location.href = "chatList.ch?userId="+userId;
+	    }
+
 		//영농일지 보기
 		$("#diarybtn").click(function(){
     		let followingId= $("#userId").text();
@@ -180,7 +212,9 @@
     				return false;
     			}
     		});
+
 		});    
+
 	</script>
 	<!-- ##### All Javascript Files ##### -->
 	<!-- jQuery-2.2.4 js -->

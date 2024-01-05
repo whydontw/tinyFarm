@@ -111,7 +111,7 @@
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
-						<li class="breadcrumb-item active" aria-current="page">상세보기</li>
+						<li class="breadcrumb-item"><a href="#">상세보기</a></li>
 					</ol>
 					</nav>
 				</div>

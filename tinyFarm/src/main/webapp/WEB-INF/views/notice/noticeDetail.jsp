@@ -78,7 +78,7 @@
 							<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
 							<li class="breadcrumb-item"><a href="${contextPath}/noticeList.no">공지사항</a></li>
-							<li class="breadcrumb-item">상세보기</li>
+							<li class="breadcrumb-item"><a href="#">상세보기</a></li>
 						</ol>
 					</nav>
 				</div>

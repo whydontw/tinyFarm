@@ -97,4 +97,10 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.updateChatRoom(sqlSession,cr);
 	}
 
+	@Override
+	public String getUserId(int userNo) {
+		// TODO Auto-generated method stub
+		return chatDao.getUserId(sqlSession,userNo);
+	}
+
 }
