@@ -71,7 +71,7 @@
 		    position: absolute;
 		    top: 0;
 		    right: 0;
-		    margin-top: 5%;
+		    margin-top: 32px;
 		    margin-right: 15px;
 		    cursor: pointer;
 		    display: flex;
@@ -399,7 +399,7 @@
 			    		wantPwd ="";
 			    		chkPWd="";
 		    			//성공시 모달창 닫기
-			    		$("#updatePwdForm").off(); 
+			    		$("#updatePwdForm .close").arrt("clicked","true"); 
 
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");

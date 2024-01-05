@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
  
   <mapper namespace="diaryMapper">
+  <!-- 영농일지 -->
   	<resultMap type="diary" id="diaryResultSet">
   		<result column="DIARY_NO" property="diaryNo"/>
   		<result column="CATEGORY_NO" property="categoryNo"/>
@@ -14,13 +15,22 @@
   		<result column="SELECT_OPEN" property="selectOpen"/>
   		<result column="CREATE_DATE" property="createDate"/>
   		<result column="STATUS" property="status"/>
+  		<result column="LIKE_COUNT" property="likeCount"/>
   	</resultMap>
   	
+  	<!-- 영농일지 카테고리 -->
   	<resultMap type="diaryCategory" id="cateResultSet">
   		<result column="CATEGORY_NO" property="diaryCateNo"/>
   		<result column="CATEGORY_NAME" property="diarycateName"/>
   	</resultMap>
   	
+  	<!-- 영농일지 좋아요 -->
+  	<resultMap type="diaryLike" id="likeCountResultSet">
+  		<result column="REF_DBNO" property="refDbno"/>
+  		<result column="USER_NO" property="userNo"/>
+  	</resultMap>
+  	
+  	<!-- 커뮤니티 -->
   	<resultMap type="board" id="boardResultSet">
 		  	<result column="BOARD_NO" property="boardNo"/>
 		  	<result column="BOARD_WRITER" property="boardWriter"/>
@@ -31,6 +41,8 @@
 		  	<result column="CREATE_DATE" property="createDate"/>
 		  	<result column="TITLEIMG" property="titleImg"/>
   	</resultMap>
+  	
+  	<!-- 커뮤니티 댓글 -->
   	<resultMap type="boardReply" id="replyResultSet">
 		  	<result column="REPLY_NO" property="replyNo"/>
 		  	<result column="REF_BNO" property="refBno"/>
@@ -41,6 +53,7 @@
 		  	<result column="STATUS" property="status"/>
   	</resultMap>
   	
+  	<!-- 회원 -->
   	<resultMap type="member" id="memberResultSet">
 			<result column = "USER_NO" property="userNo"/>
 			<result column = "USER_ID" property="userId"/>
@@ -56,11 +69,13 @@
 			<result column = "STATUS" property="status"/>
 		</resultMap>
   	
+  	<!-- 팔로우 -->
   	<resultMap type="follow" id="followResultSet">
   		<result column="USER_NO" property="userNo"/>
   		<result column="FOLLOWING_ID" property="followingId"/>
   	</resultMap>
   	
+  	<!-- 판매 -->
   	<resultMap type="product" id="productResultSet">
 	  	<result column="PRODUCT_NO" property="productNo"/>
 	  	<result column="USER_NO" property="userNo"/>
@@ -77,6 +92,7 @@
 	  	<result column="CHANGE_NAME" property="changeName"/>
   	</resultMap>
   	
+  	<!-- 주문 -->
   	<resultMap type="payments" id="paymentResultSet">
 	  	<result column="PAYMENT_NO" property="paymentNo"/>
 	  	<result column="PAYMENT_METHOD" property="paymentMethod"/>
@@ -288,7 +304,7 @@
   	
   	<!-- 일지보기 -->
   	<select id="viewDiary" resultType="diary" resultMap="diaryResultSet">
-  		SELECT DIARY_NO,CATEGORY_NO,SELECT_DATE,DIARY_TITLE,DIARY_CONTENT,SELECT_OPEN
+  		SELECT DIARY_NO,CATEGORY_NO,SELECT_DATE,DIARY_WRITER,DIARY_TITLE,DIARY_CONTENT,SELECT_OPEN
   		FROM DIARY_BOARD
   		WHERE DIARY_NO=#{diaryNo}
   	</select>
@@ -350,10 +366,11 @@
   	
   	<!-- 판매내역 목록 -->
   	<select id="mySellList" parameterType="product" resultMap="productResultSet">
-  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
+  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,A.FILE_PATH,A.CHANGE_NAME, P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
 		FROM PRODUCT P
 		LEFT JOIN PRODUCT_PAYMENT PP ON(P.PRODUCT_NO=PP.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(M.USER_NO=PP.USER_NO)
+		LEFT JOIN ATTACHMENT A ON (P.PRODUCT_NO=A.REF_NO)
 		WHERE P.USER_NO=#{userNo}
   	</select>
   	
@@ -404,6 +421,37 @@
 		WHERE PL.USER_NO=#{userNo}
   	</select>
 
+	<!-- 영농일지 좋아요 -->
+	<select id="selectLike" resultMap="likeCountResultSet">
+		SELECT USER_NO
+		FROM DIARY_LIKE
+		WHERE REF_DBNO = #{refDbno}
+		AND USER_NO = #{userNo}
+	</select>
   	
+  	<!-- 영농일지 좋아요 수 -->
+  	<select id="countLike" resultType="_int">
+  		SELECT COUNT(USER_NO)
+  		FROM DIARY_LIKE
+  		WHERE REF_DBNO = #{diaryNo}
+  	</select>
   	
+  	<!-- 영농일지 작성자 추출 -->
+  	<select id="selectDiaryWriter" parameterType="member" resultMap="memberResultSet">
+  		SELECT USER_NO, USER_NAME, CHANGE_NAME
+  		FROM MEMBER
+  		WHERE USER_NO = #{userNo}
+  	</select>
+  	
+  	<!-- 영농일지 좋아요 증가 -->
+  	<insert id="LikeCount">
+  		INSERT INTO DIARY_LIKE VALUES(#{refDbno},#{userNo})
+  	</insert>
+  	
+  	<!-- 영농일지 좋아요 취소 -->
+  	<delete id="unLikeCount">
+  		DELETE FROM DIARY_LIKE
+  		WHERE REF_DBNO = #{refDbno} 
+  		AND USER_NO = #{userNo}
+  	</delete>
   </mapper>

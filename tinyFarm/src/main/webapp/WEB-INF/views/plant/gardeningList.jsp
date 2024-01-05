@@ -233,25 +233,27 @@
         </div>
     </section>
     <script>
+    	//페이지 로드 시 10개만 일단 보여주기 위한 함수
 	    document.addEventListener("DOMContentLoaded", function() {
-	    	  var table = document.getElementById("veTable");
+	    	  var table = document.getElementById("veTable"); //테이블 요소
 	    	  var rowsToShow = 10; // 초기에 보여줄 행 수
 	    	  var rowsIncrement = 10; // 버튼 클릭 시 증가할 행 수
 	
 	    	  // 초기에 일부 행을 숨김
 	    	  var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-	    	  for (var i = rowsToShow; i < rows.length; i++) {
+	    	  for (var i = rowsToShow; i < rows.length; i++) { //rows.length는 총 불러온 행의 개수
 	    	    rows[i].style.display = "none";
 	    	  }
 	
 	    	  // 버튼 클릭 시 행 추가 보기
 	    	  var showMoreButton = document.getElementById("showMoreBtn");
 	    	  showMoreButton.addEventListener("click", function() {
-	    	    rowsToShow += rowsIncrement;
+	    	    rowsToShow += rowsIncrement; //보여줄 행을 10개 더 늘림. 처음에 10이었다면 한번 버튼을 누르면 20개로 늘어남.
 	    	  
-	    	    if(rowsToShow/${listSize} >= 1){
+	    	    if(rowsToShow/${listSize} >= 1){ //보여줄 행의 개수보다 가져온 데이터의 행의 개수가 더 적으면, rowsToShow가 20인데 데이터 총 량이 14개면 20/14 = 1.xx. 이럴때는 버튼을 숨겨야함.
 	    	    	showMoreButton.style.display = "none";
 	    	    }
+	    	    //행 보이고 숨기기
 	    	    for (var i = 0; i < rows.length; i++) {
 	    	      if (i < rowsToShow) {
 	    	        rows[i].style.display = "";
