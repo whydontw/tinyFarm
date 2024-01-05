@@ -51,8 +51,8 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		users.add(session);
 		//접속했을때
 		log.info("접속");
-		log.info("session : {}",session);
-		log.info("접속자의 아이디 : {}",((Member)session.getAttributes().get("loginUser")).getUserId());
+		log.debug("session : {}",session);
+		log.debug("접속자의 아이디 : {}",((Member)session.getAttributes().get("loginUser")).getUserId()); //이거 없애면 user정보를 가져오지 못함. why?
 		log.info("접속 ! 현재 접속자 수 : {}",users.size());
 	}
 	/*
@@ -68,7 +68,7 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		// 메세지를 받았을때
 		//log.info("메세지 수신");
-		log.info("session : {}",session);
+		//log.info("session : {}",session);
 		//log.info("message : {}",message);
 		//메세지랑 userId 붙여서 보내기
 		
@@ -94,7 +94,7 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 			//보낸사람 또는 받는사람중에 접속자가 있다면 
 			
 			if(id.equals(chatMessage.getUserId()) || id.equals(chatMessage.getReceiveId())) {
-				System.out.println("채팅이 지금 가는 id : "+id);
+				//System.out.println("채팅이 지금 가는 id : "+id);
 				ws.sendMessage( new TextMessage( new Gson().toJson(chatMessage) ));
 			}
 			
@@ -117,8 +117,8 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// 접속 종료 됐을 때
 		log.info("접속 종료");
-		log.info("session : {}",session);
-		log.info("status : {}",status);
+		log.debug("session : {}",session);
+		log.debug("status : {}",status);
 		users.remove(session);
 		
 	}
