@@ -47,6 +47,16 @@
 
         }
 
+        /* #change{
+            width: 90px;
+            margin-right: 10px;
+        }
+
+        #area{
+            width: 200px;
+            margin-left: 10px;
+        } */
+
         #inputimage{
             margin: -100px 0 0 25px;
             width: 262px;
@@ -69,6 +79,12 @@
             outline : none;
         }
         
+/*         #pimg{
+
+        width: 350px;
+        height: 450px;
+        
+    	} */
         
     </style>
 </head>
@@ -124,13 +140,18 @@
                        </select>
                     </td>
                 </tr>
-                <tr style="">
-                    <td rowspan="3"> 
+                <tr style=""> <!-- height: 50px; -->
+                    <td rowspan="3"> <!-- style="width: 400px;" -->
+                        <!-- <div style="width: 262px; height: 286px;"> -->
                             <label for="file">
                                 <img src="resources/img/bg-img/product-inputfile.png" alt="이미지 첨부" id="inputimage">                               
                             </label>
                             <input type="file" id="file" name="upfile" onchange="loadImg(this)" id="pimg" >
+                            <!-- </div> -->
                             <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+                            
+                            
+                        
                     </td>
                     <th>상품명</th>
                     <td colspan="2"><input type="text" id="name" name="productTitle"></td>  
