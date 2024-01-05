@@ -14,6 +14,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
 	.mb-4>*{
 		display: inline;
@@ -77,8 +80,7 @@
 						style="margin-bottom: 20px; margin-left: 310px;">팔로우</button>
 					<button type="button" class="btn alazea-btn2" onclick="location.href='chatList.ch';"
 						style="margin-left: 3px">1:1 채팅</button>
-					<button type="button" class="btn alazea-btn2" onclick="showDiary();"
-						style="margin-left: 3px">일지보기</button>
+					<button type="button" id="diarybtn" class="btn alazea-btn2" style="margin-left: 3px">일지보기</button>
 				</div>
 			</div>
 		</div>
@@ -104,54 +106,80 @@
 			//전송!
 			form.submit();
 		}
+		
 		//팔로우 취소
 	    function unfollow(){
-	    	let alert = window.confirm("팔로우를 취소하시겠습니까?\n나중에 다시 팔로우 할 수 있습니다.");
 	    	let followingId= $("#userId").text();
-	    	if(alert){
-				let form = document.createElement("form");
-				let obj; //넘겨받을 값 준비
-				//팔로잉 유저 아이디
-				obj = document.createElement("input");
-				obj.setAttribute("type","hidden");
-				obj.setAttribute("name","followingId");
-				obj.setAttribute("value",followingId);
-				//폼 형식 갖추기
-				form.appendChild(obj);
-				form.setAttribute("method","post");
-				form.setAttribute("action","unfollow.me");
-				//body부분에 폼 추가
-				document.body.appendChild(form);
-				//전송!
-				form.submit();
-	    	}
+			let form = document.createElement("form");
+			let obj; //넘겨받을 값 준비
+			
+			//폼 준비
+			obj = document.createElement("input");
+			obj.setAttribute("type","hidden");
+			obj.setAttribute("name","followingId");
+			obj.setAttribute("value",followingId);
+			//폼 형식 갖추기
+			form.appendChild(obj);
+			form.setAttribute("method","post");
+			form.setAttribute("action","unfollow.me");
+			//body부분에 폼 추가
+			document.body.appendChild(form);
+				
+			swal({
+	    		title : "팔로우 취소",
+	    		text : followingId+"님 팔로우를 취소하시겠습니까?\n나중에 다시 팔로우 할 수 있습니다.",
+	    		showCancelButton : true,
+	    		confirmButtonClass : "btn-danger",
+	    		confirmButtonText : "예",
+	    		cancelButtonText : "아니오",
+	    		closeOnConfirm : false,
+	    		closeOnCancel : true
+	    	}, function(isConfirm) {
+	    		if(isConfirm){ //예 누를시 폼 전송
+	    			form.submit();
+	    		}else{
+	    			return false;
+	    		}
+	    	});
 	    }
 	    
-	    function showDiary(){
+		//영농일지 보기
+		$("#diarybtn").click(function(){
 	    	let followingId= $("#userId").text();
 	    	let followingName = $("#userName").text();
-	    	
-	    	console.log(followingId);
-	    	let alert = window.confirm(followingName+"님의 영농일지를 구경하시겠습니까?");
 	    	let form = document.createElement("form");
 			let obj; //넘겨받을 값 준비
-	    	
-	    	if(alert){//예 누를시
-	    		obj = document.createElement("input");
-				obj.setAttribute("type","hidden");
-				obj.setAttribute("name","followingId");
-				obj.setAttribute("value",followingId);
-				//폼 형식 갖추기
-				form.appendChild(obj);
-				form.setAttribute("method","post");
-				form.setAttribute("action","follow.di");
-				//body부분에 폼 추가
-				document.body.appendChild(form);
-				//전송!
-				form.submit();
-	    		
-	    	}
-	    }
+			
+			//폼 준비
+    		obj = document.createElement("input");
+    		obj.setAttribute("type","hidden");
+    		obj.setAttribute("name","followingId");
+    		obj.setAttribute("value",followingId);
+    		//폼 형식 갖추기
+    		form.appendChild(obj);
+    		form.setAttribute("method","post");
+    		form.setAttribute("action","follow.di");
+    		//body부분에 폼 추가
+    		document.body.appendChild(form);
+    		
+	    	swal({
+    			title : "영농일지 구경",
+    			text : followingName+"님의 영농일지를 구경하시겠습니까?",
+    			icon: 'question',
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+    		}, function(isConfirm) {
+    			if (isConfirm) { //예 누를시 폼 전송
+    				form.submit();
+    			}else{
+    				return false;
+    			}
+    		});
+		});
 	</script>
 	<!-- ##### All Javascript Files ##### -->
 	<!-- jQuery-2.2.4 js -->

@@ -12,6 +12,7 @@ import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.dao.DiaryDao;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
+import com.kh.tinyfarm.diary.model.vo.DiaryLike;
 import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.vo.Payments;
@@ -248,11 +249,43 @@ public class DiaryServiceImpl implements DiaryService {
 	public int followCheck(Follow f) {
 		return diaryDao.followCheck(sqlSession,f);
 	}
-
+	
+	//상태 Y인 유저 정보
 	@Override
 	public Member selectFollowMember(String statusYFiId) {
 		return diaryDao.selectFollowMember(sqlSession,statusYFiId);
 	}
+	
+	//좋아요 정보
+	@Override
+	public DiaryLike selectLike(DiaryLike dl) {
+		return diaryDao.selectLike(sqlSession, dl);
+	}
+	
+	//좋아요 개수
+	@Override
+	public int countLike(Integer diaryNo) {
+		return diaryDao.countLike(sqlSession, diaryNo);
+	}
+
+	//좋아요 증가
+	@Override
+	public int LikeCount(DiaryLike dLike) {
+		return diaryDao.LikeCount(sqlSession, dLike);
+	}
+
+	//좋아요 취소
+	@Override
+	public int unLikeCount(DiaryLike dLike) {
+		return diaryDao.unLikeCount(sqlSession, dLike);
+	}
+	
+	//일지 작성자 정보
+	@Override
+	public Member selectDiaryWriter(int userNo) {
+		return diaryDao.selectDiaryWriter(sqlSession, userNo);
+	}
+	
 	
 	
 

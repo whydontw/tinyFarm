@@ -375,7 +375,7 @@
 	    			//게시글 리스트 추가해주기위한 작업
 	    			if(fiList.length == 0){
 	    				str += "<tr>"
-		    				+ "<td colspan='2'>친구를 만들어보세요!</td>"
+		    				+ "<td colspan='2' onclick='event.cancelBubble=true;'>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
 	    			}else{ 
 		    			$.each(fiList, function(key, fi){
@@ -407,96 +407,95 @@
 	    			
 	    			$("#fiPrePage").html(pStr);
 	    			$("#fiNextPage").html(nStr);
-
-	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달
+	    			
+	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
 	    			$("#followingTableContainer tbody tr").on('click', function () {
 	    			    // 클릭한 행에서 followingId 값을 가져옴
 	    			    let userId = $(this).find('td:first').text();
+	    			    
 	    			    // 모달 열기 및 정보 표시 함수 호출
-		    			$.ajax({
-		    				url: "getFollowingInfo.me",
-		    				type: 'post',
-		    				data: { followingId: userId },
-		    				success: function (m) {
-		    			 		if(m.userId != null){
-		    			        	if(m.changeName != null){ //유저 프로필 사진
-			    			        	$("#followImg").attr("src",m.changeName);
-		    			        	}else{ //없으면 기본사진
-		    			        		$("#followImg").attr("src","resources/profile.jpg");
-		    			        	}
-		    			        $("#userNo").text(m.userNo);
-		    			        if(m.changeName == null){ //사진 없을경우 기본이미지
-		    			        	$("#profileImage").attr("src","resources/profile.jpg");
-		    			        }else{
-			    			        $("#profileImage").attr("src",m.changeName); //프로필 사진
-		    			        }
-		    			        $("#userId").text(m.userId); //아이디
-		    			        $("#userName").text(m.userName); //이름
-		    			        $("#userGrade").text(m.grade); //등급
-		    			           	 	
-		    			      	//팔로우 여부 체크
-		    					$(function(){
-		    						let followingId = $("#userId").text();
-		    						let userNo = ${loginUser.userNo};
-		    							$.ajax({
-		    								url : "followChk.me",
-		    								data : {
-		    									followingId : followingId,
-		    									userNo : userNo
-		    								},
-		    								success : function(result){
-		    									if(result=='YY'){
-		    										$("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
-		    									}
-		    								},error : function(){
-		    									console.log("팔로우 확인 실패");
-		    								}
-		    							});
-		    						});
-		    			        
-		    			       	 $(".btn1").click();
-		    			        
-		    			 		}else{
-		    			 			swal({
-							    		title : "회원정보 없음",
-							    		text : "해당 회원 정보가 존재하지 않습니다. \n목록에서 제거하시겠습니까?",
-							    		showCancelButton : true,
-							    		confirmButtonClass : "btn-danger",
-							    		confirmButtonText : "예",
-							    		cancelButtonText : "아니오",
-							    		closeOnConfirm : false,
-							    		closeOnCancel : true
-							    	}, function(isConfirm) {
-							    		if(isConfirm){ //예 누를시 폼 전송
-							    			let followingId = userId;
-							    			let form = document.createElement("form");
-							    			let obj; //넘겨받을 값 준비
-							    			//폼 준비
-							    			obj = document.createElement("input");
-							    			obj.setAttribute("type","hidden");
-							    			obj.setAttribute("name","followingId");
-							    			obj.setAttribute("value",followingId);
-							    			//폼 형식 갖추기
-							    			form.appendChild(obj);
-							    			form.setAttribute("method","post");
-							    			form.setAttribute("action","deleteNonUser.me");
-							    			//body부분에 폼 추가
-							    			document.body.appendChild(form);
-							    			form.submit();
-							    			
-							    		}else{
-							    			return false;
-							    		}
-							    	});
-		    			 		}
-		    			 	}, error: function () {
-		    			 		console.log('following modal ajax 통신실패');
-		    			    }
-		    			});
-	    			    
-	    			    
-	    			    
+	    				$.ajax({
+	    					url: "getFollowingInfo.me",
+	    					type: 'post',
+	    					data: { followingId: userId },
+	    					success: function (m) {
+	    				 		if(m.userId != null){
+	    				        	if(m.changeName != null){ //유저 프로필 사진
+	    					        	$("#followImg").attr("src",m.changeName);
+	    				        	}else{ //없으면 기본사진
+	    				        		$("#followImg").attr("src","resources/profile.jpg");
+	    				        	}
+	    				        $("#userNo").text(m.userNo);
+	    				        if(m.changeName == null){ //사진 없을경우 기본이미지
+	    				        	$("#profileImage").attr("src","resources/profile.jpg");
+	    				        }else{
+	    					        $("#profileImage").attr("src",m.changeName); //프로필 사진
+	    				        }
+	    				        $("#userId").text(m.userId); //아이디
+	    				        $("#userName").text(m.userName); //이름
+	    				        $("#userGrade").text(m.grade); //등급
+	    				           	 	
+	    				      	//팔로우 여부 체크
+	    						$(function(){
+	    							let followingId = $("#userId").text();
+	    							let userNo = ${loginUser.userNo};
+	    								$.ajax({
+	    									url : "followChk.me",
+	    									data : {
+	    										followingId : followingId,
+	    										userNo : userNo
+	    									},
+	    									success : function(result){
+	    										if(result=='YY'){
+	    											$("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+	    										}
+	    									},error : function(){
+	    										console.log("팔로우 확인 실패");
+	    									}
+	    								});
+	    							});
+	    				        
+	    				       	 $(".btn1").click();
+	    				        
+	    				 		}else{
+	    				 			swal({
+	    					    		title : "회원정보 없음",
+	    					    		text : "해당 회원 정보가 존재하지 않습니다.\n목록에서 제거하시겠습니까?",
+	    					    		showCancelButton : true,
+	    					    		confirmButtonClass : "btn-danger",
+	    					    		confirmButtonText : "예",
+	    					    		cancelButtonText : "아니오",
+	    					    		closeOnConfirm : false,
+	    					    		closeOnCancel : true
+	    					    	}, function(isConfirm) {
+	    					    		if(isConfirm){ //예 누를시 폼 전송
+	    					    			let followingId = userId;
+	    					    			let form = document.createElement("form");
+	    					    			let obj; //넘겨받을 값 준비
+	    					    			//폼 준비
+	    					    			obj = document.createElement("input");
+	    					    			obj.setAttribute("type","hidden");
+	    					    			obj.setAttribute("name","followingId");
+	    					    			obj.setAttribute("value",followingId);
+	    					    			//폼 형식 갖추기
+	    					    			form.appendChild(obj);
+	    					    			form.setAttribute("method","post");
+	    					    			form.setAttribute("action","deleteNonUser.me");
+	    					    			//body부분에 폼 추가
+	    					    			document.body.appendChild(form);
+	    					    			form.submit();
+	    					    		}else{
+	    					    			return false;
+	    					    		}
+	    					    	});
+	    				 		}
+	    				 	}, error: function () {
+	    				 		console.log('following modal ajax 통신실패');
+	    				    }
+	    				});
 	    			});
+
+	    			
 	    		},error : function(){
 	    			console.log("팔로잉 ajax 통신 실패");
 	    		}
@@ -525,7 +524,7 @@
 	    			//게시글 리스트 추가해주기위한 작업
 	    			if(fwList.length == 0){
 	    				str += "<tr>"
-		    				+ "<td colspan='2'>친구를 만들어보세요!</td>"
+		    				+ "<td colspan='2' onclick='event.cancelBubble=true;'>친구를 만들어보세요!</td>"
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(fwList, function(key, fw){
@@ -557,7 +556,7 @@
 	    			$("#fwPrePage").html(pStr);
 	    			$("#fwNextPage").html(nStr);
 	    				
-	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달
+	    			// 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
 	    			$("#followerTableContainer tbody tr").on("click", function () {
 	    			    // 클릭한 행에서 Id 값을 가져옴
 	    			    let userId = $(this).find('td:first').text();
@@ -583,7 +582,6 @@
 		    			        $("#userName").text(m.userName); //이름
 		    			        $("#userGrade").text(m.grade); //등급
 		    			           	 	
-		    			        
 		    			      	//팔로우 여부 체크
 		    					$(function(){
 		    						let followingId = $("#userId").text();
