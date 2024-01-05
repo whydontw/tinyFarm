@@ -67,47 +67,52 @@
                         <div class="shop-page-count">
                             <div class="py-2">🌿 초보 농부와 풀집사들을 위한</div>
                             <h2>도서 추천</h2>
+                            
                         </div>
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
-<!--                             <form action="#" method="post" class="form-inline" id=""> -->
-                                <select class="custom-select widget-title" id="orderByStandard">
-                                  <option value ="byEnrolldate">Show: 최신등록순</option>
-                                  <option value="byHits">조회순</option>
-                                  <option value="byHighPrice">최고가격순</option>
-                                  <option value="byLowPrice">최저가격순</option>
-                                </select>
-                                <select class="custom-select widget-title" id="bookShowCount">
-                                  <option value="9">Show: 9</option>
-                                  <option value="12">12</option>
-                                  <option value="15">15</option>
-                                </select>
-<!--                             </form> -->
+<!--                      <form action="#" method="post" class="form-inline" id=""> -->
+                            <select class="custom-select widget-title" id="orderByStandard">
+                              <option value ="byEnrolldate">Show: 최신등록순</option>
+                              <option value="byHits">조회순</option>
+                              <option value="byHighPrice">최고가격순</option>
+                              <option value="byLowPrice">최저가격순</option>
+                            </select>
+                            <select class="custom-select widget-title" id="showBookCount">
+                              <option value="6">Show: 6</option>
+                              <option value="12">12</option>
+                              <option value="18">18</option>
+                            </select>
+<!--                       </form> -->
                         </div>
                     </div>
                 </div>
             </div>
+            
 
             <div class="row">
                 <!-- Sidebar Area -->
                 <div class="col-12 col-md-4 col-lg-3">
                     <div class="shop-sidebar-area">
 
-
                         <!-- Shop Widget -->
                         <div class="shop-widget catagory mb-50">
                             <h4 class="widget-title">Categories</h4>
                             <div class="widget-desc">
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" value="원예" class="custom-control-input" id="customCheck1" name="bookCategory" checked="checked">
+                                    <input type="radio" value="all" class="custom-control-input" id="customCheck0" name="bookCategory" checked="checked">
+                                    <label class="custom-control-label" for="customCheck0">전체 <span class="text-muted"></span></label>
+                                </div>
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="radio" value="gardening" class="custom-control-input" id="customCheck1" name="bookCategory">
                                     <label class="custom-control-label" for="customCheck1">원예 <span class="text-muted"></span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" value="조경" class="custom-control-input" id="customCheck2" name="bookCategory">
+                                    <input type="radio" value="landscaping" class="custom-control-input" id="customCheck2" name="bookCategory">
                                     <label class="custom-control-label" for="customCheck2">조경 <span class="text-muted"></span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" value="텃밭" class="custom-control-input" id="customCheck3" name="bookCategory">
+                                    <input type="radio" value="vegetableGarden" class="custom-control-input" id="customCheck3" name="bookCategory">
                                     <label class="custom-control-label" for="customCheck3">텃밭 <span class="text-muted"></span></label>
                                 </div>
                             </div>
@@ -117,58 +122,51 @@
 
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
+                
                     <div class="shop-products-area">
                         <div class="row">
 
 							<c:forEach var="bl" items="${bookList }">
-                            <!-- Single Product Area -->
+                               <!-- Single Product Area -->
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img">
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}"><img src="img/bg-img/40.png" alt=""></a>
-	                                        <!-- Product Tag -->
-	                                        <c:if test="${bl.bookCount > 10 }">
-	                                        	<div class="product-tag sale-tag"><a href="#">Hot</a></div>
-	                                        </c:if>
-	                                        <div class="product-meta d-flex">
-	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	<!--                                        <a href="cart.html" class="add-to-cart-btn">Add to cart</a> -->
-	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                                        </div>
+	                                    <div >
+	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
+	                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
+	                                        </a>
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
 	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
 	                                            <p>[ ${bl.bookCategory} ] ${bl.bookTitle }</p>
 	                                        </a>
-	                                        <h6>${bl.bookPrice }</h6>
+	                                        <h6>${bl.bookPrice } ₩</h6>
 	                                    </div>
 	                                </div>
 	                            </div>
 							</c:forEach>
-							
                         </div>
-
-                        <!-- Pagination -->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                
+                        
+						<section>
+	                        <!-- Pagination -->
+	                        <nav aria-label="Page navigation">
+	                            <ul class="pagination ">
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}&bookCategory=${bookMap.bookCategory}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${i}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}&bookCategory=${bookMap.bookCategory}">${i}</a></li>
 									</c:forEach>
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage+1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}&bookCategory=${bookMap.bookCategory}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
-                                    
                                 </ul>
-                        </nav>
+	                        </nav>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -177,19 +175,40 @@
     
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
    	
+   	
    	<script type="text/javascript">
-   		
-   		$(function(){
-   			
-   			$("#orderByStandard").val(bookMap.orderByStandard);
-   			$("#bookShowCount").val(bookMap.bookShowCount);
-   			$("input[name=bookCategory]").val(bookMap.bookCategory);
-   			
-   			
-   			
-   			
-   		})
-   	</script>
+            
+   				$(function(){
+
+					var orbs = "${bookMap.orderByStandard}";			
+					var bsc = ${bookMap.showBookCount};			
+					var bcy = "${bookMap.bookCategory}";
+					
+					
+   					$("#orderByStandard").val(orbs);
+   		   			$("#showBookCount").val(bsc);
+					
+					$("input[name=bookCategory][value=" + bcy + "]").prop("checked", "checked");
+
+   		   			
+   		   			$("#orderByStandard").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + $("#orderByStandard").val()  + "&showBookCount=" + bsc+ "&bookCategory=" + bcy;
+   		   			})
+   		   			
+   		   			$("#showBookCount").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + $("#showBookCount").val() + "&bookCategory=" + bcy;
+   		   			})
+   		   			
+   		   			$("input[name=bookCategory]").change(function(){
+   		   				location.href="bookMain.re?orderByStandard=" + orbs  + "&showBookCount=" + bsc + "&bookCategory=" + $("input[name=bookCategory]:checked").val();
+   		   			})
+   		   			
+   				})
+   				
+            </script>
+   	
+   	
+   	
 
   	<!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->

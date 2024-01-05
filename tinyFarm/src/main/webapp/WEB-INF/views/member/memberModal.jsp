@@ -149,6 +149,7 @@
 	    	let followingName = $("#userName").text();
 	    	let form = document.createElement("form");
 			let obj; //넘겨받을 값 준비
+<<<<<<< HEAD
 			
 			//폼 준비
     		obj = document.createElement("input");
@@ -180,6 +181,25 @@
     			}
     		});
 		});
+=======
+	    	
+	    	if(alert){//예 누를시
+	    		obj = document.createElement("input");
+				obj.setAttribute("type","hidden");
+				obj.setAttribute("name","followingId");
+				obj.setAttribute("value",followingId);
+				//폼 형식 갖추기
+				form.appendChild(obj);
+				form.setAttribute("method","post");
+				form.setAttribute("action","follow.di");
+				//body부분에 폼 추가
+				document.body.appendChild(form);
+				//전송!
+				form.submit();
+	    		
+	    	}
+	    }	    
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 	</script>
 	<!-- ##### All Javascript Files ##### -->
 	<!-- jQuery-2.2.4 js -->
