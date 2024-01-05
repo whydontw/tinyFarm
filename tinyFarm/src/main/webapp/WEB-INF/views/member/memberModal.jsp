@@ -58,15 +58,15 @@
 								<input type="hidden" id="userNo" name="userNo">
 								<div class="ml-5">
 									<div class="mb-4" style="margin-top: -70px">
-										<label for="userId">ID</label>
+										<label for="userId">ID&nbsp;:&nbsp;</label>
 										<div id="userId"></div>
 									</div>
 									<div class="mb-4">
-										<label for="userName">이름</label>
+										<label for="userName">이름&nbsp;:&nbsp;</label>
 										<div id="userName"></div>
 									</div>
 									<div class="mb-4">
-										<label for="userGrade">회원등급</label>
+										<label for="userGrade">회원등급&nbsp;:&nbsp;</label>
 										<div id="userGrade"></div>
 										<!-- 여기에 회원등급 입력 필드 또는 텍스트 추가 -->
 									</div>
@@ -77,7 +77,7 @@
 				</div>
 				<div class="d-flex justify-content-start" style="margin-top: -85px;">
 					<button type="button" id="followBtn" class="btn alazea-btn2" onclick="followUser();"
-						style="margin-bottom: 20px; margin-left: 310px;">팔로우</button>
+						style="margin-bottom: 20px; margin-left: 290px;">팔로우</button>
 					<button type="button" class="btn alazea-btn2" onclick="location.href='chatList.ch';"
 						style="margin-left: 3px">1:1 채팅</button>
 					<button type="button" id="diarybtn" class="btn alazea-btn2" style="margin-left: 3px">일지보기</button>
