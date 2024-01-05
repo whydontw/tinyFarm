@@ -51,13 +51,13 @@
 	  		SELECT COUNT(*)
 			FROM BOOK
 			<choose>
-				<when test="bookCategory == '원예'">
+				<when test="bookCategory == 'gardening'">
 					WHERE BOOK_CATEGORY LIKE '원예'
 				</when>
-				<when test="bookCategory == '조경'">
+				<when test="bookCategory == 'landscaping'">
 					WHERE BOOK_CATEGORY LIKE '조경'
 				</when>
-				<when test="bookCategory == '텃밭'">
+				<when test="bookCategory == 'vegetableGarden'">
 					WHERE BOOK_CATEGORY LIKE '텃밭'
 				</when>
 				<otherwise></otherwise>
@@ -67,6 +67,18 @@
 	  	
 	  	<select id="selectBookList" resultMap="bookResultSet">
 	  		SELECT * FROM BOOK
+	  		<choose>
+				<when test="bookCategory == 'gardening'">
+					WHERE BOOK_CATEGORY LIKE '원예'
+				</when>
+				<when test="bookCategory == 'landscaping'">
+					WHERE BOOK_CATEGORY LIKE '조경'
+				</when>
+				<when test="bookCategory == 'vegetableGarden'">
+					WHERE BOOK_CATEGORY LIKE '텃밭'
+				</when>
+				<otherwise></otherwise>
+			</choose>
 	  		ORDER BY
 	  		<choose>
 				<when test="orderByStandard == 'byHits'">
@@ -90,7 +102,7 @@
 		
 		
 		<select id="bookDetail" resultMap="bookResultSet">
-			SELECT * BOOK
+			SELECT * FROM BOOK
 			WHERE BOOK_NO = #{bookNo}
 		</select>
 		

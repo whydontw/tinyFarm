@@ -131,6 +131,7 @@
                             </label>
                             <input type="file" id="file" name="upfile" onchange="loadImg(this)" id="pimg" >
                             <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+
                     </td>
                     <th>상품명</th>
                     <td colspan="2"><input type="text" id="name" name="productTitle"></td>  
