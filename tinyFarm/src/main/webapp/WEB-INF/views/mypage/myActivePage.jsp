@@ -417,21 +417,15 @@
 	    				$.ajax({
 	    					url: "getFollowingInfo.me",
 	    					type: 'post',
-	    					data: { followingId: userId },
-	    					success: function (m) {
-	    				 		if(m.userId != null){
-	    				        	if(m.changeName != null){ //유저 프로필 사진
-	    					        	$("#followImg").attr("src",m.changeName);
-	    				        	}else{ //없으면 기본사진
-	    				        		$("#followImg").attr("src","resources/profile.jpg");
-	    				        	}
-	    				        $("#userNo").text(m.userNo);
-	    				        if(m.changeName == null){ //사진 없을경우 기본이미지
-	    				        	$("#profileImage").attr("src","resources/profile.jpg");
-	    				        }else{
-	    					        $("#profileImage").attr("src",m.changeName); //프로필 사진
-	    				        }
-	    				        $("#userId").text(m.userId); //아이디
+	    					data: { followingId: userId }, //클릭한 회원 아이디로 정보 불러오기
+	    					success: function (m) { 
+	    				 		if(m.userId != null){//아이디가 존재하면
+		    				        if(m.changeName == null){ //유저 프로필 사진 있으면
+		    				        	$("#profileImage").attr("src","resources/profile.jpg");
+		    				        }else{//없으면 기본사진
+		    					        $("#profileImage").attr("src",m.changeName);
+		    				        }
+	    				        $("#userId").text(m.userId); //모달창에 아이디값 넣기
 	    				        $("#userName").text(m.userName); //이름
 	    				        $("#userGrade").text(m.grade); //등급
 	    				           	 	
@@ -455,9 +449,11 @@
 	    								});
 	    							});
 	    				        
-	    				       	 $(".btn1").click();
+		    				        //모달창 실행
+		    				       	$(".btn1").click();
 	    				        
 	    				 		}else{
+	    				 			//회원정보가 없는데 팔로우 목록에 뜨는 경우
 	    				 			swal({
 	    					    		title : "회원정보 없음",
 	    					    		text : "해당 회원 정보가 존재하지 않습니다.\n목록에서 제거하시겠습니까?",
@@ -566,13 +562,7 @@
 		    				type: 'post',
 		    				data: { followingId: userId },
 		    				success: function (m) {
-		    			 		if(m.userId != null){
-		    			        	if(m.changeName != null){ //유저 프로필 사진
-			    			        	$("#followImg").attr("src",m.changeName);
-		    			        	}else{ //없으면 기본사진
-		    			        		$("#followImg").attr("src","resources/profile.jpg");
-		    			        	}
-		    			        $("#userNo").text(m.userNo);	
+		    			 			
 		    			        if(m.changeName == null){ //사진 없을경우 기본이미지
 		    			        	$("#profileImage").attr("src","resources/profile.jpg");
 		    			        }else{

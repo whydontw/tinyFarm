@@ -554,7 +554,7 @@ background-color: none;
 			   			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
 		   				+ "<td>"+s.productNo+"</td>"
 		   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
-		   				+ '<td><img id="proImg" src="'+s.changeName+'"></td>'
+		   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
 		   				+ "<td>"+s.productTitle+"</td>"
 		   				+ "<td>￦"+s.productPrice+"</td>"
 		   				+ "<td>"+s.salesStatus+"</td>"
