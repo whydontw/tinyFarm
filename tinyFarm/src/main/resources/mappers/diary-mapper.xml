@@ -426,6 +426,7 @@
 		SELECT USER_NO
 		FROM DIARY_LIKE
 		WHERE REF_DBNO = #{refDbno}
+		AND USER_NO = #{userNo}
 	</select>
   	
   	<!-- 영농일지 좋아요 수 -->
