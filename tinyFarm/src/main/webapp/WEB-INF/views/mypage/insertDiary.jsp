@@ -26,6 +26,9 @@ String selectDate = request.getParameter("selectDate"); //달력에서 선택한
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
 a, p {
 	font-family: 'Noto Sans KR', sans-serif !important;
@@ -136,16 +139,19 @@ a, p {
 	</section>
 
 	<!-- 일지 작성 스크립트 -->
+	<!-- summernote 이모지 -->
 	<script>
+	document.emojiSource = '../pngs/'; //relative path to emojis
 		$('#diaryContent').summernote({
 					width : 815,
-					height : 1000,
-					minHeight : 1000,
-					maxHeight : 1000,
+					height : 800,
+					minHeight : 800,
+					maxHeight : 800,
 					focus : true,
 					lang : "ko-KR",
-					placeholder : '나만의 영농일지를 작성해보세요! 최대 4000자까지 작성 가능합니다.',
+					placeholder : '나만의 영농일지를 작성해보세요! 공개/비공개 여부에 따라 다른 회원에게 보여질 수 있습니다!',
 					toolbar : [
+							['misc', ['emoji']],
 							[ 'fontname', [ 'fontname' ] ],
 							[ 'fontsize', [ 'fontsize' ] ],
 							[ 'style', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
@@ -161,12 +167,20 @@ a, p {
 				});
 
 		$("#backBtn").click(function() {
-			let alert = window.confirm("이전 페이지로 이동하시겠습니까?\n작성 중인 내용이 사라집니다.");
-				if(alert){
+			let alert = swal({
+    			title : "작성취소",
+    			text : "이전 페이지로 이동하시겠습니까?\n작성 중인 내용이 사라집니다.",
+    			icon: 'question',
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+    		}, function(alert) { 
+    				if(!alert){return false;}
 		           	window.history.back();
-		       	}else{
-		       		return false;
-		       	} 
+		    });
 		});
 
 		function insertDiary() {
@@ -175,17 +189,17 @@ a, p {
 			let openVal = $("input[name=selectOpen]:checked").val();
 
 			if (diaryTitle == "") {
-				alert("제목을 입력해주세요.");
+				swal('제목 입력', '제목을 입력해주세요.', 'error');
 				$("#diaryTitle").focus;
 				return false;
 			}
 			if (diaryContent == "") {
-				alert("내용을 입력해주세요.");
+				swal('내용 입력', '내용을 입력해주세요.', 'error');
 				$("#diaryContent").focus;
 				return false;
 			}
 			if (openVal == null) {
-				alert("공개여부를 선택해주세요.");
+				swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
 				return false;
 			}
 

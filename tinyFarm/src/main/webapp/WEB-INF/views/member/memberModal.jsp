@@ -206,7 +206,7 @@
     	    		form.setAttribute("action","follow.di");
     	    		//body부분에 폼 추가
     	    		document.body.appendChild(form);
-    	    		
+    	    		//폼 전송
     				form.submit();
     			}else{
     				return false;
