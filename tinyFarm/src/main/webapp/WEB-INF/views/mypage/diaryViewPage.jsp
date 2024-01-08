@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" href="resources/style.css">
     <link rel="stylesheet" href="resources/jisu/css/mypage.css">
+	<!-- alert창 cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     
     <style>
         .content {
@@ -166,37 +169,37 @@
 	let userNo = ${d.diaryWriter}; //회원번호 추출
 	
 	//영농일지 좋아요
-		function diaryLike(){
-	    	$(function(){
-		    	$.ajax({
-		    		url : "like.di",
-		    		data : {
-		    			refDbno : diaryNo,
-			    		userNo : ${loginUser.userNo} //회원번호는 로그인 한 회원의 번호
-		    		},
+	function diaryLike(){
+	   	$(function(){
+	    	$.ajax({
+	    		url : "like.di",
+	    		data : {
+	    			refDbno : diaryNo,
+		    		userNo : ${loginUser.userNo} //회원번호는 로그인 한 회원의 번호
+	    		},
 		    		success : function(like){
-		    			if(like != null){
-		    				//해당유저와 해당일지의 정보가 있으면 좋아요 후 좋아요 취소 버튼으로 바꿔주기
-		    				$("#diarylike img").attr("src", "resources/jisu/img/likeafter.png").attr("onclick", "diaryUnLike();");
-		    				
-		    				//성공 후 페이지 좋아요수 정정
-		    				$.ajax({
-		    					url:"likeCount.di",
-		    					data : {diaryNo : diaryNo},
-		    					success : function(result){
-		    						$("#likeCount").html(result);
-		    					},error : function(){
-		    						console.log("좋아요 수 재조회 실패");
-		    					}
-		    				
-		    				});
-		    			}
-		    		},error:function(){
-		    			console.log("일지 좋아요 ajax 실패 ");
-		    		}
-		    	});
+	   			if(like != null){
+	    				//해당유저와 해당일지의 정보가 있으면 좋아요 후 좋아요 취소 버튼으로 바꿔주기
+	    				$("#diarylike img").attr("src", "resources/jisu/img/likeafter.png").attr("onclick", "diaryUnLike();");
+	    				
+	    				//성공 후 페이지 좋아요수 정정
+	    				$.ajax({
+	    					url:"likeCount.di",
+	    					data : {diaryNo : diaryNo},
+	    					success : function(result){
+	    						$("#likeCount").html(result);
+	    					},error : function(){
+	    						console.log("좋아요 수 재조회 실패");
+	    					}
+	    				
+	    				});
+	    			}
+	    		},error:function(){
+	    			console.log("일지 좋아요 ajax 실패 ");
+	    		}
 	    	});
-	    }
+	    });
+	  }
     	
 	  //영농일지 좋아요 취소
 	  function diaryUnLike(){
@@ -232,27 +235,61 @@
 
        $(function () {
            $("#delBtn").click(function () { //삭제버튼 클릭시
-               let warn = window.confirm("삭제 후 되돌릴 수 없습니다.\n등급 기준에 따라 등급이 하락할 수도 있습니다.\n정말로 삭제하시겠습니까?");
-               if (warn) {
+               let warn = swal({
+    			title : "영농일지 삭제",
+    			text : "삭제 후 되돌릴 수 없습니다.\n등급 기준에 따라 등급이 하락할 수도 있습니다.\n정말로 삭제하시겠습니까?",
+    			icon: 'question',
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+    		}, function(warn) {
+    			//아니오 누를시 현재페이지 유지
+    			if (!warn) {return false;}
                    location.href = "delete.di?diaryNo="+${d.diaryNo}; //삭제 메소드로 ~
-               } else {
-                   return false;
-               }
-           });
+    			});
+    		}); 
+       });
            
-           $("#updateBtn").click(function(){
-           	location.href="updatePage.di?diaryNo="+${d.diaryNo}; //업데이트 메소드로 ~
-           });
+       	//영농일지 수정
+        $("#updateBtn").click(function(){
+           let update = swal({
+	       		title : "수정하기",
+	       		text : "일지를 수정하시겠습니까?",
+	       		icon: 'question',
+	       		showCancelButton : true,
+	       		confirmButtonClass : "btn-danger",
+	       		confirmButtonText : "예",
+	       		cancelButtonText : "아니오",
+	       		closeOnConfirm : false,
+	       		closeOnCancel : true
+	       	}, function(update) {
+	       		//아니오 누를시 현재페이지 유지
+	       		if (!update) {return false;}
+		      	location.href="updatePage.di?diaryNo="+${d.diaryNo}; //업데이트 메소드로 ~
+	       	}); 
+        });
            
-           $("#backBtn").click(function(){
-           	let alert = window.confirm("이전페이지로 이동하시겠습니까?"); //뒤로가기 버튼 클릭시
-           	if(alert){
-	           	window.history.back();
-           	}else{
-           		return false;
-           	}
-           })
-     });
+       	//뒤로가기 버튼 클릭시
+        $("#backBtn").click(function(){
+        	let back = swal({
+    			title : "뒤로가기",
+    			text : "이전페이지로 이동하시겠습니까?",
+    			icon: 'question',
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+    		}, function(back) {
+    			//아니오 누를시 현재페이지 유지
+    			if (!back) {return false;}
+    			window.history.back();
+    		}); 
+    	 });
     </script>
 
      <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

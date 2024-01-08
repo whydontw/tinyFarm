@@ -202,7 +202,6 @@ a, p {
 				swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
 				return false;
 			}
-
 		}
 	</script>
 
