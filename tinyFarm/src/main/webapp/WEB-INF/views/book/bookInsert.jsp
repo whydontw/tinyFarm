@@ -132,7 +132,7 @@
 		                        </div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="bookInfo" style = "margin-left:-15px">책소개</label>
-	                                    <input type="text" class="form-control" style ="width:680px; height:200px; margin-left :-15px" id="bookInfo" name="bookInfo" required>
+	                                    <input type="text" class="form-control" style ="width:730px; height:200px; margin-left :-15px" id="bookInfo" name="bookInfo" required>
 	                                </div>
 	                            </div>
   								<div class="col-8 text-center" style = "margin-left:120px">
