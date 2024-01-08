@@ -30,6 +30,15 @@
 		AND USER_NO = #{userNo}
   	</select>
   	
+  	<!-- 회원정보 모달부분 -->
+  	<!-- 팔로잉여부 체크 -->
+	<select id="followCheck" parameterType="follow" resultType="_int">
+		SELECT COUNT(*)
+		FROM FOLLOW
+		WHERE USER_NO = #{userNo}
+		AND FOLLOWING_ID = #{followingId}
+	</select>
+  	
   
   	
   </mapper>

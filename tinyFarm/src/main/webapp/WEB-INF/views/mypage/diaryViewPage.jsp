@@ -144,7 +144,7 @@
 	                    </div>
 	                    <div class="btn-area">
 	                    	<c:choose>
-	                    		<c:when test="${w.userNo eq d.diaryWriter} ">
+	                    		<c:when test="${d.diaryWriter eq loginUser.userNo}">
 			                        <button id="updateBtn" class="btn-green">수정</button>
 			                        <button id="delBtn" class="btn-green">삭제</button>
 			                        <button id="backBtn" class="btn-green">뒤로가기</button>
@@ -164,7 +164,7 @@
     $('#diaryContent').summernote("destroy"); //게시글 터치불가능
     let diaryNo = ${d.diaryNo}; // 일지번호 추출
 	let userNo = ${d.diaryWriter}; //회원번호 추출
-		
+	
 	//영농일지 좋아요
 		function diaryLike(){
 	    	$(function(){
