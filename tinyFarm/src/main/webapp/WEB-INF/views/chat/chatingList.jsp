@@ -484,11 +484,10 @@ div {
 	      </div>
 	      <div class="modal-body">
 	        정말로 채팅방을 나가시겠습니까? <br>
-	        채팅방을 나가면 채팅 데이터는 전부 삭제됩니다.
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button onclick="deleteRoom();" class="btn btn-danger">채팅방 삭제</a>
+	        <button onclick="deleteRoom();" class="btn btn-danger">채팅방 나가기</a>
 	      </div>
 	    </div>
 	  </div>
@@ -711,7 +710,7 @@ div {
 				success : function(result){
 					
 					if(result == "NNNNY"){ //채팅방 추가에 성공
-						selectChatList(); //채팅 메세지 DB로부터 가져오기
+						selectChatList(receiveMemId); //채팅 메세지 DB로부터 가져오기
 					}else if(result == "NNNYY"){//이미 채팅방이 있으면
 						//현재 존재하는 채팅방에 있는 userId를 훑고 receiveMemId와 일치하는 userId의 div를 클릭하는 이벤트
 						$(".chat-item-div input[id='userId']").each(function(index,item){
@@ -719,8 +718,8 @@ div {
 								$(this).parents(".chat-item-div").click();
 							}
 						});
-						
-					} 
+
+					}
 				},
 				error : function(){
 					
@@ -732,7 +731,8 @@ div {
 		
 		//-------------------------채팅방 리스트 관련 함수 시작----------------------------------------
 		//db로부터 로그인 한 유저가 들어가있는 채팅방 리스트를 뽑아와서 div요소로 목록에 표현
-		function selectChatList(){
+		function selectChatList(receiveMemId){
+			
 			$.ajax({
 				url : "selectChatList.ch",
 				data : {
@@ -786,6 +786,12 @@ div {
 						}
 						//읽지 않은 메시지 카운트 표시
 						selectNotReadMsg();
+						//현재 존재하는 채팅방에 있는 userId를 훑고 receiveMemId와 일치하는 userId의 div를 클릭하는 이벤트
+						$(".chat-item-div input[id='userId']").each(function(index,item){
+							if(receiveMemId == item.value){
+								$(this).parents(".chat-item-div").click();
+							}
+						});
 					}
 					
 					//다른 페이지에서 1:1채팅하기를 눌러서 넘어온 userId 값이 있으면 그 아이디로 채팅방을 생성하고, 채팅방 열기
