@@ -21,20 +21,50 @@
 	
 	<!-- Core Stylesheet -->
 	<link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
-    <style>
-
+<style>
 .footer-area::after {
-    background-color: rgba(4, 43, 15, 0.416);
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    content: ""; }
-  .footer-area .main-
+	background-color: rgba(4, 43, 15, 0.416);
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
+}
 
-    </style>
+  .link-icon {
+	position: relative;
+	display: inline-block;
+	width: auto;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	margin-right: 10px;
+	padding-right: 40px;
+	padding-top: 40px;
+	
+}
+
+.link-icon.kakao {
+	background-image:
+		url("<%=contextPath%>/resources/img/icon/icon-kakao.png");
+	background-repeat: no-repeat;
+}
+
+.link-icon.twitter {
+	background-image:
+		url("<%=contextPath%>/resources/img/icon/icon-twitter.png");
+	background-repeat: no-repeat;
+}
+
+.link-icon.link {
+	background-image:
+		url("<%=contextPath%>/resources/img/icon/icon-link.png");
+	background-repeat: no-repeat;
+}
+
+</style>
 </head>
 
 <body>
@@ -91,228 +121,113 @@
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <a class="product-img" href="img/bg-img/49.jpg" title="Product Image">
-                                        <img class="d-block w-100" src="img/bg-img/49.jpg" alt="1">
-                                    </a>
+                                        <img class="d-block w-100" src="${book.bookChangeName}" alt="1">
+                               
                                     </div>
-                                    <div class="carousel-item">
-                                        <a class="product-img" href="img/bg-img/49.jpg" title="Product Image">
-                                        <img class="d-block w-100" src="img/bg-img/49.jpg" alt="1">
-                                    </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="product-img" href="img/bg-img/49.jpg" title="Product Image">
-                                        <img class="d-block w-100" src="img/bg-img/49.jpg" alt="1">
-                                    </a>
-                                    </div>
+                                  
                                 </div>
-                                <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/bg-img/49.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/bg-img/49.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/bg-img/49.jpg);">
-                                    </li>
-                                </ol>
+                                
                             </div>
                         </div>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">
-                            <h4 class="title"></h4>
-                            <hkh정보교육원 로그인4 class="price">$9.99</h4>
-                            <div class="short_overview">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pellem malesuada in nibh selama euismod. Curabitur a rhoncus dui. Nunc lobortis cursus magna utrum faucibus. Vivamus justo nibh, pharetra non risus accumsan, tincidunt suscipit leo.</p>
-                            </div>
+                            <h4 class="title">${book.bookTitle}</h4>
+                            <h4 class="price">${book.bookPrice}원</h4>
+                            <div style = "display: flex">
+	                            <h6 style = "margin-right:10px">저자</h6>
+	                            <h6 style = "margin-right: 20px">${book.bookAuthor}</h6>
+	                            <h6 style = "margin-right:20px">|</h6>
+	                            <h6 style = "margin-right: 20px">${book.publisher}</h6>
+	                          	<h6>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;도서 > ${book.bookCategory}</h6>
+	                         </div>
+							 
+							 <h6 style = "margin-right:20px">출판일&nbsp;&nbsp;&nbsp;&nbsp;${book.bookDate}</h6>
 
-                            <div class="cart--area d-flex flex-wrap align-items-center">
-                                <!-- Add to Cart Form -->
-                                <form class="cart clearfix d-flex align-items-center" method="post">
-                                    <div class="quantity">
-                                        <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
-                                        <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                    </div>
-                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">Add to cart</button>
-                                </form>
-                                <!-- Wishlist & Compare -->
-                                <div class="wishlist-compare d-flex flex-wrap align-items-center">
-                                    <a href="#" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
-                                    <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a>
-                                </div>
-                            </div>
-
+                            
                             <div class="products--meta">
-                                <p><span>SKU:</span> <span>CT201807</span></p>
-                                <p><span>Category:</span> <span>Outdoor Plants</span></p>
-                                <p><span>Tags:</span> <span>plants, green, cactus </span></p>
                                 <p>
-                                    <span>Share on:</span>
-                                    <span>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                </span>
+                                	${book.bookInfo}
                                 </p>
+                                
                             </div>
-
                         </div>
-                    </div>
+	            	</div>
                 </div>
+                <div style="text-align: right;">
+                	<p style = "padding-right:90px"><span>Share on</span></p>
+                 	<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();"></a>
+		 		 	<a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();"></a>
+		  	     	<a id="btnlink" class="link-icon link" href="javascript:shareLink();"></a>	
+            	</div>
             </div>
         </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="product_details_tab clearfix">
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
-                            <li class="nav-item">
-                                <a href="#description" class="nav-link active" data-toggle="tab" role="tab">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#addi-info" class="nav-link" data-toggle="tab" role="tab">Additional Information</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">Reviews <span class="text-muted">(1)</span></a>
-                            </li>
-                        </ul>
-                        <!-- Tab Content -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade show active" id="description">
-                                <div class="description_area">
-                                    <p>Sed a facilisis orci. Curabitur magna urna, varius placerat placerat sodales, pretium vitae orci. Aliquam erat volutpat. Cras sit amet suscipit magna. Quisque turpis odio, facilisis vel eleifend eu, dignissim ac odio.</p>
-                                    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. In scelerisque augue at the moment mattis. Proin vitae arcu sit amet justo sollicitudin tincidunt sit amet ut velit.Proin placerat vel augue eget euismod. Phasellus cursus orci eu tellus vestibulum, vestibulum urna accumsan. Vestibulum ut ullamcorper sapien. Pellentesque molestie, est ac vestibulum eleifend, lorem ipsum mollis ipsum.</p>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="addi-info">
-                                <div class="additional_info_area">
-                                    <p>What should I do if I receive a damaged parcel?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit impedit similique qui, itaque delectus labore.</span></p>
-                                    <p>I have received my order but the wrong item was delivered to me.
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis quam voluptatum beatae harum tempore, ab?</span></p>
-                                    <p>Product Receipt and Acceptance Confirmation Process
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum ducimus, temporibus soluta impedit minus rerum?</span></p>
-                                    <p>How do I cancel my order?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum eius eum, minima!</span></p>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="reviews">
-                                <div class="reviews_area">
-                                    <ul>
-                                        <li>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Quality</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Design</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Value</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Colorlib</a> on <span>12 Sep 2018</span></p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="submit_a_review_area mt-50">
-                                    <h4>Submit A Review</h4>
-                                    <form action="#" method="post">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <span class="mr-15">Your Ratings:</span>
-                                                    <div class="stars">
-                                                        <input type="radio" name="star" class="star-1" id="star-1">
-                                                        <label class="star-1" for="star-1">1</label>
-                                                        <input type="radio" name="star" class="star-2" id="star-2">
-                                                        <label class="star-2" for="star-2">2</label>
-                                                        <input type="radio" name="star" class="star-3" id="star-3">
-                                                        <label class="star-3" for="star-3">3</label>
-                                                        <input type="radio" name="star" class="star-4" id="star-4">
-                                                        <label class="star-4" for="star-4">4</label>
-                                                        <input type="radio" name="star" class="star-5" id="star-5">
-                                                        <label class="star-5" for="star-5">5</label>
-                                                        <span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="name">Nickname</label>
-                                                    <input type="email" class="form-control" id="name" placeholder="Nazrul">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="options">Reason for your rating</label>
-                                                    <select class="form-control" id="options">
-                                                          <option>Quality</option>
-                                                          <option>Value</option>
-                                                          <option>Design</option>
-                                                          <option>Price</option>
-                                                          <option>Others</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="comments">Comments</label>
-                                                    <textarea class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn alazea-btn">Submit Your Review</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		  
     </section>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     <!-- ##### Single Product Details Area End ##### -->
     <!-- ##### Blog Content Area End ##### -->
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	
     
-
- <!-- ##### All Javascript Files ##### -->
+	<script>
+			function shareKakao() {
+				  // 사용할 앱의 JavaScript 키 설정
+				  Kakao.init('aef906bc476f983341072fc51f3c5b36');
+		
+				  var currentBookNo = '<%= request.getParameter("bookNo") %>';
+				  // 카카오링크 버튼 생성
+				  Kakao.Link.createDefaultButton({
+				    container: '#btnKakao', // 카카오공유버튼ID
+				    objectType: 'feed',
+				    content: {
+				      title: "작은농장", // 보여질 제목
+				      description: "작은농장 도서추천", // 보여질 설명
+				      imageUrl:"https://ifh.cc/g/yoKVMG.jpg", // 콘텐츠 URL
+				      link: {
+				         mobileWebUrl: 'http://localhost:8888/tinyfarm/bookDetail.re?bookNo=' + currentBookNo,
+				         webUrl: 'http://localhost:8888/tinyfarm/bookDetail.re?bookNo=' + currentBookNo
+				        }
+				  	  },
+				      social: {
+				        commentCount: 51,  
+				        sharedCount: 223  
+				    }
+				  });
+				}
+		</script>
+		
+		<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+		
+		
+		<script>
+				var currentBookNo = '<%= request.getParameter("bookNo") %>';
+				
+				function shareTwitter() {
+				    var sendText = "작은농장"; // 전달할 텍스트
+				    var sendUrl = 'http://localhost:8888/tinyfarm/bookDetail.re?bookNo=' + currentBookNo; // 전달할 URL
+				    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+				}
+			</script>
+			
+			
+			
+		<script>
+			function shareLink(){
+				var currentBookNo = '<%= request.getParameter("bookNo") %>';
+				
+				var url = 'http://localhost:8888/tinyfarm/bookDetail.re?bookNo=' + currentBookNo;
+				
+				var textarea = document.createElement("textarea");
+				document.body.appendChild(textarea);
+				textarea.value = url;
+				textarea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textarea);
+				
+				alert("링크가 복사되었습니다");
+			};
+		</script>
 		    <!-- jQuery-2.2.4 js -->
 		    <script src="<%= contextPath %>/resources/js/jquery/jquery-2.2.4.min.js"></script>
 		    <!-- Popper js -->
