@@ -151,8 +151,9 @@
                         });
                         
                         
-                        //회원 리스트
                         function selectReportList(currentPage, category){
+                        	
+							console.log(category)                        	
                         	
                         	$.ajax({
                         		url: "selectReportList.ad",

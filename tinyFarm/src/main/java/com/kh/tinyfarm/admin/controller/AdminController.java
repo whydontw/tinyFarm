@@ -545,45 +545,5 @@ public class AdminController {
 	}
 	
 
-
-	
-	
-	
-	
-	
-	// ###################################################################
-	// 도서관리
-	
-//	@ResponseBody
-//	@GetMapping("/selectBookList.ad")
-//	public  ResponseEntity<Map<String, Object>> selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, String bookCategory, Model model) {
-//
-//		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
-//		int memberListCount = memberService.memberListCount(bookCategory);
-//
-//		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
-//		int boardLimit = 5;
-//		// 페이징 바 개수(pageLimit)
-//		int pageLimit = 5;
-//
-//		PageInfo pi = Pagination.getPageInfo(memberListCount, currentPage, pageLimit, boardLimit);
-//
-//		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
-//	    ArrayList<Book> bookList = bookService.selectBookList(pi, bookCategory);
-//
-//	    
-//	    // 데이터를 Map에 담아서 전송
-//	    Map<String, Object> resultMap = new HashMap<>();
-//	    resultMap.put("bookList", bookList);
-//	    resultMap.put("pi", pi);
-//
-//	    
-//	    // ResponseEntity로 감싸서 전송
-//	    return ResponseEntity.ok(resultMap);
-//		
-//	}
-	
-	
-	
 	
 }
