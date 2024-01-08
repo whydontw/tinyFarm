@@ -31,6 +31,7 @@
     background-color: #f6f6f3;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 
 #a:hover, #b:hover, #c:hover, #A:hover, #B:hover {

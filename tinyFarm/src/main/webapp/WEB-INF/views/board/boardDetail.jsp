@@ -236,6 +236,10 @@
 									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며
 									새로운 친구들을 만나고 싶어요!"
 								</p>
+								<jsp:include page="/WEB-INF/views/member/memberModal.jsp"></jsp:include>
+								<%-- 
+								<%@include file="../member/memberModal.jsp"%>
+								 --%>
 								
 								<c:choose>
 									<c:when test="${isFollow eq 1}">
@@ -733,7 +737,7 @@
 
 
 
-	
+
 <script>
     // 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
     $("당신의 영역을 채우세요.").on('click', function () {
@@ -783,7 +787,7 @@
         });
     });
 </script>
-
+ 
 
 
 	<!-- ##### All Javascript Files ##### -->

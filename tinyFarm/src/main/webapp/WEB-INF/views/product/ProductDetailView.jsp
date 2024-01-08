@@ -91,18 +91,11 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    		
-                    	
-					<!-- 상품 정보 -->
-                    <div class="col-12 col-md-6">
-                        <div class="single_product_desc">
-=======
+
 	
 					<!-- 상품 정보 -->
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">                     	
->>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
                         	<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
                         	<input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
                             <h4 class="title" name="productTitle">${p.productTitle }</h4>
