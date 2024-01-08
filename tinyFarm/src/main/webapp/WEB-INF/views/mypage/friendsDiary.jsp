@@ -179,7 +179,7 @@
 								//폼 형식 갖추기
 								form.appendChild(obj);
 								form.setAttribute("method","post");
-								form.setAttribute("action","view.di");
+								form.setAttribute("action","fView.di");
 								//body부분에 폼 추가
 								document.body.appendChild(form);
 								//전송!
@@ -189,6 +189,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
+		        	//location.href="view.di?selectDate="+date+"&userNo="+userNo;
 	        	}
 	        }
 	    });

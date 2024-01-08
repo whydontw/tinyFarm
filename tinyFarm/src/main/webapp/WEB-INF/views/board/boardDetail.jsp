@@ -156,11 +156,8 @@
 						   <!-- 해시태그 -->
                         <div class="post-tags-share d-flex justify-content-between align-items-center">
                             <!-- Tags -->
-                            <ol class="popular-tags d-flex align-items-center flex-wrap">
-                                <li><span>Tag:</span></li>
-                                <c:forEach items="${boardInfo.hashTag }" var="ht">
-	                                <li><a href="#" id="hashTag">해시1</a></li>                            	
-                                </c:forEach>      
+                            <ol class="popular-tags d-flex align-items-center flex-wrap hashTagOl">
+                                <li><span>Tag:</span></li>  
                             </ol>
                       
                             <!-- Share -->
@@ -239,7 +236,7 @@
 									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며
 									새로운 친구들을 만나고 싶어요!"
 								</p>
-						
+								
 								<c:choose>
 									<c:when test="${isFollow eq 1}">
 										<form action="deleteFollow.fw">
@@ -377,12 +374,21 @@
 	<script>
     var hashTags = ${boardInfo.hashTag};
     
-    for (var i = 0; i < hashTags.length; i++) {
-        var value = hashTags[i].value;
-        console.log(value); // 뽑아낸 값 사용 예시 (콘솔에 출력)
-        var hashTagArea = append
-    }
-</script>
+	  for (var i = 0; i < hashTags.length; i++) {
+		    var liArea = $("<li></li>");
+		    var aArea = $("<a id='hashTag'></a>");	  
+		  
+	        var value = hashTags[i].value;
+	        console.log(value); //하나하나 콘솔에 잘 찍힘
+	        
+	        
+	        
+	        aArea.text(hashTags[i].value);
+	        liArea.append(aArea);
+
+	        $(".hashTagOl").append(liArea);       
+	    }
+	</script>
 
 
 
@@ -590,8 +596,12 @@
             }
         });
 });
-
-    
+	
+   //댓글수정버튼 클릭시 다시 댓글게시버튼으로 바꾸기 
+	$("#updateRbutton").click(function(){
+		$("#updateRbutton").hide();
+		$("#insertRbutton").show();
+	});  
     
 
 
@@ -720,6 +730,60 @@
    	   time();
    });
 </script>
+
+
+
+	
+<script>
+    // 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
+    $("당신의 영역을 채우세요.").on('click', function () {
+    // 클릭한 행에서 followingId 값을 가져옴
+        let userId = $(this).find('td:first').text();
+        // 모달 열기 및 정보 표시 함수 호출
+        $.ajax({
+            url: "getFollowingInfo.me",
+            type: 'post',
+            data: { followingId: userId }, //클릭한 회원 아이디로 정보 불러오기
+            success: function (m) { 
+                if(m.userId != null){//아이디가 존재하면
+                    if(m.changeName == null){ //유저 프로필 사진 있으면
+                        $("#profileImage").attr("src","resources/profile.jpg");
+                    }else{//없으면 기본사진
+                        $("#profileImage").attr("src",m.changeName);
+                    }
+                $("#userId").text(m.userId); //모달창에 아이디값 넣기
+                $("#userName").text(m.userName); //이름
+                $("#userGrade").text(m.grade); //등급
+                //팔로우 여부 체크
+                $(function(){
+                    let followingId = $("#userId").text();
+                    let userNo = ${loginUser.userNo};
+                    $.ajax({
+                        url : "followChk.me",
+                        data : {
+                            followingId : followingId,
+                            userNo : userNo
+                        },
+                        success : function(result){
+                            if(result=='YY'){
+                                //팔로우된 상태라면 버튼 바꿔주기
+                                $("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+                            }
+                        },error : function(){
+                            console.log("팔로우 확인 실패");
+                        }
+                    });
+                });
+                //모달창 실행
+                $(".btn1").click();
+                }
+            }, error: function () {
+                console.log('following modal ajax 통신실패');
+             }
+        });
+    });
+</script>
+
 
 
 	<!-- ##### All Javascript Files ##### -->

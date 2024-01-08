@@ -39,6 +39,14 @@
 	width: 700px;
 	word-wrap: break-word;
 }
+
+.post-sidebar-area {
+	width: 200%;
+}
+
+.search-form {
+	width: 400px;
+}
 </style>
 
 
@@ -88,22 +96,28 @@
 							<ul class="feed_items">
 
 							</ul>
+							<ul class="searchFeed_items">
+
+							</ul>
 						</div>
 					</div>
 				</div>
 
+				<!-- 검색창 -->
 				<div class="col-12 col-md-4">
 					<div class="post-sidebar-area">
 						<!-- ##### Single Widget Area ##### -->
 						<div class="single-widget-area">
-							<form action="#" method="get" class="search-form">
-								<input type="search" name="search" id="widgetsearch"
+							<div class="search-form">
+								<input type="text" name="searchText" id="widgetsearch"
 									placeholder="Search...">
-								<button type="submit">
+								<button onclick="searchBoardList();" id="searchBtn">
 									<i class="icon_search"></i>
 								</button>
-							</form>
+							</div>
 						</div>
+
+						<!-- 날씨api -->
 						<jsp:include
 							page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
 
@@ -216,12 +230,12 @@
 	                       						
 	                       						
 	                       			            var today = new Date();
-	                       				        console.log("today: " + today);
+	                       				        //console.log("today: " + today);
 	                       			
 	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
 	                       				        var dateParts = dateString.split(/[- :]/);
 	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-	                       				        console.log("timeValue: " + timeValue);
+	                       				        //console.log("timeValue: " + timeValue);
 	                       				        
 	                       				     
 	                       			
@@ -251,7 +265,7 @@
 	                       				            msg = "방금 전";
 	                       				        }
 	                       			
-	                       				        console.log(msg);
+	                       				        //console.log(msg);
 	                       				    	spanDiv1.text(msg);
 	                       	                   
 	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
@@ -336,12 +350,140 @@
                        			});
                        		}                       
               
+                       		
+                       		
+                       		//검색게시판리스트
+                       		function searchBoardList(){
+                    	   		 
+                       			$(".feed_items").hide();
+                       			var searchText = $("#widgetsearch").val();
+                       			var searchHash = "%"+searchText+"%";
+                       			//console.log(searchText);
+                       			
+                       			$.ajax({
+                       				url: "search.bo",
+                       				data : {
+                       					searchText : searchText,
+                       					searchHash : searchHash
+                       				},
+                       				success: function(result){
+                     					
+                       					$(".searchFeed_items").empty();
+                       					if(result.length == 0){
+                       						
+                       					}else {
+                       						
+	                       					for(var i in result){
+	                       						var liDiv = $("<li class='feed_item'></li>");
+	                       						var boardHeaderDiv = $("<div class='boardHeader'></div>");
+	                       						var div1 = $("<div style='width:700px;'></div>");
+	                       						var pDiv = $("<p></p>");
+	                       						var spanDiv1 = $("<span></span>");
+	                       						var boardContentDiv= $("<div class='boardContent'></div>");
+	                       						var div2 = $("<div></div>");
+	                       						var div3 = $("<div></div>");
+	                       						var footerUl = $("<ul class='boardFooter'>");
+	                       						var footerLi1 = $("<li></li>");
+	                       						var footerLi2 = $("<li></li>");
+	                       						
+	                       					
+	                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
+	                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
+	                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
+	                       						var replyCount = $("<span id='rcount'></span>");
+	                       						var hiddenBno2 = $("<input type='hidden' name='boardNo' id='hiddenBno'>");
+	                       						var heartIcon = $("<img>");
+	                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none; background-color:white;'>좋아요</button>");
+	                       						var spanDiv2 = $("<span id='likeCount'></span>");
+	                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
+	                       						
+	                       						profileStr.attr("src",result[i].profile);
+	                       						
+	                       						
+	                       			            var today = new Date();
+	                       				        //console.log("today: " + today);
+	                       			
+	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+	                       				        var dateParts = dateString.split(/[- :]/);
+	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
+	                       				        //console.log("timeValue: " + timeValue);
+	                       				        
+	                       				     
+	                       			
+	                       				        const timeDifference = today - timeValue; // 밀리초 단위의 차이
+	                       				        const seconds = Math.floor(timeDifference / 1000);
+	                       				        const minutes = Math.floor(seconds / 60);
+	                       				        const hours = Math.floor(minutes / 60);
+	                       				        const days = Math.floor(hours / 24);
+	                       			
+	                       				        let msg = "";
+	                       			
+	                       			                   
+	                       				        if (days > 0 && days <= 7) {
+	                       				            msg = days + "일 전";
+	                       				        } else if (days > 7) {
+	                       				            // 날짜 형식으로 표시
+	                       				            const year = timeValue.getFullYear();
+	                       				            const month = timeValue.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+	                       				            const day = timeValue.getDate();
+	                       			
+	                       				            msg = year + ". " + month + ". " + day;
+	                       				        } else if (hours > 0) {
+	                       				            msg = hours + "시간 전";
+	                       				        } else if (minutes > 0) {
+	                       				            msg = minutes + "분 전";
+	                       				        } else {
+	                       				            msg = "방금 전";
+	                       				        }
+	                       			
+	                       				        //console.log(msg);
+	                       				    	spanDiv1.text(msg);
+	                       	                   
+	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
+	                       						div1.append(pDiv);
+	                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
+	                       						
+	                       						hiddenBno.attr("value",result[i].boardNo);
+	                       						div2.append(result[i].boardContent);
+	                       						boardContentDiv.append(hiddenBno).append(div2);
+	                       						
+	                       						replyIcon.attr("src","resources/img/icon/댓글.png");
+	                       						replyCount.text(result[i].replyCount);
+	                       						footerLi1.append(replyIcon).append("&nbsp;댓글").append("&nbsp;").append(replyCount);
+	                       						
+	                       						hiddenBno2.attr("value",result[i].boardNo);
+	                       						heartIcon.attr("src","resources/img/icon/heart.svg").attr("class","heartClass");
+	                       						spanDiv2.text(result[i].likeCount);
+	                       						
+	                       						footerLi2.append(hiddenBno2).append(heartIcon).append(" &nbsp;").append(buttonStr).append("&nbsp;").append(spanDiv2);
+	                       						
+	                       						footerUl.append(footerLi1).append(footerLi2);
+	                       						div3.append(footerUl);
+	                       						
+	                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
+	                       						
+	                       						$(".searchFeed_items").append(liDiv);           						
+	                       						
+	                       					}
+                       					}
+                       					findLike();
+                       				  
+                       					
+                       				},
+                       				error: function(){
+                       					console.log("통신오류");
+                       				}
+                       			});
+                       		}     
+                       		
+                       		
+                       		
                             function findLike(){
                             	
 							
 							
 								var boardNoArray = document.querySelectorAll('.boardFooter input#hiddenBno');
-								console.log(boardNoArray)
+								//console.log(boardNoArray)
 								
                             	 $.ajax({
                             		url : "findLike.bo",
@@ -366,7 +508,7 @@
 		                            				}else{
 		                            					$(boardNoArray[j]).siblings("img").eq(0).attr("src","resources/img/icon/heart.svg")
 		                            					$(boardNoArray[j]).siblings("button").css("color","black");
-		                            					//$(boardNoArray[j]).siblings("#likeCount").css("color","black");
+		                            					$(boardNoArray[j]).siblings("#likeCount").css("color","black");
 		                            					
 		                            				}
 	                            				}
@@ -397,11 +539,13 @@
                             	//var likeText = $(el).parents().children().eq(2).text();
                             	var like = $(el).parents().children().eq(2);
                             	var likeText = like.text();
-                            	console.log(likeText);
+                            	//console.log(likeText);
                             	var likeCount = $(el).parents().children().eq(3); 
                             	
-     							console.log(likeCount.text())
-                            	
+     							//console.log(likeCount.text())
+                            	var searchText = $("#widgetsearch").val();
+
+     							
                             	//if(이미지파일이 heart이면 ) 
                             if(heartImg.attr("src") =="resources/img/icon/heart.svg"){
                             	 $.ajax({
@@ -413,13 +557,12 @@
                             		success : function(result){
                             			if(result==1){
                             				heartImg.attr("src","resources/img/icon/heart-fill.svg");
-                            				
-                            				//likeText.css({"color":"red"});
-                            				//like.css({"color":"red"});
-                            				//likeText.style.color="red";
-                            				selectBoardList();
-                            				
-                            				
+                            				if(searchText == "") {
+                            					selectBoardList();
+                            				}else{
+												searchBoardList();
+                            				}
+		
                             			}else{
                             				console.log("좋아요실패");
                             			}
@@ -439,7 +582,11 @@
 	                            		success: function(result){
 	                            			if(result==1){
 	                            				heartImg.attr("src","resources/img/icon/heart.svg");
-	                            				selectBoardList();
+	                            				if(searchText == "") {
+	                            					selectBoardList();
+	                            				}else{
+													searchBoardList();
+	                            				}
 	                            				
 	                            			}else{
 	                            				console.log("좋아요취소실패");
@@ -455,12 +602,12 @@
                         	//시간표시
                         	function time(){
                         		 var today = new Date();
-                        	        console.log("today: " + today);
+                        	        //console.log("today: " + today);
 
                         	        var dateString = "${boardInfo.createDate}"; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
                         	        var dateParts = dateString.split(/[- :]/);
                         	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-                        	        console.log("timeValue: " + timeValue);
+                        	        //console.log("timeValue: " + timeValue);
 
                         	        const timeDifference = today - timeValue; // 밀리초 단위의 차이
                         	        const seconds = Math.floor(timeDifference / 1000);
@@ -487,7 +634,7 @@
                         	            msg = "방금 전";
                         	        }
 
-                        	        console.log(msg);
+                        	        //console.log(msg);
                         	        //document.getElementById("boardCreateDate").innerText = msg;
                         	        $("#boardCreateDate").append(msg)
                         		
@@ -563,9 +710,10 @@
 	<script>
 							$(function(){
 								$(".feed_items").on("click","li>.boardContent",function(){
-									
-									//console.log("boardNo: "+$(this).children().eq(0).val());
-									//location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
+									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
+								});
+								
+								$(".searchFeed_items").on("click","li>.boardContent",function(){
 									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
 								});
 								

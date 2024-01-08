@@ -71,11 +71,30 @@
 		           WHERE REF_BNO = B.BOARD_NO) AS REPLY_COUNT
 		FROM BOARD B
 		JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
+		WHERE B.STATUS = 'Y'
 		ORDER BY B.CREATE_DATE DESC
 	
   	</select>
   	
-  	
+  	<select id="searchBoardList" parameterType="string" resultMap="boardResultSet">
+  		SELECT B.BOARD_NO
+		        , M.USER_ID AS BOARD_WRITER 
+		        , B.BOARD_CONTENT
+		        , B.COUNT
+		        , B.LIKE_COUNT
+		        , B.CREATE_DATE
+		        , M.CHANGE_NAME
+                , B.HASHTAG
+		        ,(SELECT COUNT(*)
+		           FROM BOARD_REPLY
+		           WHERE REF_BNO = B.BOARD_NO) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
+        WHERE M.USER_ID = #{searchText} OR B.HASHTAG LIKE #{searchHash}
+        AND B.STATUS = 'Y'
+		ORDER BY B.CREATE_DATE DESC
+  	</select>
+     
  
   	
   	
@@ -122,6 +141,7 @@
   		UPDATE BOARD
 		SET BOARD_TITLE = #{boardTitle}
     		,BOARD_CONTENT = #{boardContent}
+    		,HASHTAG = #{hashTag}
 		WHERE BOARD_NO = #{boardNo}
 		AND STATUS = 'Y'
   	</update>
@@ -237,6 +257,10 @@
   		INSERT INTO FOLLOW(USER_ID,FOLLOWING_ID)
 		VALUES(#{userNo},#{boardWriter}   <!-- 로그인유저번호 / 게시판작성자아이디 -->
   	</insert>
+  	
+  	
+  	
+  	
   	
   	
   </mapper>

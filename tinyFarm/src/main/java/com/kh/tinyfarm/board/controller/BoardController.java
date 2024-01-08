@@ -107,7 +107,7 @@ public class BoardController {
 	@GetMapping("moveUpdate.bo")
 	public String moveBoardUpdate(int boardNo,Model model) {
 		Board boardInfo = boardService.boardDetail(boardNo);
-		System.out.println("boardInfo : "+boardInfo);
+		System.out.println("업데이트 boardInfo : "+boardInfo);
 		model.addAttribute("boardInfo",boardInfo);
 		
 		return "board/boardUpdate";
@@ -295,5 +295,25 @@ public class BoardController {
 		
 	}
 	
-
+	@ResponseBody
+	@RequestMapping(value="search.bo",produces = "application/json; charset=UTF-8")
+	public ArrayList<Board> searchBoardList(Board b) {
+		
+		ArrayList<Board> searchList = boardService.searchBoardList(b);
+		System.out.println("searchList : "+searchList);
+		return searchList;
+	}
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value="search.bo",produces = "application/json; charset=UTF-8")
+	public ArrayList<Board>searchBoardList(){
+		
+		
+		ArrayList<Board> blist=boardService.selectBoardList();
+		//System.out.println("blist : "+blist);
+		
+		return blist;
+	}
+	*/
 }

@@ -43,7 +43,7 @@
    }
    
    #pimg{
-    	width: 403px;
+   		width: 350px;
    		height: 320px;
 
    }
@@ -125,7 +125,7 @@
         <div class="container">
             <div class="row">
                 <!-- All Products Area -->
-                <div class="col-10 mx-auto">
+                <div class="col-12">
                     <div class="shop-products-area">
                         <div class="row">
                         
@@ -148,7 +148,7 @@
                                         	<img src="${p.filePath}${p.changeName}" alt="" id="pimg">
                                         </a>
                                         <c:if test="${not empty loginUser}">
-	                                        <div class="product-meta" style="padding-left: 40px; width: 310px;">
+	                                        <div class="product-meta" style="padding-left: 50px; width: 320px;">
 	                                            <!-- <a href="#" class="wishlist-btn" id="rec_update"><i class="icon_heart_alt"></i></a> -->
 	                                            <a href="<%=request.getContextPath()%>/porder.bo?pno=${p.productNo}" class="add-to-cart-btn">즉시구매</a>
 	                                        </div>

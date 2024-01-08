@@ -63,20 +63,6 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="author-widget mb-30">
-					<div class="author-thumb-name d-flex align-items-center">
-						<div class="author-name">
-							<h4>🌿 <b>도서 관리</b></h4>
-						</div>
-					</div>
-					<div class="single-latest-post d-flex align-items-center">
-						<div class="post-content">
-							<a href="bookList.ad" class="post-title"><h6>도서 관리</h6></a>
-							<a href="bookInsert.re" class="post-title"><h6>도서 등록</h6></a>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

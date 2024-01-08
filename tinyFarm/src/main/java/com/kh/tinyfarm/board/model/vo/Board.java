@@ -27,4 +27,6 @@ public class Board {
 	private int replyCount;
 	private String email;
 	private String userName;
+	private String searchText;
+	private String searchHash;
 }

@@ -28,7 +28,8 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	
+
+<!-- 해시태그 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
@@ -54,6 +55,9 @@ a, p {
 #boardTitle {
 	width: 100%;
 	height: 30px;
+}
+.tagify{
+	width: 1000px;
 }
 </style>
 
@@ -143,7 +147,7 @@ a, p {
 
 		// 태그가 추가되면 이벤트 발생
 		tagify.on('add', function() {
-			console.log(tagify.value); // 입력된 태그 정보 객체
+			console.log(tagify.value); 
 		})
 	</script>
 

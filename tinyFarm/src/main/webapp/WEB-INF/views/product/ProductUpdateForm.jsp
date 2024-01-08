@@ -61,13 +61,6 @@
         outline : none;
     }
     
-    #pimg{
-        margin: -100px 0 0 25px;
-        width: 262px;
-        height: 286px;
-    }
-    
-    
 
 	</style>
 
@@ -127,8 +120,8 @@
                        </select>
                     </td>
                 </tr>
-                <tr>
-                    <td rowspan="3">
+                <tr style="height: 50px;">
+                    <td rowspan="3" style="width: 400px;">
                         <div>                     
 	                        <c:choose>
 	                    		<c:when test="${empty p.changeName}">
@@ -137,7 +130,7 @@
 	                    		
 	                            <c:otherwise>
 	                            	<label for="file">
-	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="pimg" id="pimg">
+	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
 	                    			</label>
 	                    				<input type="file" id="reUpFile" name="reUpFile" onchange="loadImg(this)" id="pimg">
                             			<%-- <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"> --%>
