@@ -67,6 +67,9 @@ public interface BoardService {
 	//댓글 신고하기
 	int replyReport(ReplyReport rp);
 
+	//게시글 검색
+	ArrayList<Board> searchBoardList(Board b);
+
 
 	
 

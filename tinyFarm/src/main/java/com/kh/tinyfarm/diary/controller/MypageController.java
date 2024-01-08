@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -357,6 +355,7 @@ public class MypageController {
 		return "mypage/friendsDiary";
 	}
 		
+	
 	//영농일지 달력페이지+회원등급 조정
 	@GetMapping("diary.me")
 	public String diary() {
@@ -369,6 +368,7 @@ public class MypageController {
 	public ArrayList<Diary> calendarImgLoad(Diary d, int userNo) {
 		// 회원이 작성한 영농일지 리스트 뽑기
 		ArrayList<Diary> dList = diaryService.selectDiaryList(userNo);
+		
 		return dList;
 	}
 
@@ -386,7 +386,7 @@ public class MypageController {
 		//일지 유무(0 or 1)
 		int count = diaryService.existDiary(d);
 
-		if (count==1) {//일지가 있으면(일지는 한 날짜에 1개의 글만 작성 가능하다.)
+		if (count==1) {//일지가 한개라도 있으면
 			return "YY";
 		} else {//없으면
 			return "NN";
@@ -425,7 +425,7 @@ public class MypageController {
 												+changeGrade.getGrade()+"로 변경되었습니다!\\n"
 												+ "앞으로도 열심히 일지를 작성해주세요!");
 			}else {
-				//등업조건이 아닐시엔 일반 메세지
+				//등업아닐시엔 일반 메세지
 				session.setAttribute("alertMsg", "일지 작성 성공");
 			}
 			return "redirect:/diary.me";
@@ -542,97 +542,73 @@ public class MypageController {
 		return diaryOne;
 	}
 
-	//영농일지 좋아요 기능
-	@ResponseBody
-	@GetMapping(value="like.di",produces = "application/json; charset=UTF-8" )
-	public DiaryLike diaryLikeCount(int refDbno, int userNo) {
-		
-		//DiaryLike 객체에 정보 담아주기
-		DiaryLike dLike = new DiaryLike();
-		dLike.setRefDbno(refDbno);
-		dLike.setUserNo(userNo);
-		
-		int result = diaryService.LikeCount(dLike);
-		
-		if(result>0) { //성공시 dLike정보 반환
-			return dLike;
-		}else {//실패시 아무것도 보내지 않고 오류처리
-			return null;
+	//영농일지 뷰페이지로 넘기기
+		@PostMapping("view.di")
+		public String viewDiary(Integer diaryNo, Date selectDate, Model model,HttpSession session) {
+
+			Diary d = diaryService.viewDiary(diaryNo);
+
+			int userNo = d.getDiaryWriter();
+			
+			//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
+			Member w =  diaryService.selectDiaryWriter(userNo);
+			
+			// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
+			f = new SimpleDateFormat("YYYY/MM/dd");
+			String date = f.format(selectDate);
+
+			String cNo = d.getCategoryNo();
+			DiaryCategory dc = diaryService.selectCategory(cNo);
+
+			// d에 바꾼 값 넣어주기
+			d.setSelectDate(date); // 날짜형식변경
+			d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
+
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			int loginUserNo = m.getUserNo();
+			int refDbno = diaryNo;
+			
+			DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
+			
+			//좋아요 정보 가져오기
+			DiaryLike like = diaryService.selectLike(dl);
+			
+			//좋아요 수
+			int likeCount = diaryService.countLike(diaryNo);
+			
+			d.setLikeCount(likeCount);
+
+			model.addAttribute("w",w); //작성자 정보
+			model.addAttribute("d", d); //일지 정보
+			model.addAttribute("like", like); //좋아요 정보
+			
+			return "mypage/diaryViewPage";
 		}
-	}
-	
-	//영농일지 좋아요 취소기능
-	@ResponseBody
-	@GetMapping(value="unLike.di",produces = "application/json; charset=UTF-8" )
-	public DiaryLike unLikeCount(int refDbno, int userNo) {
-		
-		//DiaryLike 객체에 정보 담아주기
-		DiaryLike dLike = new DiaryLike();
-		dLike.setRefDbno(refDbno);
-		dLike.setUserNo(userNo);
-		
-		int result = diaryService.unLikeCount(dLike);
-		
-		if(result>0) { //성공시 dLike정보 반환
-			return dLike;
-		}else { //실패시 아무것도 보내지 않고 오류처리
-			return null;
-		}
-		
-	}
-	//좋아요 전후  count
-	@ResponseBody
-	@GetMapping(value="likeCount.di",produces = "application/json; charset=UTF-8" )
-	public int recountLike(int diaryNo) {
-		int likeCount = diaryService.countLike(diaryNo);
-		return likeCount;
-	}
-	
 	
 	//영농일지 뷰페이지로 넘기기
-	@PostMapping("view.di")
-	public String viewDiary(Integer diaryNo, Date selectDate, Model model,HttpSession session) {
+		@PostMapping("fView.di")
+		public String followDiaryView(Integer diaryNo, Date selectDate, Model model) {
 
-		Diary d = diaryService.viewDiary(diaryNo);
+			Diary d = diaryService.viewDiary(diaryNo);
 
-		int userNo = d.getDiaryWriter();
-		
-		//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
-		Member w =  diaryService.selectDiaryWriter(userNo);
-		
-		// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
-		f = new SimpleDateFormat("YYYY/MM/dd");
-		String date = f.format(selectDate);
+			// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
+			f = new SimpleDateFormat("YYYY/MM/dd");
+			String date = f.format(selectDate);
 
-		String cNo = d.getCategoryNo();
-		DiaryCategory dc = diaryService.selectCategory(cNo);
+			String cNo = d.getCategoryNo();
+			DiaryCategory dc = diaryService.selectCategory(cNo);
 
-		// d에 바꾼 값 넣어주기
-		d.setSelectDate(date); // 날짜형식변경
-		d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
+			// d에 바꾼 값 넣어주기
+			d.setSelectDate(date); // 날짜형식변경
+			d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
 
-		Member m = (Member)session.getAttribute("loginUser");
-		
-		int loginUserNo = m.getUserNo();
-		int refDbno = diaryNo;
-		
-		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
-		
-		//좋아요 정보 가져오기
-		DiaryLike like = diaryService.selectLike(dl);
-		
-		//좋아요 수
-		int likeCount = diaryService.countLike(diaryNo);
-		
-		d.setLikeCount(likeCount);
+			model.addAttribute("d", d);
 
-		model.addAttribute("w",w); //작성자 정보
-		model.addAttribute("d", d); //일지 정보
-		model.addAttribute("like", like); //좋아요 정보
-		
-		return "mypage/diaryViewPage";
-	}
-	
+			return "mypage/followDiaryView";
+		}
+
+
 	//영농일지 삭제
 	@GetMapping("delete.di")
 	public String deleteDiary(int diaryNo, HttpSession session) {
@@ -714,7 +690,6 @@ public class MypageController {
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
-		System.out.println(sList);
 		result.put("sList", sList);
 		result.put("sPi", sPi);
 		

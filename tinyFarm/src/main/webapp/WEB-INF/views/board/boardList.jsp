@@ -34,11 +34,19 @@
 	flex-direction: row;
 	justify-content: space-around;
 }
-.boardContent{
-	width:700px;
-	word-wrap:break-word;
+
+.boardContent {
+	width: 700px;
+	word-wrap: break-word;
 }
 
+.post-sidebar-area {
+	width: 200%;
+}
+
+.search-form {
+	width: 400px;
+}
 </style>
 
 
@@ -53,7 +61,7 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>함께 이야기해요</h2>
+			<h2>이야기해요</h2>
 		</div>
 
 		<div class="container">
@@ -61,9 +69,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">함께이야기해요</li>
+							<li class="breadcrumb-item active" aria-current="page">이야기해요</li>
 						</ol>
 					</nav>
 				</div>
@@ -77,7 +85,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-8">
-					<div style="display:flex; justify-content:flex-end;">
+					<div style="display: flex; justify-content: flex-end;">
 						<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
 							style="width: 25px; height: 25px;"></a>
 					</div>
@@ -88,23 +96,84 @@
 							<ul class="feed_items">
 
 							</ul>
+							<ul class="searchFeed_items">
+
+							</ul>
 						</div>
 					</div>
 				</div>
 
+				<!-- 검색창 -->
 				<div class="col-12 col-md-4">
 					<div class="post-sidebar-area">
 						<!-- ##### Single Widget Area ##### -->
 						<div class="single-widget-area">
-							<form action="#" method="get" class="search-form">
-								<input type="search" name="search" id="widgetsearch"
+							<div class="search-form">
+								<input type="text" name="searchText" id="widgetsearch"
 									placeholder="Search...">
-								<button type="submit">
+								<button onclick="searchBoardList();" id="searchBtn">
 									<i class="icon_search"></i>
 								</button>
-							</form>
+							</div>
 						</div>
-						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
+
+						<!-- 날씨api -->
+						<jsp:include
+							page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
+
+
+
+						<div class="col-12 col-lg-7 mt-50">
+							<div class="alazea-service-area mb-100"
+								style="margin-bottom: 0px;">
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="100ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s1.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__temp">
+										<h5></h5>
+										<h6></h6>
+									</div>
+								</div>
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="300ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s2.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__moi">
+										<h5></h5>
+										<h6></h6>
+									</div>
+								</div>
+								<!-- Single Service Area -->
+								<div
+									class="single-service-area d-flex align-items-center wow fadeInUp"
+									data-wow-delay="500ms">
+									<!-- Icon -->
+									<div class="service-icon mr-30">
+										<img src="resources/img/core-img/s3.png" alt="">
+									</div>
+									<!-- Content -->
+									<div class="service-content" id="weather__reco">
+										<h5>텃밭에 추천해요!</h5>
+										<h6></h6>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>
@@ -161,12 +230,12 @@
 	                       						
 	                       						
 	                       			            var today = new Date();
-	                       				        console.log("today: " + today);
+	                       				        //console.log("today: " + today);
 	                       			
 	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
 	                       				        var dateParts = dateString.split(/[- :]/);
 	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-	                       				        console.log("timeValue: " + timeValue);
+	                       				        //console.log("timeValue: " + timeValue);
 	                       				        
 	                       				     
 	                       			
@@ -196,7 +265,7 @@
 	                       				            msg = "방금 전";
 	                       				        }
 	                       			
-	                       				        console.log(msg);
+	                       				        //console.log(msg);
 	                       				    	spanDiv1.text(msg);
 	                       	                   
 	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
@@ -281,12 +350,140 @@
                        			});
                        		}                       
               
+                       		
+                       		
+                       		//검색게시판리스트
+                       		function searchBoardList(){
+                    	   		 
+                       			$(".feed_items").hide();
+                       			var searchText = $("#widgetsearch").val();
+                       			var searchHash = "%"+searchText+"%";
+                       			//console.log(searchText);
+                       			
+                       			$.ajax({
+                       				url: "search.bo",
+                       				data : {
+                       					searchText : searchText,
+                       					searchHash : searchHash
+                       				},
+                       				success: function(result){
+                     					
+                       					$(".searchFeed_items").empty();
+                       					if(result.length == 0){
+                       						
+                       					}else {
+                       						
+	                       					for(var i in result){
+	                       						var liDiv = $("<li class='feed_item'></li>");
+	                       						var boardHeaderDiv = $("<div class='boardHeader'></div>");
+	                       						var div1 = $("<div style='width:700px;'></div>");
+	                       						var pDiv = $("<p></p>");
+	                       						var spanDiv1 = $("<span></span>");
+	                       						var boardContentDiv= $("<div class='boardContent'></div>");
+	                       						var div2 = $("<div></div>");
+	                       						var div3 = $("<div></div>");
+	                       						var footerUl = $("<ul class='boardFooter'>");
+	                       						var footerLi1 = $("<li></li>");
+	                       						var footerLi2 = $("<li></li>");
+	                       						
+	                       					
+	                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
+	                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
+	                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
+	                       						var replyCount = $("<span id='rcount'></span>");
+	                       						var hiddenBno2 = $("<input type='hidden' name='boardNo' id='hiddenBno'>");
+	                       						var heartIcon = $("<img>");
+	                       						var buttonStr = $("<button type='button' onclick='dolike(this);' style='border: none; outline: none; background-color:white;'>좋아요</button>");
+	                       						var spanDiv2 = $("<span id='likeCount'></span>");
+	                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
+	                       						
+	                       						profileStr.attr("src",result[i].profile);
+	                       						
+	                       						
+	                       			            var today = new Date();
+	                       				        //console.log("today: " + today);
+	                       			
+	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+	                       				        var dateParts = dateString.split(/[- :]/);
+	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
+	                       				        //console.log("timeValue: " + timeValue);
+	                       				        
+	                       				     
+	                       			
+	                       				        const timeDifference = today - timeValue; // 밀리초 단위의 차이
+	                       				        const seconds = Math.floor(timeDifference / 1000);
+	                       				        const minutes = Math.floor(seconds / 60);
+	                       				        const hours = Math.floor(minutes / 60);
+	                       				        const days = Math.floor(hours / 24);
+	                       			
+	                       				        let msg = "";
+	                       			
+	                       			                   
+	                       				        if (days > 0 && days <= 7) {
+	                       				            msg = days + "일 전";
+	                       				        } else if (days > 7) {
+	                       				            // 날짜 형식으로 표시
+	                       				            const year = timeValue.getFullYear();
+	                       				            const month = timeValue.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+	                       				            const day = timeValue.getDate();
+	                       			
+	                       				            msg = year + ". " + month + ". " + day;
+	                       				        } else if (hours > 0) {
+	                       				            msg = hours + "시간 전";
+	                       				        } else if (minutes > 0) {
+	                       				            msg = minutes + "분 전";
+	                       				        } else {
+	                       				            msg = "방금 전";
+	                       				        }
+	                       			
+	                       				        //console.log(msg);
+	                       				    	spanDiv1.text(msg);
+	                       	                   
+	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
+	                       						div1.append(pDiv);
+	                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
+	                       						
+	                       						hiddenBno.attr("value",result[i].boardNo);
+	                       						div2.append(result[i].boardContent);
+	                       						boardContentDiv.append(hiddenBno).append(div2);
+	                       						
+	                       						replyIcon.attr("src","resources/img/icon/댓글.png");
+	                       						replyCount.text(result[i].replyCount);
+	                       						footerLi1.append(replyIcon).append("&nbsp;댓글").append("&nbsp;").append(replyCount);
+	                       						
+	                       						hiddenBno2.attr("value",result[i].boardNo);
+	                       						heartIcon.attr("src","resources/img/icon/heart.svg").attr("class","heartClass");
+	                       						spanDiv2.text(result[i].likeCount);
+	                       						
+	                       						footerLi2.append(hiddenBno2).append(heartIcon).append(" &nbsp;").append(buttonStr).append("&nbsp;").append(spanDiv2);
+	                       						
+	                       						footerUl.append(footerLi1).append(footerLi2);
+	                       						div3.append(footerUl);
+	                       						
+	                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
+	                       						
+	                       						$(".searchFeed_items").append(liDiv);           						
+	                       						
+	                       					}
+                       					}
+                       					findLike();
+                       				  
+                       					
+                       				},
+                       				error: function(){
+                       					console.log("통신오류");
+                       				}
+                       			});
+                       		}     
+                       		
+                       		
+                       		
                             function findLike(){
                             	
 							
 							
 								var boardNoArray = document.querySelectorAll('.boardFooter input#hiddenBno');
-								console.log(boardNoArray)
+								//console.log(boardNoArray)
 								
                             	 $.ajax({
                             		url : "findLike.bo",
@@ -311,7 +508,7 @@
 		                            				}else{
 		                            					$(boardNoArray[j]).siblings("img").eq(0).attr("src","resources/img/icon/heart.svg")
 		                            					$(boardNoArray[j]).siblings("button").css("color","black");
-		                            					//$(boardNoArray[j]).siblings("#likeCount").css("color","black");
+		                            					$(boardNoArray[j]).siblings("#likeCount").css("color","black");
 		                            					
 		                            				}
 	                            				}
@@ -342,11 +539,13 @@
                             	//var likeText = $(el).parents().children().eq(2).text();
                             	var like = $(el).parents().children().eq(2);
                             	var likeText = like.text();
-                            	console.log(likeText);
+                            	//console.log(likeText);
                             	var likeCount = $(el).parents().children().eq(3); 
                             	
-     							console.log(likeCount.text())
-                            	
+     							//console.log(likeCount.text())
+                            	var searchText = $("#widgetsearch").val();
+
+     							
                             	//if(이미지파일이 heart이면 ) 
                             if(heartImg.attr("src") =="resources/img/icon/heart.svg"){
                             	 $.ajax({
@@ -358,13 +557,12 @@
                             		success : function(result){
                             			if(result==1){
                             				heartImg.attr("src","resources/img/icon/heart-fill.svg");
-                            				
-                            				//likeText.css({"color":"red"});
-                            				//like.css({"color":"red"});
-                            				//likeText.style.color="red";
-                            				selectBoardList();
-                            				
-                            				
+                            				if(searchText == "") {
+                            					selectBoardList();
+                            				}else{
+												searchBoardList();
+                            				}
+		
                             			}else{
                             				console.log("좋아요실패");
                             			}
@@ -384,7 +582,11 @@
 	                            		success: function(result){
 	                            			if(result==1){
 	                            				heartImg.attr("src","resources/img/icon/heart.svg");
-	                            				selectBoardList();
+	                            				if(searchText == "") {
+	                            					selectBoardList();
+	                            				}else{
+													searchBoardList();
+	                            				}
 	                            				
 	                            			}else{
 	                            				console.log("좋아요취소실패");
@@ -400,12 +602,12 @@
                         	//시간표시
                         	function time(){
                         		 var today = new Date();
-                        	        console.log("today: " + today);
+                        	        //console.log("today: " + today);
 
                         	        var dateString = "${boardInfo.createDate}"; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
                         	        var dateParts = dateString.split(/[- :]/);
                         	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-                        	        console.log("timeValue: " + timeValue);
+                        	        //console.log("timeValue: " + timeValue);
 
                         	        const timeDifference = today - timeValue; // 밀리초 단위의 차이
                         	        const seconds = Math.floor(timeDifference / 1000);
@@ -432,22 +634,86 @@
                         	            msg = "방금 전";
                         	        }
 
-                        	        console.log(msg);
+                        	        //console.log(msg);
                         	        //document.getElementById("boardCreateDate").innerText = msg;
                         	        $("#boardCreateDate").append(msg)
                         		
                         		
                         	}
                             
+                        	function todayGreenCast(todayGreenTemp, todayGreenMoi){
+            		   			
+            		   			if(todayGreenTemp < 10){
+            						
+            		   				$("#weather__temp > h5").text("식물 냉해주의보!")
+            						$("#weather__temp > h6").html("<p>햇빛이 잘 드는 곳에서 충분한 햇볕을 받게 해주고 난방 시설을 이용하여 식물의 환경을 따뜻하게 유지하세요.</p><p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있으니 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   			
+            		   			}else if(todayGreenTemp < 18){
+            		   				
+            		   				$("#weather__temp > h5").text("대부분의 실내 식물이 잘 성장하고 번식할 수 있는 이상적인 조건!")
+            						$("#weather__temp > h6").html("<p>햇빛이 잘 드는 곳으로 이동하여 햇빛을 받게 해주세요.</p><p>일교차 온도를 유의하여 온도를 일관되게 해주세요.</p>") //")<p>낮은 온도에서 실내 습도가 낮아질 수 있습니다. 적절한 수분 공급을 해주세요.</p><p>");
+            		   				
+            		   			}else if(todayGreenTemp < 26){
+
+            		   				$("#weather__temp > h5").text("식물이 좋아하는 온도!")
+            						$("#weather__temp > h6").html("<p>환기를 잘 해주고 비료를 공급해 주세요.</p><p>난방을 이용하여 환경을 따뜻하게 유지하세요.</p>") //"<p>적절한 물을 공급하고 습도를 유지하세요.</p><p>");
+            		 	   			
+            		   			}else{
+
+            		   				$("#weather__temp > h5").text("식물이 자라기에 온도가 높네요!")
+            						$("#weather__temp > h6").html("<p>온실의 온도를 낮춰주세요. 환기가 도움이 됩니다.</p><p>햇빛이 뜨거우면 실내로 옮겨 주거나 가림막을 사용해 주세요.</p>") //"<p>토양이 마르기 전에 물을 주세요.</p><p>");
+            		   				
+            		   			}
+            		   			
+            		   			if(todayGreenMoi < 40){
+            		   				$("#weather__moi > h5").text("건조주의보!")
+            						$("#weather__moi > h6").html("<p>건조한 공기에 노출되면 토양이 빠르게 마릅니다. 수분을 공급해주세요.</p><p>작은 식물들이 모여있으면 수분 손실을 늦출 수 있어요!</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   				
+            		   			}else if(todayGreenMoi >= 15 && todayGreenMoi <= 60){
+            		   				$("#weather__moi > h5").text("식물이 크기에 촉촉한 습도!")
+            						$("#weather__moi > h6").html("<p>대부분의 실내 식물들이 좋아하는 습도예요!</p><p>옆에서 잘 관찰하며 촉촉하게 케어 해주세요!</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");   				
+            		   				
+            		   			}else if(todayGreenMoi < 75){
+            		   				$("#weather__moi > h5").text("과습주의보!")
+            						$("#weather__moi > h6").html("<p>높은 습도는 곰팡이 및 기타 질병의 발생 가능성을 증가시켜요!</p><p>배수와 통풍에 신경 써주고 토양에 곰팡이가 피는지 관찰하세요.</p>") //"<p></p><p>");
+            		   			}else{
+            		   				$("#weather__moi > h5").text("과습경보!")
+            						$("#weather__moi > h6").html("<p>높은 습도는 곰팡이 및 기타 질병의 발생 가능성을 증가시켜요!</p><p>배수와 통풍에 신경 써주고 토양에 곰팡이가 피는지 관찰하세요.</p>") //"<p>낮은 온도에서는 식물의 수분 손실이 느려질 수 있습니다. 물 주는 빈도를 줄이고 적절한 수분을 유지하세요.</p><p>");
+            		   				
+            		   			}
+            		   			
+            		   			var mon = new Date().getMonth() + 1;
+            		   			
+            		   			if(mon >= 3 && mon <= 5){
+            		   				$("#weather__reco > h5").text("봄 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>상추 / 방울토마토 / 아스파라거스 / 브로콜리 /감자</p>")
+            		   			}if(mon >= 6 && mon <= 8){
+            		   				$("#weather__reco > h5").text("여름 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>토마토 / 오이 / 고추 / 수박 / 케일 / 바질 / 파프리카</p>")
+            		   				
+            		   			}if(mon >= 9 && mon <= 10){
+            		   				$("#weather__reco > h5").text("가을 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>배추 / 무 / 갓 / 대파 / 마늘 / 상추 / 케일 / 루꼴라</p>")
+            		   				
+            		   			}else{
+            		   				$("#weather__reco > h5").text("겨울 텃밭에는 이런 작물을 추천해요!")
+            						$("#weather__reco > h6").html("<p>시금치 / 봄동 / 상추 / 갓 / 쑥갓 / 돌산갓 / 케일 / 청경채</p>")
+            		   				
+            		   			}
+            		   			
+            		   		}
+                        	
+                        	
                        </script>
 
 
 	<script>
 							$(function(){
 								$(".feed_items").on("click","li>.boardContent",function(){
-									
-									//console.log("boardNo: "+$(this).children().eq(0).val());
-									//location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
+									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
+								});
+								
+								$(".searchFeed_items").on("click","li>.boardContent",function(){
 									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
 								});
 								

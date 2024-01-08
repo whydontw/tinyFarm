@@ -37,45 +37,21 @@
 	  color: red;
 	  text-decoration: none;
 	}
-	.fc-toolbar-chunk{
-		display: inline-block;
-	}
+	
 	.fc-day-sat a {
 	  color: blue;
 	  text-decoration: none;
 	}
-	.fc-today-button.fc-button.fc-button-primary,
 	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary,
-	.fc-dayGridMonth-button.fc-button.fc-button-primary,
-	.fc-listMonth-button.fc-button.fc-button-primary{
+	.fc-next-button.fc-button.fc-button-primary{
+		background-color: #98d479;
+		border: 1px solid #d6e5c5;
+	}
+	.fc-today-button.fc-button.fc-button-primary{
 		background-color: #98d479;
 		border: 1px solid #d6e5c5;
 	}
 	
-	.fc-listMonth-button.fc-button.fc-button-primary.fc-button-active,
-	.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active{
-		background-color: #98d479;
-		border: none;
-	}
-	
-	.fc-today-button.fc-button.fc-button-primary:active,
-	.fc-prev-button.fc-button.fc-button-primary:active,
-	.fc-next-button.fc-button.fc-button-primary:active,
-	.fc-dayGridMonth-button.fc-button.fc-button-primary:active,
-	.fc-listMonth-button.fc-button.fc-button-primary:active{
-		background-color: #aae48c;
-		border: none;
-	}
-	
-	.fc-prev-button.fc-button.fc-button-primary{
-		margin-right: 3%;
-	}
-	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary{
-		width: 5%;
-		height: 5%;
-	}
 	.fc-col-header-cell.fc-day{
 		background-color: #98d479;
 	}
@@ -131,12 +107,6 @@
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView: 'dayGridMonth',
-		headerToolbar: {				// 상단 툴바 설정
-            left: 'today,dayGridMonth,listMonth',
-            center: 'title',
-            right: 'prev,next'
-            
-        },
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
 		navLinks: true, //날짜 선택 가능

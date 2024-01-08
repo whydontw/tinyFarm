@@ -109,9 +109,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">함께 이야기해요</a></li>
+							<li class="breadcrumb-item"><a href="moveList.bo">이야기해요</a></li>
 							<li class="breadcrumb-item active" aria-current="page">이야기
 								공간</li>
 						</ol>
@@ -153,8 +153,24 @@
 							</div>
 						</div>
 
+						   <!-- 해시태그 -->
+                        <div class="post-tags-share d-flex justify-content-between align-items-center">
+                            <!-- Tags -->
+                            <ol class="popular-tags d-flex align-items-center flex-wrap hashTagOl">
+                                <li><span>Tag:</span></li>  
+                            </ol>
+                      
+                            <!-- Share -->
+                            <div class="post-share">
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
 
-						<!-- Leave A Comment -->
+
+						<!-- 댓글창 -->
 						<div class="leave-comment-area clearfix">
 							<div class="comment-form">
 								<h4 class="headline">
@@ -210,17 +226,17 @@
 										<img src="${boardInfo.profile}" alt="${boardInfo.profile}">
 									</div>
 									<div class="author-name">
-										<h5>${boardInfo.boardWriter }</h5>
+										<h5>${boardInfo.userName }</h5>
 										<p>${boardInfo.email }</p>
 									</div>
 								</div>
 								<br>
 
 								<p>
-									"안녕하세요! 나는 '${boardInfo.boardWriter}'이라고 해요.<br>여러분과 소통하며
+									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며
 									새로운 친구들을 만나고 싶어요!"
 								</p>
-
+								
 								<c:choose>
 									<c:when test="${isFollow eq 1}">
 										<form action="deleteFollow.fw">
@@ -229,7 +245,16 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-											<button type="submit" class="btn alazea-btn" id="unfollowBtn">언팔로우</button>
+												
+												
+											<c:choose>
+												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
+												
+												</c:when>
+												<c:otherwise>
+													<button type="submit" class="btn alazea-btn" id="unfollowBtn">언팔로우</button>
+												</c:otherwise>
+											</c:choose>
 										</form>
 									</c:when>
 									<c:otherwise>
@@ -239,7 +264,16 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-											<button type="submit" class="btn alazea-btn" id="followBtn">팔로우</button>
+												
+												<c:choose>
+												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
+												
+												</c:when>
+												<c:otherwise>
+													<button type="submit" class="btn alazea-btn" id="followBtn">팔로우</button>
+												</c:otherwise>
+											</c:choose>
+											
 										</form>
 									</c:otherwise>
 								</c:choose>
@@ -335,6 +369,28 @@
 	</div>
 
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+
+	<!-- 해시태그 -->
+	<script>
+    var hashTags = ${boardInfo.hashTag};
+    
+	  for (var i = 0; i < hashTags.length; i++) {
+		    var liArea = $("<li></li>");
+		    var aArea = $("<a id='hashTag'></a>");	  
+		  
+	        var value = hashTags[i].value;
+	        console.log(value); //하나하나 콘솔에 잘 찍힘
+	        
+	        
+	        
+	        aArea.text(hashTags[i].value);
+	        liArea.append(aArea);
+
+	        $(".hashTagOl").append(liArea);       
+	    }
+	</script>
+
+
 
 	<script>
     function replyList(){
@@ -540,8 +596,12 @@
             }
         });
 });
-
-    
+	
+   //댓글수정버튼 클릭시 다시 댓글게시버튼으로 바꾸기 
+	$("#updateRbutton").click(function(){
+		$("#updateRbutton").hide();
+		$("#insertRbutton").show();
+	});  
     
 
 
@@ -574,11 +634,11 @@
     
     function updateReply(el){
         var refRno = $("#hiddenRno").val();
-        console.log(refRno); //내가 클릭한 댓글의 replyNo가 나옴
+       // console.log(refRno); //내가 클릭한 댓글의 replyNo가 나옴
         //console.log(giveRno(el)); //이렇게 해도 내가 클릭한 댓글의 replyNo가 나옴
         
         var originContent=$("#hiddenRContent").val();
-        console.log(originContent);
+       // console.log(originContent);
         
        
         var contentArea = document.getElementById("replyContent");
@@ -670,6 +730,60 @@
    	   time();
    });
 </script>
+
+
+
+	
+<script>
+    // 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
+    $("당신의 영역을 채우세요.").on('click', function () {
+    // 클릭한 행에서 followingId 값을 가져옴
+        let userId = $(this).find('td:first').text();
+        // 모달 열기 및 정보 표시 함수 호출
+        $.ajax({
+            url: "getFollowingInfo.me",
+            type: 'post',
+            data: { followingId: userId }, //클릭한 회원 아이디로 정보 불러오기
+            success: function (m) { 
+                if(m.userId != null){//아이디가 존재하면
+                    if(m.changeName == null){ //유저 프로필 사진 있으면
+                        $("#profileImage").attr("src","resources/profile.jpg");
+                    }else{//없으면 기본사진
+                        $("#profileImage").attr("src",m.changeName);
+                    }
+                $("#userId").text(m.userId); //모달창에 아이디값 넣기
+                $("#userName").text(m.userName); //이름
+                $("#userGrade").text(m.grade); //등급
+                //팔로우 여부 체크
+                $(function(){
+                    let followingId = $("#userId").text();
+                    let userNo = ${loginUser.userNo};
+                    $.ajax({
+                        url : "followChk.me",
+                        data : {
+                            followingId : followingId,
+                            userNo : userNo
+                        },
+                        success : function(result){
+                            if(result=='YY'){
+                                //팔로우된 상태라면 버튼 바꿔주기
+                                $("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+                            }
+                        },error : function(){
+                            console.log("팔로우 확인 실패");
+                        }
+                    });
+                });
+                //모달창 실행
+                $(".btn1").click();
+                }
+            }, error: function () {
+                console.log('following modal ajax 통신실패');
+             }
+        });
+    });
+</script>
+
 
 
 	<!-- ##### All Javascript Files ##### -->
