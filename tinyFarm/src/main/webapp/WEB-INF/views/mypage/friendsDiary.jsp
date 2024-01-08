@@ -19,6 +19,9 @@
 	<!-- 달력 API -->
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<!-- alert창 cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<style>
 	.fc-event {
 	    background: none;
@@ -101,11 +104,11 @@
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
 		
-		initialView: 'dayGridMonth',
-		selectable: true, //날짜 선택
+		initialView: 'dayGridMonth', //캘린더 초기화면 형식
+		selectable: true, //날짜 선택 가능
 		locale: 'ko',//한글 설정
-		editable: true, 
-	    eventContent: function(img) { //새싹이미지를 위한 함수 ..
+		editable: true, //수정여부
+	    eventContent: function(img) { //새싹이미지를 위한 함수
 	    	let imageUrl = img.event.extendedProps.imageUrl;
 	        return {
 	           html: '<div class="fc-content"><div class="fc-title">' + img.event.title + '</div><img src="' + imageUrl + '" alt="Event Image" style="max-width: 100%; height: auto;"></div>'
@@ -124,12 +127,13 @@
 	        			$.each(result,function(index,el){ //반복문 돌려서 날짜 뽑기
 			        	let startDate = moment(el.selectDate).format('YYYY-MM-DD');//날짜 형식 바꾸기
 	        			let open = el.selectOpen;
-	        				if(startDate != null && open =='Y'){ //날짜가 존재하면
+			        	
+	        				if(startDate != null && open =='Y'){ //일지 존재하고 공개일지일 경우
 		        				events.push({
 		        					start: startDate,
 		        			        imageUrl: "resources/jisu/img/calender-icon.png"
 		        				});
-	        				}else if(startDate != null && open =='N'){
+	        				}else if(startDate != null && open =='N'){ //일지 존재하고 비공개 일지일 경우
 	        					events.push({
 		        					start: startDate,
 		        					imageUrl: "resources/jisu/img/openN.png"
@@ -146,9 +150,23 @@
 		    let month = info.event.start.getMonth()+1;
 		    let day = info.event.start.getDate();
 		    let userNo = ${f.userNo};
-	        let view = window.confirm(year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?");
-	        	if(view != false){
+	        let view = swal({
+    			title : "영농일지 구경",
+    			text : year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?",
+    			icon: 'question',
+    			showCancelButton : true,
+    			confirmButtonClass : "btn-danger",
+    			confirmButtonText : "예",
+    			cancelButtonText : "아니오",
+    			closeOnConfirm : false,
+    			closeOnCancel : true
+	        },function(view){
+	        		//아니오 클릭시 현재 페이지 유지
+	        		if(!view){return false;}
+	        		
+	        		//예 누를시 
 					let date = moment(info.event.start).format('YYYY/MM/DD');
+					//디테일뷰 세팅
 					$.ajax({
 						url : "viewSet.di",
 						type : "post",
@@ -158,7 +176,7 @@
 						},
 						success:function(result){
 							if(result.selectOpen == 'N'){ //작성자가 비공개 설정시 뷰페이지 막기
-								alert("비공개 일지입니다.\n채팅을 통해 작성자에게 문의해보세요!"); //채팅기능 사용하도록 유도!
+								swal('비공개 일지', '비공개 일지입니다.\n채팅을 통해 작성자에게 문의해보세요!', 'info'); //채팅기능 사용하도록 유도!
 							}else{ //공개 일지일시
 								//post방식으로 페이지 이동을 위한 준비
 								let diaryNo = result.diaryNo;
@@ -189,7 +207,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
-	        	}
+	        });
 	        }
 	    });
 		calendar.render(); //달력 띄우기

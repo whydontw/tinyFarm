@@ -40,16 +40,7 @@ public interface DiaryService {
 
 	ArrayList<Member> myFollowerList(String userId, PageInfo fwPi);
 
-	//팔로우
-	int followUser(Follow f);
-	
-	int unfollowUser(Follow f);
-	
 	Member selectMember(String userId);
-	
-	Member selectFollowingInfo(String followingId);
-	
-	Member selectFollowerInfo(String followingId);
 	
 	//영농일지
 	int insertDiary(Diary d);
@@ -102,12 +93,6 @@ public interface DiaryService {
 
 	//찜목록
 	ArrayList<Product> selectWish(int userNo);
-
-	//팔로우 여부 확인
-	int followCheck(Follow f);
-	
-	//팔로우 유저 정보(상태값 Y인)
-	Member selectFollowMember(String statusYFiId);
 	
 	//영농일지 좋아요 정보
 	DiaryLike selectLike(DiaryLike dl);
