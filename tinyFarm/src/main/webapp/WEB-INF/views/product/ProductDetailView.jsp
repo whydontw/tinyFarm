@@ -91,12 +91,20 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                     		
                     	
 					<!-- 상품 정보 -->
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">
+=======
+	
+					<!-- 상품 정보 -->
+                    <div class="col-12 col-md-6">
+                        <div class="single_product_desc">                     	
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
                         	<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+                        	<input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
                             <h4 class="title" name="productTitle">${p.productTitle }</h4>
                             <h4 class="price" name="productPrice">${p.productPrice }원</h4>
                             <div class="short_overview" name="productContent">
@@ -156,7 +164,7 @@
                                 
                                 
                                 <div>
-                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 문의하기</button>
+                                    <button onclick="goChat();" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 문의하기</button>
                                 </div>
                                 <c:choose>
 				                    <c:when test="${empty loginUser}">
@@ -179,7 +187,7 @@
 							<!-- 수정/삭제 -->
 							<div class="pdubtn" align="center">
 								
-								<c:if test="${not empty loginUser}">
+								<c:if test="${not empty loginUser and loginUser.userNo eq p.userNo}">
 									<div align="center" id="bottondiv">
 										<a type="submit" name="addtocart" id="deleteBtn" value="5" class="btn alazea-btn-gray ml-15">삭제하기</a>
 		                            	<a type="submit" name="addtocart" id="" value="5" class="btn alazea-btn-orange ml-15" href="pupdate.bo?pno=${p.productNo}">수정하기</a>
@@ -354,7 +362,33 @@
 			}
 	</script>
    	
-            
+   	<!-- 채팅방 가기 -->
+    <script>
+    	function goChat(){
+    		//상품 올린 사람의 userNo 정보
+    		var userNo = $("#pUserNo").val();
+    		var loginUserNo = "${loginUser.userNo}";
+
+    		if(userNo != loginUserNo){
+    			$.ajax({
+    				url : "getUserId.ch",
+    				data : {
+    					userNo : userNo
+    				},
+    				success : function(result){
+    					location.href="chatList.ch?userId="+result;
+    				},
+    				error : function(){
+    					console.log("통신 에러");
+    				}
+    			});
+    			
+    		} else {
+    			alert("나에게는 채팅을 걸 수 없습니다.");
+    		}
+    		
+    	}
+    </script> 
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

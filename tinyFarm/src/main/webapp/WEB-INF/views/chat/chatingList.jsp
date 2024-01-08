@@ -284,6 +284,7 @@ div {
 #chat-room-out-btn{
 	height:100%;
 	border: none;
+	background-color: transparent;
 }
 .emoji-div{
 	width:100%;
@@ -316,6 +317,9 @@ div {
 	padding-top:4px;
 	
 	
+}
+#chat-part-name:hover{
+	cursor:pointer;
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -407,7 +411,7 @@ div {
 			<div class="chat-detail">
 				<div class="chat-div hidden">
 					<div class="chat-detail-name">
-						<h4><b id="chat-part-name">채팅 상대방 이름</b></h4>
+						<h4><b id="chat-part-name" onclick="openModal();">채팅 상대방 이름</b></h4>
 						<div class="dropdown">
 						  <button id="chat-room-out-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						    <img src="resources/img/icon/menu-icon.png">
@@ -673,7 +677,7 @@ div {
 			//가져온 아이디 값을 insertChatRoom 메소드(db에 채팅방을 추가하는 메소드)에 전달.
 			insertChatRoom(receiveMemId);
 			//모달창을 닫기 위해 회원 찾기 모달창에 있는 닫기버튼을 클릭
-			$("#closeFindIdModalBtn").click();
+			$(".btn-close").click();
 		});
 		
 		//채팅방 추가 함수. 
@@ -690,7 +694,13 @@ div {
 					if(result == "NNNNY"){ //채팅방 추가에 성공
 						selectChatList(); //채팅 메세지 DB로부터 가져오기
 					}else if(result == "NNNYY"){//이미 채팅방이 있으면
-						alert("이미 채팅방이 존재합니다");
+						//현재 존재하는 채팅방에 있는 userId를 훑고 receiveMemId와 일치하는 userId의 div를 클릭하는 이벤트
+						$(".chat-item-div input[id='userId']").each(function(index,item){
+							if(receiveMemId == item.value){
+								$(this).parents(".chat-item-div").click();
+							}
+						});
+						
 					} 
 				},
 				error : function(){
@@ -757,6 +767,13 @@ div {
 						}
 						//읽지 않은 메시지 카운트 표시
 						selectNotReadMsg();
+					}
+					
+					//다른 페이지에서 1:1채팅하기를 눌러서 넘어온 userId 값이 있으면 그 아이디로 채팅방을 생성하고, 채팅방 열기
+					var uId = "${userId}";
+					if(uId != ""){
+						//채팅방 추가
+						insertChatRoom(uId);
 					}
 				},
 				error : function(){
@@ -966,8 +983,8 @@ div {
 			$('.emoji-div').removeClass("hidden");
             $('.emoji-div').addClass("visible");
             $('.chat-area').css('height','auto');
-			$('.chat-area').css('min-height','30%');
-			$('.chat-area').css('max-height','40%');
+			$('.chat-area').css('min-height','45%');
+			$('.chat-area').css('max-height','45%');
 			//스크롤 최 하단으로 이동
 			$('.chat-area')[0].scrollTop = $('.chat-area')[0].scrollHeight;
 		}
@@ -978,6 +995,96 @@ div {
             $('.chat-area').css('height','75%');
 			$('.chat-area').css('min-height','75%');
 		}
+<<<<<<< HEAD
+=======
+		//프로필 모달창 여는 함수
+		function openModal(){
+				var userId = $(".chat-area").children("#userId").val();
+				
+			    // 모달 열기 및 정보 표시 함수 호출
+				$.ajax({
+					url: "getFollowingInfo.me",
+					type: 'post',
+					data: { followingId: userId },
+					success: function (m) {
+				 		if(m.userId != null){
+				        	if(m.changeName != null){ //유저 프로필 사진
+	    			        	$("#followImg").attr("src",m.changeName);
+				        	}else{ //없으면 기본사진
+				        		$("#followImg").attr("src","resources/profile.jpg");
+				        	}
+				        $("#userNo").text(m.userNo);
+				        if(m.changeName == null){ //사진 없을경우 기본이미지
+				        	$("#profileImage").attr("src","resources/profile.jpg");
+				        }else{
+	    			        $("#profileImage").attr("src",m.changeName); //프로필 사진
+				        }
+				        $("#userId").text(m.userId); //아이디
+				        $("#userName").text(m.userName); //이름
+				        $("#userGrade").text(m.grade); //등급
+				           	 	
+				      	//팔로우 여부 체크
+						$(function(){
+							let followingId = $("#userId").text();
+							let userNo = ${loginUser.userNo};
+								$.ajax({
+									url : "followChk.me",
+									data : {
+										followingId : followingId,
+										userNo : userNo
+									},
+									success : function(result){
+										if(result=='YY'){
+											$("#followBtn").text("팔로우취소").attr("onclick","unfollow();");
+										}
+									},error : function(){
+										console.log("팔로우 확인 실패");
+									}
+								});
+							});
+				        
+				       	 $(".btn1").click();
+				        
+				 		}else{
+				 			swal({
+					    		title : "회원정보 없음",
+					    		text : "해당 회원 정보가 존재하지 않습니다. \n목록에서 제거하시겠습니까?",
+					    		showCancelButton : true,
+					    		confirmButtonClass : "btn-danger",
+					    		confirmButtonText : "예",
+					    		cancelButtonText : "아니오",
+					    		closeOnConfirm : false,
+					    		closeOnCancel : true
+					    	}, function(isConfirm) {
+					    		if(isConfirm){ //예 누를시 폼 전송
+					    			let followingId = userId;
+					    			let form = document.createElement("form");
+					    			let obj; //넘겨받을 값 준비
+					    			//폼 준비
+					    			obj = document.createElement("input");
+					    			obj.setAttribute("type","hidden");
+					    			obj.setAttribute("name","followingId");
+					    			obj.setAttribute("value",followingId);
+					    			//폼 형식 갖추기
+					    			form.appendChild(obj);
+					    			form.setAttribute("method","post");
+					    			form.setAttribute("action","deleteNonUser.me");
+					    			//body부분에 폼 추가
+					    			document.body.appendChild(form);
+					    			form.submit();
+					    			
+					    		}else{
+					    			return false;
+					    		}
+					    	});
+				 		}
+				 	}, error: function () {
+				 		console.log('following modal ajax 통신실패');
+				    }
+				});
+		}
+		
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />

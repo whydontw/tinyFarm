@@ -245,8 +245,12 @@ a, p {
 
 	<script type="text/javascript">
 		$(function() {
-			//헤더에서 웹소켓 접속
-			headerConnect();
+			var loginUser = "${loginUser.userId}";
+			if(loginUser != ""){
+				//헤더에서 웹소켓 접속
+				headerConnect();
+			}
+			
 		});
 		const alertMsg = "${alertMsg}";
 

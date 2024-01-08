@@ -62,7 +62,7 @@
 							<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
 							<li class="breadcrumb-item"><a href="${contextPath}/noticeList.no">공지사항</a></li>
-							<li class="breadcrumb-item">공지사항 수정</li>
+							<li class="breadcrumb-item"><a href="#">공지사항 수정</a></li>
 						</ol>
 					</nav>
 				</div>

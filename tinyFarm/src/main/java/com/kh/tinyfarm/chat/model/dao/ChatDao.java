@@ -80,6 +80,11 @@ public class ChatDao {
 		
 		return sqlSession.update("chatMapper.updateChatRoom", cr);
 	}
+
+	public String getUserId(SqlSessionTemplate sqlSession, int userNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getUserId", userNo);
+	}
 	
 	
 	

@@ -46,7 +46,7 @@
 	        	
 			  	<nav>
 				  	<a href = '' target = '_blank' style = "margin-left:10px; color:white;">Blog</a> |
-					<a href = 'https://github.com/ggasin/GgulZip' target = '_blank' style ="color:white;">Github</a>
+					<a href = 'https://github.com/ggasin/tinyFarm' target = '_blank' style ="color:white;">Github</a>
 			  	</nav>
 			    <div class="footer-message">작은농장</div>
 			    <div class="footer-contact">주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩 지번 서울특별시 영등포구 양평동4가 2</div>
@@ -76,6 +76,8 @@
                         <div class="footer-nav">
                             <nav>
  								<ul>
+ 									<li><div class="new-message-div px-2 hidden"></div></li>
+ 									<li><a href="${contextPath}/chatList.ch">채팅</a></li>
                                     <li><a href="noticeList.no">공지</a></li>
                                     <li><a href="qnaList.qa">1:1문의</a></li>
                                 </ul>
@@ -86,6 +88,12 @@
             </div>
         </div>
     </footer>
+    <script type="text/javascript">
+	  //메세지 도착 알림 div 클릭 이벤트
+		$(".new-message-div").click(function() {
+			location.href = "${contextPath}/chatList.ch";
+		});
+    </script>
     <!-- ##### Footer Area End ##### -->
 </body>
 </html>

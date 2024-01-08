@@ -65,6 +65,24 @@
         	height: 40px;
         	margin: auto;
         }
+        #diarylike{
+         	width: 28px;
+         	height: 28px;
+        	float: right;
+        	text-align: center;
+        	font-size: 14px;
+        }
+        #likeCount{
+        	margin-top: -2%;
+        }
+        
+        #diarylike img{
+        	width: 100%;
+        	height: 100%; 
+        }
+        #diarylike:hover {
+        	cursor: pointer;
+        }
     </style>
 </head>
 
