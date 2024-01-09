@@ -222,6 +222,7 @@ public class ProductController {
 			a.setRefNo(p.getProductNo());
 			
 			aresult = productservice.updateAttachment(a);
+
 		} 
 		
 		//전달된 파일이 있다면 세팅이 되었을테니 해당 정보 포함하여 데이터베이스에 전달하기
@@ -230,6 +231,10 @@ public class ProductController {
 		
 		if((presult*aresult)>0) {//수정 성공
 			session.setAttribute("alertMsg","게시글 수정 성공");
+			
+			System.out.println("수정성공");
+			System.out.println("수정p : "+ p);
+			
 			return "redirect:pdetail.bo?pno="+p.getProductNo();
 		}else {
 			session.setAttribute("alertMsg","게시글 수정 실패");
