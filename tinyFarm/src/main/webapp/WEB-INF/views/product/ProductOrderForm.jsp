@@ -49,9 +49,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
-                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물결제</li>
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">결제하기</li>
                         </ol>
                     </nav>
                 </div>

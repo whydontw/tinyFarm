@@ -104,12 +104,6 @@
 		</div>
     <!-- ##### Breadcrumb Area End ##### -->
 
-    <!-- ##### Blog Content Area Start ##### -->
-    <section class="blog-content-area section-padding-0-100">
-     <div class="container">
-        </div>
-    <!-- ##### Breadcrumb Area End ##### -->
-
     <!-- ##### Single Product Details Area Start ##### -->
     <section class="single_product_details_area mb-50">
         <div class="produts-details--content mb-50">
@@ -155,7 +149,13 @@
                         </div>
 	            	</div>
                 </div>
-                <div style="text-align: right;">
+                <div style="text-align: center;">
+	                <a href="bookMain.re">
+						<button type="button" class="btn alazea-btn2" 
+						style="margin-top: 60px; width:150px; height:50px">목록으로</button>
+					</a>
+				</div>
+                <div style="text-align: right; margin-top:-90px">
                 	<p style = "padding-right:90px"><span>Share on</span></p>
                  	<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();"></a>
 		 		 	<a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();"></a>

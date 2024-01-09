@@ -210,25 +210,25 @@ public class DiaryDao {
 		return (ArrayList)sqlSession.selectList("diaryMapper.selectWish",userNo);
 	}
 	//영농일지 좋아요 정보
-	public DiaryLike selectLike(SqlSession sqlSession, DiaryLike dl) {
-		return sqlSession.selectOne("diaryMapper.selectLike",dl);
-	}
-	//영농일지 좋아요 수
-	public int countLike(SqlSession sqlSession, Integer diaryNo) {
-		return sqlSession.selectOne("diaryMapper.countLike", diaryNo);
-	}
-	//영농일지 작성자 정보
-	public Member selectDiaryWriter(SqlSession sqlSession, int userNo) {
-		return sqlSession.selectOne("diaryMapper.selectDiaryWriter",userNo);
-	}
-	//영농일지 좋아요수 증가
-	public int LikeCount(SqlSession sqlSession, DiaryLike dLike) {
-		return sqlSession.insert("diaryMapper.LikeCount",dLike);
-	}
-	
-	//영농일지 종아요 취소
-	public int unLikeCount(SqlSession sqlSession, DiaryLike dLike) {
-		return sqlSession.delete("diaryMapper.unLikeCount",dLike);
-	}
+		public DiaryLike selectLike(SqlSession sqlSession, DiaryLike dl) {
+			return sqlSession.selectOne("diaryMapper.selectLike",dl);
+		}
+		//영농일지 좋아요 수
+		public int countLike(SqlSession sqlSession, Integer diaryNo) {
+			return sqlSession.selectOne("diaryMapper.countLike", diaryNo);
+		}
+		//영농일지 작성자 정보
+		public Member selectDiaryWriter(SqlSession sqlSession, int userNo) {
+			return sqlSession.selectOne("diaryMapper.selectDiaryWriter",userNo);
+		}
+		//영농일지 좋아요수 증가
+		public int LikeCount(SqlSession sqlSession, DiaryLike dLike) {
+			return sqlSession.insert("diaryMapper.LikeCount",dLike);
+		}
+		
+		//영농일지 종아요 취소
+		public int unLikeCount(SqlSession sqlSession, DiaryLike dLike) {
+			return sqlSession.delete("diaryMapper.unLikeCount",dLike);
+		}
 
 }

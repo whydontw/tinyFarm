@@ -14,9 +14,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
-<!-- alert창 cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
 	.mb-4>*{
 		display: inline;
@@ -58,15 +55,15 @@
 								<input type="hidden" id="userNo" name="userNo">
 								<div class="ml-5">
 									<div class="mb-4" style="margin-top: -70px">
-										<label for="userId">ID&nbsp;:&nbsp;</label>
+										<label for="userId">ID</label>
 										<div id="userId"></div>
 									</div>
 									<div class="mb-4">
-										<label for="userName">이름&nbsp;:&nbsp;</label>
+										<label for="userName">이름</label>
 										<div id="userName"></div>
 									</div>
 									<div class="mb-4">
-										<label for="userGrade">회원등급&nbsp;:&nbsp;</label>
+										<label for="userGrade">회원등급</label>
 										<div id="userGrade"></div>
 										<!-- 여기에 회원등급 입력 필드 또는 텍스트 추가 -->
 									</div>
@@ -106,42 +103,56 @@
 			//전송!
 			form.submit();
 		}
-		
 		//팔로우 취소
 	    function unfollow(){
+	    	let alert = window.confirm("팔로우를 취소하시겠습니까?\n나중에 다시 팔로우 할 수 있습니다.");
 	    	let followingId= $("#userId").text();
-			let form = document.createElement("form");
-			let obj; //넘겨받을 값 준비
-			
-			//폼 준비
-			obj = document.createElement("input");
-			obj.setAttribute("type","hidden");
-			obj.setAttribute("name","followingId");
-			obj.setAttribute("value",followingId);
-			//폼 형식 갖추기
-			form.appendChild(obj);
-			form.setAttribute("method","post");
-			form.setAttribute("action","unfollow.me");
-			//body부분에 폼 추가
-			document.body.appendChild(form);
-				
-			swal({
-	    		title : "팔로우 취소",
-	    		text : followingId+"님 팔로우를 취소하시겠습니까?\n나중에 다시 팔로우 할 수 있습니다.",
-	    		showCancelButton : true,
-	    		confirmButtonClass : "btn-danger",
-	    		confirmButtonText : "예",
-	    		cancelButtonText : "아니오",
-	    		closeOnConfirm : false,
-	    		closeOnCancel : true
-	    	}, function(isConfirm) {
-	    		if(isConfirm){ //예 누를시 폼 전송
-	    			form.submit();
-	    		}else{
-	    			return false;
-	    		}
-	    	});
+	    	if(alert){
+				let form = document.createElement("form");
+				let obj; //넘겨받을 값 준비
+				//팔로잉 유저 아이디
+				obj = document.createElement("input");
+				obj.setAttribute("type","hidden");
+				obj.setAttribute("name","followingId");
+				obj.setAttribute("value",followingId);
+				//폼 형식 갖추기
+				form.appendChild(obj);
+				form.setAttribute("method","post");
+				form.setAttribute("action","unfollow.me");
+				//body부분에 폼 추가
+				document.body.appendChild(form);
+				//전송!
+				form.submit();
+	    	}
 	    }
+<<<<<<< HEAD
+	    
+	    function showDiary(){
+	    	let followingId= $("#userId").text();
+	    	let followingName = $("#userName").text();
+	    	
+	    	console.log(followingId);
+	    	let alert = window.confirm(followingName+"님의 영농일지를 구경하시겠습니까?");
+	    	let form = document.createElement("form");
+			let obj; //넘겨받을 값 준비
+	    	
+	    	if(alert){//예 누를시
+	    		obj = document.createElement("input");
+				obj.setAttribute("type","hidden");
+				obj.setAttribute("name","followingId");
+				obj.setAttribute("value",followingId);
+				//폼 형식 갖추기
+				form.appendChild(obj);
+				form.setAttribute("method","post");
+				form.setAttribute("action","follow.di");
+				//body부분에 폼 추가
+				document.body.appendChild(form);
+				//전송!
+				form.submit();
+	    		
+	    	}
+	    }
+=======
 
 	    function showDiary(){
 	    	let followingId= $("#userId").text();
@@ -215,6 +226,7 @@
 
 		});    
 
+>>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 	</script>
 	<!-- ##### All Javascript Files ##### -->
 	<!-- jQuery-2.2.4 js -->

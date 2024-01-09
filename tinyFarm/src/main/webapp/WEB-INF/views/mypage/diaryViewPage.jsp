@@ -13,9 +13,6 @@
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" href="resources/style.css">
     <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	<!-- alert창 cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     
     <style>
         .content {
@@ -122,40 +119,22 @@
 		                        <h4>${d.diaryTitle }</h4>
 	                    	</div>
 	                    	<c:choose>
-	                    		<c:when test="${not empty w.changeName }">
-			                    	<span id="miniProfile"><img src="${w.changeName }">&nbsp;${w.userName } &nbsp;</span>
+	                    		<c:when test="${not empty loginUser.changeName }">
+			                    	<span id="miniProfile"><img src="${loginUser.changeName }">&nbsp;${loginUser.userName } &nbsp;</span>
 	                    		</c:when>
 	                    		<c:otherwise>
-	                    			<span id="miniProfile"><img src="resources/profile.jpg">&nbsp;${w.userName } &nbsp;</span>
+	                    			<span id="miniProfile"><img src="resources/profile.jpg">&nbsp;${loginUser.userName } &nbsp;</span>
 	                    		</c:otherwise>
 			                    	
 	                    	</c:choose>
 	                    	<span id="selectDate">${d.selectDate }</span>
-	                    	<div id="diarylike">
-	                    		<c:choose>
-	                    			<c:when test="${like.userNo eq loginUser.userNo }">
-	                    				<img alt="좋아요후" src="resources/jisu/img/likeafter.png" onclick="diaryUnLike();">
-	                    			</c:when>
-	                    			<c:otherwise>
-			                    		<img alt="좋아요전" src="resources/jisu/img/likebefore.png" onclick="diaryLike();">
-	                    			</c:otherwise>
-	                    		</c:choose>
-		                    	<span id="likeCount">${d.likeCount} </span>
-	                    	</div>
 	                    	<hr>
 	                        <div id="diaryContent">${d.diaryContent }</div>
 	                    </div>
 	                    <div class="btn-area">
-	                    	<c:choose>
-	                    		<c:when test="${d.diaryWriter eq loginUser.userNo}">
-			                        <button id="updateBtn" class="btn-green">수정</button>
-			                        <button id="delBtn" class="btn-green">삭제</button>
-			                        <button id="backBtn" class="btn-green">뒤로가기</button>
-	                    		</c:when>
-	                    		<c:otherwise>
-	                    			<button id="backBtn" class="btn-green">뒤로가기</button>
-	                    		</c:otherwise>
-	                    	</c:choose>
+	                        <button id="updateBtn" class="btn-green">수정</button>
+	                        <button id="delBtn" class="btn-green">삭제</button>
+	                        <button id="backBtn" class="btn-green">뒤로가기</button>
 	                    </div>
                 	</div>
                 </div>
@@ -164,132 +143,33 @@
     </section>
 
     <script>
-    $('#diaryContent').summernote("destroy"); //게시글 터치불가능
-    let diaryNo = ${d.diaryNo}; // 일지번호 추출
-	let userNo = ${d.diaryWriter}; //회원번호 추출
-	
-	//영농일지 좋아요
-	function diaryLike(){
-	   	$(function(){
-	    	$.ajax({
-	    		url : "like.di",
-	    		data : {
-	    			refDbno : diaryNo,
-		    		userNo : ${loginUser.userNo} //회원번호는 로그인 한 회원의 번호
-	    		},
-		    		success : function(like){
-	   			if(like != null){
-	    				//해당유저와 해당일지의 정보가 있으면 좋아요 후 좋아요 취소 버튼으로 바꿔주기
-	    				$("#diarylike img").attr("src", "resources/jisu/img/likeafter.png").attr("onclick", "diaryUnLike();");
-	    				
-	    				//성공 후 페이지 좋아요수 정정
-	    				$.ajax({
-	    					url:"likeCount.di",
-	    					data : {diaryNo : diaryNo},
-	    					success : function(result){
-	    						$("#likeCount").html(result);
-	    					},error : function(){
-	    						console.log("좋아요 수 재조회 실패");
-	    					}
-	    				
-	    				});
-	    			}
-	    		},error:function(){
-	    			console.log("일지 좋아요 ajax 실패 ");
-	    		}
-	    	});
-	    });
-	  }
-    	
-	  //영농일지 좋아요 취소
-	  function diaryUnLike(){
-	  	$(function(){
-		    $.ajax({
-		    	url : "unLike.di",
-		    	data : {
-		    		refDbno : diaryNo,
-		    		userNo :  ${loginUser.userNo} //회원번호는 로그인 한 회원의 번호
-		    	},success : function(like){
-		    		if(like != null){
-		    			//해당유저와 해당일지의 정보가 있으면 취소 후 좋아요 가능 버튼으로 바꿔주기
-	    				$("#diarylike img").attr("src", "resources/jisu/img/likebefore.png").attr("onclick", "diaryLike();");
-	    				
-	    				//취소 후 페이지 좋아요수 정정
-	    				$.ajax({
-	    					url:"likeCount.di",
-	    					data : {diaryNo : diaryNo},
-	    					success : function(result){
-	    						$("#likeCount").html(result);
-	    					},error : function(){
-	    						console.log("좋아요 수 재조회 실패");
-	    					}
-	    				});
-	    			}
-		    	},error:function(){
-		    		console.log("일지 좋아요 ajax 실패 ");
-		    	}
-		   	});
-	    });
-	  }
-    	
+    $('#diaryContent').summernote("destroy");
 
-       $(function () {
-           $("#delBtn").click(function () { //삭제버튼 클릭시
-               let warn = swal({
-    			title : "영농일지 삭제",
-    			text : "삭제 후 되돌릴 수 없습니다.\n등급 기준에 따라 등급이 하락할 수도 있습니다.\n정말로 삭제하시겠습니까?",
-    			icon: 'question',
-    			showCancelButton : true,
-    			confirmButtonClass : "btn-danger",
-    			confirmButtonText : "예",
-    			cancelButtonText : "아니오",
-    			closeOnConfirm : false,
-    			closeOnCancel : true
-    		}, function(warn) {
-    			//아니오 누를시 현재페이지 유지
-    			if (!warn) {return false;}
-                   location.href = "delete.di?diaryNo="+${d.diaryNo}; //삭제 메소드로 ~
-    			});
-    		}); 
-       });
-           
-       	//영농일지 수정
-        $("#updateBtn").click(function(){
-           let update = swal({
-	       		title : "수정하기",
-	       		text : "일지를 수정하시겠습니까?",
-	       		icon: 'question',
-	       		showCancelButton : true,
-	       		confirmButtonClass : "btn-danger",
-	       		confirmButtonText : "예",
-	       		cancelButtonText : "아니오",
-	       		closeOnConfirm : false,
-	       		closeOnCancel : true
-	       	}, function(update) {
-	       		//아니오 누를시 현재페이지 유지
-	       		if (!update) {return false;}
-		      	location.href="updatePage.di?diaryNo="+${d.diaryNo}; //업데이트 메소드로 ~
-	       	}); 
+        $(function () {
+            $("#delBtn").click(function () {
+                let warn = window.confirm("삭제 후 되돌릴 수 없습니다.\n등급 기준에 따라 등급이 하락할 수도 있습니다.\n정말로 삭제하시겠습니까?");
+                if (warn) {
+                    location.href = "delete.di?diaryNo="+${d.diaryNo};
+                } else {
+                    return false;
+                }
+            });
+            
+            $("#updateBtn").click(function(){
+            	location.href="updatePage.di?diaryNo="+${d.diaryNo};
+            });
+            
+            $("#backBtn").click(function(){
+            	let alert = window.confirm("이전페이지로 이동하시겠습니까?");
+            	if(alert){
+	            	window.history.back();
+            	}else{
+            		return false;
+            	}
+            })
         });
-           
-       	//뒤로가기 버튼 클릭시
-        $("#backBtn").click(function(){
-        	let back = swal({
-    			title : "뒤로가기",
-    			text : "이전페이지로 이동하시겠습니까?",
-    			icon: 'question',
-    			showCancelButton : true,
-    			confirmButtonClass : "btn-danger",
-    			confirmButtonText : "예",
-    			cancelButtonText : "아니오",
-    			closeOnConfirm : false,
-    			closeOnCancel : true
-    		}, function(back) {
-    			//아니오 누를시 현재페이지 유지
-    			if (!back) {return false;}
-    			window.history.back();
-    		}); 
-    	 });
+        
+        
     </script>
 
      <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
