@@ -91,7 +91,7 @@ public class ProductController {
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 조회 실패");
-			return "common/errorPage";
+			return "product/ProductListView";
 		}
 
 			return "product/ProductDetailView";
@@ -116,6 +116,8 @@ public class ProductController {
 		int presult = productservice.insertProduct(p);
 		int aresult = 0;
 		
+		System.out.println("등록p : "+p);
+		
 		if(!upfile.getOriginalFilename().equals("")) {
 			
 			Attachment a = new Attachment();
@@ -128,6 +130,10 @@ public class ProductController {
 			
 			aresult = productservice.insertAttachment(a);
 			
+			System.out.println("등록pr : "+presult);
+			System.out.println("등록ar : "+aresult);
+			System.out.println("등록a : "+a);
+			
 		}
 			
 		
@@ -138,7 +144,7 @@ public class ProductController {
 				
 				}else { 
 					session.setAttribute("alertMsg", "게시글 등록 실패");
-					return "common/errorPage"; 
+					return "product/ProductListView"; 
 			}
 	}
 	
@@ -199,16 +205,26 @@ public class ProductController {
 		int presult = productservice.updateProduct(p);
 		int aresult = 0;
 		
+		System.out.println("pr0 : "+presult);
+		System.out.println("ar0 : "+aresult);
+		System.out.println("p : "+p);
+		
 		//게시글에 이미 첨부파일이 있는 경우 or 없는 경우
 		//파일이 담겨 넘어왔다면(새로운 첨부파일이 있는 경우)
 		if(!reUpFile.getOriginalFilename().equals("")) {
 			
+			System.out.println("reUpFile : "+reUpFile);
+			
 			Attachment a = new Attachment();
+			
+			System.out.println("a : "+a);
 			
 			String changeName = saveFile(reUpFile, session);
 			
 			//기존에 파일이 있다면
 			if(!p.getChangeName().equals("")) {
+				
+				System.out.println("p : "+p);
 			
 				//new File 객체로 해당 경로에 있는 파일(업로드되어있던)을 delete 메소드로 지우기
 				new File(session.getServletContext().getRealPath(p.getChangeName())).delete();
@@ -222,18 +238,30 @@ public class ProductController {
 			a.setRefNo(p.getProductNo());
 			
 			aresult = productservice.updateAttachment(a);
+			
+			System.out.println("pr : "+presult);
+			System.out.println("ar : "+aresult);
+			System.out.println("a : "+a);
 		} 
 		
 		//전달된 파일이 있다면 세팅이 되었을테니 해당 정보 포함하여 데이터베이스에 전달하기
 		//update - DML
 		
 		
-		if((presult*aresult)>0) {//수정 성공
+		if((presult+aresult)>0) {//수정 성공
+			
+			System.out.println("pr2 : "+presult);
+			System.out.println("ar2 : "+aresult);
+			
 			session.setAttribute("alertMsg","게시글 수정 성공");
+			
+			System.out.println("수정성공");
+			
 			return "redirect:pdetail.bo?pno="+p.getProductNo();
+			
 		}else {
 			session.setAttribute("alertMsg","게시글 수정 실패");
-			return "common/errorPage";
+			return "product/ProductListView";
 		}
 		
 	}

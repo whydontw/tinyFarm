@@ -69,9 +69,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농장</a></li>
-                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물거래 상세보기</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물정보</li>
                         </ol>
                     </nav>
                 </div>
@@ -96,7 +96,7 @@
 				                		<c:choose>
 				                    		<c:when test="${empty p.changeName}">
 				                    			첨부파일이 없습니다.
-				                    		
+				                    			
 				                    		</c:when>
 				                            <c:otherwise>
 				                    			<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
@@ -171,7 +171,7 @@
                                 
                                 
                                 <div>
-                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 문의하기</button>
+                                    <button type="submit" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 채팅하기</button>
                                 </div>
                                 <c:choose>
 				                    <c:when test="${empty loginUser}">
