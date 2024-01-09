@@ -13,7 +13,7 @@
  	<% String contextPath = request.getContextPath(); %>
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
-	<!-- Title --> 
+	<!-- Title -->
 	<title>Alazea - Gardening &amp; Landscaping HTML Template</title>
 	
 	<!-- Favicon -->
@@ -102,7 +102,6 @@
 				</div>
 			</div>
 		</div>
-
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Single Product Details Area Start ##### -->
@@ -150,7 +149,13 @@
                         </div>
 	            	</div>
                 </div>
-                <div style="text-align: right;">
+                <div style="text-align: center;">
+	                <a href="bookMain.re">
+						<button type="button" class="btn alazea-btn2" 
+						style="margin-top: 60px; width:150px; height:50px">목록으로</button>
+					</a>
+				</div>
+                <div style="text-align: right; margin-top:-90px">
                 	<p style = "padding-right:90px"><span>Share on</span></p>
                  	<a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();"></a>
 		 		 	<a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();"></a>
