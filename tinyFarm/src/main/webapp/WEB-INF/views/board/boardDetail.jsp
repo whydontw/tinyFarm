@@ -19,7 +19,7 @@
 <link rel="icon" href="img/core-img/favicon.ico">
 
 <!-- Core Stylesheet -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="resources/style.css">
 
 <!-- jQuery 라이브러리 -->
 <script
@@ -86,6 +86,20 @@
 	width: 800px;
 	word-wrap: break-word;
 }
+
+.ffbtn {
+	display: flex;
+	justify-content: space-around;
+}
+/*
+.modal-content {
+	margin: 0px;
+}
+
+.modal {
+	z-index: 1050;
+}
+*/
 </style>
 
 
@@ -153,21 +167,17 @@
 							</div>
 						</div>
 
-						   <!-- 해시태그 -->
-                        <div class="post-tags-share d-flex justify-content-between align-items-center">
-                            <!-- Tags -->
-                            <ol class="popular-tags d-flex align-items-center flex-wrap hashTagOl">
-                                <li><span>Tag:</span></li>  
-                            </ol>
-                      
-                            <!-- Share -->
-                            <div class="post-share">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
+						<!-- 해시태그 -->
+						<div
+							class="post-tags-share d-flex justify-content-between align-items-center">
+							<!-- Tags -->
+							<ol
+								class="popular-tags d-flex align-items-center flex-wrap hashTagOl">
+								<li><span>Tag:</span></li>
+							</ol>
+
+
+						</div>
 
 
 						<!-- 댓글창 -->
@@ -231,16 +241,13 @@
 									</div>
 								</div>
 								<br>
-
 								<p>
-									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며
-									새로운 친구들을 만나고 싶어요!"
+									"안녕하세요! 나는 '${boardInfo.userName}'이라고 해요.<br>여러분과 소통하며 새로운
+									친구들을 만나고 싶어요!"
 								</p>
-								<jsp:include page="/WEB-INF/views/member/memberModal.jsp"></jsp:include>
-								<%-- 
-								<%@include file="../member/memberModal.jsp"%>
-								 --%>
-								
+
+
+
 								<c:choose>
 									<c:when test="${isFollow eq 1}">
 										<form action="deleteFollow.fw">
@@ -249,14 +256,19 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-												
-												
+
+
 											<c:choose>
 												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
-												
+
 												</c:when>
 												<c:otherwise>
-													<button type="submit" class="btn alazea-btn" id="unfollowBtn">언팔로우</button>
+													<div class="ffbtn">
+														<button type="submit" class="btn alazea-btn"
+															id="unfollowBtn">unfollow</button>
+														<img src="resources/img/icon/profileModal.png"
+															id="profileModal" style="width: 50px; height: 50px;">
+													</div>
 												</c:otherwise>
 											</c:choose>
 										</form>
@@ -268,19 +280,25 @@
 												name="followingId" value="${boardInfo.boardWriter}">
 											<input type="hidden" name="boardNo"
 												value="${boardInfo.boardNo}">
-												
-												<c:choose>
+
+											<c:choose>
 												<c:when test="${loginUser.userId eq boardInfo.boardWriter }">
-												
+
 												</c:when>
 												<c:otherwise>
-													<button type="submit" class="btn alazea-btn" id="followBtn">팔로우</button>
+													<div class="ffbtn">
+														<button type="submit" class="btn alazea-btn"
+															id="followBtn">follow</button>
+														<img src="resources/img/icon/profileModal.png"
+															id="profileModal" style="width: 50px; height: 50px;">
+													</div>
 												</c:otherwise>
 											</c:choose>
-											
+
 										</form>
 									</c:otherwise>
 								</c:choose>
+
 
 
 
@@ -371,7 +389,7 @@
 			</div>
 		</div>
 	</div>
-
+	<jsp:include page="/WEB-INF/views/member/memberModal.jsp"></jsp:include>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 	<!-- 해시태그 -->
@@ -631,37 +649,24 @@
                console.log("통신오류");
            }
        }); 
-       $(".closeReply").click();
+		   $(".closeReply").click();
    }
     
     
     
     function updateReply(el){
-        var refRno = $("#hiddenRno").val();
-       // console.log(refRno); //내가 클릭한 댓글의 replyNo가 나옴
-        //console.log(giveRno(el)); //이렇게 해도 내가 클릭한 댓글의 replyNo가 나옴
-        
+        var refRno = $("#hiddenRno").val();    
         var originContent=$("#hiddenRContent").val();
-       // console.log(originContent);
-        
-       
         var contentArea = document.getElementById("replyContent");
         contentArea.innerText = originContent;
-        
         
         //모달창에서 수정하기버튼을 누르면 기존등록버튼 사라지고 수정버튼이 보여지기
         $("#insertRbutton").css({"display":"none"});
         $("#updateRbutton").css({"display":"block"});
         
-        //이 방식은 안먹힘 id값이나 class값이 잘 바뀌고 버튼text도 잘바뀌었지만 그대로 등록기능만 적용됨
-        //$(".insertRbutton").addClass("updateRbutton");
-        //$(".insertRbutton").removeClass("insertRbutton").text("Update Comment");
-
-        //var buttonChange = document.getElementById("insertRbutton");
-        //console.log(buttonChange);
-        //$(buttonChange).attr("id","updateRbutton").text("Update Comment");
-
         $(".closeReply").click();
+        //$('.updateRbutton').modal('hide')
+        //$('.updateRbutton').off()
 
        
     }
@@ -680,15 +685,10 @@
 	
 	//시간표시
 	function time(){
-		 var today = new Date();
-	       // console.log("today: " + today);
-
-	        var dateString = "${boardInfo.createDate}"; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+			var today = new Date();
+	        var dateString = "${boardInfo.createDate}"; 
 	        var dateParts = dateString.split(/[- :]/);
-	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-	      //  console.log("timeValue: " + timeValue);
-	        
-	     
+	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]); 
 
 	        const timeDifference = today - timeValue; // 밀리초 단위의 차이
 	        const seconds = Math.floor(timeDifference / 1000);
@@ -723,26 +723,15 @@
 	}
 	
 	
-</script>
-
-
-
-	<script>
-   //상세게시물에 댓글 불러오기
-   $(function(){   //페이지에 들어오는 순간 실행되는 함수 새로고침될때마다도 실행 함부로 많이쓰는거 x
-       replyList();
-   	   time();
-   });
-</script>
-
-
-
-
-<script>
-    // 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
-    $("당신의 영역을 채우세요.").on('click', function () {
+	
+	
+	 // 클릭 이벤트를 추가하여 해당 followingId를 전달(회원정보 모달창 띄우기)
+	// $("#profileModal").click(function(){
+    $("#profileModal").on('click', function () {
     // 클릭한 행에서 followingId 값을 가져옴
-        let userId = $(this).find('td:first').text();
+        let userId = "${boardInfo.boardWriter}";
+
+    	
         // 모달 열기 및 정보 표시 함수 호출
         $.ajax({
             url: "getFollowingInfo.me",
@@ -786,8 +775,20 @@
              }
         });
     });
+	
 </script>
- 
+
+
+
+	<script>
+   //상세게시물에 댓글 불러오기
+   $(function(){   //페이지에 들어오는 순간 실행되는 함수 새로고침될때마다도 실행 함부로 많이쓰는거 x
+       replyList();
+   	   time();
+   });
+</script>
+
+
 
 
 	<!-- ##### All Javascript Files ##### -->

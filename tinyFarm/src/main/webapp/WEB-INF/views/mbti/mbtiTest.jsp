@@ -27,21 +27,21 @@
 <style>
 #a, #b, #c, #A, #B {
 	border-radius: 30px;
-    height: 50px;
-    background-color: #f6f6f3;
-    border: none;
-    outline: none;
-    cursor: pointer;
+	height: 50px;
+	background-color: #f6f6f3;
+	border: none;
+	outline: none;
+	cursor: pointer;
 }
 
 #a:hover, #b:hover, #c:hover, #A:hover, #B:hover {
 	border-radius: 30px;
-    height: 50px;
-    background-color: #ff6c30;
-    color:white;
-    border: none;
-    outline: none;
-    font-weight: bold;
+	height: 50px;
+	background-color: #ff6c30;
+	color: white;
+	border: none;
+	outline: none;
+	font-weight: bold;
 }
 
 .start, .question {
@@ -142,18 +142,21 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	/*position: fixed;*/
-	/*display: block;*/
+	position: fixed;
+	display: block;
 	background: white;
 	z-index: 99;
 	text-align: center;
 }
-#load > img{
+
+#load>img {
 	margin: 150px;
 }
-.loadText{
+
+.loadText {
 	font-size: 25px;
 }
+
 </style>
 
 
@@ -265,25 +268,19 @@
 
 										<!-- 질문 답버튼 -->
 										<div id="resultBtn1">
-											<button id="a" type="button"
-												class="aBtn">a대답</button>
+											<button id="a" type="button" class="aBtn">a대답</button>
 											<br>
-											<button id="b" type="button"
-												class="bBtn">b대답</button>
+											<button id="b" type="button" class="bBtn">b대답</button>
 											<br>
-											<button id="c" type="button"
-												class="cBtn">c대답</button>
+											<button id="c" type="button" class="cBtn">c대답</button>
 										</div>
 
 
 										<div id="resultBtn">
-											<button id="A" type="button"
-												class="mbtiResultBtn ABtn">ESTJ대답</button>
-											<br>
-											<br>
+											<button id="A" type="button" class="mbtiResultBtn ABtn">ESTJ대답</button>
+											<br> <br>
 											<!-- 위의 것은 E, S, T, J 값 -->
-											<button id="B" type="button"
-												class="mbtiResultBtn BBtn">INFP대답</button>
+											<button id="B" type="button" class="mbtiResultBtn BBtn">INFP대답</button>
 											<!-- 아래는 I, N, F, P 값 -->
 										</div>
 
@@ -300,12 +297,12 @@
 
 	<article class="loading">
 		<!-- 로딩창 -->
-	    
+
 		<div id="load">
 			<img src="resources/img/icon/로딩창.gif">
 			<p class="loadText">잠시만 기다려주세요...</p>
 		</div>
-		
+
 	</article>
 
 
@@ -345,13 +342,11 @@
 									</div>
 
 									<h4 class="post-title">
-										키우는 <br>
-										<strong>공간을 분석해보니</strong>
+										키우는 <br> <strong>공간을 분석해보니</strong>
 									</h4>
 									<p id="envyTypeText">무난한 환경</p>
 									<progress id="progress" value="50" min="0" max="100"></progress>
-									<br>
-									<br>
+									<br> <br>
 
 
 
@@ -414,10 +409,11 @@
 								<p id="mbtiExplain"></p>
 							</div>
 							<hr style='background-color: #E0E0E0; opacity: 0.7'>
-							
-							<a href="moveMbtiTest.bo" class="btn alazea-btn-orange ml-15" style="border-radius: 30px;">다시하기</a>
-							
-							
+
+							<a href="moveMbtiTest.bo" class="btn alazea-btn-orange ml-15"
+								style="border-radius: 30px;">다시하기</a>
+
+
 						</div>
 					</div>
 				</div>
