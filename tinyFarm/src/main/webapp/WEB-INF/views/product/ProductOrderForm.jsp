@@ -60,7 +60,7 @@
     </div>
     <!-- ##### Breadcrumb Area End ##### -->
 
-    <!-- ##### Cart Area Start ##### -->
+    <!-- ##### Cart Area Start ##### --> 
     <div class="cart-area section-padding-0-100 clearfix">
         <div class="container">
             <div class="row">
