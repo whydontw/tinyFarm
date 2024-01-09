@@ -133,13 +133,6 @@ public class FollowController {
 		Member m = followService.selectFollowingInfo(followingId); //팔로우 한 유저 아이디 정보 가져오기
 		return m;
 	}
-	//팔로워 모달창 정보
-	@ResponseBody
-	@PostMapping(value = "getFollowerInfo.me", produces = "application/json; charset=UTF-8")
-	public Member getFollowerInfo(String followerId) {
-		Member m = followService.selectFollowerInfo(followerId); //팔로우 한 유저 아이디 정보 가져오기
-		return m;
-	}
 	
 	//존재하지 않는 회원 목록에서 삭제
 	@PostMapping("deleteNonUser.me")

@@ -280,33 +280,7 @@ public class MypageController {
 		return result;
 	}
 
-	//팔로잉 목록 조회
-	@ResponseBody
-	@PostMapping(value = "followingPage.me", produces = "application/json; charset=UTF-8")
-	public Map<String, Object> followingList(String userId,int curPage) {
-		
-		//결과값 담을 변수 설정
-		Map<String, Object> result=new HashMap<String, Object>();
-		
-		//현재 페이지 정보
-		int currentPage=curPage;
-		//전체 팔로잉 수
-		int listCount=diaryService.fwingListCount(userId);
-		//한 페이지에서 보여줘야하는 팔로잉 수  (followingLimit)
-		int boardLimit=5;
-		//페이징바 개수
-		int pageLimit=5;
-		
-		//페이징 처리된 팔로잉 목록 조회하기
-		PageInfo fiPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		ArrayList<Follow> fiList = diaryService.myFollowingList(userId, fiPi);
-		
-		//map에 페이지 정보와 팔로잉유저 정보 담기
-		result.put("fiList", fiList);
-		result.put("fiPi", fiPi);
 
-		return result;
-	}
 
 	//팔로워 목록 조회
 	@ResponseBody

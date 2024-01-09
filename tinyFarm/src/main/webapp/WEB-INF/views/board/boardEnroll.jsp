@@ -31,7 +31,8 @@
 
 <!-- 해시태그 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+	rel="stylesheet" type="text/css" />
 
 
 
@@ -56,8 +57,13 @@ a, p {
 	width: 100%;
 	height: 30px;
 }
-.tagify{
+
+.tagify {
 	width: 1000px;
+}
+
+.note-modal-footer {
+	margin: 10px;
 }
 </style>
 
@@ -102,7 +108,8 @@ a, p {
 			<table>
 				<tr>
 					<th><label for="boardTitle">제목&nbsp;&nbsp;</label></th>
-					<td><input type="text" id="boardTitle" name="boardTitle" required></td>
+					<td><input type="text" id="boardTitle" name="boardTitle"
+						required></td>
 				</tr>
 				<tr>
 					<th><label for="boardContent">내용&nbsp;&nbsp;</label></th>
@@ -147,7 +154,7 @@ a, p {
 
 		// 태그가 추가되면 이벤트 발생
 		tagify.on('add', function() {
-			console.log(tagify.value); 
+			console.log(tagify.value);
 		})
 	</script>
 
