@@ -102,12 +102,7 @@
 				</div>
 			</div>
 		</div>
-    <!-- ##### Breadcrumb Area End ##### -->
 
-    <!-- ##### Blog Content Area Start ##### -->
-    <section class="blog-content-area section-padding-0-100">
-     <div class="container">
-        </div>
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Single Product Details Area Start ##### -->

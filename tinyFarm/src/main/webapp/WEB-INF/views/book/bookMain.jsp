@@ -140,9 +140,12 @@
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
 	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-	                                            <p>[ ${bl.bookCategory} ] ${bl.bookTitle }</p>
+	                                        <p><span class="" style="color:#70C745"># ${bl.bookCategory}</span></p>
+	                                            <p>${bl.bookTitle }</p>
 	                                        </a>
-	                                        <h6>${bl.bookPrice }</h6>
+                                        
+	                                        <h6><fmt:formatNumber value="${bl.bookPrice }" type="currency" currencySymbol="₩" /></h6>
+                                        
 	                                    </div>
 	                                </div>
 	                            </div>
