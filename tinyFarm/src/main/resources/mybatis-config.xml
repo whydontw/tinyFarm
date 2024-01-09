@@ -20,7 +20,6 @@
 		<typeAlias type = "com.kh.tinyfarm.follow.model.vo.Follow" alias="follow"/>
 		<typeAlias type="com.kh.tinyfarm.diary.model.vo.Diary" alias="diary"/>
 		<typeAlias type="com.kh.tinyfarm.diary.model.vo.DiaryCategory" alias="diaryCategory"/>
-		<typeAlias type="com.kh.tinyfarm.diary.model.vo.DiaryLike" alias="diaryLike"/>
 		<typeAlias type = "com.kh.tinyfarm.qna.model.vo.Qna" alias ="qna"/>
 		
 		<typeAlias type = "com.kh.tinyfarm.chat.model.vo.ChatMessage" alias ="chatMsg"/>

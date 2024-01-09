@@ -222,35 +222,33 @@ public class DiaryServiceImpl implements DiaryService {
 	public ArrayList<Product> selectWish(int userNo) {
 		return (ArrayList)diaryDao.selectWish(sqlSession,userNo);
 	}
-	
 	//좋아요 정보
-	@Override
-	public DiaryLike selectLike(DiaryLike dl) {
-		return diaryDao.selectLike(sqlSession, dl);
-	}
-	
-	//좋아요 개수
-	@Override
-	public int countLike(Integer diaryNo) {
-		return diaryDao.countLike(sqlSession, diaryNo);
-	}
+		@Override
+		public DiaryLike selectLike(DiaryLike dl) {
+			return diaryDao.selectLike(sqlSession, dl);
+		}
+		
+		//좋아요 개수
+		@Override
+		public int countLike(Integer diaryNo) {
+			return diaryDao.countLike(sqlSession, diaryNo);
+		}
 
-	//좋아요 증가
-	@Override
-	public int LikeCount(DiaryLike dLike) {
-		return diaryDao.LikeCount(sqlSession, dLike);
-	}
+		//좋아요 증가
+		@Override
+		public int LikeCount(DiaryLike dLike) {
+			return diaryDao.LikeCount(sqlSession, dLike);
+		}
 
-	//좋아요 취소
-	@Override
-	public int unLikeCount(DiaryLike dLike) {
-		return diaryDao.unLikeCount(sqlSession, dLike);
-	}
-	
-	//일지 작성자 정보
-	@Override
-	public Member selectDiaryWriter(int userNo) {
-		return diaryDao.selectDiaryWriter(sqlSession, userNo);
-	}
-	
+		//좋아요 취소
+		@Override
+		public int unLikeCount(DiaryLike dLike) {
+			return diaryDao.unLikeCount(sqlSession, dLike);
+		}
+		
+		//일지 작성자 정보
+		@Override
+		public Member selectDiaryWriter(int userNo) {
+			return diaryDao.selectDiaryWriter(sqlSession, userNo);
+		}
 }

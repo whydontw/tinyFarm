@@ -5,173 +5,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<!-- Title -->
-<title>회원 정보 수정</title>
+    <!-- Title -->
+    <title>회원 정보 수정</title>
 
-<!-- Favicon -->
-<link rel="icon" href="resources/img/core-img/favicon.ico">
+    <!-- Favicon -->
+    <link rel="icon" href="resources/img/core-img/favicon.ico">
 
-<!-- Core Stylesheet -->
-<link rel="stylesheet" href="resources/style.css">
-<link rel="stylesheet" href="resources/jisu/css/mypage.css">
-<!-- alert창 cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-<style>
-.container h5 {
-	font-size: 30px;
-	text-align: center;
-}
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
 
-#center {
-	width: 70%;
-	margin: auto;
-	margin-top: 2%;
-}
 
-.col-8 {
-	float: right;
-	margin-right: 8%;
-}
+	<style>
+		.container h5{
+			font-size: 30px;
+			text-align: center;
+		}
+		#center{
+			width: 70%;
+			margin: auto;
+			margin-top: 2%;
+		}
+		.col-8{
+			float:right;
+			margin-right: 8%;
+		}
+		.changeImg{
+            margin: auto;
+            width: 50%;
+            height: 100%;
+		}
+        .box-file-input label{
+		  display:inline-block;
+		  background:#70c745;
+		  color:#fff;
+		  padding:0px 15px;
+		  line-height:35px;
+		  cursor:pointer;
+		  margin-left: 26%;
+		}
+		
+		.box-file-input label:after{
+		  content:"사진등록";
+		}
+		
+		.box-file-input .file-input{
+		  display:none;
+		}
+        #deleteImg{
+            height: 36px;
+            width: 28%;
+            border: none;
+            cursor: pointer;
+        }
+        #searchBtn {
+		    width: 50px;
+		    height: 46px;
+		    font-size: 18px;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    margin-top: 5%;
+		    margin-right: 15px;
+		    cursor: pointer;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    background-color: #dddfdc;
+		    color: #ffffff;
+		    border-radius: 0px 3px 3px 0px;
+		}
 
-.changeImg {
-	margin: auto;
-	width: 50%;
-	height: 100%;
-}
+		#searchBtn:hover {
+		    background-color: #c9cdc6; /* Darker gray background on hover */
+		}
+		
+		.modal-header{
+			background-color: #98d479;
+			color: #fff;
+			font-size: 25px;
+		}
+		.modal-content.main{
+			width: 60%;
+			margin: auto;
+		}
+		#pwdModal.modal-content{
+			border: none;
+		}
+		#deleteModal.modal-content{
+			border: none;
+			font-size: 14px;
+		}
+		#texet-area{
+			width: 70%;
+			border: none;
+		}
+		.btn-click{
+			width: 80px;
+			height: 40px;
+			background-color: #98d479;
+			border: none;
+			color: #fff;
+		}
+		
+		.btn-click:hover{
+			background-color: #a4c992;	
+			border: none;	
+		}
+		.btn-click:checked, .btn-click:after{
+			border: none;
+		}
+		.kaUser{
+			color: red;
+			font-size: 15px;
+		}
+		#delText{
+			width: 90%;
+			height: 40px;
+			border: 1px solid #c9cdc6;
+			padding-left: 5px;
+			font-size: 13px;
+		}
+		#delWarn{
+			color: red;
+			text-align: center;
+			margin-top: 2%;
+			margin-bottom: 3%;
+		}
+		#deleteModal .mr-sm-2{
+			display: flex;
+		}
+		#deleteModal .mr-sm-2 p{
+			font-size: 14px;
+		}
+		.delNum{
+			width: 150px;
+		}
+		.mr-sm-2.top{
+			margin-top: 5%;
+		}
+		
+	</style>
 
-.box-file-input label {
-	display: inline-block;
-	background: #70c745;
-	color: #fff;
-	padding: 0px 15px;
-	line-height: 35px;
-	cursor: pointer;
-	margin-left: 26%;
-}
 
-.box-file-input label:after {
-	content: "사진등록";
-}
-
-.box-file-input .file-input {
-	display: none;
-}
-
-#deleteImg {
-	height: 36px;
-	width: 28%;
-	border: none;
-	cursor: pointer;
-}
-
-#searchBtn {
-	width: 50px;
-	height: 46px;
-	font-size: 18px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin-top: 32px;
-	margin-right: 15px;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #dddfdc;
-	color: #ffffff;
-	border-radius: 0px 3px 3px 0px;
-}
-
-#searchBtn:hover {
-	background-color: #c9cdc6; /* Darker gray background on hover */
-}
-
-.modal-header {
-	background-color: #98d479;
-	color: #fff;
-	font-size: 25px;
-}
-
-.modal-content.main {
-	width: 60%;
-	margin: auto;
-}
-
-#pwdModal.modal-content {
-	border: none;
-}
-
-#deleteModal.modal-content {
-	border: none;
-	font-size: 14px;
-}
-
-#texet-area {
-	width: 70%;
-	border: none;
-}
-
-.btn-click {
-	width: 80px;
-	height: 40px;
-	background-color: #98d479;
-	border: none;
-	color: #fff;
-}
-
-.btn-click:hover {
-	background-color: #a4c992;
-	border: none;
-}
-
-.btn-click:checked, .btn-click:after {
-	border: none;
-}
-
-.kaUser {
-	color: red;
-	font-size: 15px;
-}
-
-#delText {
-	width: 90%;
-	height: 40px;
-	border: 1px solid #c9cdc6;
-	padding-left: 5px;
-	font-size: 13px;
-}
-
-#delWarn {
-	color: red;
-	text-align: center;
-	margin-top: 2%;
-	margin-bottom: 3%;
-}
-
-#deleteModal .mr-sm-2 {
-	display: flex;
-}
-
-#deleteModal .mr-sm-2 p {
-	font-size: 14px;
-}
-
-.delNum {
-	width: 150px;
-}
-
-.mr-sm-2.top {
-	margin-top: 5%;
-}
-</style>
 </head>
+
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 	
@@ -385,18 +369,18 @@
 			
 			//카카오 로그인 회원 변경 막기 (pwd 값 null)
 			if(${loginUser.userPwd eq null}){
-				swal('카카오 로그인 회원', '카카오 로그인 회원은 변경 불가능합니다.', 'warning');
+				alert("카카오 로그인 회원은 변경 불가능합니다.");
 				return false;
 			}
 			
 			//변경비번 일치하지 않을경우
 			if(wantPwd != chkPWd){
-				swal('비밀번호 불일치', '변경하실 비밀번호가 일치하지 않습니다.', 'error');
+				alert("변경하실 비밀번호가 일치하지 않습니다.");
 				return false;
 			}
 			
 			if(!pwdReg.test(wantPwd)){
-				swal('비밀번호 입력오류', '비밀번호는 영(대/소)문자,숫자,특수문자 포함 8~16자로 설정해주세요.', 'error');
+				alert("비밀번호는 영(대/소)문자,숫자,특수문자 포함 8~16자로 설정해주세요.");
 				return false;
 			}
 			
@@ -410,18 +394,18 @@
 		    	type : "post",
 		    	success : function(result){
 		    		if(result=="YYYYY"){
-		    			swal('변경 성공', '비밀번호 변경 성공', 'success');
+		    			alert("비밀번호 변경 성공");
 			    		currentPwd = "";
 			    		wantPwd ="";
 			    		chkPWd="";
 		    			//성공시 모달창 닫기
-			    		$("#updatePwdForm .close").arrt("clicked","true"); 
+			    		$("#updatePwdForm").off(); 
 
 		    		}else if(result=="NNNYY"){
-		    			swal('변경 실패', '현재 비밀번호가 일치하지 않습니다.', 'error');
+				    	alert("현재 비밀번호가 일치하지 않습니다.");
 				    	$("#userPwd").focus();
 				    }else{
-				    	swal('변경 실패', '비밀번호 변경 실패. 다시 시도해주세요.', 'error');
+		    			alert("비밀번호 변경 실패. 다시 시도해주세요.");
 		    		}
 		    		
 		    	},error : function(){
@@ -435,7 +419,7 @@
 		function updateme(){
 			let userPwd = "${loginUser.userPwd}";
 			if(userPwd == ""){ 
-				swal('카카오 로그인 회원', '카카오톡 로그인 회원은 정보변경이 불가합니다.\n카카오톡에서 변경 부탁드립니다.', 'warning');
+				alert("카카오톡 로그인 회원은 정보변경이 불가합니다.\n카카오톡에서 변경 부탁드립니다.");
 				return false;
 			}
 		}
@@ -449,14 +433,15 @@
 					text:delText
 				},
 				success:function(result){
+					console.log(result);
 					if(result=='YY'){
 						alert("그동안 저희 사이트를 이용해주셔서 감사합니다.");
 						//탈퇴 후 메인페이지
 						window.location.href='<%=contextPath%>'; 
 					}else if(result=='NY'){ //문구 틀렸을시
-						swal('탈퇴 실패', '탈퇴문구를 정확하게 입력해주세요.', 'error');
+						alert("탈퇴문구를 정확하게 입력해주세요.");
 					}else{ //탈퇴 실패
-						swal('탈퇴 실패', '다시 시도해주세요.', 'error');
+						alert("회원 탈퇴 실패");
 					}
 				},error:function(){
 					console.log("회원탈퇴 ajax 실패");
