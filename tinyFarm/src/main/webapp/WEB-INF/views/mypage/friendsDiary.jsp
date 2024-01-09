@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Title -->
-    <title>마이페이지</title>
+    <title>영농일지</title>
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -37,21 +37,45 @@
 	  color: red;
 	  text-decoration: none;
 	}
-	
+	.fc-toolbar-chunk{
+		display: inline-block;
+	}
 	.fc-day-sat a {
 	  color: blue;
 	  text-decoration: none;
 	}
+	.fc-today-button.fc-button.fc-button-primary,
 	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary{
-		background-color: #98d479;
-		border: 1px solid #d6e5c5;
-	}
-	.fc-today-button.fc-button.fc-button-primary{
+	.fc-next-button.fc-button.fc-button-primary,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary,
+	.fc-listMonth-button.fc-button.fc-button-primary{
 		background-color: #98d479;
 		border: 1px solid #d6e5c5;
 	}
 	
+	.fc-listMonth-button.fc-button.fc-button-primary.fc-button-active,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active{
+		background-color: #98d479;
+		border: none;
+	}
+	
+	.fc-today-button.fc-button.fc-button-primary:active,
+	.fc-prev-button.fc-button.fc-button-primary:active,
+	.fc-next-button.fc-button.fc-button-primary:active,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary:active,
+	.fc-listMonth-button.fc-button.fc-button-primary:active{
+		background-color: #aae48c;
+		border: none;
+	}
+	
+	.fc-prev-button.fc-button.fc-button-primary{
+		margin-right: 3%;
+	}
+	.fc-prev-button.fc-button.fc-button-primary,
+	.fc-next-button.fc-button.fc-button-primary{
+		width: 5%;
+		height: 5%;
+	}
 	.fc-col-header-cell.fc-day{
 		background-color: #98d479;
 	}
@@ -60,6 +84,9 @@
 	}
 	.fc-day.fc-day-today.fc-daygrid-day{
 		background-color: #ebdfd3;
+	}
+	.fc-daygrid-bg-harness{
+		background-color: #f1efec;
 	}
 	</style>
 </head>
@@ -98,13 +125,21 @@
             </div>
         </div>
     </section>
-<script>
+
+	<script>
+	//sweetalert css 사용
 	//달력 화면에 띄우기
 	document.addEventListener('DOMContentLoaded', function() {
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
 		
 		initialView: 'dayGridMonth', //캘린더 초기화면 형식
+		headerToolbar: {				// 상단 툴바 설정
+            left: 'today,dayGridMonth,listMonth',
+            center: 'title',
+            right: 'prev,next'
+            
+        },
 		selectable: true, //날짜 선택 가능
 		locale: 'ko',//한글 설정
 		editable: true, //수정여부
@@ -197,7 +232,7 @@
 								//폼 형식 갖추기
 								form.appendChild(obj);
 								form.setAttribute("method","post");
-								form.setAttribute("action","fView.di");
+								form.setAttribute("action","view.di");
 								//body부분에 폼 추가
 								document.body.appendChild(form);
 								//전송!
@@ -207,12 +242,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
-<<<<<<< HEAD
-		        	//location.href="view.di?selectDate="+date+"&userNo="+userNo;
-	        	}
-=======
-	        });
->>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
+	       		});
 	        }
 	    });
 		calendar.render(); //달력 띄우기
