@@ -242,7 +242,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
-
+	       		});
 	        }
 	    });
 		calendar.render(); //달력 띄우기
