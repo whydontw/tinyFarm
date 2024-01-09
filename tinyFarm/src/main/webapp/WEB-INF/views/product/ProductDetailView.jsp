@@ -172,7 +172,7 @@
                                 
                                 
                                 <div>
-                                    <button onclick="goChat();" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 채팅하기</button>
+                                    <button onclick="goChat();" name="addtocart" value="5" class="btn alazea-btn ml-15" >1:1 채팅하기</button>
                                 </div>
                                 <c:choose>
 				                    <c:when test="${empty loginUser}">

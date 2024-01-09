@@ -19,8 +19,11 @@ String selectDate = request.getParameter("selectDate"); //달력에서 선택한
 
 <!-- Core Stylesheet -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
 <!-- alert창 cdn -->
@@ -199,6 +202,7 @@ a, p {
 				swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
 				return false;
 			}
+
 		}
 	</script>
 

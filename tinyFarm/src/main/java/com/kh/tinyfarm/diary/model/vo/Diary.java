@@ -18,7 +18,6 @@ public class Diary {
 	private String createDate;
 	private String status;
 	private int likeCount;
-	
 }
 
 
