@@ -8,6 +8,7 @@ import com.kh.tinyfarm.board.model.vo.BoardReply;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
+import com.kh.tinyfarm.diary.model.vo.DiaryLike;
 import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.vo.Member;
 import com.kh.tinyfarm.product.model.vo.Payments;
@@ -39,16 +40,7 @@ public interface DiaryService {
 
 	ArrayList<Member> myFollowerList(String userId, PageInfo fwPi);
 
-	//팔로우
-	int followUser(Follow f);
-	
-	int unfollowUser(Follow f);
-	
 	Member selectMember(String userId);
-	
-	Member selectFollowingInfo(String followingId);
-	
-	Member selectFollowerInfo(String followingId);
 	
 	//영농일지
 	int insertDiary(Diary d);
@@ -101,10 +93,22 @@ public interface DiaryService {
 
 	//찜목록
 	ArrayList<Product> selectWish(int userNo);
+	
+	//영농일지 좋아요 정보
+	DiaryLike selectLike(DiaryLike dl);
+	
+	//좋아요 수
+	int countLike(Integer diaryNo);
+	
+	//좋아요 수 증가
+	int LikeCount(DiaryLike dLike);
 
-	//팔로우 여부 확인
-	int followCheck(Follow f);
+	//좋아요 취소
+	int unLikeCount(DiaryLike dLike);
+	
+	//일지 작성자 정보
+	Member selectDiaryWriter(int userNo);
 
-	Member selectFollowMember(String statusYFiId);
+	
 
 }

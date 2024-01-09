@@ -19,6 +19,9 @@
 	<!-- 달력 API -->
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<!-- alert창 cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 	<style>
 	.fc-event {
 	    background: none;
@@ -34,21 +37,45 @@
 	  color: red;
 	  text-decoration: none;
 	}
-	
+	.fc-toolbar-chunk{
+		display: inline-block;
+	}
 	.fc-day-sat a {
 	  color: blue;
 	  text-decoration: none;
 	}
+	.fc-today-button.fc-button.fc-button-primary,
 	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary{
-		background-color: #98d479;
-		border: 1px solid #d6e5c5;
-	}
-	.fc-today-button.fc-button.fc-button-primary{
+	.fc-next-button.fc-button.fc-button-primary,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary,
+	.fc-listMonth-button.fc-button.fc-button-primary{
 		background-color: #98d479;
 		border: 1px solid #d6e5c5;
 	}
 	
+	.fc-listMonth-button.fc-button.fc-button-primary.fc-button-active,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active{
+		background-color: #98d479;
+		border: none;
+	}
+	
+	.fc-today-button.fc-button.fc-button-primary:active,
+	.fc-prev-button.fc-button.fc-button-primary:active,
+	.fc-next-button.fc-button.fc-button-primary:active,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary:active,
+	.fc-listMonth-button.fc-button.fc-button-primary:active{
+		background-color: #aae48c;
+		border: none;
+	}
+	
+	.fc-prev-button.fc-button.fc-button-primary{
+		margin-right: 3%;
+	}
+	.fc-prev-button.fc-button.fc-button-primary,
+	.fc-next-button.fc-button.fc-button-primary{
+		width: 5%;
+		height: 5%;
+	}
 	.fc-col-header-cell.fc-day{
 		background-color: #98d479;
 	}
@@ -104,6 +131,12 @@
 		let calendarEl = document.getElementById('calendar');
 		let calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView: 'dayGridMonth',
+		headerToolbar: {				// 상단 툴바 설정
+            left: 'today,dayGridMonth,listMonth',
+            center: 'title',
+            right: 'prev,next'
+            
+        },
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
 		navLinks: true, //날짜 선택 가능
@@ -120,12 +153,22 @@
 					userNo : userNo
 				},success:function(result){
 					if(result=='NN'){ //작성된 일지 없을시
-					    let goInsert = window.confirm("선택하신 날짜는 " + str + "입니다.\n일지를 작성하시겠습니까?");
-						    if (goInsert != false) { //확인 누를시 일지작성페이지로 가기
+					    let goInsert =swal({
+			    			title : "영농일지 작성",
+			    			text : "선택하신 날짜는 " + str + "입니다.\n일지를 작성하시겠습니까?",
+			    			icon: 'question',
+			    			showCancelButton : true,
+			    			confirmButtonClass : "btn-danger",
+			    			confirmButtonText : "예",
+			    			cancelButtonText : "아니오",
+			    			closeOnConfirm : false,
+			    			closeOnCancel : true 
+					    },function(goInsert){
+					    	if(!goInsert){return false;}
 						    	location.href = "insert.di?selectDate=" + encodeURIComponent(formattedDate);
-						    }
-					}else{
-						let goView = window.alert(str + "에 작성하신 일지가 있습니다.\n확인하시려면 새싹 아이콘을 눌러주세요.");
+					    });
+					}else{//일지가 있을시
+						swal('영농일지가 있습니다.', str+'에 작성하신 일지가 있습니다.\n확인하시려면 새싹 아이콘을 눌러주세요.', 'info');
 					}
 				},error:function(){
 					console.log("일지 유무확인 ajax 통신오류");
@@ -153,8 +196,8 @@
 			        	let startDate = moment(el.selectDate).format('YYYY-MM-DD');//날짜 형식 바꾸기
 	        				if(startDate != null){ //날짜가 존재하면
 		        				events.push({
-		        					start: startDate,
-		        			        imageUrl: "resources/jisu/img/calender-icon.png"
+		        					start: startDate, //해당 날짜에
+		        			        imageUrl: "resources/jisu/img/calender-icon.png" //이미지 띄우기
 		        				});
 	        				}
 	        			});
@@ -168,9 +211,21 @@
 		    let month = info.event.start.getMonth()+1;
 		    let day = info.event.start.getDate();
 		    let userNo = ${loginUser.userNo};
-	        let view = window.confirm(year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?");
-	        	if(view != false){
+	        let view = swal({ //confirm 창
+	    			title : "영농일지 구경",
+	    			text : year+"년 "+month+"월 "+day+"일의 일지를 보시겠습니까?",
+	    			icon: 'question',
+	    			showCancelButton : true,
+	    			confirmButtonClass : "btn-danger",
+	    			confirmButtonText : "예",
+	    			cancelButtonText : "아니오",
+	    			closeOnConfirm : false,
+	    			closeOnCancel : true 
+		    },function(view){
+		    	//아니오 누를시 현재 페이지 유지
 					let date = moment(info.event.start).format('YYYY/MM/DD');
+		    		if(!view){return false;}
+		    		//예 클릭시 해당 날짜 데이터 받아와 뷰페이지 띄우기
 					$.ajax({
 						url : "viewSet.di",
 						type : "post",
@@ -207,7 +262,7 @@
 							console.log("일지불러오기 ajax 통신 실패");
 						}
 					});
-	        	}
+		    	}); 
 	        }
 	    });
 		calendar.render(); //달력 띄우기

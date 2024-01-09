@@ -111,7 +111,7 @@
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
-						<li class="breadcrumb-item"><a href="#">상세보기</a></li>
+						<li class="breadcrumb-item active" aria-current="page">상세보기</li>
 					</ol>
 					</nav>
 				</div>
@@ -129,6 +129,8 @@
                         <div class="single_product_thumb">
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
+                                	
+                                	<!-- 
                                 	<c:forEach items="${imgArr}" var="i" varStatus="vs">
                                 		<c:choose>
 	                                		<c:when test="${vs.index eq 0}">
@@ -148,7 +150,12 @@
 	                                		</c:otherwise>
                                 		</c:choose>
                                 	</c:forEach>
-                                   
+                                    -->
+                                     <div class="carousel-item active">
+			                                        <a class="product-img" href="${i}" title="Product Image">
+			                                        	<img class="d-block w-100 plantImg" src="${detailImg }" alt="1">
+			                                    	</a>
+			                                    </div>
                                 </div>
                                <%--  <ol class="carousel-indicators">
                                 	<c:forEach items="${imgArr}" var="i" varStatus="vs">
@@ -588,6 +595,8 @@
 	</div>
     <input id="currentPage" type="hidden" value="1">
     <script>
+
+    
     	$(function(){
     		//총 의견 개수 세기
     		getCommentCount();

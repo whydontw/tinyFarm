@@ -15,4 +15,6 @@ public class InGardenPlantList {
 	private String[] rtnImgSeCode; //파일구분코드 209002|209002|209002|209002|209002|209002|209006
 	private String[] rtnThumbFileUrl; //썸네일 url
 	
+	private String detailImg;
+	
 }

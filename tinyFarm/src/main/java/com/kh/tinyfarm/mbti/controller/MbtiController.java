@@ -7,18 +7,23 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.kh.tinyfarm.mbti.model.service.MbtiService;
 import com.kh.tinyfarm.mbti.model.vo.GardenFile;
@@ -123,15 +128,95 @@ public class MbtiController {
 		
 		return list;
 	}
+	
+	
+	@RequestMapping("detailRecommend.mt")
+	public String detail(String detailImg,InGardenPlantList plantInfo,Model model) throws IOException, ParserConfigurationException, SAXException {
+		
+		String[] responseNameList = {
+				"cntntsNo", "plntzrNm", "distbNm", "fmlCodeNm", "adviseInfo", "growthHgInfo", "growthAraInfo", "lefStleInfo",
+				"smellCodeNm", "prpgtEraInfo", "etcEraInfo", "managelevelCodeNm", "grwtveCodeNm", "grwhTpCodeNm", "winterLwetTpCodeNm",
+				"hdCodeNm", "frtlzrInfo", "soilInfo", "watercycleSprngCodeNm", "watercycleSummerCodeNm", "watercycleAutumnCodeNm",
+				"watercycleWinterCodeNm", "dlthtsManageInfo", "speclmanageInfo", "fncltyInfo", "managedemanddoCodeNm", "clCodeNm",
+				"grwhstleCodeNm", "indoorpsncpacompositionCodeNm", "eclgyCodeNm"
+		};
+		
+		// apiKey - 농사로 Open API에서 신청 후 승인되면 확인 가능
+		String apiKey = "20231128LKLLXWVMAXGGYTETEWAOBA";
+		// 서비스 명
+		String serviceName = "garden";
+		
+		// 오퍼레이션 명
+		String operationNameList = "gardenDtl";
+		
+		// XML 받을 URL 생성
+		String parameter = "/" + serviceName + "/" + operationNameList;
+		parameter += "?apiKey=" + apiKey;
+		parameter += "&cntntsNo=" + plantInfo.getCntntsNo();
+		
+		// 서버와 통신
+		URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);
+		
+		// HttpURLConnection 객체를 이용하여 api 요청작업을 수행한다. (url객체에서 HttpURLConnection 객체
+		// 얻어오기)
+		HttpURLConnection urlCon = (HttpURLConnection) apiUrl.openConnection();
 
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="recommendPlantList.mt",
-	 * produces="application/json; charset=UTF-8") public
-	 * ArrayList<InGardenPlantList>recommendPlantList(InGardenMbti igm){
-	 * 
-	 * 
-	 * return list; }
-	 */
+		// 요청에 필요한 설정 해주기 (get) header method 설정
+		urlCon.setRequestMethod("GET"); // get방식 요청 설정
+
+		// 해당 openApi 서버로 요청후 연결스트림을 이용하여 응답 데이터 읽어오기(추출)
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
+
+		// 연결된 스트림을 이용하여 각 데이터 읽어오기
+		String responseText = "";
+		String line;
+		
+		// 더이상 읽을 데이터가 없으면 null을 읽어올때까지 문자열 읽어오기 작업
+		while ((line = br.readLine()) != null) { // br.readLine()이 수행되면 한줄을 읽어버리기 때문에 변수 처리해야한다.
+			responseText += line;
+		}
+		
+		
+		// model.addAttribute("result",responseText);
+		
+		// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		
+		// XML 문자열을 Document 객체로 파싱
+		Document document = builder.parse(new InputSource(new StringReader(responseText)));
+		
+		//응답결과 이름별 노드 추가
+		ArrayList<NodeList> nodeList = new ArrayList();
+		
+		//키와 값으로 이루어진 Map 형태로 model로 전달하기 위해 Map 선언
+		Map<String,String> map = new HashMap<String, String>();
+		
+		for(int i=0;i<responseNameList.length;i++) {
+			nodeList.add(document.getElementsByTagName(responseNameList[i]));
+			Node node = nodeList.get(i).item(0);
+			
+			try {
+				map.put(node.getNodeName(), node.getChildNodes().item(0).getNodeValue());
+			} catch (NullPointerException e) {
+				map.put(node.getNodeName(), "정보 없음");
+			}			
+		}
+		
+		//식물 이미지 배열 넘기기
+		String[] imgArr = plantInfo.getRtnFileUrlStr().split("\\|");
+		model.addAttribute("imgArr", imgArr);
+		model.addAttribute("plantInfo", plantInfo);
+		model.addAttribute("detailImg", plantInfo.getDetailImg());
+
+		//식물에 대한 의견 정보 리스트 넘기기
+		//ArrayList<PlantComment> pcList = pl
+		
+		//응답 키와 값을 가진 map 넘기기
+		model.addAllAttributes(map);
+		return "mbti/recommendDetailPlant";	
+	}
+	
+	
+
 }

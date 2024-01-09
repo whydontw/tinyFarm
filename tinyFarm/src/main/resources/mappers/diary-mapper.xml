@@ -162,14 +162,7 @@
 		LEFT JOIN MEMBER M USING(USER_NO)
 		WHERE M.USER_ID=#{userId}
 	</select>
-		
-	<!-- 팔로잉 유저 상태값 확인 -->
-	<select id="selectFollowMember" resultMap="memberResultSet">
-		SELECT USER_NO, STATUS
-		FROM MEMBER
-		WHERE USER_ID=#{statusYFiId}
-	</select>	
-	
+
 	<!-- 팔로워수 -->
 	<select id="fwerListCount" parameterType="follow" resultType="_int"> 
 		SELECT COUNT(USER_ID)
@@ -187,24 +180,6 @@
 		WHERE FOLLOWING_ID=#{userId}
 		AND M.STATUS = 'Y'
 	</select>
-	<!-- 팔로잉여부 체크 -->
-	<select id="followCheck" parameterType="follow" resultType="_int">
-		SELECT COUNT(*)
-		FROM FOLLOW
-		WHERE USER_NO = #{userNo}
-		AND FOLLOWING_ID = #{followingId}
-	</select>
-	<!-- 팔로우 하기 -->
-	<insert id="followUser">
-		INSERT INTO FOLLOW(USER_NO,FOLLOWING_ID)
-		VALUES(#{userNo},#{followingId})
-	</insert>
-	<!-- 팔로우 끊기 -->
-	<delete id="unfollowUser" parameterType="follow">
-		DELETE FOLLOW 
-		WHERE USER_NO = #{userNo}
-		AND FOLLOWING_ID=#{followingId}
-  	</delete>
   	
     <!-- 내가 쓴 글 목록 -->
     <select id="myBoardList" parameterType="board" resultMap="boardResultSet">
@@ -213,6 +188,7 @@
        JOIN MEMBER M ON(USER_NO=BOARD_WRITER)
        WHERE USER_ID = #{userId}
        AND B.STATUS='Y'
+       ORDER BY CREATE_DATE DESC
     </select>
     <!-- 내가 쓴 댓글 목록 -->
     <select id="myReplyList" parameterType="boardReply" resultMap="replyResultSet">
@@ -221,6 +197,7 @@
        JOIN MEMBER M ON(USER_NO=REPLY_WRITER)
        WHERE USER_ID=#{userId}
        AND R.STATUS='Y'
+       ORDER BY CREATE_DATE DESC
     </select>
   	<!-- 달력 -->
 	<select id="selectDiaryList" parameterType="diary" resultMap="diaryResultSet">
@@ -385,6 +362,7 @@
   		WHERE USER_NO=#{userNo}
   		AND REGI_DATE LIKE '%'||#{regiDate}||'%'
   	</select>
+  	
   	<!-- 판매리스트 검색 -->
   	<select id="searchSellList" parameterType="product" resultMap="productResultSet">
   		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME

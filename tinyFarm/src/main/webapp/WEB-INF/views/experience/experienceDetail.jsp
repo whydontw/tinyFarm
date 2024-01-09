@@ -103,8 +103,8 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">농촌교육농장</a></li>
-					
+						<li class="breadcrumb-item"><a href="${contextPath}/experienceList.ex">농촌교육농장</a></li>
+						<li class="breadcrumb-item"><a href="">체험 상세보기</a></li>
 					</ol>
 					</nav>
 				</div>

@@ -31,6 +31,7 @@ import com.kh.tinyfarm.common.template.Pagination;
 import com.kh.tinyfarm.diary.model.service.DiaryService;
 import com.kh.tinyfarm.diary.model.vo.Diary;
 import com.kh.tinyfarm.diary.model.vo.DiaryCategory;
+import com.kh.tinyfarm.diary.model.vo.DiaryLike;
 import com.kh.tinyfarm.follow.model.vo.Follow;
 import com.kh.tinyfarm.member.model.service.MemberService;
 import com.kh.tinyfarm.member.model.vo.Member;
@@ -338,114 +339,6 @@ public class MypageController {
 		return result;
 	}
 	
-	//팔로잉 모달창 정보
-	@ResponseBody
-	@PostMapping(value = "getFollowingInfo.me", produces = "application/json; charset=UTF-8")
-	public Member getFollowingInfo(String followingId) {
-		Member m = diaryService.selectFollowingInfo(followingId); //팔로우 한 유저 아이디 정보 가져오기
-		return m;
-	}
-	//팔로워 모달창 정보
-	@ResponseBody
-	@PostMapping(value = "getFollowerInfo.me", produces = "application/json; charset=UTF-8")
-	public Member getFollowerInfo(String followerId) {
-		Member m = diaryService.selectFollowerInfo(followerId); //팔로우 한 유저 아이디 정보 가져오기
-		return m;
-	}
-	//팔로우 확인
-	@ResponseBody
-	@RequestMapping("followChk.me")
-	public String followCheck(int userNo,String followingId) {
-		
-		Follow f = new Follow();
-		f.setUserNo(userNo);
-		f.setFollowingId(followingId);
-		
-		int result = diaryService.followCheck(f);
-		
-		if(result==1) {
-			return "YY";
-		}else {
-			return "NN";
-		}
-	}
-	//팔로우
-	@RequestMapping("follow.me")
-	public String followUser(String followingId,HttpSession session, HttpServletRequest request) {
-		//로그인 유저 정보
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		int userNo = loginUser.getUserNo();
-		
-		Follow f = new Follow();
-		f.setUserNo(userNo);
-		f.setFollowingId(followingId);
-		
-		//이전페이지
-		String before = (String)request.getHeader("Referer");
-		
-		int result = diaryService.followUser(f);
-		
-		if(result>0) {	
-			session.setAttribute("alertMsg", "팔로우 완료!");
-		}else {
-			session.setAttribute("alertMsg", "팔로우 실패. 다시 확인해주세요.");
-		}
-		//이전페이지(보고있던 페이지)로 리턴
-		return "redirect:"+before;
-		
-	}
-	
-	//언팔로우
-	@PostMapping("unfollow.me")
-	public String unfollowUser(String followingId,HttpSession session, HttpServletRequest request) {
-		
-		//로그인 유저 정보
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		int userNo = loginUser.getUserNo();
-		
-		Follow f = new Follow();
-		f.setUserNo(userNo);
-		f.setFollowingId(followingId);
-		
-		//이전페이지
-		String before = (String)request.getHeader("Referer");
-		
-		int result = diaryService.unfollowUser(f);
-		//언팔 결과 확인 후 활동내역 페이지 유지
-		if(result>0) {
-			session.setAttribute("alertMsg", "팔로우 취소가 완료되었습니다.");
-		}else {
-			session.setAttribute("alertMsg", "다시 시도해주세요.");
-		}
-		//이전페이지(보고있던 페이지)로 리턴
-		return "redirect:"+before;
-	}
-	
-	//존재하지 않는 회원 목록에서 삭제
-	@PostMapping("deleteNonUser.me")
-	public String deleteNonUser(String followingId,HttpSession session, HttpServletRequest request) {
-		
-		//로그인 유저 회원정보
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		int userNo = loginUser.getUserNo();
-		
-		Follow f = new Follow();
-		f.setUserNo(userNo);
-		f.setFollowingId(followingId);
-		int result = diaryService.unfollowUser(f);
-		
-		if(result>0) {
-			session.setAttribute("alertMsg", "삭제 완료");
-		}else {
-			session.setAttribute("alertMsg", "다시 시도해주세요.");
-		}
-		
-		//이전페이지
-		String before = (String)request.getHeader("Referer");
-		
-		//이전페이지(보고있던 페이지)로 리턴
-		return "redirect:"+before;
-	}
 	//유저 영농일지 보기
 	@PostMapping("follow.di")
 	public String followDiaryView(String followingId, Model model) {
@@ -464,7 +357,6 @@ public class MypageController {
 		return "mypage/friendsDiary";
 	}
 		
-	
 	//영농일지 달력페이지+회원등급 조정
 	@GetMapping("diary.me")
 	public String diary() {
@@ -477,7 +369,6 @@ public class MypageController {
 	public ArrayList<Diary> calendarImgLoad(Diary d, int userNo) {
 		// 회원이 작성한 영농일지 리스트 뽑기
 		ArrayList<Diary> dList = diaryService.selectDiaryList(userNo);
-		
 		return dList;
 	}
 
@@ -495,7 +386,7 @@ public class MypageController {
 		//일지 유무(0 or 1)
 		int count = diaryService.existDiary(d);
 
-		if (count==1) {//일지가 한개라도 있으면
+		if (count==1) {//일지가 있으면(일지는 한 날짜에 1개의 글만 작성 가능하다.)
 			return "YY";
 		} else {//없으면
 			return "NN";
@@ -534,7 +425,7 @@ public class MypageController {
 												+changeGrade.getGrade()+"로 변경되었습니다!\\n"
 												+ "앞으로도 열심히 일지를 작성해주세요!");
 			}else {
-				//등업아닐시엔 일반 메세지
+				//등업조건이 아닐시엔 일반 메세지
 				session.setAttribute("alertMsg", "일지 작성 성공");
 			}
 			return "redirect:/diary.me";
@@ -651,12 +542,64 @@ public class MypageController {
 		return diaryOne;
 	}
 
+	//영농일지 좋아요 기능
+	@ResponseBody
+	@GetMapping(value="like.di",produces = "application/json; charset=UTF-8" )
+	public DiaryLike diaryLikeCount(int refDbno, int userNo) {
+		
+		//DiaryLike 객체에 정보 담아주기
+		DiaryLike dLike = new DiaryLike();
+		dLike.setRefDbno(refDbno);
+		dLike.setUserNo(userNo);
+		
+		int result = diaryService.LikeCount(dLike);
+		
+		if(result>0) { //성공시 dLike정보 반환
+			return dLike;
+		}else {//실패시 아무것도 보내지 않고 오류처리
+			return null;
+		}
+	}
+	
+	//영농일지 좋아요 취소기능
+	@ResponseBody
+	@GetMapping(value="unLike.di",produces = "application/json; charset=UTF-8" )
+	public DiaryLike unLikeCount(int refDbno, int userNo) {
+		
+		//DiaryLike 객체에 정보 담아주기
+		DiaryLike dLike = new DiaryLike();
+		dLike.setRefDbno(refDbno);
+		dLike.setUserNo(userNo);
+		
+		int result = diaryService.unLikeCount(dLike);
+		
+		if(result>0) { //성공시 dLike정보 반환
+			return dLike;
+		}else { //실패시 아무것도 보내지 않고 오류처리
+			return null;
+		}
+		
+	}
+	//좋아요 전후  count
+	@ResponseBody
+	@GetMapping(value="likeCount.di",produces = "application/json; charset=UTF-8" )
+	public int recountLike(int diaryNo) {
+		int likeCount = diaryService.countLike(diaryNo);
+		return likeCount;
+	}
+	
+	
 	//영농일지 뷰페이지로 넘기기
 	@PostMapping("view.di")
-	public String viewDiary(Integer diaryNo, Date selectDate, Model model) {
+	public String viewDiary(Integer diaryNo, Date selectDate, Model model,HttpSession session) {
 
 		Diary d = diaryService.viewDiary(diaryNo);
 
+		int userNo = d.getDiaryWriter();
+		
+		//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
+		Member w =  diaryService.selectDiaryWriter(userNo);
+		
 		// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
 		f = new SimpleDateFormat("YYYY/MM/dd");
 		String date = f.format(selectDate);
@@ -668,34 +611,28 @@ public class MypageController {
 		d.setSelectDate(date); // 날짜형식변경
 		d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
 
-		model.addAttribute("d", d);
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int loginUserNo = m.getUserNo();
+		int refDbno = diaryNo;
+		
+		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
+		
+		//좋아요 정보 가져오기
+		DiaryLike like = diaryService.selectLike(dl);
+		
+		//좋아요 수
+		int likeCount = diaryService.countLike(diaryNo);
+		
+		d.setLikeCount(likeCount);
 
+		model.addAttribute("w",w); //작성자 정보
+		model.addAttribute("d", d); //일지 정보
+		model.addAttribute("like", like); //좋아요 정보
+		
 		return "mypage/diaryViewPage";
 	}
 	
-	//영농일지 뷰페이지로 넘기기
-		@PostMapping("fView.di")
-		public String followDiaryView(Integer diaryNo, Date selectDate, Model model) {
-
-			Diary d = diaryService.viewDiary(diaryNo);
-
-			// selectDate 형식 DB처럼 바꿔주기 (yyyy-mm-dd- hh:mm:ss 에서 변경)
-			f = new SimpleDateFormat("YYYY/MM/dd");
-			String date = f.format(selectDate);
-
-			String cNo = d.getCategoryNo();
-			DiaryCategory dc = diaryService.selectCategory(cNo);
-
-			// d에 바꾼 값 넣어주기
-			d.setSelectDate(date); // 날짜형식변경
-			d.setCategoryNo(dc.getDiarycateName()); // 카테고리 이름추출
-
-			model.addAttribute("d", d);
-
-			return "mypage/followDiaryView";
-		}
-
-
 	//영농일지 삭제
 	@GetMapping("delete.di")
 	public String deleteDiary(int diaryNo, HttpSession session) {
@@ -777,6 +714,7 @@ public class MypageController {
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
+		System.out.println(sList);
 		result.put("sList", sList);
 		result.put("sPi", sPi);
 		
@@ -857,11 +795,6 @@ public class MypageController {
 		ArrayList<Product> wishList = diaryService.selectWish(userNo);
 		result.put("wishList", wishList);
 		return result;
-	}
-	
-	@GetMapping("modal.me")
-	public String loadModal() {
-		return "member/memberModal";
 	}
 
 	

@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.tinyfarm.chat.model.service.ChatService;
@@ -22,7 +24,10 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@RequestMapping("chatList.ch")
-	public String goChat() {
+	public String goChat(@RequestParam(value = "userId",defaultValue = "")String userId,Model model) {
+		//다른 페이지에서 1:1 채팅하기를 눌렀을 때 userId 받아서 전달
+		model.addAttribute("userId", userId);
+		System.out.println(userId);
 		return "chat/chatingList";
 	}
 	
@@ -90,9 +95,9 @@ public class ChatController {
 		map.put("chatRoomNo", chatRoomNo);
 		int result = chatService.updateConnectTime(map);
 		if(result > 0) {
-			System.out.println("업데이트 성공");
+			//System.out.println("업데이트 성공");
 		}else {
-			System.out.println("업데이트 실패");
+			//System.out.println("업데이트 실패");
 		}	
 	}
 	@ResponseBody
@@ -128,5 +133,11 @@ public class ChatController {
 			session.setAttribute("alertMsg", "채팅방 삭제에 실패했습니다. 다시 시도해주세요");
 			return "redirect:chatList.ch";
 		}
+	}
+	@ResponseBody
+	@RequestMapping("getUserId.ch")
+	public String getUserId(int userNo) {
+		String userId = chatService.getUserId(userNo);
+		return userId;
 	}
 }
