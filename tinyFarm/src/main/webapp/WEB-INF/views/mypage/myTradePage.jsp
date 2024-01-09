@@ -42,8 +42,7 @@ table.ui-datepicker-calendar {
 	display: none;
 }
 
-.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all
-	{
+.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all{
 	background-color: #70c745;
 }
 
@@ -66,16 +65,39 @@ table.ui-datepicker-calendar {
 .hasDatepicker {
 	width: 50%;
 }
+.searchOutDiv{
+	width: 100%;
+	height:100%;
+	vertical-align:middle;
+	border: 2px #70c745 solid ;
+	margin-bottom: 2%;
+}
+.searchOutDiv img{
+	width:15px;
+	height:15px;
+}
+
+#orderDate, #sellDate {
+	width: 70%;
+	height: 30px;
+	border: none;
+	font-size: 1em;
+	padding-left: 5px;
+	font-style: oblique;
+	display: inline;
+	outline: none;
+	box-sizing: border-box;
+	color: black;
+}
 
 #orderBtn, #sellBtn {
 	width: 40px;
 	height: 30px;
 	border: none;
-	background-color: #70c745;
-	color: #fff;
+	margin-bottom: 2%;
+	background-color:transparent;
 	outline: none;
 	display: inline;
-	margin-left: -10px;
 	box-sizing: border-box;
 	cursor: pointer;
 }
@@ -90,8 +112,8 @@ table.ui-datepicker-calendar {
 	margin: auto;
 }
 
-#orderBtn:hover, #sellBtn:hover, #wishBtn:hover {
-	background-color: #66b83d;
+#wishBtn:hover {
+	background-color: #ebebeb;
 }
 
 .pagingArea {
@@ -139,19 +161,6 @@ thead {
 }
 #wishListTableContainer table tbody::-webkit-scrollbar-track{
 background-color: none;
-}
-
-#orderDate, #sellDate {
-	width: 70%;
-	height: 30px;
-	border: 1px solid #cdcdcd;
-	font-size: 1em;
-	padding-left: 5px;
-	font-style: oblique;
-	display: inline;
-	outline: none;
-	box-sizing: border-box;
-	color: black;
 }
 
 #proImg {
@@ -214,8 +223,10 @@ background-color: none;
                                 <h4>구매내역<span id="orderCount"></span></h4>
                             </div>
                             <div class="dateSearch">
-                            	<input type="text" id="orderDate" placeholder="검색날짜">
-                            	<input type="button" id="orderBtn" value="검색" onclick="loadOrderSearch(1);">
+                            	<div class="searchOutDiv"> 
+		                            <input type="search" id="orderDate" placeholder="검색날짜">
+						  			<button id="orderBtn" onclick="loadOrderSearch(1);"><img src="${contextPath}/resources/img/icon/search.svg"></button>
+					  			</div> 
                             </div>
                             <!-- 구매목록 테이블 -->
                     		<table>
@@ -245,8 +256,10 @@ background-color: none;
                                 <h4>판매내역<span id="sellCount"></span></h4>
                             </div>
                             <div class="dateSearch">
-                            	<input type="text" id="sellDate" placeholder="검색날짜">
-                            	<input type="button" id="sellBtn" value="검색" onclick="loadSellSearch(1);">
+                            	<div class="searchOutDiv"> 
+	                            	<input type="search" id="sellDate" placeholder="검색날짜">
+	                            	<button id="orderBtn" onclick="loadSellSearch(1);"><img src="${contextPath}/resources/img/icon/search.svg"></button>
+                            	</div>
                             </div>
                             <!-- 판매내역 테이블 -->
                     		<table>
@@ -334,8 +347,7 @@ background-color: none;
 		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
 		    				+ "<td>"+o.paymentNo+"</td>"
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
-			   				//+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
-			   				+ '<td><img id="proImg" src="resources/상추.jpg"></td>'
+			   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
 			   				+ "<td>"+o.productTitle+"</td>"
 			   				+ "<td>￦"+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
@@ -399,10 +411,11 @@ background-color: none;
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(sList, function(key, s){ 
+		    			console.log(s);
 		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
 			   				+ "<td>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
-			   				+ '<td><img id="proImg" src="'+s.changeName+'"></td>'
+			   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
 			   				+ "<td>"+s.productTitle+"</td>"
 			   				+ "<td>￦"+s.productPrice+"</td>"
 			   				+ "<td>"+s.salesStatus+"</td>"
@@ -461,14 +474,14 @@ background-color: none;
     			count = oList.length;
     				if(oList.length == 0){
     			    	str += "<tr>"
-    				    	+ "<td colspan='5'>해당 기간 구매내역이 존재하지 않습니다.</td>"
+    				    	+ "<td colspan='6'>해당 기간 구매내역이 존재하지 않습니다.</td>"
     				    	+ "</tr>";
     			    }else{
     					$.each(oList, function(key, o){
     						str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
 			    				+ "<td>"+o.paymentNo+"</td>"
 				   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
-				   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
+				   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
 				   				+ "<td>"+o.productTitle+"</td>"
 				   				+ "<td>￦"+o.paymentPrice+"</td>"
 				   				+ "<td>"+o.paymentMethod+"</td>"
@@ -534,14 +547,14 @@ background-color: none;
 		        
 		        if(count == 0){
 		    		str += "<tr>"
-			   			+ "<td colspan='5'>해당 기간 판매내역이 존재하지 않습니다.</td>"
+			   			+ "<td colspan='6'>해당 기간 판매내역이 존재하지 않습니다.</td>"
 			   			+ "</tr>";
 		    	}else{
 			   		$.each(sList, function(key, s){
 			   			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
 		   				+ "<td>"+s.productNo+"</td>"
 		   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
-		   				+ '<td><img id="proImg" src="'+s.changeName+'"></td>'
+		   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
 		   				+ "<td>"+s.productTitle+"</td>"
 		   				+ "<td>￦"+s.productPrice+"</td>"
 		   				+ "<td>"+s.salesStatus+"</td>"
