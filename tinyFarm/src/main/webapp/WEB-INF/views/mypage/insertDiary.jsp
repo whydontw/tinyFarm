@@ -137,15 +137,11 @@ a, p {
 			</div>
 		</div>
 	</section>
-
+	
 	<!-- 일지 작성 스크립트 -->
-	<!-- summernote 이모지 -->
-	<script src="resources/tam-emoji/js/config.js"></script>
-  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 	<script>
 	//sweetalert css 사용
 	$(function(){
-		document.emojiType = 'unicode'; // default: image
 	    document.emojiSource = 'resources/tam-emoji/img'; //이모지 사진 사용
 		$('#diaryContent').summernote({
 					width : 900,
@@ -169,8 +165,8 @@ a, p {
 									'맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],	
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 								'20', '22', '24', '28', '30', '36', '50', '72' ]
-				});
 		});
+	});
 
 		//뒤로가기 버튼 클릭시
 		$("#backBtn").click(function() {
@@ -201,6 +197,13 @@ a, p {
 				$("#diaryTitle").focus;
 				return false;
 			}
+			
+			//제목 50자 넘을시 작성 막기
+			if(diaryTitle.length >30){
+				swal('제목 입력', '제목은 최대 30자까지 가능합니다.', 'error');
+				$("#diaryTitle").focus;
+				return false;
+			}
 			//내용 공백
 			if (diaryContent == "") {
 				swal('내용 입력', '내용을 입력해주세요.', 'error');
@@ -228,6 +231,9 @@ a, p {
 	<script src="resources/js/plugins/plugins.js"></script>
 	<!-- Active js -->
 	<script src="resources/js/active.js"></script>
+	<!-- summernote 이모지 -->
+	<script src="resources/tam-emoji/js/config.js"></script>
+  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 </body>
 
 </html>

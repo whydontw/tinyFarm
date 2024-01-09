@@ -356,15 +356,16 @@
 			$("#deleteImg").click(function(){
 				//삭제버튼 클릭시 src값 null로 변경, 대체이미지로 기본프로필 사용
 				$("#profileImage").attr("src", "").attr("onerror","this.src='resources/profile.jpg'");
+				console.log("사진삭제 : "+$("#profileImage").val());
 			});		
 		});
 		//프로필 사진 변경
 		function loadImg(inputFile, num) {
 			let profileImage = document.getElementById('profileImage');
-		    
+		    console.log("변경후 : "+profileImage);
 			if (inputFile.files.length == 1) { //파일이 등록되면(length = 1)
 				let reader = new FileReader();
-			
+				
 				//파일을 읽어줄 메소드 :  reader.readAsDataURL(파일)
 				reader.readAsDataURL(inputFile.files[0]);
 				reader.onload = function(e) {
@@ -415,7 +416,7 @@
 			    		wantPwd ="";
 			    		chkPWd="";
 		    			//성공시 모달창 닫기
-			    		$("#updatePwdForm .close").arrt("clicked","true"); 
+			    		$("#updatePwdForm>.close").click();
 
 		    		}else if(result=="NNNYY"){
 		    			swal('변경 실패', '현재 비밀번호가 일치하지 않습니다.', 'error');

@@ -111,7 +111,7 @@ public class MypageController {
 		
 		//새로운 프로필 사진 첨부시
 		if (!reUpfile.getOriginalFilename().equals("")) {
-
+			
 			//DB에 정보 덮어쓰기
 			String changeName = saveFile(reUpfile, session);
 			//기존 파일 존재하면 지워주기
@@ -122,6 +122,10 @@ public class MypageController {
 			//Member에 새 프로필사진 담기
 			m.setOriginName(reUpfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
+		}else {
+			String changeName = "resources/profile.jpg";
+			m.setOriginName("profile.jpg");
+			m.setChangeName(changeName);
 		}
 
 		//새로 입력한 정보 변경해주기(DB)

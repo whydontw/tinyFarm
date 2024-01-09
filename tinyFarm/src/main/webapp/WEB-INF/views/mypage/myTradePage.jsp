@@ -125,26 +125,29 @@ table {
 	font-size: 14px;
 }
 
-thead {
+thead, tbody {
 	height: 40px;
 }
 
+#wishListTableContainer table tbody #nowish{
+margin: auto;
+ color: red;
+ border: 1px solid blue;
+ font-size: 14px;
+}
 #wishListTableContainer {
 	margin-top: -15px;
 }
 
 #wishListTableContainer table tbody {
 	display: block;
+	height: 450px;
 	max-height: 450px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	text-align: left;
 	font-size: 14px;
 	text-overflow: ellipsis;
-}
-
-#wishTable thead {
-	height: 20px;
 }
 
 #wishTable tbody tr {
@@ -164,13 +167,17 @@ background-color: none;
 }
 
 #proImg {
-	width: 60%;
-	height: 60%;
+	width: 100px;
+	height: 100px;
 	padding: 0px 0px 0px 0px;
 }
 
 #imgTd {
 	width: 25%;
+	height: 25%;
+}
+#wInfoTd{
+	padding-left: 15px;
 }
 
 #btnTd {
@@ -178,8 +185,8 @@ background-color: none;
 	text-align: center;
 }
 #wishImg {
-	width: 80%;
-	height: 80%;
+	width: 100px;
+    height: 100px;
 	padding: 10px 0px 10px 10px;
 }
 #wishCount,#orderCount,#sellCount{
@@ -295,7 +302,7 @@ background-color: none;
 	        					<div id="wishListTableContainer">
 			                    	<table id="wishTable">
 										<thead>
-											<tr><td colspan="3">찜목록</td></tr>
+											<tr><td colspan='3'>찜목록</td></tr>
 										</thead>
 										<tbody>
 										</tbody>
@@ -411,7 +418,6 @@ background-color: none;
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(sList, function(key, s){ 
-		    			console.log(s);
 		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
 			   				+ "<td>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
@@ -606,19 +612,20 @@ background-color: none;
     			userNo : myNo
     		},
     		success : function(result){ //wishList
+    			console.log(result);
     			let wishList = result.wishList; //찜내역
     			let count = wishList.length; //찜개수
     			let str = "";
     			let cStr = "";
+    			console.log("찜내역 : "+wishList);
     			//개수 0이면
     			if(count == 0){
-    				str += "<span id='noWish'>찜내역이 없습니다.</span>";
+    				str += "<tr id='nowish'><td colspan='3'>찜내역이 없습니다.</td></tr>";
     			}else{ //있으면 목록 뽑아주기
 	    			$.each(wishList, function(key, w){
-	    				console.log(w.productNo);
 	    				str += "<tr>"
-	    					+ "<td id='imgTd'><img id='wishImg' alt='제품이미지' src='resources/상추.jpg'></td>"
-							+ "<td>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
+	    					+ '<td id="imgTd"><img id="wishImg" alt="제품이미지" src="'+w.filePath+w.changeName+'"></td>'
+							+ "<td id='wInfoTd'>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
 							+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
 	    					+ "</tr>";
 	    			});

@@ -62,6 +62,9 @@
 		#followingCount, #followerCount{
 			font-weight: lighter;
 		}
+		thead, tbody {
+	height: 40px;
+}
 	</style>
 </head>
 

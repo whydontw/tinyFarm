@@ -73,7 +73,7 @@
 		                        		<img src="resources/jisu/img/fruit.png" id="gradeImg"> <br>
                         			</c:when>
                         		</c:choose>
-                        		<span>작은농장의 '${loginUser.grade } ' ${loginUser.userName }님</span>
+                        		<span>작은농장의 '<span style="font-weight: bold;">${loginUser.grade } </span>' ${loginUser.userName }님</span>
                         	</div>
                         <div class="myPageMain">
                             <div id="updateMe">
