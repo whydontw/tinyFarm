@@ -47,16 +47,6 @@
 
         }
 
-        /* #change{
-            width: 90px;
-            margin-right: 10px;
-        }
-
-        #area{
-            width: 200px;
-            margin-left: 10px;
-        } */
-
         #inputimage{
             margin: -100px 0 0 25px;
             width: 262px;
@@ -79,12 +69,6 @@
             outline : none;
         }
         
-/*         #pimg{
-
-        width: 350px;
-        height: 450px;
-        
-    	} */
         
     </style>
 </head>
@@ -112,9 +96,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농부</a></li>
-                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물 등록</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물등록</li>
                         </ol>
                     </nav>
                 </div>
@@ -140,17 +124,19 @@
                        </select>
                     </td>
                 </tr>
-                <tr style=""> <!-- height: 50px; -->
-                    <td rowspan="3"> <!-- style="width: 400px;" -->
-                        <!-- <div style="width: 262px; height: 286px;"> -->
+                <tr style="">
+                    <td rowspan="3"> 
                             <label for="file">
                                 <img src="resources/img/bg-img/product-inputfile.png" alt="이미지 첨부" id="inputimage">                               
                             </label>
-                            <input type="file" id="file" name="upfile" onchange="loadImg(this)" id="pimg" >
-                            <!-- </div> -->
+                            <input type="file" id="file" name="upfile" onchange="loadImg(this)" id="pimg">
                             <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+                            <input type="hidden" id="originName" name="originName" value="originName">
+                            
+                            
                             
                         
+
                     </td>
                     <th>상품명</th>
                     <td colspan="2"><input type="text" id="name" name="productTitle"></td>  
