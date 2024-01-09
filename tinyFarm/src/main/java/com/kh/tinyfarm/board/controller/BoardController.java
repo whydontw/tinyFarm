@@ -304,16 +304,5 @@ public class BoardController {
 		return searchList;
 	}
 	
-	/*
-	@ResponseBody
-	@RequestMapping(value="search.bo",produces = "application/json; charset=UTF-8")
-	public ArrayList<Board>searchBoardList(){
-		
-		
-		ArrayList<Board> blist=boardService.selectBoardList();
-		//System.out.println("blist : "+blist);
-		
-		return blist;
-	}
-	*/
+
 }

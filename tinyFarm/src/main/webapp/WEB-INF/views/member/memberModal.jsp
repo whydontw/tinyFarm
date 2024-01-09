@@ -125,34 +125,7 @@
 				form.submit();
 	    	}
 	    }
-<<<<<<< HEAD
-	    
-	    function showDiary(){
-	    	let followingId= $("#userId").text();
-	    	let followingName = $("#userName").text();
-	    	
-	    	console.log(followingId);
-	    	let alert = window.confirm(followingName+"님의 영농일지를 구경하시겠습니까?");
-	    	let form = document.createElement("form");
-			let obj; //넘겨받을 값 준비
-	    	
-	    	if(alert){//예 누를시
-	    		obj = document.createElement("input");
-				obj.setAttribute("type","hidden");
-				obj.setAttribute("name","followingId");
-				obj.setAttribute("value",followingId);
-				//폼 형식 갖추기
-				form.appendChild(obj);
-				form.setAttribute("method","post");
-				form.setAttribute("action","follow.di");
-				//body부분에 폼 추가
-				document.body.appendChild(form);
-				//전송!
-				form.submit();
-	    		
-	    	}
-	    }
-=======
+
 
 	    function showDiary(){
 	    	let followingId= $("#userId").text();
@@ -226,7 +199,7 @@
 
 		});    
 
->>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
+
 	</script>
 	<!-- ##### All Javascript Files ##### -->
 	<!-- jQuery-2.2.4 js -->

@@ -41,7 +41,8 @@
 
 <!-- 해시태그 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+	rel="stylesheet" type="text/css" />
 
 
 
@@ -59,11 +60,13 @@ a, p {
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
 	font-family: 'Noto Sans KR', sans-serif !important;
 }
+
 #boardTitle {
 	width: 100%;
 	height: 30px;
 }
-.tagify{
+
+.tagify {
 	width: 1000px;
 }
 </style>
@@ -112,17 +115,20 @@ a, p {
 				</tr>
 				<tr>
 					<th><label for="boardContent">내용</label></th>
-				
+
 					<td><textarea id="summernote" name="boardContent">${boardInfo.boardContent }</textarea></td>
 				</tr>
 				<tr>
 					<th><label for="boardHashTag">해시태그&nbsp;&nbsp;</label></th>
-					<td id="tagId"><input placeholder="type tags" id="hashTag" name="hashTag" value=${boardInfo.hashTag }></td>   
+					<td id="tagId"><input placeholder="type tags" id="hashTag"
+						name="hashTag" value=${boardInfo.hashTag }></td>
 				</tr>
 			</table>
-			<input type="hidden" name="boardWriter" value="${boardInfo.boardWriter }" readonly="readonly"> 
-			<input type="hidden" name="boardNo" value="${boardInfo.boardNo }">
-			<button type="submit" class="btn alazea-btn" value="boardUpdate" id="boardUpdateBtn">UPDATE</button>
+			<input type="hidden" name="boardWriter"
+				value="${boardInfo.boardWriter }" readonly="readonly"> <input
+				type="hidden" name="boardNo" value="${boardInfo.boardNo }">
+			<button type="submit" class="btn alazea-btn" value="boardUpdate"
+				id="boardUpdateBtn">UPDATE</button>
 		</form>
 	</div>
 	<br>
@@ -131,56 +137,20 @@ a, p {
 	<br>
 
 
+
+
+
+
 	<script>
 		var hashTag = document.getElementById('hashTag');
 		var tagify = new Tagify(hashTag);
 
 		// 태그가 추가되면 이벤트 발생
 		tagify.on('add', function() {
-			console.log(tagify.value); 
-			
+			console.log(tagify.value);
+
 		})
-		
-		var hashTags = ${boardInfo.hashTag};
-		console.log("hashTags 확인");
-		console.log(hashTags);
-	    var text = "";
-		console.log(hashTags.length);
-  
-	 	 for(var i = 0; i < hashTags.length; i++) {
 
-	        var value = hashTags[i].value;   //각각의 해시태그값
-			console.log("value값 확인");
-	        console.log(value);
-	        
-	        text += hashTags[i].value + ","; // 태그1,태그2,태그3,태그4,태그5, 이렇게 저장  
-	               
-	       
-	
-	        var tagSpan= $("tag span");
-	        var tagsi = tagSpan[i];
-	        $(tagsi).text(hashTags[i].value);
-	        
-	    }
-	 	 $("#hashTag").attr("value",text);  //input value값에 해시태그들의 값을 넣어줌
-	 	
-	 	//최대 10개 해시태그를 지정하기위해 기본해시태그 10개 받아옴
-	 	var basigTagsNum = $("tags tag").length;
-	 	console.log(basigTagsNum);
-	    var tags =$("tags tag"); 
-	 	
-	    //등록한 해시태그 갯수 이상이면 나머지 기본 해시태그값들 삭제하기
-	    for(var i =0;i<basigTagsNum;i++) {
-		 	if(hashTags.length-1<i){
-	        	tags[i].remove();
-		 	}
-	 			
-	 	}		 	 
-	</script>
-
-
-
-	<script>
 		$(document).ready(function() {
 			//여기 아래 부분
 			$('#summernote').summernote({
