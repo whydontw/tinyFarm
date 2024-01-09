@@ -117,6 +117,7 @@
                     <div class="col-12 col-md-5" style="margin : 15px;">
                         <div class="single_product_desc">
                         	<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+                            <input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
                             <h4 class="title" name="productTitle">${p.productTitle }</h4>
                             <h4 class="price" name="productPrice">${p.productPrice }원</h4>
                             <div class="short_overview" name="productContent">
