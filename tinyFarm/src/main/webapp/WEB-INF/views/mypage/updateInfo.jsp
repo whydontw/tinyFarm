@@ -370,12 +370,14 @@
 			//카카오 로그인 회원 변경 막기 (pwd 값 null)
 			if(${loginUser.userPwd eq null}){
 				alert("카카오 로그인 회원은 변경 불가능합니다.");
+				
 				return false;
 			}
 			
 			//변경비번 일치하지 않을경우
 			if(wantPwd != chkPWd){
 				alert("변경하실 비밀번호가 일치하지 않습니다.");
+				$("#upPwdChk").focus();
 				return false;
 			}
 			
@@ -394,12 +396,12 @@
 		    	type : "post",
 		    	success : function(result){
 		    		if(result=="YYYYY"){
+		    			$("#userPwd").val() = "";
+		    			$("#updatePwd").val() ="";
+		    			$("#upPwdChk").val()="";
 		    			alert("비밀번호 변경 성공");
-			    		currentPwd = "";
-			    		wantPwd ="";
-			    		chkPWd="";
 		    			//성공시 모달창 닫기
-			    		$("#updatePwdForm").off(); 
+			    		$("#updatePwdForm").modal("hide");
 
 		    		}else if(result=="NNNYY"){
 				    	alert("현재 비밀번호가 일치하지 않습니다.");
@@ -412,7 +414,7 @@
 		    		console.log("비번변경 ajax 통신오류");
 		    	}
 		    });
-		};
+		}
 		
 		//정보수정 클릭시 실행
 		//카카오톡 로그인 유저의 경우 회원정보 수정 막기
