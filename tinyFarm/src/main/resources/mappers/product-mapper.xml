@@ -118,6 +118,7 @@
 	SET PRODUCT_TITLE = #{productTitle}
            ,PRODUCT_PRICE = #{productPrice}
            ,PRODUCT_CONTENT = #{productContent}
+           ,CATEGORY_NO = #{categoryNo}
 	WHERE PRODUCT_NO = #{productNo}
 	AND SALES_STATUS = 'Y'
     AND FILE_TYPE = 2
