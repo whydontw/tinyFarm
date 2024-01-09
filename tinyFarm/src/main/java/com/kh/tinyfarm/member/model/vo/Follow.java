@@ -1,15 +1,13 @@
-package com.kh.tinyfarm.diary.model.vo;
+package com.kh.tinyfarm.member.model.vo;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class DiaryLike {
-	private int refDbno;
+@Data
+public class Follow {
 	private int userNo;
+	private String followingId;
 }
