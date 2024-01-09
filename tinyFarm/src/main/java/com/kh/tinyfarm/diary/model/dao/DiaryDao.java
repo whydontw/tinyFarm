@@ -197,19 +197,6 @@ public class DiaryDao {
 		RowBounds rowbounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("diaryMapper.searchSellList",p,rowbounds);
 	}
-
-	//팔로우 유저 정보
-	public Member selectFollowInfo(SqlSession sqlSession, String followingId) {
-		return sqlSession.selectOne("memberMapper.loginMember",followingId);
-	}
-	//팔로우 걸기
-	public int followUser(SqlSession sqlSession, Follow f) {
-		return sqlSession.insert("diaryMapper.followUser",f);
-	}
-	//팔로우 취소
-	public int unfollowUser(SqlSession sqlSession, Follow f) {
-		return sqlSession.delete("diaryMapper.unfollowUser",f);
-	}
 	//카카오 로그인 유저정보 조회
 	public Member selectMember(SqlSession sqlSession, String userId) {
 		return sqlSession.selectOne("diaryMapper.selectMember",userId);
@@ -221,14 +208,6 @@ public class DiaryDao {
 	//찜내역
 	public ArrayList<Product> selectWish(SqlSession sqlSession, int userNo) {
 		return (ArrayList)sqlSession.selectList("diaryMapper.selectWish",userNo);
-	}
-	//팔로우 유무 확인
-	public int followCheck(SqlSession sqlSession, Follow f) {
-		return sqlSession.selectOne("diaryMapper.followCheck",f);
-	}
-	//상태값 Y인 팔로우 회원
-	public Member selectFollowMember(SqlSession sqlSession, String statusYFiId) {
-		return sqlSession.selectOne("diaryMapper.selectFollowMember",statusYFiId);
 	}
 	//영농일지 좋아요 정보
 	public DiaryLike selectLike(SqlSession sqlSession, DiaryLike dl) {
