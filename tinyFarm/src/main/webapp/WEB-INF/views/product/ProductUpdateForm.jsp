@@ -92,9 +92,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농장</a></li>
-                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물 수정</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물등록</li>
                         </ol>
                     </nav>
                 </div>
@@ -133,7 +133,7 @@
 	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
 	                    			</label>
 	                    				<input type="file" id="reUpFile" name="reUpFile" onchange="loadImg(this)" id="pimg">
-                            			<%-- <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"> --%>
+                            			<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
                             			<input type="hidden" name="productNo" value="${p.productNo}">
                             			<input type="hidden" name="changeName" value="${p.changeName}">
                             			<input type="hidden" name="originName" value="${p.originName }">

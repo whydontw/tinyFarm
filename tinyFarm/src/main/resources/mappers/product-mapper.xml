@@ -18,6 +18,7 @@
   	<result column="SALES_STATUS" property="salesStatus"/>
   	<result column="FILE_PATH" property="filePath"/>
   	<result column="CHANGE_NAME" property="changeName"/>
+  	<result column="ORIGIN_NAME" property="originName"/>
   	<result column="LIKE_COUNT" property="likeCount"/>
   	
   </resultMap>
@@ -207,13 +208,13 @@
   
   </update>
   
-	  <select id="selectLikeYn" resultType="_int">
+  <select id="selectLikeYn" resultType="_int">
 	  	SELECT COUNT(*)
 	    FROM PRODUCT_LIKE
 	    WHERE PRODUCT_NO = #{productNo}
 	    AND USER_NO = #{userNo}
 	  
-	  </select>
+  </select>
   
   
   </mapper>
