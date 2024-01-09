@@ -17,7 +17,7 @@
 	
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
+ 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
 

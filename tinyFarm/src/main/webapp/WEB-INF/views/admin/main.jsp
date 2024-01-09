@@ -368,10 +368,9 @@
 									</div>
 								</div>
 							</div>
-							
 						</div>
 					</section>
-					
+					 
 					
 					<!-- 결제 -->
 					<section class="cool-facts-area bg-img staticsSection" id="pmStatics">

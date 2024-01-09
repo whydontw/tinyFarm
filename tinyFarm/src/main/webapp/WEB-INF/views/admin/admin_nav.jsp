@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body> 
 
 	<div class="col-12 col-md-3">
 		<div class="post-sidebar-area">
