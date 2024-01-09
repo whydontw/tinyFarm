@@ -236,7 +236,7 @@
 	        }
 	    });
 		calendar.render(); //달력 띄우기
-		});
+	});
 	</script>
 	
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

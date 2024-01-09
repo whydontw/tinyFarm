@@ -63,16 +63,16 @@
 		        	WHERE RR.STATUS = 'Y' AND BR.STATUS = 'Y'
 		        </if>
 				<if test="type == 'board'">
-					<if test="category == 1">AND BR.CATEGORY = 1</if>
-					<if test="category == 2">AND BR.CATEGORY = 2</if>
-					<if test="category == 3">AND BR.CATEGORY = 3</if>
-					<if test="category == 4">AND BR.CATEGORY = 4</if>
+					<if test="category == 1">AND BR.CATEGORY LIKE '스팸'</if>
+					<if test="category == 2">AND BR.CATEGORY LIKE '욕설'</if>
+					<if test="category == 3">AND BR.CATEGORY LIKE '광고'</if>
+					<if test="category == 4">AND BR.CATEGORY LIKE '음란물'</if>
 				</if>
 				<if test="type == 'reply'">
-					<if test="category == 1">AND RR.CATEGORY = '스팸'</if>
-					<if test="category == 2">AND RR.CATEGORY = '욕설'</if>
-					<if test="category == 3">AND RR.CATEGORY = '광고'</if>
-					<if test="category == 4">AND RR.CATEGORY = '음란물'</if>
+					<if test="category == 1">AND RR.CATEGORY LIKE '스팸'</if>
+					<if test="category == 2">AND RR.CATEGORY LIKE '욕설'</if>
+					<if test="category == 3">AND RR.CATEGORY LIKE '광고'</if>
+					<if test="category == 4">AND RR.CATEGORY LIKE '음란물'</if>
 				</if>
   		</select>
   		
@@ -93,10 +93,10 @@
 				WHERE BR.STATUS = 'Y'
                 AND B.STATUS = 'Y'
 			<choose>
-		        <when test="category == 1">AND CATEGORY = 1</when>
-		        <when test="category == 2">AND CATEGORY = 2</when>
-		        <when test="category == 3">AND CATEGORY = 3</when>
-		        <when test="category == 4">AND CATEGORY = 4</when>
+		        <when test="category == 1">AND CATEGORY LIKE '스팸'</when>
+		        <when test="category == 2">AND CATEGORY LIKE '욕설'</when>
+		        <when test="category == 3">AND CATEGORY LIKE '광고'</when>
+		        <when test="category == 4">AND CATEGORY LIKE '음란물'</when>
 		        <otherwise></otherwise>
 		    </choose>
 		    ORDER BY BR.CREATE_DATE DESC
@@ -116,10 +116,10 @@
 				WHERE RR.STATUS = 'Y'
                 AND BR.STATUS = 'Y'
 			<choose>
-		        <when test="category == 1">AND CATEGORY = '스팸'</when>
-		        <when test="category == 2">AND CATEGORY = '욕설'</when>
-		        <when test="category == 3">AND CATEGORY = '광고'</when>
-		        <when test="category == 4">AND CATEGORY = '음란물'</when>
+		        <when test="category == 1">AND CATEGORY LIKE '스팸'</when>
+		        <when test="category == 2">AND CATEGORY LIKE '욕설'</when>
+		        <when test="category == 3">AND CATEGORY LIKE '광고'</when>
+		        <when test="category == 4">AND CATEGORY LIKE '음란물'</when>
 		        <otherwise></otherwise>
 		    </choose>
 		    ORDER BY RR.CREATE_DATE DESC
@@ -172,7 +172,6 @@
 			    )
 		</update>
 		
-
 
 
 		<select id="reportBoardDetailInfo" resultMap="boardResultSet">
