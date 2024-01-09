@@ -270,7 +270,7 @@ background-color: none;
                     					<td style="width: 20%">제품이미지</td>
                     					<td style="width: 30%">제품명</td>
                     					<td style="width: 10%">가격</td>
-                    					<td style="width: 10%">거래상태</td>
+                    					<td style="width: 10%">판매상태</td>
                     				</tr>
                     			</thead>
                     			<tbody>

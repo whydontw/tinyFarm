@@ -82,13 +82,16 @@ public class ProductController {
 			
 			int likeResult = productservice.selectLikeYn(product);
 			
+			
+			System.out.println(p);
+			
 			model.addAttribute("p",p);
 			model.addAttribute("likeNo", likeResult);
 			
 			
 		}else {
 			model.addAttribute("errorMsg", "게시글 조회 실패");
-			return "product/ProductListView";
+			return "common/errorPage";
 		}
 
 			return "product/ProductDetailView";
@@ -124,7 +127,6 @@ public class ProductController {
 			a.setFilePath("resources/uploadFiles/");
 			
 			aresult = productservice.insertAttachment(a);
-
 			
 		}
 			
@@ -136,7 +138,7 @@ public class ProductController {
 				
 				}else { 
 					session.setAttribute("alertMsg", "게시글 등록 실패");
-					return "product/ProductListView"; 
+					return "common/errorPage"; 
 			}
 	}
 	
@@ -227,23 +229,18 @@ public class ProductController {
 		//update - DML
 		
 		
-		if((presult+aresult)>0) {//수정 성공
-			
-			System.out.println("pr2 : "+presult);
-			System.out.println("ar2 : "+aresult);
-			
+		if((presult*aresult)>0) {//수정 성공
 			session.setAttribute("alertMsg","게시글 수정 성공");
 			
 			System.out.println("수정성공");
 			System.out.println("수정p : "+ p);
 			
 			return "redirect:pdetail.bo?pno="+p.getProductNo();
-			
 		}else {
 			session.setAttribute("alertMsg","게시글 수정 실패");
-			return "product/ProductListView";
+			return "common/errorPage";
 		}
-		 
+		
 	}
 	
 	//상품 삭제

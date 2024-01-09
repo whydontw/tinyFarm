@@ -14,7 +14,7 @@
 	    <% String contextPath = request.getContextPath(); %>
 	    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
-	    <!-- Title -->
+	    <!-- Title --> 
 	    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
 	
 	    <!-- Favicon -->

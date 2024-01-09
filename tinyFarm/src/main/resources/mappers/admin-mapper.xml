@@ -174,7 +174,6 @@
 		
 
 
-
 		<select id="reportBoardDetailInfo" resultMap="boardResultSet">
 			SELECT
 				BOARD_NO,

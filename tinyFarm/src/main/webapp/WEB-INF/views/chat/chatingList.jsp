@@ -995,8 +995,7 @@ div {
             $('.chat-area').css('height','75%');
 			$('.chat-area').css('min-height','75%');
 		}
-<<<<<<< HEAD
-=======
+
 		//프로필 모달창 여는 함수
 		function openModal(){
 				var userId = $(".chat-area").children("#userId").val();
@@ -1084,7 +1083,6 @@ div {
 				});
 		}
 		
->>>>>>> branch 'main' of https://github.com/ggasin/tinyFarm.git
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />

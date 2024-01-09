@@ -61,13 +61,6 @@
         outline : none;
     }
     
-    #pimg{
-        margin: -100px 0 0 25px;
-        width: 262px;
-        height: 286px;
-    }
-    
-    
 
 	</style>
 
@@ -99,9 +92,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
-                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물등록</li>
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물 수정</li>
                         </ol>
                     </nav>
                 </div>
@@ -127,8 +120,8 @@
                        </select>
                     </td>
                 </tr>
-                <tr>
-                    <td rowspan="3">
+                <tr style="height: 50px;">
+                    <td rowspan="3" style="width: 400px;">
                         <div>                     
 	                        <c:choose>
 	                    		<c:when test="${empty p.changeName}">
@@ -137,10 +130,10 @@
 	                    		
 	                            <c:otherwise>
 	                            	<label for="file">
-	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="pimg" id="pimg">
+	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
 	                    			</label>
 	                    				<input type="file" id="reUpFile" name="reUpFile" onchange="loadImg(this)" id="pimg">
-                            			<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
+                            			<%-- <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"> --%>
                             			<input type="hidden" name="productNo" value="${p.productNo}">
                             			<input type="hidden" name="changeName" value="${p.changeName}">
                             			<input type="hidden" name="originName" value="${p.originName }">
