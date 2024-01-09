@@ -327,18 +327,33 @@ h1, h2, h3, h4, h5, h6 {
 						item.SKY = '흐림'; break;
 					default: break;
 				}
+				
+				//맑음
+				if(item.SKY == '맑음'){
+					
+	            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
+		                item.WeatherImg = imgSrc + "Sun.png'>";
+	            	}else{
+		                item.WeatherImg = imgSrc + "Moon.png'>";
+	            	}
+	            	
+				//구름많음	
+				}else if(item.SKY == '구름많음'){
 
-		        
-		        //- 강수형태(PTY) 코드 : (초단기) 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
+	        		if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
+	            		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
+	            	}else{
+	            		item.WeatherImg = imgSrc + "Cloud_Moon.png'>";
+	            	}
+	        	//흐림
+	        	}else{
+	        		item.WeatherImg = imgSrc + "Cloud.png'>";
+	        	}
+				
+				
+		    	//- 강수형태(PTY) 코드 : (초단기) 없음(0), 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울눈날림(6), 눈날림(7)
 		        switch (item.PTY) {
 		            case "0":
-		            	
-		            	if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
-			                item.WeatherImg = imgSrc + "Sun.png'>";
-		            	}else{
-			                item.WeatherImg = imgSrc + "Moon.png'>";
-		            	}
-		            	
 		                item.PTY = '강수없음';
 		                break;
 		            case "1":
@@ -350,7 +365,7 @@ h1, h2, h3, h4, h5, h6 {
 		                item.PTY = '비 또는 눈';
 		                break;
 		            case "3":
-		                item.WeatherImg = imgSrc + "Snow_2.png'>";
+		                item.WeatherImg = imgSrc + "Snow_1.png'>";
 		                item.PTY = '눈';
 		                break;
 		            case "5":
@@ -376,29 +391,14 @@ h1, h2, h3, h4, h5, h6 {
 		        }
 		        
 		        
-		        //맑지는 않은데 구름있거나 흐린 경우
-		        if(item.SKY != '맑음'){	//맑지 않음
-		        	
-		        	if(item.SKY == '구름많음'){
 
-		        		if(Number(item.fcstTime) > 600 && Number(item.fcstTime) < 1800){
-		            		item.WeatherImg = imgSrc + "Cloud_Sun.png'>";
-		            	}else{
-		            		item.WeatherImg = imgSrc + "Cloud_Moon.png'>";
-		            	}
-		        		
-		        	}else if(item.SKY == '흐림'){
-		        		item.WeatherImg = imgSrc + "Cloud.png'>";
-		        	}
 		        	
-		        }
-		        
 		        perHours +=
 		            "<div class='p-1 d-flex flex-column justify-content-center align-items-center'>" +
-		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + "</span></div>" +
+		            "<div><span class='weather__description'>" + (item.fcstTime).substr(0, 2) + ":" + (item.fcstTime).substr(-2) + " 예상" + "</span></div>" +
 		            "<div class='mb-15 mt-15'>" + item.WeatherImg + "</div>" +
-		            "<div><span style='margin-left:6px;'>" + item.T1H + "&deg;</span></div>" +
-		            "<div style='margin-top:10px;'><span>💧" + item.REH + "%</span></div>" +
+		            "<div><span>" + item.T1H + "&deg;</span></div>" +
+		            "<div><span>💧 " + item.REH + "%</span></div>" +
 		            "</div>";
 				
 		    });
@@ -412,24 +412,20 @@ h1, h2, h3, h4, h5, h6 {
 			$("#todayWeatherImg").html(weatherList[0].WeatherImg);				
 			$("#todayWSD").text(weatherList[0].WSD);
 			$("#todayREH").text(weatherList[0].REH);
-		    
 			
 			$("#updateWeatherHour").text((weatherList[0].fcstTime).substr(0,2) + ":00 기준");
 		    $("#todayWeatherInfoArea").html(perHours);
-
-		
+		    
 		    
 		    
 		    //초록예보~
 		   	todayGreenCast(weatherList[0].T1H, weatherList[0].REH);
-		    
+
+			
 		}
 
 	
 	</script>
-
-
-
     
     
 </body>
