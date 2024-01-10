@@ -16,16 +16,16 @@ String selectDate = request.getParameter("selectDate"); //달력에서 선택한
 <title>마이페이지</title>
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
+<!-- summernote emoji -->
+<link href="resources/tam-emoji/css/emoji.css" rel="stylesheet">
 
 <!-- Core Stylesheet -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
+
 <!-- alert창 cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
@@ -140,10 +140,15 @@ a, p {
 
 	<!-- 일지 작성 스크립트 -->
 	<!-- summernote 이모지 -->
+	<script src="resources/tam-emoji/js/config.js"></script>
+  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 	<script>
-	document.emojiSource = '../pngs/'; //relative path to emojis
+	//sweetalert css 사용
+	$(function(){
+		document.emojiType = 'unicode'; // default: image
+	    document.emojiSource = 'resources/tam-emoji/img'; //이모지 사진 사용
 		$('#diaryContent').summernote({
-					width : 815,
+					width : 900,
 					height : 800,
 					minHeight : 800,
 					maxHeight : 800,
@@ -151,7 +156,7 @@ a, p {
 					lang : "ko-KR",
 					placeholder : '나만의 영농일지를 작성해보세요! 공개/비공개 여부에 따라 다른 회원에게 보여질 수 있습니다!',
 					toolbar : [
-							['misc', ['emoji']],
+							['insert', ['emoji']],
 							[ 'fontname', [ 'fontname' ] ],
 							[ 'fontsize', [ 'fontsize' ] ],
 							[ 'style', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
@@ -165,7 +170,9 @@ a, p {
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 								'20', '22', '24', '28', '30', '36', '50', '72' ]
 				});
+		});
 
+		//뒤로가기 버튼 클릭시
 		$("#backBtn").click(function() {
 			let alert = swal({
     			title : "작성취소",
@@ -178,31 +185,33 @@ a, p {
     			closeOnConfirm : false,
     			closeOnCancel : true
     		}, function(alert) { 
-    				if(!alert){return false;}
-		           	window.history.back();
+    				if(!alert){return false;} //아니오 클릭시 현재페이지 유지
+		           	window.history.back(); //이전페이지로 이동
 		    });
 		});
 
 		function insertDiary() {
-			let diaryTitle = $("#diaryTitle").val();
-			let diaryContent = $("#diaryContent").val();
-			let openVal = $("input[name=selectOpen]:checked").val();
-
+			let diaryTitle = $("#diaryTitle").val(); //제목
+			let diaryContent = $("#diaryContent").val(); //내용
+			let openVal = $("input[name=selectOpen]:checked").val(); //공개여부
+			
+			//제목 공백
 			if (diaryTitle == "") {
 				swal('제목 입력', '제목을 입력해주세요.', 'error');
 				$("#diaryTitle").focus;
 				return false;
 			}
+			//내용 공백
 			if (diaryContent == "") {
 				swal('내용 입력', '내용을 입력해주세요.', 'error');
 				$("#diaryContent").focus;
 				return false;
 			}
+			//공개여부 선택 안할시
 			if (openVal == null) {
 				swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
 				return false;
 			}
-
 		}
 	</script>
 

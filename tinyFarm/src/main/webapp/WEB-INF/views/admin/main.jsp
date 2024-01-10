@@ -74,11 +74,12 @@
             	<%@ include file="admin_nav.jsp" %>
 
 						
-				<div class="col-12 col-md-9">
+				<div class="col-12 col-md-9" id="pdfDiv">
 					<!-- <div class="row"> -->
 					<%-- <%@ include file="/WEB-INF/views/common/weather/weather_today.jsp" %> --%>
 					
-					<div class="text-right breadcrumb-item"><a href="#" onclick="alert('뿡')"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;PDF DOWNLOAD</a></div>
+					<div class="text-right breadcrumb-item"><a href="#" id="savePdfBtn"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;PDF DOWNLOAD</a></div>
+					
 					
 					<section class="cool-facts-area bg-img ">
 						<!-- style="background-image: url(${contextPath }/resources/img/bg-img/cool-facts.png);"> -->
@@ -367,10 +368,9 @@
 									</div>
 								</div>
 							</div>
-							
 						</div>
 					</section>
-					
+					 
 					
 					<!-- 결제 -->
 					<section class="cool-facts-area bg-img staticsSection" id="pmStatics">
@@ -476,16 +476,49 @@
 							$(".staticsSection").hide();
 						})
 						
-						
 						function showStatics(data){
 							$(".staticsSection").hide();
 							$("#" + data).show();
 						}
+						
+						
+						
+						$('#savePdfBtn').click(function() {
+						    html2canvas($('#pdfDiv')[0]).then(function(canvas) {
+						        // 캔버스를 이미지로 변환
+						        let imgData = canvas.toDataURL('image/png');
+
+						        let margin = 10;					// 출력 페이지 여백설정
+						        let imgWidth = 210 - (10 * 2);		// 이미지 가로 길이(mm) A4 기준
+						        let pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+						        let imgHeight = canvas.height * imgWidth / canvas.width;
+						        let heightLeft = imgHeight;
+						        
+						        console.log(pageHeight);
+						        console.log(imgHeight);
+						        
+
+						        let doc = new jsPDF('p', 'mm');
+						        let position = margin;
+
+						        // 첫 페이지 출력
+						        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+						        heightLeft -= pageHeight;
+
+						        // 한 페이지 이상일 경우 루프 돌면서 출력
+						        while (heightLeft >= 20) {
+						            position = heightLeft - imgHeight;
+						            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+						            doc.addPage();
+						            heightLeft -= pageHeight;
+						        }
+
+						        // 파일 저장
+						        doc.save('stastic_sample.pdf');
+						    });
+						});
+						
 					</script>
-					
-					
-					
-					
 					
 				</div>
              </div>
@@ -497,12 +530,9 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     
- 
- 
- 	<script type="text/javascript">
-			
-		</script>
- 
+	 
+	<script type="text/javascript" src="${contextPath}/resources/js/pdf/jspdf.min.js" rel="stylesheet"></script>
+	<script type="text/javascript" src="${contextPath}/resources/js/pdf/html2canvas.js" rel="stylesheet"></script>
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->

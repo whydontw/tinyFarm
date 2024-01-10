@@ -61,13 +61,6 @@
         outline : none;
     }
     
-    #pimg{
-        margin: -100px 0 0 25px;
-        width: 262px;
-        height: 286px;
-    }
-    
-    
 
 	</style>
 
@@ -127,8 +120,8 @@
                        </select>
                     </td>
                 </tr>
-                <tr>
-                    <td rowspan="3">
+                <tr style="height: 50px;">
+                    <td rowspan="3" style="width: 400px;">
                         <div>                     
 	                        <c:choose>
 	                    		<c:when test="${empty p.changeName}">
@@ -137,7 +130,7 @@
 	                    		
 	                            <c:otherwise>
 	                            	<label for="file">
-	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="pimg" id="pimg">
+	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
 	                    			</label>
 	                    				<input type="file" id="reUpFile" name="reUpFile" onchange="loadImg(this)" id="pimg">
                             			<%-- <input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}"> --%>
@@ -187,11 +180,32 @@
 	<script>
 	
 		$(function(){
-			
-			$("#productselect").val(${p.categoryNo});
 
+//			$("#productselect").val(${p.categoryNo}).prop("selected", true);
+			$("#productselect").val(${p.categoryNo});
 			
 		});
+		
+	
+	
+	
+	
+/* 		$(function(){
+			
+			var choose = "${p.categoryNo}";
+			
+			console.log(choose);
+			$("#productselect").each(function(){
+				//데이터베이스에서 조회해온 게시글의 카테고리와 카테고리목록중 텍스트가 같은 요소
+				console.log($(this));
+				if($(this)==choose){ // 비교대상이 같다면 
+					console.log($(this));
+					$(this).attr("selected",true);//해당 요소객체의 selected속성을 true값으로 변경
+					//선택되어짐
+					return false; //break; 역할 
+				}
+			});
+		}); */
 	
 	</script>
     

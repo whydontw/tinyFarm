@@ -69,9 +69,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농장</a></li>
-                            <li class="breadcrumb-item"><a href="#">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물거래 상세보기</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물정보</li>
                         </ol>
                     </nav>
                 </div>
@@ -96,7 +96,7 @@
 				                		<c:choose>
 				                    		<c:when test="${empty p.changeName}">
 				                    			첨부파일이 없습니다.
-				                    		
+				                    			
 				                    		</c:when>
 				                            <c:otherwise>
 				                    			<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
@@ -109,12 +109,16 @@
                             </div>
                         </div>
                     </div>
-	
+
+                    
+                    
+                    		
+                    	
 					<!-- 상품 정보 -->
-                    <div class="col-12 col-md-6">
-                        <div class="single_product_desc">                     	
+                    <div class="col-12 col-md-5" style="margin : 15px;">
+                        <div class="single_product_desc">
                         	<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
-                        	<input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
+                            <input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
                             <h4 class="title" name="productTitle">${p.productTitle }</h4>
                             <h4 class="price" name="productPrice">${p.productPrice }원</h4>
                             <div class="short_overview" name="productContent">
@@ -169,7 +173,7 @@
                                 
                                 
                                 <div>
-                                    <button onclick="goChat();" name="addtocart" value="5" class="btn alazea-btn ml-15">1:1 문의하기</button>
+                                    <button onclick="goChat();" name="addtocart" value="5" class="btn alazea-btn ml-15" >1:1 채팅하기</button>
                                 </div>
                                 <c:choose>
 				                    <c:when test="${empty loginUser}">
@@ -192,7 +196,7 @@
 							<!-- 수정/삭제 -->
 							<div class="pdubtn" align="center" style="margin-right:30px;">
 								
-								<c:if test="${not empty loginUser and loginUser.userNo eq p.userNo}">
+								<c:if test="${not empty loginUser}">
 									<div align="center" id="bottondiv">
 										<a type="submit" name="addtocart" id="deleteBtn" value="5" class="btn alazea-btn-gray ml-15">삭제하기</a>
 		                            	<a type="submit" name="addtocart" id="" value="5" class="btn alazea-btn-orange ml-15" href="pupdate.bo?pno=${p.productNo}">수정하기</a>
@@ -347,8 +351,8 @@
   				return false;
 			}
 	</script>
-   	
-   	<!-- 채팅방 가기 -->
+	
+	<!-- 채팅방 가기 -->
     <script>
     	function goChat(){
     		//상품 올린 사람의 userNo 정보
@@ -374,7 +378,9 @@
     		}
     		
     	}
-    </script> 
+     </script> 
+   	
+            
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

@@ -68,7 +68,7 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
 							<li class="breadcrumb-item"><a href="#">신고하기</a></li>
 						</ol>
@@ -99,21 +99,20 @@
 									<h4 class="headline">
 										<span id="rcount"></span> Report
 									</h4>
-									<input type="hidden" name="reportWriter" value="${reportWriter }">
-									<input type="hidden" name="refBno" value="${refBno }">
+									<input type="hidden" name="reportWriter"
+										value="${reportWriter }"> <input type="hidden"
+										name="refBno" value="${refBno }">
 									<table>
 										<tr>
-											<th><label for="category">카테고리</label>&nbsp;&nbsp;</th> 
-											<td>
-												<select name="category" class="pl">
+											<th><label for="category">카테고리</label>&nbsp;&nbsp;</th>
+											<td><select name="category" class="pl">
 													<option value="스팸" selected>1: 스팸</option>
 													<option value="욕설">2: 욕설</option>
 													<option value="광고">3: 광고</option>
 													<option value="음란물">4: 음란물</option>
-												</select>
-											</td>
+											</select></td>
 										</tr>
-										
+
 										<tr>
 											<th><label for="reportContent">신고내용</label>&nbsp;&nbsp;</th>
 											<td>
@@ -122,11 +121,14 @@
 													<div class="row">
 														<div class="col-12">
 															<div class="form-group">
-																<textarea class="form-control" name="reportContent" id="reportContent" cols="70" rows="10" style="resize: none;" placeholder="Report Comment"></textarea>
+																<textarea class="form-control" name="reportContent"
+																	id="reportContent" cols="70" rows="10"
+																	style="resize: none;" placeholder="Report Comment"></textarea>
 															</div>
 														</div>
 														<div class="col-12">
-															<button type="submit" class="btn alazea-btn " id="reportBtn">Report</button>
+															<button type="submit" class="btn alazea-btn "
+																id="reportBtn">Report</button>
 														</div>
 													</div>
 												</div>

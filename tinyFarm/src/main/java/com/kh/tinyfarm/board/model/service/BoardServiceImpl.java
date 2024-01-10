@@ -177,6 +177,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.replyReport(sqlSession,rp);
 	}
 
+	//게시글 검색
+	@Override
+	public ArrayList<Board> searchBoardList(Board b) {
+	
+		return boardDao.searchBoardList(sqlSession,b);
+	}
+
 	
 	
 	

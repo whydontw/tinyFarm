@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="productMapper">
+  <mapper namespace="productMapper"> 
   
   <resultMap type="product" id="productResultSet">
   	<result column="PRODUCT_NO" property="productNo"/>
@@ -18,6 +18,7 @@
   	<result column="SALES_STATUS" property="salesStatus"/>
   	<result column="FILE_PATH" property="filePath"/>
   	<result column="CHANGE_NAME" property="changeName"/>
+  	<result column="ORIGIN_NAME" property="originName"/>
   	<result column="LIKE_COUNT" property="likeCount"/>
   	
   </resultMap>
@@ -207,13 +208,13 @@
   
   </update>
   
-	  <select id="selectLikeYn" resultType="_int">
+  <select id="selectLikeYn" resultType="_int">
 	  	SELECT COUNT(*)
 	    FROM PRODUCT_LIKE
 	    WHERE PRODUCT_NO = #{productNo}
 	    AND USER_NO = #{userNo}
 	  
-	  </select>
+  </select> 
   
   
   </mapper>

@@ -24,16 +24,6 @@
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
-.find-id-btn{
-    color: #ffffff;
-    background-color: #FF6C30;
-    border: 2px solid #FF6C30;
-    border-radius: 2px;
-    padding: 0 20px;
-    font-size: 14px;
-    line-height: 35px;
-    font-weight: 600;
-}
 .chat-container-1 {
 	display: flex;
 	width: 1100px;
@@ -226,7 +216,6 @@
 .post-content{
 	margin-left:30px;
 	color:black;
-	min-width: 60%;
 }
 .post-content p{
 
@@ -253,7 +242,7 @@
 	/* margin-top: 15px;
 	margin-bottom: 15px; */
 	vertical-align:middle;
-	border: 1px #dae0e5 solid ;
+	border: 1px black solid ;
 }
 .searchOutDiv input{
 	width: 400px;
@@ -261,7 +250,6 @@
 	border-style: none;
 	padding:10px;
 	outline: none;
-	font-size:14px;
 	
 }
 div {
@@ -283,12 +271,10 @@ div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
- 	width:40px;
- 	height:100%;
+ 	width:30px;
+ 	height:25px;
  	border:none;
- 	font-size:13px;
  	align-content: center;
- 	padding: 3px 0 0 0;
 }
 #sType{
 	border:none;
@@ -340,7 +326,6 @@ div {
 </head>
 <body>
 	<%@include file="../common/header.jsp"%>
-	<jsp:include page="/WEB-INF/views/member/memberModal.jsp"/>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 	
 	<!-- 현재 선택된 방의 번호를 저장 -->
@@ -370,7 +355,7 @@ div {
 	</div>
 	<!-- 채팅 상대를 찾아 방을 생성할 수 있는 모달창을 띄우는 버튼과 모달창 존재 -->
 	<div class="find-id-btn-div">
-		<button type="button" onclick="findUser();" class="find-id-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+		<button type="button" onclick="findUser();" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 		  채팅 상대 찾기
 		</button>
 		<!-- Modal -->
@@ -379,19 +364,15 @@ div {
 		    <div class="modal-content">
 		      <div class="modal-header-1">
 		      	<div style="display:flex; justify-content: space-between;">
-			        <h1 class="modal-title fs-5" id="staticBackdropLabel">채팅 대상 찾기</h1>
+			        <h1 class="modal-title fs-5" id="staticBackdropLabel">채팅 상대 아이디로 검색</h1>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      	
 		      	</div>
 		      	<div class="searchContainer">
 			        <div class="searchOutDiv">
 			        	<div class="searchInDiv">
-				  			<input type="search" id="searchInput" placeholder="아이디로 찾기">
-					  		<div style="height:100%;">
-						  		<button id="searchBtn" onclick="findUser();">
-						  			검색
-						  		</button>       	
-					  		</div>
+				  			<input type="search" id="searchInput" placeholder="search..">
+					  		<button id="searchBtn" onclick="findUser();"><img src="/tinyfarm/resources/img/icon/search.svg"></button>       	
 				        	
 			        	</div>
 			        	
@@ -403,7 +384,8 @@ div {
 
 		      </div>
 		      <div class="modal-footer">
-		        
+		        <button type="button" id="closeFindIdModalBtn" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		 
 		      </div>
 		    </div>
 		  </div>
@@ -436,7 +418,6 @@ div {
 						  </button>
 						  <ul class="dropdown-menu">
 						    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exitModal">나가기</a></li>
-						    <li><button class="dropdown-item" onclick="openModal();">프로필 보기</a></li>
 						    <!-- <li><button class="dropdown-item">차단하기</a></li> -->
 				
 						  </ul>
@@ -1020,6 +1001,7 @@ div {
             $('.chat-area').css('height','75%');
 			$('.chat-area').css('min-height','75%');
 		}
+
 		//프로필 모달창 여는 함수
 		function openModal(){
 				var userId = $(".chat-area").children("#userId").val();

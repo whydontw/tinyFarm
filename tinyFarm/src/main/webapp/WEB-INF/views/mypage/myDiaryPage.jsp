@@ -223,9 +223,9 @@
 	    			closeOnCancel : true 
 		    },function(view){
 		    	//아니오 누를시 현재 페이지 유지
-		    	if(!view){return false;}
-		    		//예 클릭시 해당 날짜 데이터 받아와 뷰페이지 띄우기
 					let date = moment(info.event.start).format('YYYY/MM/DD');
+		    		if(!view){return false;}
+		    		//예 클릭시 해당 날짜 데이터 받아와 뷰페이지 띄우기
 					$.ajax({
 						url : "viewSet.di",
 						type : "post",
@@ -266,7 +266,7 @@
 	        }
 	    });
 		calendar.render(); //달력 띄우기
-		});
+	});
 	</script>
 	
    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

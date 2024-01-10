@@ -21,10 +21,6 @@
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
 
-<!-- 썸머노트 이용하기 -->
-<!--  <script src="resources/summernote1/js/summernote/summernote-lite.js"></script>
-	<script src="resources/summernote1/js/summernote/lang/summernote-ko-KR.js"></script>
-    <link rel="stylesheet" href="resources/summernote1/css/summernote/summernote-lite.css"> -->
 
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -33,11 +29,12 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<!-- 해시태그 -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+	rel="stylesheet" type="text/css" />
+
+
 
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
@@ -60,6 +57,14 @@ a, p {
 	width: 100%;
 	height: 30px;
 }
+
+.tagify {
+	width: 1000px;
+}
+
+.note-modal-footer {
+	margin: 10px;
+}
 </style>
 
 
@@ -67,132 +72,8 @@ a, p {
 </head>
 
 <body>
+	<%@include file="../common/header.jsp"%>
 
-	<!-- Preloader -->
-	<div class="preloader d-flex align-items-center justify-content-center">
-		<div class="preloader-circle"></div>
-		<div class="preloader-img">
-			<img src="resources/img/core-img/leaf.png" alt="">
-		</div>
-	</div>
-
-	<!-- ##### Header Area Start ##### -->
-	<header class="header-area">
-
-		<!-- ***** Top Header Area ***** -->
-		<div class="top-header-area">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div
-							class="top-header-content d-flex align-items-center justify-content-between">
-							<!-- Top Header Content -->
-							<div class="top-header-meta"></div>
-
-							<!-- Top Header Content -->
-							<div class="top-header-meta d-flex">
-
-								<!-- Login -->
-								<div class="login">
-									<c:choose>
-										<c:when test="${empty loginUser}">
-											<a href="loginGo.me"> <i class="fa fa-user"
-												aria-hidden="true"></i> <span>Login</span>
-											</a>
-											<a href="join.me">회원가입</a>
-										</c:when>
-
-										<c:otherwise>
-											<c:if test="${not empty loginUser.userName}">
-												<label
-													style="font-size: 12px; color: white; margin-top: 10px">${loginUser.userName}님</label>
-
-												<a style="margin-left: 20px" href="">마이페이지&nbsp;</a>
-												<a href="logout.me">로그아웃</a>
-											</c:if>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- ***** Navbar Area ***** -->
-		<div class="alazea-main-menu">
-			<div class="classy-nav-container breakpoint-off">
-				<div class="container">
-					<!-- Menu -->
-					<nav class="classy-navbar justify-content-between" id="alazeaNav">
-
-						<!-- Nav Brand -->
-						<a href="/tinyfarm" class="nav-brand"><img
-							src="resources/img/core-img/logo.png" alt=""></a>
-
-						<!-- Navbar Toggler -->
-						<div class="classy-navbar-toggler">
-							<span class="navbarToggler"><span></span><span></span><span></span></span>
-						</div>
-
-						<!-- Menu -->
-						<div class="classy-menu">
-
-							<!-- Close Button -->
-							<div class="classycloseIcon">
-								<div class="cross-wrap">
-									<span class="top"></span><span class="bottom"></span>
-								</div>
-							</div>
-
-							<!-- Navbar Start -->
-							<div class="classynav">
-								<ul>
-									<li><a href="index.html">식물 정보</a>
-										<ul class="dropdown">
-											<li><a href="inGardenPlantList.pp">실내식물 정보</a></li>
-											<li><a href="gardeningList.pp?category=채소">채소 정보</a></li>
-											<li><a href="gardeningList.pp?category=실내농업">실내농업 관련
-													정보</a></li>
-											<li><a href="gardeningList.pp?category=기능별 텃밭">기능별
-													텃밭 정보</a></li>
-											<li><a href="makeInGarden.pp">실내정원 만들기</a></li>
-										</ul></li>
-									<li><a href="about.html">체험활동</a></li>
-
-									<li><a href="moveList.bo">커뮤니티</a></li>
-									<li><a href="plist.bo">작물거래</a></li>
-									<li><a href="contact.html">공지사항</a></li>
-									<li><a href="qnaList.qa">1:1 문의</a></li>
-								</ul>
-
-								<!-- Search Icon -->
-								<div id="searchIcon">
-									<i class="fa fa-search" aria-hidden="true"></i>
-								</div>
-
-							</div>
-							<!-- Navbar End -->
-						</div>
-					</nav>
-
-					<!-- Search Form -->
-					<div class="search-form">
-						<form action="#" method="get">
-							<input type="search" name="search" id="search"
-								placeholder="Type keywords &amp; press enter...">
-							<button type="submit" class="d-none"></button>
-						</form>
-						<!-- Close Icon -->
-						<div class="closeIcon">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
 
 	<!-- ##### Breadcrumb Area Start ##### -->
 	<div class="breadcrumb-area">
@@ -208,9 +89,9 @@ a, p {
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">함께 이야기해요</a></li>
+							<li class="breadcrumb-item"><a href="moveList.bo">이야기해요</a></li>
 							<li class="breadcrumb-item active" aria-current="page">게시글
 								작성</li>
 						</ol>
@@ -233,7 +114,11 @@ a, p {
 				<tr>
 					<th><label for="boardContent">내용&nbsp;&nbsp;</label></th>
 
-					<td><textarea id="summernote" name="boardContent"></textarea></td>
+					<td><textarea id="summernote" name="boardContent" required></textarea></td>
+				</tr>
+				<tr>
+					<th><label for="boardHashTag">해시태그&nbsp;&nbsp;</label></th>
+					<td><input placeholder="type tags" id="hashTag" name="hashTag"></td>
 				</tr>
 			</table>
 			<input type="hidden" name="boardWriter" value="${loginUser.userNo }">
@@ -262,6 +147,17 @@ a, p {
 			});
 		});
 	</script>
+
+	<script>
+		var hashTag = document.getElementById('hashTag');
+		var tagify = new Tagify(hashTag);
+
+		// 태그가 추가되면 이벤트 발생
+		tagify.on('add', function() {
+			console.log(tagify.value);
+		})
+	</script>
+
 	</div>
 	</div>
 

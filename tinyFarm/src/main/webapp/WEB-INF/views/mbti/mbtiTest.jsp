@@ -27,20 +27,21 @@
 <style>
 #a, #b, #c, #A, #B {
 	border-radius: 30px;
-    height: 50px;
-    background-color: #f6f6f3;
-    border: none;
-    outline: none;
+	height: 50px;
+	background-color: #f6f6f3;
+	border: none;
+	outline: none;
+	cursor: pointer;
 }
 
 #a:hover, #b:hover, #c:hover, #A:hover, #B:hover {
 	border-radius: 30px;
-    height: 50px;
-    background-color: #ff6c30;
-    color:white;
-    border: none;
-    outline: none;
-    font-weight: bold;
+	height: 50px;
+	background-color: #ff6c30;
+	color: white;
+	border: none;
+	outline: none;
+	font-weight: bold;
 }
 
 .start, .question {
@@ -147,12 +148,15 @@
 	z-index: 99;
 	text-align: center;
 }
-#load > img{
+
+#load>img {
 	margin: 150px;
 }
-.loadText{
+
+.loadText {
 	font-size: 25px;
 }
+
 </style>
 
 
@@ -264,25 +268,19 @@
 
 										<!-- 질문 답버튼 -->
 										<div id="resultBtn1">
-											<button id="a" type="button"
-												class="aBtn">a대답</button>
+											<button id="a" type="button" class="aBtn">a대답</button>
 											<br>
-											<button id="b" type="button"
-												class="bBtn">b대답</button>
+											<button id="b" type="button" class="bBtn">b대답</button>
 											<br>
-											<button id="c" type="button"
-												class="cBtn">c대답</button>
+											<button id="c" type="button" class="cBtn">c대답</button>
 										</div>
 
 
 										<div id="resultBtn">
-											<button id="A" type="button"
-												class="mbtiResultBtn ABtn">ESTJ대답</button>
-											<br>
-											<br>
+											<button id="A" type="button" class="mbtiResultBtn ABtn">ESTJ대답</button>
+											<br> <br>
 											<!-- 위의 것은 E, S, T, J 값 -->
-											<button id="B" type="button"
-												class="mbtiResultBtn BBtn">INFP대답</button>
+											<button id="B" type="button" class="mbtiResultBtn BBtn">INFP대답</button>
 											<!-- 아래는 I, N, F, P 값 -->
 										</div>
 
@@ -299,6 +297,7 @@
 
 	<article class="loading">
 		<!-- 로딩창 -->
+
 		<div id="load">
 			<img src="resources/img/icon/로딩창.gif">
 			<p class="loadText">잠시만 기다려주세요...</p>
@@ -307,7 +306,7 @@
 	</article>
 
 
-	<article class="result">
+	<article class="result" id="result">
 		<!-- ##### Blog Content Area Start ##### -->
 		<section class="blog-content-area section-padding-0-100">
 			<div class="container">
@@ -343,13 +342,11 @@
 									</div>
 
 									<h4 class="post-title">
-										키우는 <br>
-										<strong>공간을 분석해보니</strong>
+										키우는 <br> <strong>공간을 분석해보니</strong>
 									</h4>
 									<p id="envyTypeText">무난한 환경</p>
 									<progress id="progress" value="50" min="0" max="100"></progress>
-									<br>
-									<br>
+									<br> <br>
 
 
 
@@ -411,6 +408,12 @@
 								</div>
 								<p id="mbtiExplain"></p>
 							</div>
+							<hr style='background-color: #E0E0E0; opacity: 0.7'>
+
+							<a href="moveMbtiTest.bo" class="btn alazea-btn-orange ml-15"
+								style="border-radius: 30px;">다시하기</a>
+
+
 						</div>
 					</div>
 				</div>
@@ -779,41 +782,19 @@
 		// 로딩 창을 감추는 함수
 		 function hideLoading() {
 		     $("#load").hide();
+		     $(".container").show();
 		 }
 		 
 		// 로딩 창을 보여주는 함수
 		 function showLoading() {
-		     $("#load").show();
+		     $(".container").css("display","none");
+			 $("#load").show();
 
-		     // 5초 후에 숨기기
-		     setTimeout(hideLoading, 5000);
+		     // 8초 후에 숨기기
+		     setTimeout(hideLoading, 8000);
+		    
 		 }
-		 
-		 
-		 
-		/*
-		//다시 테스트하기 함수
-		function reset() {
-			num = 1;
-			$("#EI").val("");
-			$("#SN").val("");
-			$("#TF").val("");
-			$("#JP").val("");
 
-			$(".progress-bar").attr("style","width: calc(100 / 11 * " + num + "%)");
-			$(".question").show();
-			$(".result").hide();
-			$("#img").hide();
-			$("#mbtiExplain").hide();
-			$("#subexplain").hide();
-			$("#mbtiTag1").hide();
-			$("#mbtiTag2").hide();
-			$("#subTag1").hide();
-			$("#subTag1").hide();
-			$("#title").html(q[num]["title"]);
-			next();
-		}
-		 */
 
 		//키우는 환경 답변버튼 a,b,c
 		$("#a").click(function() {
@@ -988,7 +969,7 @@
 
 								for (var i = 0; i < result.length; i++) {
 									var wrapDiv = $("<div class='single-best-seller-product d-flex align-items-center'></div>");
-									var formDiv = $("<form action='detailInGarden.pp' method='post'></div>");
+									var formDiv = $("<form action='detailRecommend.mt' method='post'></div>");
 
 									var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
 									rtnFileUrlStr.val(result[i].rtnFileUrlStr);
@@ -1000,6 +981,8 @@
 									cntntsSj.val(result[i].cntntsSj);
 
 									var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
+									var detailImg = $("<input type='hidden' name='detailImg'>");
+									detailImg.val(result[i].rtnFileUrl[0]);
 									var div1 = $("<div style='width:100px;'></div>");
 									var thumbnailDiv = $("<div class='product-thumbnail'></div>");
 									var imgDiv = $("<div class='product-img'></div>");
@@ -1017,6 +1000,7 @@
 									formDiv.append(cntntsNo);
 									formDiv.append(cntntsSj);
 									formDiv.append(submitBtn);
+									formDiv.append(detailImg);
 									formDiv.append(div1);
 									wrapDiv.append(formDiv);
 
@@ -1037,6 +1021,7 @@
 									<input type="hidden" name="cntntsNo" value="">
 									<input type="hidden" name="cntntsSj" value="">
 									<input type="submit" class="submitBtn" hidden>
+									<input type="hidden" name="detailImg" src="result[i].rtnFileUrl[0]"> 
 									<div>
 										<div class="product-thumbnail">
 											<div class='product-img'><img src="resources/img/bg-img/4.jpg"

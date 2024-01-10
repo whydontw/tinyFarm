@@ -9,11 +9,13 @@
 		  	<result column="BOARD_WRITER" property="boardWriter"/>
 		  	<result column="BOARD_TITLE" property="boardTitle"/>
 		  	<result column="BOARD_CONTENT" property="boardContent"/>
+		  	<result column="HASHTAG" property="hashTag"/>
 		  	<result column="COUNT" property="count"/>
 		  	<result column="LIKE_COUNT" property="likeCount"/>
 		  	<result column="CREATE_DATE" property="createDate"/>
 		  	<result column="CHANGE_NAME"  property="profile"/>
 		  	<result column="REPLY_COUNT" property="replyCount"/>
+		  	<result column="USER_NAME" property="userName"/>	  	
   	</resultMap>
   	
   	<resultMap type="boardReply" id="boardReplyResultSet">
@@ -69,11 +71,30 @@
 		           WHERE REF_BNO = B.BOARD_NO) AS REPLY_COUNT
 		FROM BOARD B
 		JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
+		WHERE B.STATUS = 'Y'
 		ORDER BY B.CREATE_DATE DESC
 	
   	</select>
   	
-  	
+  	<select id="searchBoardList" parameterType="string" resultMap="boardResultSet">
+  		SELECT B.BOARD_NO
+		        , M.USER_ID AS BOARD_WRITER 
+		        , B.BOARD_CONTENT
+		        , B.COUNT
+		        , B.LIKE_COUNT
+		        , B.CREATE_DATE
+		        , M.CHANGE_NAME
+                , B.HASHTAG
+		        ,(SELECT COUNT(*)
+		           FROM BOARD_REPLY
+		           WHERE REF_BNO = B.BOARD_NO) AS REPLY_COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON M.USER_NO = B.BOARD_WRITER
+        WHERE M.USER_ID = #{searchText} OR B.HASHTAG LIKE #{searchHash}
+        AND B.STATUS = 'Y'
+		ORDER BY B.CREATE_DATE DESC
+  	</select>
+     
  
   	
   	
@@ -95,6 +116,8 @@
 		        ,B.CREATE_DATE
 		        ,EMAIL
 		        ,CHANGE_NAME
+		        ,USER_NAME
+		        ,HASHTAG
 		FROM BOARD B
 		JOIN MEMBER M ON (M.USER_NO = B.BOARD_WRITER)
 		WHERE B.STATUS='Y'
@@ -105,17 +128,20 @@
   		INSERT INTO BOARD(BOARD_NO
             ,BOARD_WRITER 
             ,BOARD_TITLE
-            ,BOARD_CONTENT)
+            ,BOARD_CONTENT
+            ,HASHTAG)
 		VALUES (SEQ_BNO.NEXTVAL,
 		        #{boardWriter},
 		        #{boardTitle},    
-		        #{boardContent})
+		        #{boardContent},
+		        #{hashTag})
   	</insert>
   
   	<update id="boardUpdate">
   		UPDATE BOARD
 		SET BOARD_TITLE = #{boardTitle}
     		,BOARD_CONTENT = #{boardContent}
+    		,HASHTAG = #{hashTag}
 		WHERE BOARD_NO = #{boardNo}
 		AND STATUS = 'Y'
   	</update>
@@ -231,6 +257,10 @@
   		INSERT INTO FOLLOW(USER_ID,FOLLOWING_ID)
 		VALUES(#{userNo},#{boardWriter}   <!-- 로그인유저번호 / 게시판작성자아이디 -->
   	</insert>
+  	
+  	
+  	
+  	
   	
   	
   </mapper>

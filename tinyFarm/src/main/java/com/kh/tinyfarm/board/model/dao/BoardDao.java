@@ -151,6 +151,12 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.replyReport", rp);
 	}
 
+	//게시글 검색
+	public ArrayList<Board> searchBoardList(SqlSessionTemplate sqlSession, Board b) {
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList",b);
+	}
+
 
 	
 

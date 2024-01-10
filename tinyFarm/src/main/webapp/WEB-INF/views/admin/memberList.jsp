@@ -376,7 +376,9 @@
                         			$("#userGrade_detail").val(result.grade);
                         			
                                 	selectMemberList(${currentPage}, $("#searchMemberId").val());
-                        			
+                                	
+                                	alert('회원 정보 변경이 완료되었습니다.');
+                                	
                         		},
                         		error: function(){
                         			alert("오류났수ㅜ");

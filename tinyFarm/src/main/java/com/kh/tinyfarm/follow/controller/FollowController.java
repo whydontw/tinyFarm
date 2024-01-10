@@ -25,26 +25,26 @@ public class FollowController {
 	private FollowService followService;
 	
 	//게시판 팔로우 걸기
-	@RequestMapping("insertFollow.fw")
-	public String insertFollow(int boardNo,Follow fw) {
-		
-		int result =followService.insertFollow(fw);
-		
-		if(result>0) {	
-			return "redirect:detail.bo?boardNo="+boardNo;
-		}else {
-		
-			return "common/errorPage";
+		@RequestMapping("insertFollow.fw")
+		public String insertFollow(int boardNo,Follow fw) {
+			
+			int result =followService.insertFollow(fw);
+			
+			if(result>0) {	
+				return "redirect:detail.bo?boardNo="+boardNo;
+			}else {
+			
+				return "common/errorPage";
+			}
 		}
-	}
 	
 	//게시판 팔로우 취소하기
 	@RequestMapping("deleteFollow.fw")
 	public String deleteFollow(int boardNo,Follow fw) {
-		System.out.println("fw :"+fw);
+		//System.out.println("fw :"+fw);
 	
 		int result =followService.deleteFollow(fw);
-		System.out.println(result);
+		//System.out.println(result);
 		
 		if(result>0) {	
 		
@@ -131,13 +131,6 @@ public class FollowController {
 	@PostMapping(value = "getFollowingInfo.me", produces = "application/json; charset=UTF-8")
 	public Member getFollowingInfo(String followingId) {
 		Member m = followService.selectFollowingInfo(followingId); //팔로우 한 유저 아이디 정보 가져오기
-		return m;
-	}
-	//팔로워 모달창 정보
-	@ResponseBody
-	@PostMapping(value = "getFollowerInfo.me", produces = "application/json; charset=UTF-8")
-	public Member getFollowerInfo(String followerId) {
-		Member m = followService.selectFollowerInfo(followerId); //팔로우 한 유저 아이디 정보 가져오기
 		return m;
 	}
 	
