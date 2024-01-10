@@ -13,7 +13,7 @@
 <!-- Title -->
 <title>작은농장</title>
 <!-- Favicon -->
-<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
 <!-- jQuery 라이브러리 -->
@@ -157,7 +157,7 @@ a, p, button {
 					<!-- Section Heading -->
 					<div class="section-heading text-center">
 						<h2>TIP</h2>
-						<p>실시간 초록예보입니다 🌿🌿</p>
+						<h3>실시간 초록예보입니다 🌿</h3>
 					</div>
 				</div>
 			</div>

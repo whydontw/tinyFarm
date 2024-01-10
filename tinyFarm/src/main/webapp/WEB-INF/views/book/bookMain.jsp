@@ -13,10 +13,10 @@
 	<% String contextPath = request.getContextPath(); %>
     
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 	
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
  
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
@@ -124,28 +124,37 @@
 
                     <div class="shop-products-area">
                         <div class="row">
-
-							<c:forEach var="bl" items="${bookList }">
-                               <!-- Single Product Area -->
-	                            <div class="col-12 col-sm-6 col-lg-4">
-	                                <div class="single-product-area mb-50">
-	                                    <!-- Product Image -->
-	                                    <div >
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-	                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
-	                                        </a>
-	                                    </div>
-	                                    <!-- Product Info -->
-	                                    <div class="product-info mt-15 text-center">
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-	                                        <p><span class="" style="color:#70C745"># ${bl.bookCategory}</span></p>
-	                                            <p>${bl.bookTitle }</p>
-	                                        </a>
-	                                        <h6><fmt:formatNumber value="${bl.bookPrice }" type="currency" currencySymbol="₩" /></h6>
-	                                    </div>
-	                                </div>
-	                            </div>
-							</c:forEach>
+                        
+                        	<c:if test="${empty bookList }">
+                        		<div class="text-center mx-auto">
+                        			<p>※ 등록된 도서가 없습니다.</p>
+                        		</div>
+                        	</c:if>
+                        	
+                        	<c:if test="${not empty bookList }">
+								<c:forEach var="bl" items="${bookList }">
+	                               <!-- Single Product Area -->
+		                            <div class="col-12 col-sm-6 col-lg-4">
+		                                <div class="single-product-area mb-50">
+		                                    <!-- Product Image -->
+		                                    <div >
+		                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
+		                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
+		                                        </a>
+		                                    </div>
+		                                    <!-- Product Info -->
+		                                    <div class="product-info mt-15 text-center">
+		                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
+		                                        <p><span class="" style="color:#70C745"># ${bl.bookCategory}</span></p>
+		                                            <p>${bl.bookTitle }</p>
+		                                        </a>
+		                                        <h6><fmt:formatNumber value="${bl.bookPrice }" type="currency" currencySymbol="₩" /></h6>
+		                                    </div>
+		                                </div>
+		                            </div>
+								</c:forEach>
+							</c:if>
+							
                         </div>
                         
                        <c:if test="${loginUser.userId eq 'admin'}">
