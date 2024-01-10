@@ -65,6 +65,28 @@
 				url("<%=contextPath%>/resources/img/icon/icon-link.png");
 			background-repeat: no-repeat;
 		}
+		
+		#rec_update{
+			width: 150px;
+			height: 46px;
+			background-color: #70C745;
+			color: white;
+			border: none;
+			font-weight: bold;
+		}
+		
+		#rec_update:focus{
+			outline: none;
+		}
+		
+		#rec_update:hover{
+			background-color: white;
+			color: #70C745;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #70C745;
+			transition-duration: 400ms;
+		}
     
     </style>
 
@@ -440,7 +462,7 @@
 				    objectType: 'feed',
 				    content: {
 				      title: "작은농장", // 보여질 제목
-				      description: "작은농장 도서추천", // 보여질 설명
+				      description: "작은농장 작물 판매 정보", // 보여질 설명
 				      imageUrl:"https://ifh.cc/g/yoKVMG.jpg", // 콘텐츠 URL
 				      link: {
 				         mobileWebUrl: 'http://localhost:8888/tinyfarm/pdetail.bo?pno=${p.productNo}' + currentProductNo,
