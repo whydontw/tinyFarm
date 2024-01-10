@@ -17,7 +17,7 @@
 <title>작은농장</title>
 
 <!-- Favicon -->
-<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
@@ -101,6 +101,11 @@ a, p {
 .visible {
 	display: block;
 }
+
+#login {
+	font-size : 20px;
+}
+
 </style>
 </head>
 
@@ -135,7 +140,7 @@ a, p {
 							<div class="top-header-meta d-flex">
 								<div class="new-message-div px-2 hidden"></div>
 								<!-- Login -->
-								<div class="login">
+								<div class="login" id="login" style="font-size : 25px;">
 									<c:choose>
 										<c:when test="${empty loginUser}">
 											<a href="loginGo.me"> <i class="fa fa-user"

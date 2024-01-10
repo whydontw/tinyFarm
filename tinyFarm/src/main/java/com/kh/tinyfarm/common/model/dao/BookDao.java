@@ -48,6 +48,18 @@ public class BookDao {
 		return sqlSession.update("bookMapper.increaseCount", bookNo);
 	}
 
+	
+	//책 수정
+	public int bookUpdate(SqlSessionTemplate sqlSession, Book book) {
+		return sqlSession.update("bookMapper.bookUpdate", book);
+	}
+	
+
+	//책 삭제
+	public int bookDelete(SqlSessionTemplate sqlSession, int bookNo) {
+		return sqlSession.delete("bookMapper.bookDelete", bookNo);
+	}
+
 
 	
 	

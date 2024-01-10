@@ -16,7 +16,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -47,7 +47,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Admin</li>
                         </ol>
                     </nav>
@@ -109,7 +109,7 @@
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody align="center"></tbody>
                             </table>
                         </div>
                         <div class="single-widget-area float-right">
@@ -326,8 +326,6 @@
                         		url : "memberDetailInfo.ad",
                         		data: { userNo : userNo },
                         		success: function(result){
-                        			
-                        			console.log(result);
                         			
                         			$("#userNo_detail").val(result.userNo);
                         			$("#userId_detail").val(result.userId);

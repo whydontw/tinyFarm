@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.text.SimpleDateFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +38,9 @@ public class Product {
 	private String changeName;
 	private String originName;
 	private int likeCount;
+	private String userId;
+	private String categoryName;
+	
 	
 	
 

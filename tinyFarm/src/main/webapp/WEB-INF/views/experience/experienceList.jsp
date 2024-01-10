@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작은농장</title>
    <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- 부트스트랩에서 제공하고 있는 스타일 -->
@@ -76,7 +76,11 @@
 			outline:none;
 			
 		}
-		
+		.page-link.active{
+			background-color: #70c745;
+			color:white;
+			border-color: #70c745;
+		}
 	</style>
 </head>
 <body>
@@ -163,65 +167,91 @@
 				</c:forEach>
             <!-- 페이징바 -->
 			<div class="wholeList" align="center">
+				<ul class="pagination">
 				<c:choose>
 					<c:when test="${not empty sText}">
 						<c:choose>
 		                    <c:when test="${pi.currentPage eq 1}">
-		                        <button  class='btn btn-sm' disabled>이전</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-left"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}&sText=${sText}&sType=${sType}'">이전</button>
+		                    	<li class="page-item">
+		                        	<button class='page-link' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}&sText=${sText}&sType=${sType}'"><i class="fa fa-angle-left"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			<li class="page-item">
+		                				<button style='color:white;' class='page-link active' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			</li>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			<li class="page-item">
+		                				<button class='page-link' onclick="location.href='experienceList.ex?pageNo=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			</li>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq pi.maxPage}">
-		                        <button  class='btn btn-sm' disabled>다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-right"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button  class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage+1}&sText=${sText}&sType=${sType}'">다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage+1}&sText=${sText}&sType=${sType}'"><i class="fa fa-angle-right"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 					</c:when>
 					<c:otherwise>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq 1}">
-		                        <button  class='btn btn-sm' disabled>이전</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-left"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}'">이전</button>
+		                    	<li class="page-item">
+		                        	<button class='page-link' onclick="location.href='experienceList.ex?pageNo=${pi.currentPage-1}'"><i class="fa fa-angle-left"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
+		                			<li class="page-item">
+		                				<button style='color:white;' class='page-link active' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
+		                			</li>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
+		                			<li class="page-item">
+		                				<button class='page-link' onclick="location.href='experienceList.ex?pageNo=${i}'">${i}</button>
+		                			</li>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq pi.maxPage}">
-		                        <button  class='btn btn-sm' disabled>다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-right"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'">다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'"><i class="fa fa-angle-right"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 					
 					</c:otherwise>
 				</c:choose>
+				</ul>
 			</div>
             
 

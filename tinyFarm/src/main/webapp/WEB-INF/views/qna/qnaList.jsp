@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="resources/img/core-img/favicon.ico">
@@ -100,11 +100,11 @@
                                         <th>삭제</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody align="center">
 		                        	 <c:forEach items="${qList}" var="qList" varStatus="index">
 	                                    <tr>
 	                                        <td>${qList.qnaNo }</td>
-	                                        <td>
+	                                        <td align="left">
 	                                        	<p><b>${qList.qnaTitle }</b> <small>&nbsp;&nbsp; [ ${qList.qnaCreatedate } ]</small></p>
 	                                        	<p>${qList.qnaContent }</p>
 							                        				                        
@@ -157,8 +157,6 @@
                         <script type="text/javascript">
                         
 	                        $(function(){
-	                        	
-	                        	console.log(${period})
 	                        	
 	                        	$("#showPeriod").val(${period});
 	                        })

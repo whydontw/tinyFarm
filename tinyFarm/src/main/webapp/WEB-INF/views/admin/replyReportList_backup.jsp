@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -46,7 +46,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Admin</li>
                         </ol>
                     </nav>
@@ -84,7 +84,7 @@
                         <!-- 표 작성 내역 -->
                         <div class="clearfix mt-15 mb-15" id="reportListTable">
                         	<div class="mb-15" id="reportListCurrentPage"></div>
-                            <table class="table table-responsive" align="center">
+                            <table class="table" align="center">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="12%">
@@ -222,8 +222,6 @@
 								}
                 				
                 				
-                				console.log("카테고리", item.category); 
-                				
                 				str += "<tr class='align-items-center'><td>" + item.reportNo + "</td>" + 
 			                        	"<td>" + item.category + "</td>" +
 			                        	"<td>" + item.reportWriter + "</td>" +
@@ -348,8 +346,6 @@
 //                         		url : "memberDetailInfo.ad",
 //                         		data: { userNo : userNo },
 //                         		success: function(result){
-                        			
-//                         			console.log(result);
                         			
 //                         			$("#userNo_detail").val(result.userNo);
 //                         			$("#userId_detail").val(result.userId);

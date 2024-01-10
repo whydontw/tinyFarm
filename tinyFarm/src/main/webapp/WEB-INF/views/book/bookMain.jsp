@@ -13,10 +13,10 @@
 	<% String contextPath = request.getContextPath(); %>
     
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 	
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
  
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
@@ -65,9 +65,8 @@
                     <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                         <!-- Shop Page Count -->
                         <div class="shop-page-count">
-                            <div class="py-2">🌿 초보 농부와 풀집사들을 위한</div>
+                            <div class="py-2"><h5><img src="${contextPath }/resources/img/icon/carrot_icon.png"> 초보 농부와 풀집사들을 위한</h5></div>
                             <h2>도서 추천</h2>
-                            
                         </div>
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
@@ -80,8 +79,8 @@
                             </select>
                             <select class="custom-select widget-title" id="showBookCount">
                               <option value="6">Show: 6</option>
+                              <option value="9">9</option>
                               <option value="12">12</option>
-                              <option value="18">18</option>
                             </select>
 <!--                       </form> -->
                         </div>
@@ -92,12 +91,12 @@
 
             <div class="row">
                 <!-- Sidebar Area -->
-                <div class="col-12 col-md-4 col-lg-3">
+                <div class="col-12 col-md-3 col-lg-2">
                     <div class="shop-sidebar-area">
 
                         <!-- Shop Widget -->
                         <div class="shop-widget catagory mb-50">
-                            <h4 class="widget-title">Categories</h4>
+                            <h4 class="widget-title">카테고리</h4>
                             <div class="widget-desc">
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" value="all" class="custom-control-input" id="customCheck0" name="bookCategory" checked="checked">
@@ -121,38 +120,55 @@
                 </div>
 
                 <!-- All Products Area -->
-                <div class="col-12 col-md-8 col-lg-9">
-                
+                <div class="col-12 col-md-8 col-lg-10">
+
                     <div class="shop-products-area">
                         <div class="row">
-
-							<c:forEach var="bl" items="${bookList }">
-                               <!-- Single Product Area -->
-	                            <div class="col-12 col-sm-6 col-lg-4">
-	                                <div class="single-product-area mb-50">
-	                                    <!-- Product Image -->
-	                                    <div >
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-	                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
-	                                        </a>
-	                                    </div>
-	                                    <!-- Product Info -->
-	                                    <div class="product-info mt-15 text-center">
-	                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-	                                        <p><span class="" style="color:#70C745"># ${bl.bookCategory}</span></p>
-	                                            <p>${bl.bookTitle }</p>
-	                                        </a>
-	                                        <h6><fmt:formatNumber value="${bl.bookPrice }" type="currency" currencySymbol="₩" /></h6>
-	                                    </div>
-	                                </div>
-	                            </div>
-							</c:forEach>
+                        
+                        	<c:if test="${empty bookList }">
+                        		<div class="text-center mx-auto">
+                        			<p>※ 등록된 도서가 없습니다.</p>
+                        		</div>
+                        	</c:if>
+                        	
+                        	<c:if test="${not empty bookList }">
+								<c:forEach var="bl" items="${bookList }">
+	                               <!-- Single Product Area -->
+		                            <div class="col-12 col-sm-6 col-lg-4">
+		                                <div class="single-product-area mb-50">
+		                                    <!-- Product Image -->
+		                                    <div >
+		                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
+		                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
+		                                        </a>
+		                                    </div>
+		                                    <!-- Product Info -->
+		                                    <div class="product-info mt-15 text-center">
+		                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
+		                                        <p><span class="" style="color:#70C745"># ${bl.bookCategory}</span></p>
+		                                            <p>${bl.bookTitle }</p>
+		                                        </a>
+		                                        <h6><fmt:formatNumber value="${bl.bookPrice }" type="currency" currencySymbol="₩" /></h6>
+		                                    </div>
+		                                </div>
+		                            </div>
+								</c:forEach>
+							</c:if>
+							
                         </div>
                         
-						<section>
+                       <c:if test="${loginUser.userId eq 'admin'}">
+		                   <div class="text-right">
+		                        <button type="button" class="btn alazea-btn mt-100" onclick="location.href='bookInsert.re'">도서 등록</button>
+		                    </div>
+	                    </c:if>
+                        
+                        
+                        
+						<section class="my-5">
 	                        <!-- Pagination -->
 	                        <nav aria-label="Page navigation">
-	                            <ul class="pagination ">
+	                            <ul class="pagination justify-content-center">
 			                        <c:if test="${pi.currentPage > 1}">
 			                            <li class="page-item"><a class="page-link" href="bookMain.re?currentPage=${pi.currentPage-1}&orderByStandard=${bookMap.orderByStandard}&showBookCount=${bookMap.showBookCount}&bookCategory=${bookMap.bookCategory}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
@@ -173,6 +189,7 @@
             </div>
         </div>
     </section>
+      							
     
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
    	

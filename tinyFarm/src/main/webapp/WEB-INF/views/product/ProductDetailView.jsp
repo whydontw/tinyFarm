@@ -5,12 +5,14 @@
 <html lang="en">
 
 <head>
+	<% String contextPath = request.getContextPath(); %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    
     <!-- Title -->
     <title>작은농장</title>
 
@@ -33,11 +35,58 @@
     	
     	}
     	
-    	#pimg{
-    	/* 	width: 350px;
-        	height: 400px; */
+    	.link-icon {
+			position: relative;
+			display: inline-block;
+			width: auto;
+			font-size: 14px;
+			font-weight: 500;
+			color: #333;
+			margin-right: 10px;
+			padding-right: 40px;
+			padding-top: 40px;
+		
+		}
     	
-    	}
+		.link-icon.kakao {
+			background-image:
+				url("<%=contextPath%>/resources/img/icon/icon-kakao.png");
+			background-repeat: no-repeat;
+		}
+		
+		.link-icon.twitter {
+			background-image:
+				url("<%=contextPath%>/resources/img/icon/icon-twitter.png");
+			background-repeat: no-repeat;
+		}
+		
+		.link-icon.link {
+			background-image:
+				url("<%=contextPath%>/resources/img/icon/icon-link.png");
+			background-repeat: no-repeat;
+		}
+		
+		#rec_update{
+			width: 150px;
+			height: 46px;
+			background-color: #70C745;
+			color: white;
+			border: none;
+			font-weight: bold;
+		}
+		
+		#rec_update:focus{
+			outline: none;
+		}
+		
+		#rec_update:hover{
+			background-color: white;
+			color: #70C745;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #70C745;
+			transition-duration: 400ms;
+		}
     
     </style>
 
@@ -61,7 +110,7 @@
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
-            <h2>SHOP DETAILS</h2>
+            <h2>작물 정보</h2>
         </div>
 
         <div class="container">
@@ -69,7 +118,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> 작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
                             <li class="breadcrumb-item active" aria-current="page">작물정보</li>
                         </ol>
@@ -91,7 +140,7 @@
                             <div id="product_details_slider" class="" data-ride="carousel">
                                 <div class="carousel-inner">
                                 	<!-- 상품 이미지 -->
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item active" style="width:400px; height: 480px;">
                     
 				                		<c:choose>
 				                    		<c:when test="${empty p.changeName}">
@@ -115,18 +164,37 @@
                     		
                     	
 					<!-- 상품 정보 -->
-                    <div class="col-12 col-md-5" style="margin : 15px;">
+                    <div class="col-12 col-md-5">
                         <div class="single_product_desc">
                         	<input type="hidden" id="userNo" name="userNo" value="${loginUser.userNo}">
                             <input type="hidden" id="pUserNo" name="pUserNo" value="${p.userNo}">
-                            <h4 class="title" name="productTitle">${p.productTitle }</h4>
+                            <div class="flexcontent" style="display: flex;">
+                            <h4 class="title" name="productTitle" style="width: 320px;">${p.productTitle }</h4>
+				            <h4 style="margin-left: ;">
+				                <a id="btnKakao" class="link-icon kakao" href="javascript:shareKakao();"></a>
+					 		 	<a id="btnTwitter" class="link-icon twitter" href="javascript:shareTwitter();"></a>
+					  	     	<a id="btnlink" class="link-icon link" href="javascript:shareLink();"></a>	
+							</h4>
+							</div>
                             <h4 class="price" name="productPrice">${p.productPrice }원</h4>
                             <div class="short_overview" name="productContent">
                                 <p>${p.productContent }</p>
-                            </div>
-
-
-                            <div class="cart--area d-flex flex-wrap align-items-center" style="padding-top: 100px; padding-left: 5px; width: 500px;" align="center">
+                        </div>
+                            
+	                    <div class="products--meta" style="padding-top : 30px;">
+	                       <div>
+		                       <p><span>작물종류</span><span>${p.categoryName}</span></p>
+		                       <p><span>작성자</span><span>${p.userId}</span></p>
+		                       <p><span>등록일자</span>
+		                          <span>
+		                          <fmt:parseDate value="${p.regiDate}" var="dateFmt" pattern="yyyy-MM-dd"/>
+		                          <fmt:formatDate value="${dateFmt}" pattern="yyyy년 MM월 dd일"/>
+		                          </span>
+		                       </p>
+	                       </div>
+                        </div>
+                            
+                            <div class="cart--area d-flex flex-wrap align-items-center" style="padding-top: 30px; width: 500px;" align="center">
                                 <!-- 찜, 문의하기, 구매하기 버튼 -->
                                 <c:choose>
 				                    <c:when test="${not empty loginUser}">
@@ -196,7 +264,7 @@
 							<!-- 수정/삭제 -->
 							<div class="pdubtn" align="center" style="margin-right:30px;">
 								
-								<c:if test="${not empty loginUser}">
+								<c:if test="${p.userNo == loginUser.userNo || loginUser.userId == 'admin'}">
 									<div align="center" id="bottondiv">
 										<a type="submit" name="addtocart" id="deleteBtn" value="5" class="btn alazea-btn-gray ml-15">삭제하기</a>
 		                            	<a type="submit" name="addtocart" id="" value="5" class="btn alazea-btn-orange ml-15" href="pupdate.bo?pno=${p.productNo}">수정하기</a>
@@ -209,7 +277,7 @@
                 </div>
             </div>
         </div>
-
+	</div>
 
     </section>
     <!-- ##### Single Product Details Area End ##### -->
@@ -379,6 +447,66 @@
     		
     	}
      </script> 
+     
+     <!-- 공유하기 -->
+     
+     	<script>
+			function shareKakao() {
+				  // 사용할 앱의 JavaScript 키 설정
+				  Kakao.init('aef906bc476f983341072fc51f3c5b36');
+		
+				  var currentProductNo = '<%= request.getParameter("productNo") %>';
+				  // 카카오링크 버튼 생성
+				  Kakao.Link.createDefaultButton({
+				    container: '#btnKakao', // 카카오공유버튼ID
+				    objectType: 'feed',
+				    content: {
+				      title: "작은농장", // 보여질 제목
+				      description: "작은농장 작물 판매 정보", // 보여질 설명
+				      imageUrl:"https://ifh.cc/g/yoKVMG.jpg", // 콘텐츠 URL
+				      link: {
+				         mobileWebUrl: 'http://localhost:8888/tinyfarm/pdetail.bo?pno=${p.productNo}' + currentProductNo,
+				         webUrl: 'http://localhost:8888/tinyfarm/pdetail.bo?pno=${p.productNo}' + currentProductNo
+				        }
+				  	  },
+				      social: {
+				        commentCount: 51,  
+				        sharedCount: 223  
+				    }
+				  });
+				}
+		</script>
+		
+		<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+		
+		
+		<script>
+				var currentProductNo = '<%= request.getParameter("productNo") %>';
+				
+				function shareTwitter() {
+				    var sendText = "작은농장"; // 전달할 텍스트
+				    var sendUrl = 'http://localhost:8888/tinyfarm/pdetail.bo?pno=${p.productNo}' + currentProductNo; // 전달할 URL
+				    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+				}
+			</script>
+			
+
+		<script>
+			function shareLink(){
+				var currentProductNo = '<%= request.getParameter("bookNo") %>';
+				
+				var url = 'http://localhost:8888/tinyfarm/pdetail.bo?pno=${p.productNo}' + currentProductNo;
+				
+				var textarea = document.createElement("textarea");
+				document.body.appendChild(textarea);
+				textarea.value = url;
+				textarea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textarea);
+				
+				alert("링크가 복사되었습니다");
+			};
+		</script>
    	
             
 

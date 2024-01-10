@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -359,8 +359,6 @@
                         		url : "memberDetailInfo.ad",
                         		data: { userNo : userNo },
                         		success: function(result){
-                        			
-                        			console.log(result);
                         			
                         			$("#userNo_detail").val(result.userNo);
                         			$("#userId_detail").val(result.userId);

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작은농장</title>
  <!-- 부트스트랩에서 제공하고 있는 스타일 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
@@ -21,7 +21,7 @@ crossorigin="anonymous">
         border: 1px #a39485 solid;
         font-size: .9em;
         box-shadow: 0 2px 5px rgba(0,0,0,.25);
-        width: 800px;
+        width: 1000px;
         margin:0 auto;
         border-collapse: collapse;
         border-radius: 5px;
@@ -49,7 +49,7 @@ crossorigin="anonymous">
     background: #fff;
     }
     .searchContainer{
-    		width:800px;
+    	width:1000px;
 		
 		display:flex;
 		justify-content: space-between;
@@ -91,7 +91,7 @@ crossorigin="anonymous">
 		align-items: center;
 	 	width:30px;
 	 	height:25px;
-		
+		background-color:transparent;
 	 	border:none;
 	 	align-content: center;
 	}
@@ -108,7 +108,17 @@ crossorigin="anonymous">
 		background-color: red;
 		color:white;
 	}
-	
+	.title{
+		max-width:300px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.page-link.active{
+		background-color: #70c745;
+		color:white;
+		border-color: #70c745;
+	}
 </style>
 </head>
 <body>
@@ -187,6 +197,15 @@ crossorigin="anonymous">
 				<!-- Single Portfolio Area -->
 
                    <table id="veTable" style="margin:0 auto;">
+                   		<colgroup>
+						  <col width="10%" />
+						  <col width="10%" />
+						  <col width="40%"/>
+						  <col width="15%"/>
+						  <col width="10%"/>
+						   <col width="15%"/>
+						</colgroup>
+                   		
 				        <thead>
 					        <tr class="tableHeader">
 					            <th>번호</th>
@@ -201,7 +220,7 @@ crossorigin="anonymous">
 									<tr>
 							            <td>${li.noticeNo}</td>
 							            <td><div class="impoTypeDiv"><b>${li.noticeType}</b></div></td>
-							            <td><a href="detailNotice.no?noticeNo=${li.noticeNo}">${li.noticeTitle}</a></td>
+							            <td class="title"><a href="detailNotice.no?noticeNo=${li.noticeNo}">${li.noticeTitle}</a></td>
 							            <td>${li.noticeWriter}</td>
 							            <td>${li.count}</td>
 							            <td>${li.createDate}</td>
@@ -224,7 +243,7 @@ crossorigin="anonymous">
 										<tr>
 								            <td>${li.noticeNo}</td>
 								            <td>${li.noticeType}</td>
-								            <td><a href="detailNotice.no?noticeNo=${li.noticeNo}">${li.noticeTitle}</a></td>
+								            <td class="title"><a href="detailNotice.no?noticeNo=${li.noticeNo}">${li.noticeTitle}</a></td>
 								            <td>${li.noticeWriter}</td>
 								            <td>${li.count}</td>
 								            <td>${li.createDate}</td>
@@ -241,65 +260,92 @@ crossorigin="anonymous">
         </div>
          <!-- 페이징바 -->
 			<div class="pageBarDiv" align="center">
+				 <ul class="pagination">
 				<c:choose>
 					<c:when test="${not empty sText}">
 						<c:choose>
 		                    <c:when test="${pi.currentPage eq 1}">
-		                        <button  class='btn btn-sm' disabled>이전</button>
+		                       <li class="page-item">
+			                       	<button class="page-link" disabled>
+			                       	<i class="fa fa-angle-left"></i></button>
+                               </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${pi.currentPage-1}&sText=${sText}&sType=${sType}'">이전</button>
+		                    	<li class="page-item">
+		                        	<button class="page-link" onclick="location.href='noticeList.no?currentPage=${pi.currentPage-1}&sText=${sText}&sType=${sType}'"><i class="fa fa-angle-left"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			<li class="page-item">
+		                				<button style='color:white;' class='page-link active' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			</li>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			<li class="page-item">
+		                				<button class='page-link' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'">${i}</button>
+		                			</li>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq pi.maxPage}">
-		                        <button  class='btn btn-sm' disabled>다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-right"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button  class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'">다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' onclick="location.href='noticeList.no?currentPage=${i}&sText=${sText}&sType=${sType}'"><i class="fa fa-angle-right"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 					</c:when>
 					<c:otherwise>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq 1}">
-		                        <button  class='btn btn-sm' disabled>이전</button>
+		                    	<li class="page-item">
+		                        	<button  class="page-link" disabled><i class="fa fa-angle-left"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${pi.currentPage-1}'">이전</button>
+		                    	<li class="page-item">
+		                        	<button class="page-link" onclick="location.href='noticeList.no?currentPage=${pi.currentPage-1}'"><i class="fa fa-angle-left"></i></button>
+		                        </li>
 		                    </c:otherwise>
 		                </c:choose>
 		                <c:forEach var="i" begin="${pi.startPage}" end ="${pi.endPage}">
 		                	<c:choose>
 		                		<c:when test="${i eq pi.currentPage}">
-		                			<button class='btn btn-sm active' onclick="location.href='noticeList.no?currentPage=${i}'">${i}</button>
+		                			<li class="page-item">
+		                				<button style='color:white;' class='page-link active' onclick="location.href='noticeList.no?currentPage=${i}'">${i}</button>
+		                			</li>
 		                		</c:when>
 		                		<c:otherwise>
-		                			<button class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${i}'">${i}</button>
+		                			<li class="page-item">
+		                				<button class='page-link' onclick="location.href='noticeList.no?currentPage=${i}'">${i}</button>
+		                			</li>
 		                		</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq pi.maxPage}">
-		                        <button  class='btn btn-sm' disabled>다음</button>
+		                        <li class="page-item">
+		                        	<button  class='page-link' disabled><i class="fa fa-angle-right"></i></button>
+		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
-		                        <button  class='btn btn-sm' onclick="location.href='noticeList.no?currentPage=${pi.currentPage+1}'">다음</button>
+		                    	<li class="page-item">
+		                        	<button  class='page-link' onclick="location.href='noticeList.no?currentPage=${pi.currentPage+1}'"><i class="fa fa-angle-right"></i></button>
+		                    	</li>
 		                    </c:otherwise>
 		                </c:choose>
 					
 					</c:otherwise>
 				</c:choose>
+				</ul>
 			</div>
     </section>
 

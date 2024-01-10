@@ -26,7 +26,7 @@
 				<div class="author-widget mb-30">
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
-							<h4>🌿 <b>회원관리</b></h4>
+							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>회원관리</b></h4>
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
@@ -40,7 +40,7 @@
 				<div class="author-widget mb-30">
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
-							<h4>🌿 <b>QnA</b></h4>
+							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>QnA</b></h4>
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
@@ -53,7 +53,7 @@
 				<div class="author-widget mb-30">
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
-							<h4>🌿 <b>작성 글 관리</b></h4>
+							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>작성 글 관리</b></h4>
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
@@ -67,7 +67,7 @@
 				<div class="author-widget mb-30">
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
-							<h4>🌿 <b>도서 관리</b></h4>
+							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>도서 관리</b></h4>
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">

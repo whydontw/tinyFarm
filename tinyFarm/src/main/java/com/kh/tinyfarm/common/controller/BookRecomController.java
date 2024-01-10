@@ -113,6 +113,8 @@ public class BookRecomController {
 	
 	
 	
+	
+	
 	// 파일명 수정 모듈
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
@@ -159,5 +161,79 @@ public class BookRecomController {
 	}
 	
 	
+	//book 업데이트
+	@GetMapping("bookUpdate.re")
+	public String bookUpdate(int bookNo, Model model) {
+		
+		Book book = bookService.bookDetail(bookNo);
+		model.addAttribute("book", book);
+
+		return "book/bookUpdate";
+	}
+	
+	
+	
+	@PostMapping("bookUpdate.re")
+	public String bookUpdate(Book book, MultipartFile upfile, HttpSession session) {
+		
+		System.out.println(book);
+		System.out.println(upfile.getOriginalFilename());
+		
+		//기존 책 정보
+		Book oldBook = bookService.bookDetail(book.getBookNo());
+		
+		System.out.println("옛날 책정보: " + oldBook);
+		
+		
+		//파일이 바뀌었을 때
+		if (!upfile.getOriginalFilename().equals("")) {
+			
+			String bookChangeName = saveFile(upfile, session);
+			book.setBookOriginName(upfile.getOriginalFilename());
+			book.setBookChangeName("resources/uploadFiles/book/" + bookChangeName);
+			
+			if(!oldBook.getBookChangeName().equals("")) {
+			
+				//new File 객체로 해당 경로에 있는 파일(업로드되어있던)을 delete 메소드로 지우기
+				new File(session.getServletContext().getRealPath(oldBook.getBookChangeName())).delete();
+			}
+			
+		}else {
+			//안 바뀜
+			book.setBookOriginName(oldBook.getBookOriginName());
+			book.setBookChangeName(oldBook.getBookChangeName());
+		}
+		
+		System.out.println(book);
+		
+		int result = bookService.bookUpdate(book);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "도서 정보 수정이 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "도서 정보 수정에 실패하였습니다.");
+		}
+		
+		
+		return "redirect:bookDetail.re?bookNo=" + book.getBookNo();
+	}
+	
+	
+	
+	@PostMapping("bookDelete.re")
+	public String bookDelete(int bookNo, HttpSession session) {
+		
+		System.out.println(bookNo);
+		
+		int result = bookService.bookDelete(bookNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "도서 정보 삭제가 완료되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "오류가 발생하였습니다.");
+		}
+		
+		return "redirect:bookMain.re";
+	}
 	
 }
