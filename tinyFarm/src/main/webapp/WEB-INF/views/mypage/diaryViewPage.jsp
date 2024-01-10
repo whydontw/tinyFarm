@@ -67,7 +67,21 @@
         	width: 90px;
         	height: 50px;
         	margin: auto;
-        	border-radius: 0;
+        	background-color: #70C745;
+			color: white;
+			border: none;
+        }
+        .btn-green:focus{
+			outline: none;
+		}
+        
+        .btn-green:hover{
+        	background-color: white;
+			color: #70C745;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #70C745;
+			transition-duration: 400ms;
         }
         #diarylike{
          	width: 28px;
