@@ -181,6 +181,9 @@
 .mr-sm-2.top {
 	margin-top: 5%;
 }
+#updateBtn{
+	margin-left: 7%;
+}
 </style>
 </head>
 <body>
@@ -265,8 +268,8 @@
 	                                </div>
 	                            </div>
   								<div class="col-8">
-                                    <button type="submit" class="btn alazea-btn mt-15">수정하기</button>
-                                    <button type="button" class="btn alazea-btn mt-15" data-toggle="modal" data-target="#deleteForm">탈퇴하기</button>
+                                    <button type="submit" id="updateBtn" class="btn alazea-btn mt-15">수정하기</button>
+                                    <button type="button" class="btn alazea-btn-gray mt-15" data-toggle="modal" data-target="#deleteForm">탈퇴하기</button>
                                 </div>
 	                        </form>
 	                    </div>
