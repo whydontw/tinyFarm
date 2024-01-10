@@ -258,8 +258,6 @@
                         			
                         			var imageSrc = "${contextPath}/" + result.changeName;
                         			
-                        			console.log(imageSrc);
-                        			
                         			$("#profileImage").prop("src", imageSrc);
                         			
                                 	$("#memberdetailViewModal").click();

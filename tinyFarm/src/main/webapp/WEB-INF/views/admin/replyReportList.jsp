@@ -83,7 +83,7 @@
                         <!-- 표 작성 내역 -->
                         <div class="clearfix mt-15 mb-15" id="reportListTable">
                         	<div class="mb-15" id="reportListCurrentPage"></div>
-                            <table class="table table-responsive" align="center">
+                            <table class="table" align="center">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="12%">
@@ -259,9 +259,6 @@
                         	let str = "";
                         	
                         	
-                        	console.log("reportList", reportList);
-                        	
-                        	
                         	if(reportList == null || reportList == ''){
                         		
                         		$("#reportListTable table tbody").html("<tr><td colspan='6'> ※ 신고 댓글이 없습니다. </td></tr>")
@@ -406,9 +403,6 @@
                         
                         //신고글 내용 상세조회
                         function reportDetailInfo(refRno){
-                        	
-                        	
-                        	console.log("refRno", refRno)
                         	
                         	$.ajax({
                         		url : "reportDetailInfo.ad",

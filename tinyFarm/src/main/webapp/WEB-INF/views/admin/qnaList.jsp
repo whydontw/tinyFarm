@@ -147,8 +147,6 @@
                         $(function(){
                         	
                         	
-                        	console.log("답변개수", ${answerYn})
-                        	
                         	$("#answerYn").val(${answerYn});
                         	
                         	//전체 선택/선택해제

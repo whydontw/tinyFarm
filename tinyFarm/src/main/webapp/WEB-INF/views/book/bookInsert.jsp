@@ -151,7 +151,6 @@
 								        reader.readAsDataURL(inputFile.files[0]);
 	
 								        reader.onload = function (e) {
-								            console.log(e.target.result);
 								            bookImage.src = e.target.result;
 								        }
 								    } else {

@@ -17,11 +17,11 @@
     <!-- Title -->
     <title>작은농장</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
-
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="${contextPath }/resources/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
     
     <style type="text/css">
     	.display__none{
@@ -494,10 +494,6 @@
 						        let imgHeight = canvas.height * imgWidth / canvas.width;
 						        let heightLeft = imgHeight;
 						        
-						        console.log(pageHeight);
-						        console.log(imgHeight);
-						        
-
 						        let doc = new jsPDF('p', 'mm');
 						        let position = margin;
 

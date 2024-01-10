@@ -131,8 +131,6 @@
     	
     	$("#qnaContent").keyup(function(){
     		
-    		console.log($(this).val())
-    		
     		let qnaContent = $(this).val();
     		
     		if(qnaContent.length > 500){
