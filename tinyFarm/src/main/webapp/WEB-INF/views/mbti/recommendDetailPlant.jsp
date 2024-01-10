@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +6,7 @@
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Title -->
 <title>작은농장</title>
@@ -101,27 +98,17 @@
 	border-bottom: 1px solid black;
 }
 </style>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
 <body>
 
-	<!-- ##### Breadcrumb Area End ##### -->
+	<!-- 상단 -->
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-		crossorigin="anonymous"></script>
-	<!-- ##### nav 그림 + 페이지 설명 ##### -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 	<div class="breadcrumb-area">
-		<!-- Top Breadcrumb Area -->
-		<div
-			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-			style="background-image: url(resources/img/bg-img/24.jpg);">
+		<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
 			<h2>실내정원용 식물</h2>
 		</div>
 
@@ -130,10 +117,8 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/"><i
-									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a
-								href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
+							<li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+							<li class="breadcrumb-item"><a href="${contextPath}/inGardenPlantList.pp">실내정원용 식물</a></li>
 							<li class="breadcrumb-item active" aria-current="page">상세보기</li>
 						</ol>
 					</nav>
@@ -151,13 +136,10 @@
 		<div class="produts-details--content mb-50">
 			<div class="container">
 				<div class="row justify-content-between">
-
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
-							<div id="product_details_slider" class="carousel slide"
-								data-ride="carousel">
+							<div id="product_details_slider" class="carousel slide" data-ride="carousel">
 								<div class="carousel-inner">
-
 									<!-- 
                                 	<c:forEach items="${imgArr}" var="i" varStatus="vs">
                                 		<c:choose>
@@ -181,8 +163,7 @@
                                     -->
 									<div class="carousel-item active">
 										<a class="product-img" href="${i}" title="Product Image">
-											<img class="d-block w-100 plantImg" src="${detailImg }"
-											alt="1">
+											<img class="d-block w-100 plantImg" src="${detailImg }" alt="1">
 										</a>
 									</div>
 								</div>
@@ -208,12 +189,9 @@
 							<p class="title" style="font-size: 20px; font-weight: 900;">${plantInfo.cntntsSj}</p>
 							<p class="price" style="font-size: 16px; font-weight: 700;">${plntzrNm}</p>
 							<div class="short_overview">
-								<p style="font-size: 14px; font-weight: 600;">꽃말 :
-									${adviseInfo}</p>
+								<p style="font-size: 14px; font-weight: 600;">꽃말 : ${adviseInfo}</p>
 								<p style="font-size: 14px; font-weight: 600;">${speclmanageInfo}</p>
 							</div>
-
-
 
 							<%--  <a href="#" class="wishlist-btn ml-15"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                             <div class="products--meta" style="padding-top: 30px;">
@@ -229,8 +207,7 @@
 								<!-- Single Benefits Area -->
 								<div class="col-12 col-sm-6">
 									<div class="single-benefits-area">
-										<img class="green-icon-img"
-											src="resources/img/icon/temperature_icon.png" alt="">
+										<img class="green-icon-img" src="resources/img/icon/temperature_icon.png" alt="">
 										<h5>생육 온도</h5>
 										<p style="font-weight: 500;">${grwhTpCodeNm}</p>
 									</div>
@@ -239,8 +216,7 @@
 								<!-- Single Benefits Area -->
 								<div class="col-12 col-sm-6">
 									<div class="single-benefits-area">
-										<img class="green-icon-img"
-											src="resources/img/icon/water_icon.png" alt="">
+										<img class="green-icon-img" src="resources/img/icon/water_icon.png" alt="">
 										<h5>습도</h5>
 										<p style="font-weight: 500;">${hdCodeNm}</p>
 									</div>
@@ -249,8 +225,7 @@
 								<!-- Single Benefits Area -->
 								<div class="col-12 col-sm-6">
 									<div class="single-benefits-area">
-										<img class="green-icon-img"
-											src="resources/img/icon/stopwatch_icon.png" alt="">
+										<img class="green-icon-img" src="resources/img/icon/stopwatch_icon.png" alt="">
 										<h5>생장속도</h5>
 										<p style="font-weight: 500;">${grwtveCodeNm}</p>
 									</div>
@@ -259,8 +234,7 @@
 								<!-- Single Benefits Area -->
 								<div class="col-12 col-sm-6">
 									<div class="single-benefits-area">
-										<img class="green-icon-img"
-											src="resources/img/icon/snowman_icon.png" alt="">
+										<img class="green-icon-img" src="resources/img/icon/snowman_icon.png" alt="">
 										<h5>겨울 최저 온도</h5>
 										<p style="font-weight: 500;">${winterLwetTpCodeNm}</p>
 									</div>
@@ -268,7 +242,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -279,31 +252,20 @@
 					<div class="product_details_tab clearfix">
 						<!-- Tabs -->
 						<ul class="nav nav-tabs" role="tablist" id="product-details-tab">
-							<li class="nav-item"><a href="#description"
-								class="nav-link active" data-toggle="tab" role="tab"
-								style="font-weight: 800;">식물 정보</a></li>
-							<li class="nav-item"><a href="#addi-info" class="nav-link"
-								data-toggle="tab" role="tab" style="font-weight: 800;">위키백과</a>
-							</li>
-							<li class="nav-item"><a href="#reviews" class="nav-link"
-								data-toggle="tab" role="tab" style="font-weight: 800;">의견 <span
-									class="text-muted"></span></a></li>
+							<li class="nav-item"><a href="#description" class="nav-link active" data-toggle="tab" role="tab" style="font-weight: 800;">식물 정보</a></li>
+							<li class="nav-item"><a href="#addi-info" class="nav-link" data-toggle="tab" role="tab" style="font-weight: 800;">위키백과</a></li>
+							<li class="nav-item"><a href="#reviews" class="nav-link" data-toggle="tab" role="tab" style="font-weight: 800;">의견 <span class="text-muted"></span></a></li>
 						</ul>
 						<!-- Tab Content -->
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane fade show active"
-								id="description">
+							<div role="tabpanel" class="tab-pane fade show active" id="description">
 								<div class="plant-info">
-
-
 									<div class="plant-info-top">
-
 										<div>
 											<p>
 												<b>과 명</b>
 											</p>
 											<p>${fmlCodeNm}</p>
-
 										</div>
 										<div>
 											<p>
@@ -325,7 +287,6 @@
 											</p>
 											<p>${growthAraInfo}</p>
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -340,7 +301,6 @@
 											</p>
 											<p>${grwtveCodeNm}</p>
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -355,10 +315,7 @@
 												<b>겨울 최저 온도&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${winterLwetTpCodeNm}</p>
-
-
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -366,18 +323,13 @@
 												<b>습도&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${hdCodeNm}</p>
-
-
 										</div>
 										<div>
 											<p>
 												<b>비료 정보&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${frtlzrInfo}</p>
-
-
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -385,17 +337,13 @@
 												<b>토양 정보&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${soilInfo}</p>
-
-
 										</div>
 										<div>
 											<p>
 												<b>물주기 봄&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${watercycleSprngCodeNm}</p>
-
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -403,16 +351,13 @@
 												<b>물주기 여름&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${watercycleSummerCodeNm}</p>
-
 										</div>
 										<div>
 											<p>
 												<b>물주기 가을&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${watercycleAutumnCodeNm}</p>
-
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
 										<div>
@@ -420,39 +365,29 @@
 												<b>물주기 겨울&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${watercycleWinterCodeNm}</p>
-
 										</div>
 										<div>
-
 											<p>
 												<b>특별관리 정보&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${speclmanageInfo}</p>
-
 										</div>
-
 									</div>
 									<div class="plant-info-middle">
-
 										<div>
 											<p>
 												<b>기능성 정보&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${fncltyInfo}</p>
-
-
 										</div>
 										<div>
-
 											<p>
 												<b>관리요구도&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${managedemanddoCodeNm}</p>
-
 										</div>
 									</div>
 									<div class="plant-info-middle">
-
 										<div>
 											<p>
 												<b>분류명&nbsp&nbsp&nbsp</b>
@@ -467,31 +402,24 @@
 										</div>
 									</div>
 									<div class="plant-info-bottom">
-
 										<div>
 											<p>
 												<b>실내정원구성&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${indoorpsncpacompositionCodeNm}</p>
-
-
 										</div>
 										<div>
 											<p>
 												<b>생태명&nbsp&nbsp&nbsp</b>
 											</p>
 											<p>${eclgyCodeNm}</p>
-
-
 										</div>
 									</div>
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="addi-info">
 								<div class="additional_info_area">
-									<object
-										data="https://ko.wikipedia.org/wiki/${plantInfo.cntntsSj}"
-										width="1100" height="800" type="text/html">
+									<object data="https://ko.wikipedia.org/wiki/${plantInfo.cntntsSj}" width="1100" height="800" type="text/html">
 										<p align="center">해당 식물정보가 위키백과에 존재하지 않습니다.</p>
 									</object>
 								</div>
@@ -507,43 +435,36 @@
 												<div class="row">
 													<div class="col-12 col-md-6">
 														<div class="form-group">
-															<label for="name">아이디</label> <input type="text"
-																class="form-control" id="userId"
-																value="${loginUser.userId}" readonly>
+															<label for="name">아이디</label> <input type="text" class="form-control" id="userId" value="${loginUser.userId}" readonly>
 														</div>
 													</div>
 													<div class="col-12">
 														<div class="form-group d-flex align-items-center">
 															<span class="mr-15">별점: </span>
 															<div class="stars">
-																<input type="radio" name="star" class="star-1"
-																	id="star-1" value="1"> <label class="star-1"
-																	for="star-1">1</label> <input type="radio" name="star"
-																	class="star-2" id="star-2" value="2"> <label
-																	class="star-2" for="star-2">2</label> <input
-																	type="radio" name="star" class="star-3" id="star-3"
-																	value="3"> <label class="star-3" for="star-3">3</label>
-																<input type="radio" name="star" class="star-4"
-																	id="star-4" value="4"> <label class="star-4"
-																	for="star-4">4</label> <input type="radio" name="star"
-																	class="star-5" id="star-5" value="5" checked> <label
-																	class="star-5" for="star-5">5</label> <span></span>
+																<input type="radio" name="star" class="star-1" id="star-1" value="1"> 
+																<label class="star-1" for="star-1">1</label> 
+																<input type="radio" name="star" class="star-2" id="star-2" value="2"> 
+																<label class="star-2" for="star-2">2</label> 
+																<input type="radio" name="star" class="star-3" id="star-3" value="3"> 
+																<label class="star-3" for="star-3">3</label>
+																<input type="radio" name="star" class="star-4" id="star-4" value="4"> 
+																<label class="star-4" for="star-4">4</label> 
+																<input type="radio" name="star" class="star-5" id="star-5" value="5" checked> 
+																<label class="star-5" for="star-5">5</label> 
+																<span></span>
 															</div>
-
 														</div>
 													</div>
 
 													<div class="col-12">
 														<div class="form-group">
 															<label for="comments">의견</label>
-															<textarea class="form-control" id="commentContent"
-																rows="5" maxlength="200" data-max-length="150"
-																style="resize: none;"></textarea>
+															<textarea class="form-control" id="commentContent" rows="5" maxlength="200" data-max-length="150" style="resize: none;"></textarea>
 														</div>
 													</div>
 													<div class="col-12 send-comment-btn-div">
-														<button onclick="return false;"
-															class="btn alazea-btn send-comment">의견 남기기</button>
+														<button onclick="return false;" class="btn alazea-btn send-comment">의견 남기기</button>
 														<h4>
 															총 <b class="commentCount"></b>개의 의견
 														</h4>
@@ -551,7 +472,6 @@
 												</div>
 											</form>
 										</div>
-
 									</c:when>
 									<c:otherwise>
 										<div class="submit_a_review_area mt-50">
@@ -561,44 +481,37 @@
 												<div class="row">
 													<div class="col-12 col-md-6">
 														<div class="form-group">
-															<label for="name">아이디</label> <input type="text"
-																class="form-control" id="userId"
-																value="${loginUser.userId}" readonly>
+															<label for="name">아이디</label> 
+															<input type="text" class="form-control" id="userId" value="${loginUser.userId}" readonly>
 														</div>
 													</div>
 													<div class="col-12">
 														<div class="form-group d-flex align-items-center">
 															<span class="mr-15">별점: </span>
 															<div class="stars">
-																<input type="radio" name="star" class="star-1"
-																	id="star-1" value="1"> <label class="star-1"
-																	for="star-1">1</label> <input type="radio" name="star"
-																	class="star-2" id="star-2" value="2"> <label
-																	class="star-2" for="star-2">2</label> <input
-																	type="radio" name="star" class="star-3" id="star-3"
-																	value="3"> <label class="star-3" for="star-3">3</label>
-																<input type="radio" name="star" class="star-4"
-																	id="star-4" value="4"> <label class="star-4"
-																	for="star-4">4</label> <input type="radio" name="star"
-																	class="star-5" id="star-5" value="5" checked> <label
-																	class="star-5" for="star-5">5</label> <span></span>
+																<input type="radio" name="star" class="star-1" id="star-1" value="1"> 
+																<label class="star-1" for="star-1">1</label> 
+																<input type="radio" name="star" class="star-2" id="star-2" value="2"> 
+																<label class="star-2" for="star-2">2</label> 
+																<input type="radio" name="star" class="star-3" id="star-3" value="3"> 
+																<label class="star-3" for="star-3">3</label>
+																<input type="radio" name="star" class="star-4" id="star-4" value="4"> 
+																<label class="star-4" for="star-4">4</label> 
+																<input type="radio" name="star" class="star-5" id="star-5" value="5" checked> 
+																<label class="star-5" for="star-5">5</label> 
+																<span></span>
 															</div>
-
 														</div>
 													</div>
 
 													<div class="col-12">
 														<div class="form-group">
 															<label for="comments">의견</label>
-															<textarea class="form-control" id="commentContent"
-																placeholder="로그인 후 이용 가능합니다." readonly rows="5"
-																maxlength="200" data-max-length="150"
-																style="resize: none;"></textarea>
+															<textarea class="form-control" id="commentContent" placeholder="로그인 후 이용 가능합니다." readonly rows="5" maxlength="200" data-max-length="150" style="resize: none;"></textarea>
 														</div>
 													</div>
 													<div class="col-12 send-comment-btn-div">
-														<button onclick="return false;"
-															class="btn alazea-btn send-comment">의견 남기기</button>
+														<button onclick="return false;" class="btn alazea-btn send-comment">의견 남기기</button>
 														<h4>
 															총 <b class="commentCount"></b>개의 의견
 														</h4>
@@ -606,7 +519,6 @@
 												</div>
 											</form>
 										</div>
-
 									</c:otherwise>
 								</c:choose>
 
@@ -614,16 +526,11 @@
 									<ul>
 										<li class="reviews_area-li"></li>
 									</ul>
-									<div
-										style="width: 100%; display: flex; justify-content: center;">
-
-										<button class="btn alazea-btn more-comment-btn"
-											onclick="selectComment();">의견 더보기</button>
+									<div style="width: 100%; display: flex; justify-content: center;">
+										<button class="btn alazea-btn more-comment-btn" onclick="selectComment();">의견 더보기</button>
 									</div>
 								</div>
-
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -632,49 +539,40 @@
 	</section>
 
 	<!--수정 p태그를 눌렀을 때 modal을 띄우기 위해 아래 버튼을 숨겨두고 p태그를 누르면 이 버튼을 클릭하는 이벤트를 발생 -->
-	<button type="button" id="updateModalBtn" class="btn btn-primary"
-		data-bs-toggle="modal" data-bs-target="#exampleModal"
-		style="display: none;"></button>
+	<button type="button" id="updateModalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;"></button>
 
 
 	<!-- 수정 모달창 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">의견 수정</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<div class="submit_a_review_area">
 						<form action="#">
 							<div class="mb-3">
 								<label for="recipient-name" class="col-form-label">아이디 :
-								</label> <input type="text" class="form-control" id="updateCommentId"
-									readonly>
+								</label> <input type="text" class="form-control" id="updateCommentId" readonly>
 							</div>
 							<div class="col-12">
 								<div class="form-group d-flex align-items-center">
-
 									<span class="mr-15">별점: </span>
 									<div class="stars">
-										<input type="radio" name="updateStar" class="star-1"
-											id="updateStar-1" value="1"> <label class="star-1"
-											for="updateStar-1">1</label> <input type="radio"
-											name="updateStar" class="star-2" id="updateStar-2" value="2">
-										<label class="star-2" for="updateStar-2">2</label> <input
-											type="radio" name="updateStar" class="star-3"
-											id="updateStar-3" value="3"> <label class="star-3"
-											for="updateStar-3">3</label> <input type="radio"
-											name="updateStar" class="star-4" id="updateStar-4" value="4">
-										<label class="star-4" for="updateStar-4">4</label> <input
-											type="radio" name="updateStar" class="star-5"
-											id="updateStar-5" value="5" checked> <label
-											class="star-5" for="updateStar-5">5</label> <span></span>
+										<input type="radio" name="updateStar" class="star-1" id="updateStar-1" value="1"> 
+										<label class="star-1" for="updateStar-1">1</label> 
+										<input type="radio" name="updateStar" class="star-2" id="updateStar-2" value="2">
+										<label class="star-2" for="updateStar-2">2</label> 
+										<input type="radio" name="updateStar" class="star-3" id="updateStar-3" value="3"> 
+										<label class="star-3" for="updateStar-3">3</label> 
+										<input type="radio" name="updateStar" class="star-4" id="updateStar-4" value="4">
+										<label class="star-4" for="updateStar-4">4</label> 
+										<input type="radio" name="updateStar" class="star-5" id="updateStar-5" value="5" checked> 
+										<label class="star-5" for="updateStar-5">5</label> 
+										<span></span>
 									</div>
-
 								</div>
 							</div>
 							<div class="mb-3">
@@ -685,19 +583,17 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" id="modalCloseBtn">닫기</button>
-					<button type="button" class="btn btn-primary"
-						onclick="updateComment(this);">수정</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modalCloseBtn">닫기</button>
+					<button type="button" class="btn btn-primary" onclick="updateComment(this);">수정</button>
 					<input type="hidden" id="updateCtpNo">
 				</div>
 			</div>
 		</div>
 	</div>
 	<input id="currentPage" type="hidden" value="1">
+	
 	<script>
 
-    
     	$(function(){
     		//총 의견 개수 세기
     		getCommentCount();
@@ -709,7 +605,7 @@
     		var content = $("#commentContent").val();
     		var star = $('input[type="radio"][name="star"]:checked').val();
     		var loginUser = "${loginUser.userId}";
-    		console.log(loginUser);
+
     		if(loginUser == ""){
     			alert("로그인 후 이용 가능합니다.");
     		}
@@ -842,7 +738,6 @@
     				cntntsNo : ${cntntsNo}
     			},
     			success : function(result){
-    				console.log(result);
     				$(".commentCount").text(result);
     			},
     			error : function(){
@@ -873,7 +768,6 @@
    			var ctpNo = $(el).parents(".review-details").find(".ctpNo").val(); //댓글 고유번호
    			var userId = "${loginUser.userId}";
    			var content = $(el).parents(".review-details").find(".comment-p").text();
-   			console.log(content);
    			//모달창에 아이디 입력
    			$("#updateCommentId").val(userId);
    			//모달창에 의견 입력
@@ -939,8 +833,7 @@
 		   					alert("의견 삭제 실패");
 		   				}
    					},
-   					error : function(){
-   						
+   					error : function(){			
    					}
    				});	
    			}

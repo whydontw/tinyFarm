@@ -45,8 +45,7 @@ public interface BoardService {
 	int deleteReply(int replyNo);
 
 	
-	//유저가 좋아요했는지 안했는지 확인
-	//int findLike(BoardLike br);
+	//좋아요한 리스트찾기
 	ArrayList<BoardLike> findLike(BoardLike br);
 	
 	//좋아요 하면 카운트 증가
@@ -70,14 +69,5 @@ public interface BoardService {
 	//게시글 검색
 	ArrayList<Board> searchBoardList(Board b);
 
-
-	
-
-	
-
-	
-	
-
-	
 	
 }
