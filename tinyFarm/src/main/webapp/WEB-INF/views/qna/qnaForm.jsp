@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -80,7 +80,7 @@
 								<div class="row">
 									<div class="col-12 mb-4">
 										<label for="phone_number">제목 *</label>
-										<input type="text" class="form-control" id="qnaTitle" min="0" value="" name="qnaTitle" placeholder="제목을 입력해 주세요.">
+										<input type="text" class="form-control" id="qnaTitle" min="0" value="" name="qnaTitle" placeholder="제목을 입력해 주세요. (60자 미만)">
 									</div>
 									<div class="col-md-6 mb-4">
 										<label for="city">작성자</label> <input type="text" class="form-control" id="qnaUserNo" value="${loginUser.userId }" name="userNo" disabled>
@@ -95,7 +95,7 @@
 									</div>
 									<div class="col-md-12 mb-4">
 										<label for="order-notes">문의사항 *</label>
-										<textarea class="form-control" id="qnaContent" name="qnaContent" cols="30" rows="80" placeholder="문의할 내용을 입력해 주세요."></textarea>
+										<textarea class="form-control" id="qnaContent" name="qnaContent" cols="30" rows="80" placeholder="문의할 내용을 입력해 주세요. (500자 미만)"></textarea>
 									</div>
 									<div class="col-12 ">
                                          <button type="button" class="btn alazea-btn mt-15  float-right" onclick="location.href='qnaList.qa'">목록</button>
@@ -115,6 +115,34 @@
 
 
     <script type="text/javascript">
+    
+    	
+    	$("#qnaTitle").keyup(function(){
+    		
+    		let qnaTitle = $(this).val();
+    		
+    		if(qnaTitle.length > 60){
+    			alert("60자 미만으로 작성이 가능합니다.");
+    			qnaTitle = qnaTitle.substr(0, 60);
+    			$(this).val(qnaTitle);
+    		}
+    		
+    	})
+    	
+    	$("#qnaContent").keyup(function(){
+    		
+    		console.log($(this).val())
+    		
+    		let qnaContent = $(this).val();
+    		
+    		if(qnaContent.length > 500){
+    			alert("500자 미만으로 작성이 가능합니다.");
+    			qnaContent = qnaContent.substr(0, 500);
+    			$(this).val(qnaContent);
+    		}
+    		
+    	})
+    		
     
     	function qnaSend(){
     		

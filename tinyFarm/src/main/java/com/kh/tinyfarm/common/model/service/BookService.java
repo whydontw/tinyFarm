@@ -22,4 +22,10 @@ public interface BookService {
 
 	//조회수 증가
 	int increaseCount(int bookNo);
+
+	//책 수정
+	int bookUpdate(Book book);
+
+	//책 삭제
+	int bookDelete(int bookNo);
 }

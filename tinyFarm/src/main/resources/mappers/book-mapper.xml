@@ -92,7 +92,7 @@
 				</when>
 				<otherwise>
 					<!-- 최신 등록순 -->
-					BOOK_DATE DESC
+					BOOK_NO DESC
 				</otherwise>
 			</choose>
 	  	</select>
@@ -113,5 +113,26 @@
 			WHERE BOOK_NO = #{bookNo}
 		</update>
 		
+		
+		
+		<update id="bookUpdate">
+			UPDATE BOOK SET
+					BOOK_TITLE = #{bookTitle}, 
+					BOOK_CATEGORY = #{bookCategory},
+					BOOK_INFO = #{bookInfo},
+					BOOK_AUTHOR = #{bookAuthor},
+					PUBLISHER = #{publisher},
+					BOOK_PRICE = #{bookPrice},
+					BOOK_ORIGIN_NAME = #{bookOriginName},
+					BOOK_CHANGE_NAME = #{bookChangeName},
+					BOOK_DATE = #{bookDate}
+			WHERE BOOK_NO = #{bookNo}
+		</update>
+		
+		
+		<delete id="bookDelete">
+			DELETE FROM BOOK
+			WHERE BOOK_NO = #{bookNo}
+		</delete>
 		
  	</mapper>

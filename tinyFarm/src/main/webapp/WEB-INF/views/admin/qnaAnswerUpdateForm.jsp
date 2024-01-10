@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -46,7 +46,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Admin</li>
                         </ol>
                     </nav>
@@ -133,11 +133,11 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <textarea name="qnaAnswerContent" class="form-control" name="message" id="message" cols="30" rows="80">${qna.qnaAnswerContent }</textarea>
+                                                            <textarea name="qnaAnswerContent" class="form-control height-200" id="qnaAnswerContent" cols="30" rows="100">${qna.qnaAnswerContent }</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 ">
-                                                        <button type="button" class="btn alazea-btn mt-15  float-right" onclick="history.back()">목록</button>
+                                                        <button type="button" class="btn alazea-btn-orange mt-15  float-right" onclick="location.href='qnaList.ad'">목록</button>
                                                         <button type="submit" class="btn alazea-btn mt-15 mr-15 float-right" onclick="return confirm('답변을 수정하시겠습니까?')">전송</button>
                                                     </div>
                                                 </div>
@@ -154,6 +154,29 @@
         </div>
     </section>
     <!-- ##### Blog Area End ##### -->
+    
+    
+    <script type="text/javascript">
+    
+    
+		$("#qnaAnswerContent").keyup(function(){
+			
+			console.log($(this).val())
+			
+			let qnaAnswerContent = $(this).val();
+			
+			if(qnaAnswerContent.length > 500){
+				alert("500자 미만으로 작성이 가능합니다.");
+				qnaAnswerContent = qnaAnswerContent.substr(0, 500);
+				$(this).val(qnaAnswerContent);
+			}
+			
+		})
+    
+    
+    </script>
+    
+    
 
     
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

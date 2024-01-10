@@ -149,11 +149,11 @@
                         </div>
 	            	</div>
                 </div>
-                <div style="text-align: center;">
-	                <a href="bookMain.re">
-						<button type="button" class="btn alazea-btn2" 
-						style="margin-top: 60px; width:150px; height:50px">목록으로</button>
-					</a>
+                <div class="text-center my-5">
+                	<c:if test="${loginUser.userId == 'admin'}">
+						<button type="button" class="btn alazea-btn" onclick="location.href='bookUpdate.re?bookNo=${book.bookNo}'">수정</button>
+					</c:if>
+					<button type="button" class="btn alazea-btn-orange" onclick="location.href='bookMain.re'">목록</button>
 				</div>
                 <div style="text-align: right; margin-top:-90px">
                 	<p style = "padding-right:90px"><span>Share on</span></p>

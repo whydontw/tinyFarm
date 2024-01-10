@@ -58,6 +58,20 @@ public class BookServiceImpl implements BookService {
 	public int increaseCount(int bookNo) {
 		return bookDao.increaseCount(sqlSession, bookNo);
 	}
+
+	
+	//책 수정
+	@Override
+	public int bookUpdate(Book book) {
+		return bookDao.bookUpdate(sqlSession, book);
+	}
+
+	
+	//책 삭제
+	@Override
+	public int bookDelete(int bookNo) {
+		return bookDao.bookDelete(sqlSession, bookNo);
+	}
 	
 	
 	

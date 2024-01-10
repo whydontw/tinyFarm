@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -48,7 +48,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href=""><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a href="main.ad">Admin</a></li>
                         </ol>
                     </nav>
@@ -87,7 +87,8 @@
                         <!-- 표 작성 내역 -->
                         <div class="clearfix mt-15 mb-15">
                         	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
-                            <table class="table table-responsive" align="center">
+<!--                             <table class="table table-responsive" align="center"> -->
+                            <table class="table" align="center">
                                 <colgroup>
                                     <col width="5%">
                                     <col width="15%">
@@ -106,24 +107,29 @@
                                         <th><input type="checkbox" name="checkAll" id="checkAll"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                	<c:forEach var="q" items="${qList }">
-	                                    <tr>
-	                                        <td>${q.qnaNo }</td>
-	                                        <td>${q.userNo }</td>
-	                                        <c:choose>
-	                                        	<c:when test="${empty q.qnaAnswerContent }">
-			                                        <td><a href="#" onclick="qnaAnswerEnrollBtn(${q.qnaNo})">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting-o fa-lg"></i></span></a></td>
-	                                        	</c:when>
-	                                        	<c:otherwise>
-			                                        <td><a href="#" onclick="qnaAnswerUpdateBtn(${q.qnaNo});">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o fa-lg"></i></span></a></td>
-	                                        	</c:otherwise>
-	                                        </c:choose>
-	                                        <td>${q.qnaCreatedate }</td>
-	                                        <td>${q.qnaAnswerCreatedate }</td>
-	                                        <td><input type="checkbox" value="${q.qnaNo }" class="chkQna"></td>
-	                                    </tr>
-                                    </c:forEach>
+                                <tbody align="center">
+                                		<c:if test="${not empty qList }">
+	                                		<c:forEach var="q" items="${qList }">
+			                                    <tr>
+			                                        <td>${q.qnaNo }</td>
+			                                        <td>${q.userNo }</td>
+			                                        <c:choose>
+			                                        	<c:when test="${empty q.qnaAnswerContent }">
+					                                        <td align="left"><a href="#" onclick="qnaAnswerEnrollBtn(${q.qnaNo})">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting-o fa-lg"></i></span></a></td>
+			                                        	</c:when>
+			                                        	<c:otherwise>
+					                                        <td align="left"><a href="#" onclick="qnaAnswerUpdateBtn(${q.qnaNo});">${q.qnaTitle } <span>&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil-square-o fa-lg"></i></span></a></td>
+			                                        	</c:otherwise>
+			                                        </c:choose>
+			                                        <td>${q.qnaCreatedate }</td>
+			                                        <td>${q.qnaAnswerCreatedate }</td>
+			                                        <td><input type="checkbox" value="${q.qnaNo }" class="chkQna"></td>
+			                                    </tr>
+		                                    </c:forEach>
+                                		</c:if>
+                                		<c:if test="${empty qList }">
+                                			<tr><td colspan="6">※ 문의 내역이 없습니다.</td></tr>
+                                		</c:if>
                                 </tbody>
                             </table>
                         </div>

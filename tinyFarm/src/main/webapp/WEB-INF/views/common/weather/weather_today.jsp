@@ -161,6 +161,7 @@ h1, h2, h3, h4, h5, h6 {
 		})
 		
 		
+		
 		//위치 정보
 		function success({ coords, timestamp }) {
             const latitude = coords.latitude;   		// 위도
@@ -406,6 +407,7 @@ h1, h2, h3, h4, h5, h6 {
 			
 			$("#updateWeatherHour").text((weatherList[0].fcstTime).substr(0,2) + ":00 기준");
 		    $("#todayWeatherInfoArea").html(perHours);
+		    
 		    
 		    
 		    //초록예보~

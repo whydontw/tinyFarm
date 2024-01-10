@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -115,6 +115,32 @@
     <%@include file="/WEB-INF/views/common/footer.jsp" %>
 
     <script type="text/javascript">
+    
+	    $("#qnaTitle").keyup(function(){
+			
+			let qnaTitle = $(this).val();
+			
+			if(qnaTitle.length > 60){
+				alert("60자 미만으로 작성이 가능합니다.");
+				qnaTitle = qnaTitle.substr(0, 60);
+				$(this).val(qnaTitle);
+			}
+			
+		})
+		
+		$("#qnaContent").keyup(function(){
+			
+			console.log($(this).val())
+			
+			let qnaContent = $(this).val();
+			
+			if(qnaContent.length > 500){
+				alert("500자 미만으로 작성이 가능합니다.");
+				qnaContent = qnaContent.substr(0, 500);
+				$(this).val(qnaContent);
+			}
+			
+		})
     
     	function qnaSend(){
     		
