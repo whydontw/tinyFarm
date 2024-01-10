@@ -32,24 +32,21 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>QnA</h2>
+			<h2>1:1 문의하기</h2>
 		</div>
 
 		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i>QnA</a></li>
-						<li class="breadcrumb-item"><a href="#"><i
-						class="fa fa-home"></i>QnA 수정</a></li>
-						
-					</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">1:1 문의하기</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 	</div>
 
     <!-- ##### Blog Area Start ##### -->
@@ -57,9 +54,7 @@
         <div class="container">
             <div class="row">
             
-            
             	<%@ include file="qna_nav.jsp" %>
-
 
 				<div class="col-12 col-md-9">
 					<div class="col-12">
@@ -68,7 +63,7 @@
 							<div class="mb-50">
 								<p>
 								<h5>
-									<b>🌱 QNA 수정하기</b>
+									<b>🌱 문의사항 수정하기</b>
 								</h5>
 								</p>
 							</div>

@@ -43,6 +43,7 @@
                                     <select class="custom-select d-block w-100" id="userGrade_detail" name="grade">
                                         <option value="씨앗">씨앗</option>
                                         <option value="새싹">새싹</option>
+                                        <option value="잎새">잎새</option>
                                         <option value="열매">열매</option>
                                         <option value="관리자">관리자</option>
                                     </select>

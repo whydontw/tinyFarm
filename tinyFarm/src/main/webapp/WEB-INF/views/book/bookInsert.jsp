@@ -137,6 +137,7 @@
 	                            </div>
   								<div class="col-8 text-center" style = "margin-left:120px">
                                     <button type="submit" class="btn alazea-btn mt-15">등록</button>
+                                    <button type="button" class="btn alazea-btn-orange mt-15" onclick="location.href='bookMain.re'">목록</button>
                                 </div>
 	                        </form>
 	                    </div>
