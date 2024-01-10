@@ -690,6 +690,8 @@ public class MypageController {
 		PageInfo oPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Payments> oList = diaryService.myOrderList(userNo, oPi);
 		
+		System.out.println("구매내역 목록 : "+oList);
+		
 		//map에 페이지 정보와 글정보 담기
 		result.put("oList", oList);
 		result.put("oPi", oPi);
@@ -718,7 +720,6 @@ public class MypageController {
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
-		System.out.println(sList);
 		result.put("sList", sList);
 		result.put("sPi", sPi);
 		

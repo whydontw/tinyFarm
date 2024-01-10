@@ -27,6 +27,12 @@ public class Payments {
 	private String paymentStatus;
 	private String salesStatus;
 	
+	//마이페이지에서 사진 불러오는 용도로 사용!(지수)
+	private String filePath;
+	private String changeName;
+	
+	
+	
 
 
 }

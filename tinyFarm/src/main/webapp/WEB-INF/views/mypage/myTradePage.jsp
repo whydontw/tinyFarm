@@ -129,17 +129,14 @@ thead, tbody {
 	height: 40px;
 }
 
-#wishListTableContainer table tbody #nowish{
-margin: auto;
- font-size: 14px;
-}
 #wishListTableContainer {
 	margin-top: -15px;
 }
+#nowish{
+	text-align: center;
+}
 
 #wishListTableContainer table tbody {
-	display: block;
-	height: 450px;
 	max-height: 450px;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -210,6 +207,7 @@ background-color: none;
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="trade.me">거래내역</a></li>
 					</ol>
 					</nav>
@@ -342,17 +340,17 @@ background-color: none;
 	    		endPage = result.oPi.endPage;
 	    		maxPage = result.oPi.maxPage;
 				count = oList.length;
-	    	    
 	    	    if(count == 0){
 	    			str += "<tr>"
 		    			+ "<td colspan='6'>구매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(oList, function(key, o){
-		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+		    			
+		    			str += '<tr>'
 		    				+ "<td>"+o.paymentNo+"</td>"
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
-			   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
+			   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
 			   				+ "<td>"+o.productTitle+"</td>"
 			   				+ "<td>￦"+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
@@ -371,6 +369,10 @@ background-color: none;
     			}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage-5)+')">이전</a></li>';
     			}
+	    			console.log("페이징");
+	    			console.log(curPage);
+	    			console.log(startPage);
+	    			console.log(endPage);
 	    		for(var i=startPage; i<endPage+1; i++){
 	    			if (i==curPage) { //현재페이지일때 current-page class 추가
 	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
@@ -383,7 +385,7 @@ background-color: none;
 	    		}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage+5)+')">다음</a></li>';
 	    		}
-    			$("#orderPageArea>#orderPage").html(pStr);
+		    	$("#orderPageArea>#orderPage").html(pStr);
 	    		
     		},error : function(){
     			console.log("구매내역 ajax 통신 실패");
@@ -482,7 +484,7 @@ background-color: none;
     				    	+ "</tr>";
     			    }else{
     					$.each(oList, function(key, o){
-    						str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+    						str += '<tr>'
 			    				+ "<td>"+o.paymentNo+"</td>"
 				   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 				   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
@@ -610,12 +612,10 @@ background-color: none;
     			userNo : myNo
     		},
     		success : function(result){ //wishList
-    			console.log(result);
     			let wishList = result.wishList; //찜내역
     			let count = wishList.length; //찜개수
     			let str = "";
     			let cStr = "";
-    			console.log("찜내역 : "+wishList);
     			//개수 0이면
     			if(count == 0){
     				str += "<tr id='nowish'><td colspan='3'>찜내역이 없습니다.</td></tr>";
