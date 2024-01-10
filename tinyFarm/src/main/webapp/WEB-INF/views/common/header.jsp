@@ -17,7 +17,7 @@
 <title>작은농장</title>
 
 <!-- Favicon -->
-<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">

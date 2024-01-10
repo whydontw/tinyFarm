@@ -15,7 +15,7 @@
 	    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
 	    <!-- Title --> 
-	    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+	    <title>작은농장</title>
 	
 	    <!-- Favicon -->
 	    <link rel="icon" href="/resources/img/core-img/favicon.ico">
@@ -176,7 +176,6 @@
 								        reader.readAsDataURL(inputFile.files[0]);
 	
 								        reader.onload = function (e) {
-								            console.log(e.target.result);
 								            bookImage.src = e.target.result;
 								        }
 								    } else {

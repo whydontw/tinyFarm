@@ -360,8 +360,6 @@
                         		data: { userNo : userNo },
                         		success: function(result){
                         			
-                        			console.log(result);
-                        			
                         			$("#userNo_detail").val(result.userNo);
                         			$("#userId_detail").val(result.userId);
                         			$("#userName_detail").val(result.userName);

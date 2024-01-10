@@ -154,7 +154,6 @@
                         
                         function selectReportList(currentPage, category){
                         	
-							console.log(category)                        	
                         	
                         	$.ajax({
                         		url: "selectReportList.ad",
@@ -180,7 +179,6 @@
                         	let reportPi = result.pi;
                         	
                         	
-                        	console.log("reportPi", reportPi);
                         	
                         	
                         	
@@ -216,7 +214,6 @@
 								}
                 				
                 				
-                				console.log("카테고리", item.category); 
                 				
                 				str += "<tr class='align-items-center'><td>" + item.reportNo + "</td>" + 
 			                        	"<td>" + item.category + "</td>" +

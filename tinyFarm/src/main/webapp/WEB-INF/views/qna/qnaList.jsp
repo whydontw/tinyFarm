@@ -158,8 +158,6 @@
                         
 	                        $(function(){
 	                        	
-	                        	console.log(${period})
-	                        	
 	                        	$("#showPeriod").val(${period});
 	                        })
                         
