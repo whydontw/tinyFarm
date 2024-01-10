@@ -53,6 +53,8 @@ public class ProductController {
 		ArrayList<Product> list = productservice.selectList(pi);
 		
 		model.addAttribute("list", list);
+		
+		System.out.println("list : " +list);
 		model.addAttribute("pi", pi);
 		
 		return "product/ProductListView";
@@ -74,6 +76,8 @@ public class ProductController {
 			if((Member) session.getAttribute("loginUser") != null) {
 				
 				userNo = ((Member) session.getAttribute("loginUser")).getUserNo();
+				
+				System.out.println("userNo " + userNo);
 			}
 			
 			Product product = new Product();
