@@ -139,7 +139,7 @@
 		                                    <!-- Product Image -->
 		                                    <div >
 		                                        <a href="bookDetail.re?bookNo=${bl.bookNo}">
-		                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:350px; object-fit: cover;">
+		                                        	<img src="${contextPath }/${bl.bookChangeName }" alt="book_" style="width:300px; height:380px; object-fit: cover;">
 		                                        </a>
 		                                    </div>
 		                                    <!-- Product Info -->

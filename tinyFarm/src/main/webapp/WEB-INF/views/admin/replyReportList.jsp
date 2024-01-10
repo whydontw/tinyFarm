@@ -174,8 +174,12 @@
 										<th colspan="2">제목</th>
 										<td colspan="4" id="board__boardTitle"></td>
 									</tr>
+									<tr>
+										<th colspan="2">제목</th>
+										<td colspan="4" id="board__boardContent"></td>
+									</tr>
 								</table>
-								<button type="button" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">MORE DETAIL ≫</button>
+								<button type="button" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">더보기</button>
 							</div>
 							
 						</div>
@@ -419,6 +423,7 @@
                         			$("#board__boardWriter").text(bObj.boardWriter);
                         			$("#board__createDate").text(bObj.createDate);
                         			$("#board__boardTitle").text(bObj.boardTitle);
+                        			$("#board__boardContent").html(bObj.boardContent);
                         			
 	                    			$("#reply__replyWriter").text(brObj.replyWriter);
 	                    			$("#reply__createDate").text(brObj.createDate.toString());

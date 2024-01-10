@@ -392,8 +392,8 @@
 											<tr align="center">
 												<th>전체 결제수</th>
 												<th>일일 결제수</th>
-												<th>일일 누적 결제금액</th>
 												<th>일일 평균 결제금액</th>
+												<th>일일 누적 결제금액</th>
 											</tr>
 											<tr align="center">
 												<td>${paymentMap.allCount }</td>

@@ -116,7 +116,6 @@
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <img class="d-block w-100" src="${book.bookChangeName}" alt="1">
-                               
                                     </div>
                                   
                                 </div>
