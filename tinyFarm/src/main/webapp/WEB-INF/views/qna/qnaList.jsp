@@ -35,20 +35,21 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>QnA</h2>
+			<h2>1:1 문의하기</h2>
 		</div>
 
 		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>QnA</a></li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">1:1 문의하기</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 	</div>
 
     <!-- ##### Blog Area Start ##### -->
@@ -62,7 +63,7 @@
                     <!-- <div class="row"> -->
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
-                                <p><h5><b>🌱 나의 QNA 내역</b></h5></p>
+                                <p><h5><b>🌱 나의 문의내역</b></h5></p>
                             </div>
                             <div class="search_by_terms">
                                 <form action="qnaList" method="post" class="form-inline">
@@ -75,7 +76,6 @@
                                 </form>
                             </div>
                         </div>
-
 
 
                         <div class="clearfix mt-15 mb-15">
@@ -101,52 +101,61 @@
                                     </tr>
                                 </thead>
                                 <tbody align="center">
-		                        	 <c:forEach items="${qList}" var="qList" varStatus="index">
-	                                    <tr>
-	                                        <td>${qList.qnaNo }</td>
-	                                        <td align="left">
-	                                        	<p><b>${qList.qnaTitle }</b> <small>&nbsp;&nbsp; [ ${qList.qnaCreatedate } ]</small></p>
-	                                        	<p>${qList.qnaContent }</p>
-							                        				                        
-						                        <!-- 관리자 답변 -->
-			                                	<c:if test="${not empty qList.qnaAnswerContent }">	
-						                            <div class="single-comment justify-content-between d-flex">
-						                                <div class="user justify-content-between d-flex" style="display:none">
-						                                    <div id="qaAdminAnswer${index.count }" class="collapse desc">
-																<div class="py-4" style="border-top: 0.1em dotted #ccc;">
-							                                		<p><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;&nbsp;<b> 관리자 답변</b> <small>&nbsp;&nbsp; [ ${qList.qnaAnswerCreatedate } ]</small></p>
-													                <p>${qList.qnaAnswerContent }</p>
-							                                	</div>
-															</div>
-						                                </div>
-						                            </div>
-			                                    </c:if>
-	                                        </td>
-	                                        
-	                                        <td align="center">
-	                                        	<c:choose>
-	                                        		<c:when test="${empty qList.qnaAnswerContent }"></c:when>
-	                                        		<c:otherwise>
-					                                	<a href="#" class="text-uppercase" id="checkAdminAnswer" data-toggle="collapse" data-target="#qaAdminAnswer${index.count}"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-	                                        		</c:otherwise>
-	                                        	</c:choose>
-	                                        </td>
-	                                        
-	                                        <td align="center">
-	                                        	<c:choose>
-	                                        		<c:when test="${empty qList.qnaAnswerContent }"><b># 미답변</b></c:when>
-	                                        		<c:otherwise><b># 답변완료</b></c:otherwise>
-	                                        	</c:choose>
-	                                        </td>
-	                                        <td>
-	                                        	<c:if test="${empty qList.qnaAnswerContent }">
-	                                        		<a href="#" id="qnaUpdateBtn" onclick="qnaUpdateBtn(${qList.qnaNo})"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-		                                        </c:if>
-	                                        	<c:if test="${not empty qList.qnaAnswerContent }">-</c:if>
-	                                        </td>
-											<td><a href="#" id="qnaDeleteBtn" onclick="qnaDeleteBtn(${qList.qnaNo})"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a></td>
-	                                    </tr>
-                                    </c:forEach>
+		                        	 <c:if test="${empty qList }">
+		                        	 	<tr><td colspan="6">※ 문의한 내역이 없습니다.</td></tr>
+		                        	 </c:if>
+		                        	 
+		                        	 
+		                        	 <c:if test="${not empty qList }">
+		                        	 
+			                        	 <c:forEach items="${qList}" var="qList" varStatus="index">
+		                                    <tr>
+		                                        <td>${qList.qnaNo }</td>
+		                                        <td align="left">
+		                                        	<p><b>${qList.qnaTitle }</b> <small>&nbsp;&nbsp; [ ${qList.qnaCreatedate } ]</small></p>
+		                                        	<p>${qList.qnaContent }</p>
+								                        				                        
+							                        <!-- 관리자 답변 -->
+				                                	<c:if test="${not empty qList.qnaAnswerContent }">	
+							                            <div class="single-comment justify-content-between d-flex">
+							                                <div class="user justify-content-between d-flex" style="display:none">
+							                                    <div id="qaAdminAnswer${index.count }" class="collapse desc">
+																	<div class="py-4" style="border-top: 0.1em dotted #ccc;">
+								                                		<p><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;&nbsp;<b> 관리자 답변</b> <small>&nbsp;&nbsp; [ ${qList.qnaAnswerCreatedate } ]</small></p>
+														                <p>${qList.qnaAnswerContent }</p>
+								                                	</div>
+																</div>
+							                                </div>
+							                            </div>
+				                                    </c:if>
+		                                        </td>
+		                                        
+		                                        <td align="center">
+		                                        	<c:choose>
+		                                        		<c:when test="${empty qList.qnaAnswerContent }"></c:when>
+		                                        		<c:otherwise>
+						                                	<a href="#" class="text-uppercase" id="checkAdminAnswer" data-toggle="collapse" data-target="#qaAdminAnswer${index.count}"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+		                                        		</c:otherwise>
+		                                        	</c:choose>
+		                                        </td>
+		                                        
+		                                        <td align="center">
+		                                        	<c:choose>
+		                                        		<c:when test="${empty qList.qnaAnswerContent }"><b># 미답변</b></c:when>
+		                                        		<c:otherwise><b># 답변완료</b></c:otherwise>
+		                                        	</c:choose>
+		                                        </td>
+		                                        <td>
+		                                        	<c:if test="${empty qList.qnaAnswerContent }">
+		                                        		<a href="#" id="qnaUpdateBtn" onclick="qnaUpdateBtn(${qList.qnaNo})"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+			                                        </c:if>
+		                                        	<c:if test="${not empty qList.qnaAnswerContent }">-</c:if>
+		                                        </td>
+												<td><a href="#" id="qnaDeleteBtn" onclick="qnaDeleteBtn(${qList.qnaNo})"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a></td>
+		                                    </tr>
+	                                    </c:forEach>
+		                        	 </c:if>
+                                    
                                 </tbody>
                             </table>
                             <button type="button" onclick="location.href='qnaForm.qa'" class="btn alazea-btn-orange mb-15  float-right" id="boardMoreDetailBtn">작성하기</button>
@@ -202,32 +211,9 @@
                             	
                             }
                             
-                            
-                           
 			            	
 			            </script>
                         
-                        
-                        
-<!--						######### 검색 #########-->
-<!--                         <div class="section-padding-100"> -->
-<!--                             <div class="single-widget-area"> -->
-<!--                                 <form action="#" method="get" class="search-form d-flex float-right">   height-50 css 추가 -->
-<!--                                     <div class=""> -->
-<!--                                         <select class="custom-select widget-title height-50"> -->
-<!--                                             <option value="1">ID</option> -->
-<!--                                             <option value="2">내용</option> -->
-<!--                                         </select> -->
-<!--                                     </div> -->
-<!--                                     <div class=""> -->
-<!--                                         <input type="search" name="search" id="widgetsearch" placeholder="Search..."> -->
-<!--                                         <button type="submit"><i class="icon_search"></i></button> -->
-<!--                                     </div> -->
-<!--                                 </form> -->
-<!--                             </div> -->
-<!--                         </div> -->
-                    <!-- </div> -->
-                    
 							
 
                     <div class="row">

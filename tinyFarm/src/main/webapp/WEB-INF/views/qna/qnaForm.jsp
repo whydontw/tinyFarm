@@ -34,24 +34,21 @@
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>QnA</h2>
+			<h2>1:1 문의하기</h2>
 		</div>
 
 		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i>QnA</a></li>
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i>QnA 작성</a></li>
-						
-					</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">1:1 문의하기</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 	</div>
 
     <!-- ##### Blog Area Start ##### -->
@@ -67,11 +64,7 @@
 						<div
 							class=" d-flex flex-wrap align-items-center justify-content-between">
 							<div class="mb-50">
-								<p>
-								<h5>
-									<b>🌱 QNA 작성하기</b>
-								</h5>
-								</p>
+								<p><h5><b>🌱 문의사항 작성하기</b></h5></p>
 							</div>
 						</div>
 						<div class="checkout_details_area clearfix">
@@ -98,8 +91,8 @@
 										<textarea class="form-control" id="qnaContent" name="qnaContent" cols="30" rows="80" placeholder="문의할 내용을 입력해 주세요. (500자 미만)"></textarea>
 									</div>
 									<div class="col-12 ">
-                                         <button type="button" class="btn alazea-btn mt-15  float-right" onclick="location.href='qnaList.qa'">목록</button>
-										 <button type="submit" class="btn alazea-btn-orange mt-15 mr-15 float-right" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
+                                         <button type="button" class="btn alazea-btn-orange mt-15  float-right" onclick="location.href='qnaList.qa'">목록</button>
+										 <button type="submit" class="btn alazea-btn mt-15 mr-15 float-right" onclick="return qnaSend();" class="btn alazea-btn mt-15 float-right">등록</button>
                                      </div>
 								</div>
 							</form>
@@ -114,8 +107,8 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 
+
     <script type="text/javascript">
-    
     	
     	$("#qnaTitle").keyup(function(){
     		
@@ -128,6 +121,7 @@
     		}
     		
     	})
+    	
     	
     	$("#qnaContent").keyup(function(){
     		
@@ -154,7 +148,7 @@
     			$("#qnaContent").focus();
     			return false;
     		}
-    		if(!confirm('문의 사항을 작성하시겠습니까?')){
+    		if(!confirm('문의사항을 작성하시겠습니까?')){
     			return false;
     		}
     		return true;

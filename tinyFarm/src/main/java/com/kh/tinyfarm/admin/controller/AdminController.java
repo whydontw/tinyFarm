@@ -255,8 +255,7 @@ public class AdminController {
 		
 		return "redirect:qnaList.ad";
 	}
-	
-	
+
 	
 	//QNA 답변 수정 Form
 	@PostMapping("/qnaAnswerUpdateForm.ad")
@@ -537,7 +536,6 @@ public class AdminController {
 	
 	
 	
-	//회원 상세조회
 	@ResponseBody
 	@RequestMapping(value="reportDetailInfo.ad", produces = "application/json; charset=utf-8")
 	public HashMap<String, Object> reportDetailInfo(int replyNo) {
