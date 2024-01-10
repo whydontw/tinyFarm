@@ -154,7 +154,7 @@
   	</delete>
   	
   	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ댓글영역ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-  	<select id="boardReplyList" parameterType="_int" resultMap="boardReplyResultSet"> <!--내가 담아줄 vo객체 resultMap을 쓰기 -->	
+  	<select id="boardReplyList" parameterType="_int" resultMap="boardReplyResultSet"> 
 		SELECT REPLY_NO
       		  ,USER_ID REPLY_WRITER
       		  ,REPLY_CONTENT

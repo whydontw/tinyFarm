@@ -36,7 +36,7 @@ public class MbtiController {
 	@Autowired
 	private MbtiService mbtiService;
 
-	@RequestMapping("moveMbtiTest.bo")
+	@RequestMapping("moveMbtiTest.mt")
 	public String moveMbtiTest() {
 		return "mbti/mbtiTest";
 	}
@@ -44,53 +44,42 @@ public class MbtiController {
 	@ResponseBody
 	@RequestMapping(value = "selectContentNo.mt", produces = "application/json; charset=UTF-8")
 	public ArrayList<GardenFile> selectCntntsNo(int pageNo, InGardenMbti igm) throws IOException {
-		System.out.println("igm : " + igm);
+
 		ArrayList<InGardenMbti> cnList = mbtiService.selectCntntsNo(igm);
-		System.out.println("cnList : " + cnList);
-		
 		ArrayList<GardenFile> list = new ArrayList();
-		
 		//각각의 cntntsNo일때 실행해야함
-			
-		System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+
 		for(int i=0;i<cnList.size();i++) {
-			System.out.println(cnList.get(i).getCntntsNo());
-			
-			
+			//System.out.println(cnList.get(i).getCntntsNo());
 			
 			// 농사로api에서 추천리스트 받아오기
 			String apiKey = "20231128LKLLXWVMAXGGYTETEWAOBA";
 			String serviceName = "garden";
 			String operationNameList = "gardenFileList";
-
 			String parameter = "/" + serviceName + "/" + operationNameList;
 			parameter += "?apiKey=" + apiKey;
 			parameter += "&cntntsNo="+cnList.get(i).getCntntsNo();  //cnList의 cntntsNo넣기
-
 			URL apiUrl = new URL("http://api.nongsaro.go.kr/service" + parameter);
 			HttpURLConnection urlCon = (HttpURLConnection) apiUrl.openConnection();
 			urlCon.setRequestMethod("GET");
-
 			BufferedReader br = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
-
 			String responseText = "";
 			String line;
 
 			while ((line = br.readLine()) != null) {
 				responseText += line;
 			}
-			System.out.println("responseText : "+responseText);
+			//System.out.println("responseText : "+responseText);
 			try {
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
-
 				Document document = builder.parse(new InputSource(new StringReader(responseText)));
 				NodeList cntntsNoList = document.getElementsByTagName("cntntsNo");
 				NodeList cntntsSjList = document.getElementsByTagName("cntntsSj");
 				NodeList rtnFileUrlList = document.getElementsByTagName("rtnFileUrl");
 				NodeList rtnImgSeCodeList = document.getElementsByTagName("rtnImgSeCode");
 				NodeList rtnThumbFileUrlList = document.getElementsByTagName("rtnThumbFileUrl");
-				//for (int j = 0; j < cntntsNoList.getLength(); j++) {
+
 					int j=0;
 					Node node = cntntsNoList.item(j);
 					Node node2 = cntntsSjList.item(j);
@@ -115,16 +104,12 @@ public class MbtiController {
 						
 						list.add(gp);
 					}
-			//	}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
 		}
-		System.out.println("이거나오냐?");
-		System.out.println("list : "+list);
-		
-		
+		//System.out.println("list : "+list);	
 		
 		return list;
 	}
@@ -175,10 +160,7 @@ public class MbtiController {
 		while ((line = br.readLine()) != null) { // br.readLine()이 수행되면 한줄을 읽어버리기 때문에 변수 처리해야한다.
 			responseText += line;
 		}
-		
-		
-		// model.addAttribute("result",responseText);
-		
+
 		// XML 데이터 파싱을 위한 DocumentBuilderFactory 생성
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -208,9 +190,6 @@ public class MbtiController {
 		model.addAttribute("imgArr", imgArr);
 		model.addAttribute("plantInfo", plantInfo);
 		model.addAttribute("detailImg", plantInfo.getDetailImg());
-
-		//식물에 대한 의견 정보 리스트 넘기기
-		//ArrayList<PlantComment> pcList = pl
 		
 		//응답 키와 값을 가진 map 넘기기
 		model.addAllAttributes(map);

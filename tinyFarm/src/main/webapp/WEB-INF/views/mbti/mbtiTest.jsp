@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +12,9 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title -->
-<title>작은 농장</title>
+<title>작은농장</title>
 <!-- jQuery 라이브러리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
 
@@ -165,13 +163,13 @@
 <body>
 	<%@include file="../common/header.jsp"%>
 
-	<!-- ##### Breadcrumb Area Start ##### -->
+	<!-- 상단 시작 -->
 	<div class="breadcrumb-area">
 		<!-- Top Breadcrumb Area -->
 		<div
 			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 			style="background-image: url(resources/img/bg-img/24.jpg);">
-			<h2>작은농부 테스트</h2>
+			<h2>풀BTI 테스트</h2>
 		</div>
 
 		<div class="container">
@@ -181,47 +179,38 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="/tinyfarm"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Mbti</li>
+							<li class="breadcrumb-item active" aria-current="page">풀BTI</li>
 						</ol>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- ##### Breadcrumb Area End ##### -->
-
+	<!-- 상단 끝 -->
+	
+	<!-- mbti시작페이지 -->
 	<article class="start">
-		<!-- ##### Blog Content Area Start ##### -->
 		<section class="blog-content-area section-padding-0-100">
 			<div class="container">
 				<div class="row justify-content-center">
-					<!-- Blog Posts Area -->
 					<div class="col-12 col-md-8">
 						<div class="blog-posts-area">
-
-							<!-- Post Details Area -->
 							<div class="single-post-details-area" align="center">
 								<div class="post-content">
-									<!-- 타이틀 부분 -->
+									<!-- 타이틀 -->
 									<h4 class="post-title">나에게 어울리는 식물은 무엇일까요?</h4>
-
 									<!-- mbti테스트 타이틀사진 -->
 									<div class="post-thumbnail mb-30">
 										<img src="resources/img/icon/진단테스트이미지.webp" id="img">
 									</div>
 
-									<!-- 사진 밑에 글 1 -->
-
-
-									<!-- 사진 밑에 글 2 -->
 									<blockquote style="background-color: white;">
 										<div class="blockquote-text">
 											<h5>“당신의 Mbti성향과 공간에서 키우기 좋은 식물을 찾아드려요.”</h5>
 											<h5>Please answer honestly.</h5>
 										</div>
 									</blockquote>
-									<button type="button" class="btn alazea-btn-orange ml-15"
-										onclick="start();">테스트 시작하기</button>
+									<button type="button" class="btn alazea-btn-orange ml-15" onclick="start();">테스트 시작하기</button>
 								</div>
 							</div>
 						</div>
@@ -229,25 +218,20 @@
 				</div>
 			</div>
 		</section>
-		<!-- ##### Blog Content Area End ##### -->
 	</article>
+		<!-- mbti시작페이지 끝 -->
 
 
-
+	<!-- mbti 질문페이지 시작 -->
 	<article class="question">
-		<!-- ##### Blog Content Area Start ##### -->
 		<section class="blog-content-area section-padding-0-100">
 			<div class="container">
 				<div class="row justify-content-center">
-					<!-- Blog Posts Area -->
 					<div class="col-12 col-md-8">
 						<div class="blog-posts-area">
-
-							<!-- Post Details Area -->
 							<div class="single-post-details-area">
 								<div class="post-content">
 									<article class="question">
-
 										<!--몇번째 문항인지 숫자로 표현-->
 										<div>
 											<h1 class="q-num">Q1</h1>
@@ -260,10 +244,10 @@
 										</div>
 
 										<h2 id="title" class="text-center mt-5">1번 문제</h2>
-										<br> <br> <img id="qImg">
-										<!-- <img src="resources/img/icon/진단테스트이미지.webp" id="qImg"> -->
-										<br> <br> <br> <input id="type" type="hidden"
-											value="EI">
+										<br><br>
+										<img id="qImg">
+										<br><br><br> 
+										<input id="type" type="hidden" value="EI">
 										<!-- 어떤 타입을 물어보는 문제인지 알기위해 사용 -->
 
 										<!-- 질문 답버튼 -->
@@ -283,7 +267,6 @@
 											<button id="B" type="button" class="mbtiResultBtn BBtn">INFP대답</button>
 											<!-- 아래는 I, N, F, P 값 -->
 										</div>
-
 									</article>
 								</div>
 							</div>
@@ -292,9 +275,10 @@
 				</div>
 			</div>
 		</section>
-		<!-- ##### Blog Content Area End ##### -->
 	</article>
-
+		<!-- mbti질문페이지 끝 -->
+	
+	
 	<article class="loading">
 		<!-- 로딩창 -->
 
@@ -830,7 +814,6 @@
 
 		$(function() {
 			$("#recommendPlant").on("click", "img", function() {
-				console.log($(this));
 				$(this).parents("form").children(".submitBtn").click();
 			});
 		});
@@ -850,27 +833,13 @@
 				var growth = "";
 				var management = "";
 
-				($("#lv1lv2lv3").val() == 0) ? (lvTest += "lv1") : ($(
-						"#lv1lv2lv3").val() == 1) ? (lvTest += "lv2")
-						: (lvTest += "lv3");
-				($("#ntmtht").val() == 0) ? (temperate += "nt") : ($("#ntmtht")
-						.val() == 1) ? (temperate += "mt")
-						: (temperate += "ht");
-				($("#nsmshs").val() == 0) ? (sun += "ns")
-						: ($("#nsmshs").val() == 1) ? (sun += "ms")
-								: (sun += "hs");
-				($("#nhmhhh").val() == 0) ? (humidity += "nh") : ($("#nhmhhh")
-						.val() == 1) ? (humidity += "mh") : (humidity += "hh");
-				($("#namaha").val() == 0) ? (air += "na")
-						: ($("#namaha").val() == 1) ? (air += "ma")
-								: (air += "ha");
-
-				($("#ngmghg").val() == 0) ? (growth += "ng") : ($("#ngmghg")
-						.val() == 1) ? (growth += "mg") : (growth += "hg");
-				($("#nimihi").val() == 0) ? (management += "ni")
-						: ($("#nimihi").val() == 1) ? (management += "mi")
-								: (management += "hi");
-
+				($("#lv1lv2lv3").val() == 0) ? (lvTest += "lv1") : ($("#lv1lv2lv3").val() == 1) ? (lvTest += "lv2"): (lvTest += "lv3");
+				($("#ntmtht").val() == 0) ? (temperate += "nt") : ($("#ntmtht").val() == 1) ? (temperate += "mt"): (temperate += "ht");
+				($("#nsmshs").val() == 0) ? (sun += "ns"): ($("#nsmshs").val() == 1) ? (sun += "ms"): (sun += "hs");
+				($("#nhmhhh").val() == 0) ? (humidity += "nh") : ($("#nhmhhh").val() == 1) ? (humidity += "mh") : (humidity += "hh");
+				($("#namaha").val() == 0) ? (air += "na"): ($("#namaha").val() == 1) ? (air += "ma"): (air += "ha");
+				($("#ngmghg").val() == 0) ? (growth += "ng") : ($("#ngmghg").val() == 1) ? (growth += "mg") : (growth += "hg");
+				($("#nimihi").val() == 0) ? (management += "ni"): ($("#nimihi").val() == 1) ? (management += "mi"): (management += "hi");
 				$("#lvExplain").html(result[lvTest]["lvExplain"]);
 				$("#lvTitle").html(result[lvTest]["lvTitle"]);
 				$("#lvTag1").html(result[lvTest]["lvTag1"]);
@@ -878,82 +847,60 @@
 
 				//설문조사한 온도,빛,습도,공기값을 넣어주고 색깔바꿔주기
 				if (temperate == "nt") {
-					$("#tempTitle").html(result[temperate]["tempTitle"]).css(
-							"color", "#FF6C30");
+					$("#tempTitle").html(result[temperate]["tempTitle"]).css("color", "#FF6C30");
 				} else if (temperate == "mt") {
 					$("#tempTitle").html(result[temperate]["tempTitle"]);
 				} else {
-					$("#tempTitle").html(result[temperate]["tempTitle"]).css(
-							"color", "#70C745");
+					$("#tempTitle").html(result[temperate]["tempTitle"]).css("color", "#70C745");
 				}
 				$("#tempExplain").html(result[temperate]["tempExplain"]);
 
 				if (sun == "ns") {
-					$("#sunTitle").html(result[sun]["sunTitle"]).css("color",
-							"#FF6C30");
+					$("#sunTitle").html(result[sun]["sunTitle"]).css("color","#FF6C30");
 				} else if (sun == "ms") {
 					$("#sunTitle").html(result[sun]["sunTitle"]);
 				} else {
-					$("#sunTitle").html(result[sun]["sunTitle"]).css("color",
-							"#70C745");
+					$("#sunTitle").html(result[sun]["sunTitle"]).css("color","#70C745");
 				}
 				$("#sunExplain").html(result[sun]["sunExplain"]);
 
 				if (humidity == "nh") {
-					$("#humTitle").html(result[humidity]["humTitle"]).css(
-							"color", "#FF6C30");
+					$("#humTitle").html(result[humidity]["humTitle"]).css("color", "#FF6C30");
 				} else if (humidity == "mh") {
 					$("#humTitle").html(result[humidity]["humTitle"]);
 				} else {
-					$("#humTitle").html(result[humidity]["humTitle"]).css(
-							"color", "#70C745");
+					$("#humTitle").html(result[humidity]["humTitle"]).css("color", "#70C745");
 				}
 				$("#humExplain").html(result[humidity]["humExplain"]);
 
 				if (air == "na") {
-					$("#airTitle").html(result[air]["airTitle"]).css("color",
-							"#FF6C30");
+					$("#airTitle").html(result[air]["airTitle"]).css("color","#FF6C30");
 				} else if (air == "ma") {
 					$("#airTitle").html(result[air]["airTitle"]);
 				} else {
-					$("#airTitle").html(result[air]["airTitle"]).css("color",
-							"#70C745");
+					$("#airTitle").html(result[air]["airTitle"]).css("color","#70C745");
 				}
 				$("#airExplain").html(result[air]["airExplain"]);
 
 				//input hidden요소에 설문조사한 생장속도/관리요구도 값 넣어주기
 				$("#growth").attr("value", result[growth]["grothExplain"]);
-				$("#management").attr("value",
-						result[management]["interestExplain"]);
-				console.log($("#growth").val());
-				console.log($("#management").val());
+				$("#management").attr("value",result[management]["interestExplain"]);
 
 				var enviNum = parseInt($("#ntmtht").val())
 						+ parseInt($("#nsmshs").val())
 						+ parseInt($("#nhmhhh").val())
 						+ parseInt($("#namaha").val());
-				console.log(enviNum);
+
 				//enviNum과 percentage의 관계
 				var percentage3 = enviNum * 10;
-				var enviType = enviNum <= 3 ? "험난한 환경"
-						: (enviNum <= 5 ? "무난한 환경" : "훌륭한 환경");
-				console.log(percentage3);
-				console.log("바확인");
-				console.log($("#pressbarGage"));
-				console.log("환경설정");
-				console.log(enviType);
+				var enviType = enviNum <= 3 ? "험난한 환경": (enviNum <= 5 ? "무난한 환경" : "훌륭한 환경");
+
 				//방법1
 				$("#pressbarGage").attr('data-percentage', percentage3);
 				$("#progress").attr("value", percentage3);
 				$("#envyTypeText").html(enviType);
 
-				//추천식물 불러오기
-				console.log("growth/management확인");
-				console.log($("#growth").val());
-				console.log($("#management").val());
-
-				//비동기방식으로 컨텐츠숫자리스트들 가져오기
-
+				//추천식물 가져오기
 				$.ajax({
 							url : "selectContentNo.mt",
 							data : {
@@ -962,7 +909,7 @@
 								managedemanddoCodeNm : $("#management").val()
 							},
 							success : function(result) {
-								//input hidden으로 result[i].컨텐츠번호를 리스트에 담고 추천ajax에서 가져다쓰면될듯
+
 								var inputValue = $("#pageNo").val();
 								var incrementedValue = parseInt(inputValue) + 1;
 								$("#pageNo").val(incrementedValue);
@@ -970,16 +917,12 @@
 								for (var i = 0; i < result.length; i++) {
 									var wrapDiv = $("<div class='single-best-seller-product d-flex align-items-center'></div>");
 									var formDiv = $("<form action='detailRecommend.mt' method='post'></div>");
-
 									var rtnFileUrlStr = $("<input type='hidden' name='rtnFileUrlStr' value=''>");
 									rtnFileUrlStr.val(result[i].rtnFileUrlStr);
-
 									var cntntsNo = $("<input type='hidden' name='cntntsNo' value=''>");
 									cntntsNo.val(result[i].cntntsNo);
-
 									var cntntsSj = $("<input type='hidden' name='cntntsSj' value=''>");
 									cntntsSj.val(result[i].cntntsSj);
-
 									var submitBtn = $("<input type='submit' class='submitBtn' hidden>");
 									var detailImg = $("<input type='hidden' name='detailImg'>");
 									detailImg.val(result[i].rtnFileUrl[0]);
@@ -991,7 +934,6 @@
 									var name = $("<p id='plantName'></p>").text(result[i].cntntsSj);
 									
 									img.attr("src", result[i].rtnFileUrl[0]);
-									
 									imgDiv.append(img);
 									thumbnailDiv.append(imgDiv);
 									nameDiv.append(name);
@@ -1037,10 +979,9 @@
 				 */
 
 			}
-
-			if (num == 12) { //11개의 질문이 끝나면 question창 숨기고 result창 띄우기
+			//11개의 질문이 끝나면 question창 숨기고 result창 띄우기
+			if (num == 12) { 
 				
-			
 				showLoading();
 				$(".question").hide();
 				$(".result").show();
@@ -1058,7 +999,6 @@
 				$("#TF").val() == 0 ? (mbti += "F") : (mbti += "T");
 				$("#JP").val() == 0 ? (mbti += "P") : (mbti += "J");
 
-				console.log(mbti);
 				$("#mbtiImg").attr("src", result[mbti]["mbtiImg"]);
 				$("#item").html(result[mbti]["item"]);
 				$("#mbtiExplain").html(result[mbti]["mbtiExplain"]);
@@ -1066,16 +1006,12 @@
 				$("#mbtiTag2").html(result[mbti]["mbtiTag2"]);
 				$("#mbtiTag3").html(result[mbti]["mbtiTag3"]);
 				$("#mbtiTag4").html(result[mbti]["mbtiTag4"]);
-
 			} else {
 
 				//질문페이지를 클릭시 숫자를 올렸으니깐 그 번호에 해당하는 질문,버튼2개의 값을 바꿔주기
 				$(".q-num").html('Q' + num);
 				$(".progress-txt").html(num + ' / 11');
-				$(".progress-bar").attr(
-						'style',
-						'width: calc(100/11*' + num
-								+ '%); background-color: #70c745;');
+				$(".progress-bar").attr('style','width: calc(100/11*' + num+ '%); background-color: #70c745;');
 				$("#title").html(q[num]["title"]); // <h2 id="title" class="text-center mt-5">문제</h2>의 문제를 바꿔줌
 				$("#type").val(q[num]["type"]); //내용을 변경"하는 것이 아니라, 속성을 변경. input id="type"의 value=""안의 값을 바꿔주는 것. 즉 문제종류를 결정하는 타입 변경해주기
 				$("#A").html(q[num]["A"]);
@@ -1084,12 +1020,9 @@
 				$("#b").html(q[num]["b"]);
 				$("#c").html(q[num]["c"]);
 				$("#qImg").attr("src", q[num]['qImg']);
-				//console.log("Image Path:", q[num]['qImg']);
 				num++;
 			}
-
 		}
-
 		 
 	</script>
 

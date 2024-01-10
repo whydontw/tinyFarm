@@ -39,10 +39,8 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="list.bo",produces = "application/json; charset=UTF-8")
 	public ArrayList<Board>selectBoardList(){
-		
-		
+			
 		ArrayList<Board> blist=boardService.selectBoardList();
-		//System.out.println("blist : "+blist);
 		
 		return blist;
 	}
@@ -50,29 +48,19 @@ public class BoardController {
 	
 	@RequestMapping("detail.bo")
 	public String boardDetail(int boardNo,Model model,HttpSession session) {
-		//조회수 증가랑 bno넘겨서 detail정보 가져오기 그 후 가져온 객체를 detailview에 보내기
+		
 		int result = boardService.boardIncreaseCount(boardNo);
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNo =loginUser.getUserNo();
-		System.out.println("로그인한 회원번호 : "+userNo);
+		
 		if(result>0) {
 			Board boardInfo = boardService.boardDetail(boardNo);
 			model.addAttribute("boardInfo", boardInfo);
-			System.out.println("boardInfo : "+boardInfo);
-			
-			//System.out.println("boardNo : "+boardNo);
-			
 			Follow fw = new Follow();
-			//fw = new Follow(null, null, userNo,boardNo);
 			fw.setBoardNo(boardNo);
 			fw.setUserNo(userNo);
-		
-			//System.out.println("fw : "+fw);
-			
-			
 			int isFollow = followService.selectFollow(fw);
 			model.addAttribute("isFollow", isFollow);
-			//System.out.println("isFollow : "+isFollow);
 			
 		}else {
 			return "common/errorPage";
@@ -89,8 +77,7 @@ public class BoardController {
 	
 	@PostMapping("insert.bo")
 	public String boardInsert(Board b,HttpSession session) {
-		
-		System.out.println("Board : "+b);
+
 		int result = boardService.insertBoard(b);
 		System.out.println("result : "+result);
 		if(result>0) {
@@ -107,7 +94,6 @@ public class BoardController {
 	@GetMapping("moveUpdate.bo")
 	public String moveBoardUpdate(int boardNo,Model model) {
 		Board boardInfo = boardService.boardDetail(boardNo);
-		System.out.println("업데이트 boardInfo : "+boardInfo);
 		model.addAttribute("boardInfo",boardInfo);
 		
 		return "board/boardUpdate";
@@ -115,10 +101,8 @@ public class BoardController {
 	
 	@PostMapping("update.bo")
 	public String boardUpdate(Board boardInfo,HttpSession session) {
-		System.out.println("업데이트확인");
-		System.out.println("boardInfo : "+boardInfo);
+		
 		int result = boardService.boardUpdate(boardInfo);
-		System.out.println("result : "+result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글 수정이 성공하셨습니다.");
 			return "redirect:detail.bo?boardNo="+boardInfo.getBoardNo();
@@ -146,7 +130,6 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="boardReplyList.bo",produces ="application/json; charset=UTF-8")
-	//@RequestMapping("boardReplyList.bo")
 	public ArrayList<BoardReply> boardReplyList(int boardNo){
 		
 		ArrayList<BoardReply> rlist = new ArrayList<>();
@@ -159,10 +142,9 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="insertReply.bo", produces="application/json; charset=UTF-8")
 	public int insertReply(BoardReply br) {
-		//System.out.println("이것도 안나올까??");
-		//System.out.println("br : "+br);
+		
 		int result = boardService.insertReply(br);
-		//System.out.println("result : "+result);
+
 		return result;
 	}
 	
@@ -170,42 +152,28 @@ public class BoardController {
 	@RequestMapping(value="updateReply.bo",produces="application/json; charset=UTF-8")
 	public int updateReply(BoardReply br) {
 		
-		//System.out.println("br : "+br);
 		int result = boardService.updateReply(br);
-		//System.out.println(result);
+
 		return result;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="deleteReply.bo",produces = "application/json; charset=UTF-8")
 	public int deleteReply(int replyNo) {
-		//System.out.println(replyNo);
+
 		int result = boardService.deleteReply(replyNo);
 		
 		
 		return result;
 	}
 	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="findLike.bo",produces =
-	 * "application/json; charset=UTF-8") public int findLike(BoardLike br) {
-	 * System.out.println("br : "+br); //int result = boardService.findLike(br);
-	 * 
-	 * int result = boardService.findLike(br);
-	 * System.out.println("result : "+result); return result;
-	 * 
-	 * }
-	 */
+
 	@ResponseBody
 	@RequestMapping(value="findLike.bo",produces = "application/json; charset=UTF-8")
 	public ArrayList<BoardLike> findLike(BoardLike br) {
-		//System.out.println("br : "+br);
-		//int result  = boardService.findLike(br);
-		
+
 		ArrayList<BoardLike> blList = boardService.findLike(br);
-		//System.out.println("result : "+blList);
+
 		return blList;
 		
 	}
@@ -214,8 +182,6 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="dolike.bo",produces = "application/json; charset=UTF-8")
 	public int doLike(BoardLike bl) {
-		
-		//System.out.println("bl : "+bl);
 		
 		int result1 = boardService.likeIncreaseCount(bl);
 		int result2 = 0;
@@ -246,8 +212,7 @@ public class BoardController {
 	//게시글 신고페이지로 이동
 	@PostMapping("moveReport.bo")
 	public String moveReport(int userNo,int boardNo,Model model) {
-		//System.out.println("userNo : "+userNo);
-		//System.out.println("boardNo :"+boardNo);
+
 		model.addAttribute("reportWriter", userNo);
 		model.addAttribute("refBno", boardNo);
 		
@@ -273,6 +238,7 @@ public class BoardController {
 	//댓글 신고창으로 이동
 	@RequestMapping("moveReplyReport.bo")
 	public String moveReplyReport(int replyNo,Model model) {
+		
 		model.addAttribute("replyNo", replyNo);
 		return "board/replyReport";
 	}
@@ -281,7 +247,6 @@ public class BoardController {
 	//댓글 신고
 	@PostMapping("replyReport.bo")
 	public String replyReport(ReplyReport rp,HttpSession session) {
-		//System.out.println("rp : "+rp);
 		
 		int result =boardService.replyReport(rp);
 		
@@ -300,7 +265,7 @@ public class BoardController {
 	public ArrayList<Board> searchBoardList(Board b) {
 		
 		ArrayList<Board> searchList = boardService.searchBoardList(b);
-		System.out.println("searchList : "+searchList);
+
 		return searchList;
 	}
 	

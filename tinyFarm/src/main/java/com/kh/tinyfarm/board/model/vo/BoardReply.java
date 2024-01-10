@@ -17,10 +17,8 @@ public class BoardReply {
 	private String replyWriter;
 	private String replyContent;
 	private int likeCount;
-//	private Date createDate;
 	private String createDate;
 	private String status;
-	
 	private String profile;
 	
 	
