@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작은농장</title>
 <style>
     table {
         border: 1px #a39485 solid;

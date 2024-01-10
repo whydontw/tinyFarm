@@ -41,7 +41,7 @@
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
-            <h2>결제하기</h2>
+            <h2>작물 결제</h2>
         </div>
 
         <div class="container">
@@ -49,8 +49,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">결제하기</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="plist.bo">작물거래</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물결제</li>
                         </ol>
                     </nav>
                 </div>
@@ -59,7 +60,7 @@
     </div>
     <!-- ##### Breadcrumb Area End ##### -->
 
-    <!-- ##### Cart Area Start ##### -->
+    <!-- ##### Cart Area Start ##### --> 
     <div class="cart-area section-padding-0-100 clearfix">
         <div class="container">
             <div class="row">
@@ -132,7 +133,7 @@
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <label for="order-notes">배송 메모</label>
-                                    <textarea class="form-control" id="order-notes" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                    <textarea class="form-control" id="order-notes" cols="30" rows="10" placeholder="배송 시 전달 사항을 적어주세요." style = "resize: none;"></textarea>
                                 </div>
 
                             </div>
@@ -272,13 +273,8 @@
     		});
     	}
            	  
-           	  
- 
 	</script>
 
-           	
-  
-    
     
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

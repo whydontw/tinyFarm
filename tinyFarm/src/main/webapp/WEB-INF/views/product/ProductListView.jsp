@@ -43,9 +43,14 @@
    }
    
    #pimg{
-   		width: 350px;
+    	width: 403px;
    		height: 320px;
 
+   }
+   
+   
+   .emptylist{
+   		align-items : center;
    }
    
 	
@@ -83,8 +88,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">작물거래</li>
                         </ol>
                     </nav>
                 </div>
@@ -95,7 +100,7 @@
     <!-- ##### Breadcrumb Area End ##### -->
     
 	<!-- 작물 검색 -->
-    <!-- <div class="pccontainer" align="center">
+<!--      <div class="pccontainer" align="center">
 		<div>
 			<table class="psearch-area">
 				<tr id=psearch>
@@ -110,14 +115,14 @@
 						<input type="text" class="form-control"placeholder="거래 하고 싶은 작물을 검색해보세요." name="psearch" id="psearch" maxlength="100" style="width: 700px;">
 					</td>
 					<td class="psearchbtn">
-						<button class="btn" name="psearchButton" id="psearchButton" style="width: 100px;">검색</button>
+						<button class="btn alazea-btn" name="psearchButton" id="psearchButton" style="width: 100px;">검색</button>
 					</td>
 				</tr>
 			</table>
 		</div>
-	</div> -->
+	</div>
 	
-	<br><br>
+	<br><br> -->
     
 
     <!-- ##### Shop Area Start ##### -->
@@ -125,10 +130,14 @@
         <div class="container">
             <div class="row">
                 <!-- All Products Area -->
-                <div class="col-12">
+                <div class="col-10 mx-auto">
                     <div class="shop-products-area">
                         <div class="row">
-                        
+                        <c:if test="${empty list}">                                   
+							<div class="emptylist mx-auto">
+								<p style="text-align : center;">등록된 작물이 없습니다.<br><br></p>
+							</div>
+						</c:if>
                         
 						<c:forEach items="${list}" var="p">
  
@@ -136,19 +145,15 @@
                             <div class="col-12 col-sm-6 col-lg-4">
 
                                 <div class="single-product-area mb-50">
-                                    
-                                    <c:if test="${empty list }">
-										<div>
-											<p>조회된 게시글이 없습니다.</p>
-										</div>
-									</c:if>
+                        
+
 									<!-- Product Image -->
 									<div class="product-img">
                                         <a href="<%=request.getContextPath()%>/pdetail.bo?pno=${p.productNo}">
                                         	<img src="${p.filePath}${p.changeName}" alt="" id="pimg">
                                         </a>
                                         <c:if test="${not empty loginUser}">
-	                                        <div class="product-meta" style="padding-left: 50px; width: 320px;">
+	                                        <div class="product-meta" style="padding-left: 40px; width: 310px;">
 	                                            <!-- <a href="#" class="wishlist-btn" id="rec_update"><i class="icon_heart_alt"></i></a> -->
 	                                            <a href="<%=request.getContextPath()%>/porder.bo?pno=${p.productNo}" class="add-to-cart-btn">즉시구매</a>
 	                                        </div>
@@ -179,7 +184,7 @@
                         <!-- Pagination -->
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                            	<c:if test="${pi.currentPage ne 1}">
+                            	<c:if test="${pi.currentPage > 1}">
                                 	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage-1}">
                                 	<i class="fa fa-angle-left"></i></a>
                                 	</li>
@@ -187,7 +192,7 @@
                                 <c:forEach begin="${pi.startPage}" end="${pi.endPage }" var="p">
                                 	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${p}">${p}</a></li>
                                 </c:forEach>
-                                <c:if test="${pi.currentPage ne pi.maxPage}">
+                                <c:if test="${pi.currentPage < pi.maxPage}">
 	                                <li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage+1}">
 	                                <i class="fa fa-angle-right"></i></a></li>
                                 </c:if>

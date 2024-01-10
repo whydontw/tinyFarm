@@ -1,5 +1,7 @@
 package com.kh.tinyfarm.product.model.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,13 +32,15 @@ public class Product {
 	private String productContent;
 	private String productPrice;
 	private int count;
-	private String regiDate;
+	private Date regiDate;
 	private String modiDate;
 	private String salesStatus;
 	private String filePath;
 	private String changeName;
 	private String originName;
 	private int likeCount;
+	private String userId;
+	private String categoryName;
 	
 	
 

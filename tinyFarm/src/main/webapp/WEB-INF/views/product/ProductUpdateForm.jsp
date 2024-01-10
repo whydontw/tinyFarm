@@ -11,20 +11,21 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/scss/style.css">
+    <link href="resources/tam-emoji/css/emoji.css" rel="stylesheet">
     
     <!-- summernote -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<!--     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet"> -->
     
     <style>
 
-    table{
+    .updatetable{
         width: 1000px;
         height: 500px;
         font-size: 14px;
@@ -61,6 +62,8 @@
         outline : none;
     }
     
+    
+    
 
 	</style>
 
@@ -84,7 +87,7 @@
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
-            <h2>SHOP DETAILS</h2>
+            <h2>작물 등록</h2>
         </div>
 
         <div class="container">
@@ -92,9 +95,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i>작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item"><a href="#">작물거래</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">작물 수정</li>
+                            <li class="breadcrumb-item active" aria-current="page">작물등록</li>
                         </ol>
                     </nav>
                 </div>
@@ -106,7 +109,7 @@
     <!-- 상품 등록 테이블 -->
     <div class="updatearea" align="center">
     <form action="pupdate.bo" id="pupdateForm" method="post" enctype="multipart/form-data">
-        <table>
+        <table class="updatetable">
             <tbody>
                 <tr style="height: 50px;">
                     <th align="left">사진</th>
@@ -122,14 +125,14 @@
                 </tr>
                 <tr style="height: 50px;">
                     <td rowspan="3" style="width: 400px;">
-                        <div>                     
+                        <div >                     
 	                        <c:choose>
 	                    		<c:when test="${empty p.changeName}">
 	                    			첨부파일이 없습니다.	                    		
 	                    		</c:when>
 	                    		
 	                            <c:otherwise>
-	                            	<label for="file">
+	                            	<label for="file" style="width: 262px; height: 286px; margin: -100px 0 0 60px;">
 	                    				<img class="d-block w-100" src="${p.filePath}${p.changeName}" alt="" id="pimg">
 	                    			</label>
 	                    				<input type="file" id="reUpFile" name="reUpFile" onchange="loadImg(this)" id="pimg">
@@ -180,11 +183,32 @@
 	<script>
 	
 		$(function(){
-			
-			$("#productselect").val(${p.categoryNo});
 
+//			$("#productselect").val(${p.categoryNo}).prop("selected", true);
+			$("#productselect").val(${p.categoryNo});
 			
 		});
+		
+	
+	
+	
+	
+/* 		$(function(){
+			
+			var choose = "${p.categoryNo}";
+			
+			console.log(choose);
+			$("#productselect").each(function(){
+				//데이터베이스에서 조회해온 게시글의 카테고리와 카테고리목록중 텍스트가 같은 요소
+				console.log($(this));
+				if($(this)==choose){ // 비교대상이 같다면 
+					console.log($(this));
+					$(this).attr("selected",true);//해당 요소객체의 selected속성을 true값으로 변경
+					//선택되어짐
+					return false; //break; 역할 
+				}
+			});
+		}); */
 	
 	</script>
     
@@ -193,33 +217,33 @@
     
     <script>
     
-		$(document).ready(function() {
-				$('#summernote').summernote({
-					  width: 500,
-				      height: 300,                 // 에디터 높이
-					  minHeight: null,             // 최소 높이
-				  	  maxHeight: null,             // 최대 높이
-					  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-					  lang: "ko-KR",					// 한글 설정
-					  placeholder: '최대 2048자까지 작성 가능합니다.',	//placeholder 설정
-				 	  toolbar: [
-					    // [groupName, [list of button]]
-					    ['fontname', ['fontname']],
-					    ['fontsize', ['fontsize']],
-					    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-					    ['color', ['forecolor','color']],
-					    ['table', ['table']],
-					    ['para', ['ul', 'ol', 'paragraph']],
-					    ['height', ['height']],
-					    ['insert',['picture','link','video']],
-					    ['view', ['fullscreen', 'help']]
-					  ],
-					fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-					fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-		          
-				});
-			
-		});
+    $(document).ready(function() {
+		document.emojiSource = 'resources/tam-emoji/img'; //이모지 사진 사용
+			$('#summernote').summernote({
+				width : 500,
+                height : 300, // 에디터 높이
+                minHeight : null, // 최소 높이
+                maxHeight : null, // 최대 높이
+                focus : true, // 에디터 로딩후 포커스를 맞출지 여부
+                lang : "ko-KR", // 한글 설정  
+                toolbar : [
+                  //   ['a11y',['a11y']], // The Button
+                    ['insert', ['emoji']],
+                    [ 'fontname', [ 'fontname' ] ],
+                    [ 'fontsize', [ 'fontsize' ] ],
+                    [ 'style', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
+                    [ 'color', [ 'forecolor', 'color' ] ],
+                    [ 'table', [ 'table' ] ],
+                    [ 'para', [ 'paragraph' ] ],
+                    [ 'height', [ 'height' ] ],
+                    [ 'insert', [ 'picture', 'link' ] ] ],
+            fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
+                            '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],   
+            fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
+                        '20', '22', '24', '28', '30', '36', '50', '72' ]
+            });
+		
+	});
     
 		
 	</script>
@@ -268,6 +292,20 @@
 
                  }
         	 }
+     
+     
+     <!-- 글작성 제목,가격 글자수 제한 --> 	
+	     $("#name,#price").keyup(function(){
+		
+		let insertTitle = $(this).val();
+		
+		if(insertTitle.length > 30){
+			alert("30자 미만으로 작성이 가능합니다.");
+			insertTitle = insertTitle.substr(0, 30);
+			$(this).val(insertTitle);
+		}
+		
+	})
          
      
      
@@ -280,6 +318,9 @@
     
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	
+	<script src="resources/tam-emoji/js/config.js"></script>
+    <script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 	
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
@@ -294,8 +335,8 @@
     <script src="js/active.js"></script>
 
     <!-- summernote css/js -->
-    <script src="<%=request.getContextPath()%>/resources/summernote1/js/summernote/summernote-lite.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/summernote1/js/summernote/lang/summernote-ko-KR.js"></script>
+<%--     <script src="<%=request.getContextPath()%>/resources/summernote1/js/summernote/summernote-lite.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/summernote1/js/summernote/lang/summernote-ko-KR.js"></script> --%>
 </body>
 
 </html>

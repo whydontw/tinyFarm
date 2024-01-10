@@ -13,7 +13,7 @@
 <!-- Title -->
 <title>작은농장</title>
 <!-- Favicon -->
-<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
 <!-- jQuery 라이브러리 -->
@@ -157,7 +157,7 @@ a, p, button {
 					<!-- Section Heading -->
 					<div class="section-heading text-center">
 						<h2>TIP</h2>
-						<p>실시간 초록예보입니다 🌿🌿</p>
+						<h3>실시간 초록예보입니다 🌿</h3>
 					</div>
 				</div>
 			</div>
@@ -281,11 +281,14 @@ a, p, button {
 					});
 
 				});
+				
+				
 				//계절 버튼 클릭시 이벤트
 				//getInGardenPlantListAjax와 따로 두는 이유는 버튼이 클릭되면 $("#pageNo")를 초기화하고 $(".itemRow")를 비워야 하기 때문
 				function selectWeatherRecomm(ignSeasonChkVal) {
 					$(".itemRow").empty();
 					$("#loadingScreen").css("display", "block");
+					$(".more-view-div").addClass("hidden");
 					//현재 꽃피는 계절을 눌린 계절의 코드로 변경
 					$("#currentIgnSeasonChkVal").val(ignSeasonChkVal);
 					//더보기 누를때 쓰이는 pageNo를 다시 1로 초기화

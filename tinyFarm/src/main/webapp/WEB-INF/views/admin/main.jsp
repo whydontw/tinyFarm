@@ -15,13 +15,13 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
+    <title>작은농장</title>
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="${contextPath }/resources/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
     
     <style type="text/css">
     	.display__none{
@@ -55,7 +55,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="${contextPath }"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Admin</li>
                         </ol>
                     </nav>
@@ -214,7 +214,7 @@
 
 							<div class="py-3">
 								<div class="section-heading mt-2">
-									<h6 class="py-1">🌱 전체 상세통계</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 전체 상세통계</h6>
 								</div>
 								<div class="clearfix mt-15" id="">
 									<table class="table" width="100%">
@@ -256,7 +256,7 @@
 
 							<div class="py-3">
 								<div class="section-heading mt-2">
-									<h6 class="py-1">🌱 전체 상세통계</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 전체 상세통계</h6>
 								</div>
 								<div class="clearfix mt-15" id="">
 									<table class="table" width="100%">
@@ -295,7 +295,7 @@
 
 							<div class="py-3">
 								<div class="section-heading mt-2">
-									<h6 class="py-1">🌱 전체 상세통계</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 전체 상세통계</h6>
 								</div>
 								<div class="clearfix mt-15" id="">
 									<table class="table" width="100%">
@@ -325,7 +325,7 @@
 
 							<div class="py-3">
 								<div class="section-heading">
-									<h6 class="py-1">🌱 상품 카테고리 비율</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 상품 카테고리 비율</h6>
 								</div>
 								<div class="alazea-progress-bar mb-50">
 									<!-- Single Progress Bar -->
@@ -378,7 +378,7 @@
 
 							<div class="py-3">
 								<div class="section-heading mt-2">
-									<h6 class="py-1">🌱 전체 상세통계</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 전체 상세통계</h6>
 								</div>
 								<div class="clearfix mt-15" id="">
 									<table class="table" width="100%">
@@ -427,7 +427,7 @@
 
 							<div class="py-3">
 								<div class="section-heading mt-2">
-									<h6 class="py-1">🌱 전체 상세통계</h6>
+									<h6 class="py-1"><img src="${contextPath }/resources/img/icon/peach_icon.png"> 전체 상세통계</h6>
 								</div>
 								<div class="clearfix mt-15" id="">
 									<table class="table" width="100%">
@@ -494,10 +494,6 @@
 						        let imgHeight = canvas.height * imgWidth / canvas.width;
 						        let heightLeft = imgHeight;
 						        
-						        console.log(pageHeight);
-						        console.log(imgHeight);
-						        
-
 						        let doc = new jsPDF('p', 'mm');
 						        let position = margin;
 

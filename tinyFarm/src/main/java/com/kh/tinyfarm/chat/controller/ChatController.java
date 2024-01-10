@@ -127,10 +127,9 @@ public class ChatController {
 		int result = chatService.deleteRoom(map);
 
 		if(result >0) {
-			session.setAttribute("alertMsg", "채팅방 삭제가 완료됐습니다");
 			return "redirect:chatList.ch";
 		} else {
-			session.setAttribute("alertMsg", "채팅방 삭제에 실패했습니다. 다시 시도해주세요");
+			session.setAttribute("alertMsg", "채팅방 나가기에 실패했습니다. 다시 시도해주세요");
 			return "redirect:chatList.ch";
 		}
 	}

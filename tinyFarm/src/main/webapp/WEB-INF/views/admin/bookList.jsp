@@ -15,7 +15,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+    <title>작은농장</title>
 
     <!-- Favicon -->
     <link rel="icon" href="${contextPath }/resources/img/core-img/favicon.ico">
@@ -257,8 +257,6 @@
                         			$("#userPhone_detail").val(result.phone);
                         			
                         			var imageSrc = "${contextPath}/" + result.changeName;
-                        			
-                        			console.log(imageSrc);
                         			
                         			$("#profileImage").prop("src", imageSrc);
                         			
