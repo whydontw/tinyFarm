@@ -64,9 +64,24 @@
         	text-align: center;
         }
         .btn-green{
-        	width: 80px;
-        	height: 40px;
+        	width: 90px;
+        	height: 50px;
         	margin: auto;
+        	background-color: #70C745;
+			color: white;
+			border: none;
+        }
+        .btn-green:focus{
+			outline: none;
+		}
+        
+        .btn-green:hover{
+        	background-color: white;
+			color: #70C745;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #70C745;
+			transition-duration: 400ms;
         }
         #diarylike{
          	width: 28px;
@@ -102,7 +117,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0)">일지보기</a></li>
                         </ol>
                     </nav>
@@ -287,7 +303,8 @@
     		}, function(back) {
     			//아니오 누를시 현재페이지 유지
     			if (!back) {return false;}
-    			window.history.back();
+    			
+    			window.history.go(-1);
     		}); 
     	 });
     </script>

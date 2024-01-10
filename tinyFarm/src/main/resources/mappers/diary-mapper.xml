@@ -91,7 +91,6 @@
 	  	<result column="FILE_PATH" property="filePath"/>
 	  	<result column="CHANGE_NAME" property="changeName"/>
   	</resultMap>
-  	
   	<!-- 주문 -->
   	<resultMap type="payments" id="paymentResultSet">
 	  	<result column="PAYMENT_NO" property="paymentNo"/>
@@ -100,13 +99,17 @@
 	  	<result column="PRODUCT_NO" property="productNo"/>
 	  	<result column="USER_NO" property="userNo"/>
 	  	<result column="BUYER_ADDRESS" property="buyerAddress"/>
+	  	<result column="PAYMENT_STATUS" property="paymentStatus"/>
 	  	<result column="ORDER_NO" property="orderNo"/>
 	  	<result column="BUYER_EMAIL" property="buyerEmail"/>
 	  	<result column="BUYER_PHONE" property="buyerPhone"/>
 	  	<result column="BUYER_NAME" property="buyerName"/>
 	  	<result column="ORDER_REQUIRED" property="orderRequired"/>
 	  	<result column="ORDER_DATE" property="orderDate"/>
-	  	<result column="STATUS" property="status"/>
+	  	<result column="PRODUCT_TITLE" property="productTitle"/>
+	  	<result column="SALES_STATUS" property="salesStatus"/>
+	  	<result column="FILE_PATH" property="filePath"/>
+	  	<result column="CHANGE_NAME" property="changeName"/>
   	</resultMap>
   	
   	<!-- 로그인 유저 정보 -->
@@ -326,11 +329,12 @@
   	</select>
   	
   	<!-- 구매내역 목록 -->
-  	<select id="myOrderList" parameterType="payments" resultMap="paymentResultSet,productResultSet">
-  		SELECT PAYMENT_NO,ORDER_DATE, P.PRODUCT_TITLE,PAYMENT_METHOD, PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
+  	<select id="myOrderList" parameterType="payments" resultMap="paymentResultSet">
+  		SELECT PAYMENT_NO,ORDER_DATE,P.PRODUCT_TITLE,PAYMENT_METHOD,A.FILE_PATH,A.CHANGE_NAME,PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(P.USER_NO=M.USER_NO)
+		LEFT JOIN ATTACHMENT A ON (P.PRODUCT_NO=A.REF_NO)
 		WHERE PP.USER_NO=#{userNo}
   	</select>
   	
@@ -363,10 +367,11 @@
   	
   	<!-- 주문리스트 검색 -->
   	<select id="searchOrderList" parameterType="payments" resultMap="paymentResultSet">
-  		SELECT PP.PAYMENT_NO,PP.ORDER_DATE, P.PRODUCT_TITLE,PP.PAYMENT_METHOD,PP.PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
+  		SELECT PP.PAYMENT_NO,PP.ORDER_DATE, P.PRODUCT_TITLE,PP.PAYMENT_METHOD,A.FILE_PATH,A.CHANGE_NAME,PP.PAYMENT_PRICE, P.PRODUCT_NO, M.USER_NAME
 		FROM PRODUCT_PAYMENT PP
 		LEFT JOIN PRODUCT P ON(PP.PRODUCT_NO=P.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(P.USER_NO=M.USER_NO)
+		LEFT JOIN ATTACHMENT A ON (P.PRODUCT_NO=A.REF_NO)
 		WHERE PP.USER_NO=#{userNo}
 		AND ORDER_DATE LIKE '%'||#{orderDate}||'%'
 		ORDER BY ORDER_DATE
@@ -382,10 +387,11 @@
   	
   	<!-- 판매리스트 검색 -->
   	<select id="searchSellList" parameterType="product" resultMap="productResultSet">
-  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
+  		SELECT P.PRODUCT_NO,P.PRODUCT_TITLE,P.PRODUCT_PRICE,A.FILE_PATH,A.CHANGE_NAME,P.REGI_DATE,P.SALES_STATUS,M.USER_NAME
 		FROM PRODUCT P
 		LEFT JOIN PRODUCT_PAYMENT PP ON(P.PRODUCT_NO=PP.PRODUCT_NO)
 		LEFT JOIN MEMBER M ON(M.USER_NO=PP.USER_NO)
+		LEFT JOIN ATTACHMENT A ON (P.PRODUCT_NO=A.REF_NO)
 		WHERE P.USER_NO=#{userNo}
 		AND REGI_DATE LIKE '%'||#{regiDate}||'%'
 		ORDER BY REGI_DATE
@@ -393,10 +399,12 @@
   	
   	<!-- 찜목록 -->
   	<select id="selectWish" parameterType="product" resultMap="productResultSet">
-  		SELECT P.PRODUCT_NO, PRODUCT_TITLE, PRODUCT_PRICE
+  		SELECT P.PRODUCT_NO, PRODUCT_TITLE, PRODUCT_PRICE, CHANGE_NAME, FILE_PATH 
 		FROM PRODUCT P
 		LEFT JOIN PRODUCT_LIKE PL ON(P.PRODUCT_NO=PL.PRODUCT_NO)
+		LEFT JOIN ATTACHMENT A ON(P.PRODUCT_NO=A.REF_NO)
 		WHERE PL.USER_NO=#{userNo}
+		AND SALES_STATUS='Y'
   	</select>
 
 	<!-- 영농일지 좋아요 -->

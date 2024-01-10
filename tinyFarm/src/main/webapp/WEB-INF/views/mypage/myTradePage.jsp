@@ -125,26 +125,24 @@ table {
 	font-size: 14px;
 }
 
-thead {
+thead, tbody {
 	height: 40px;
 }
 
 #wishListTableContainer {
 	margin-top: -15px;
 }
+#nowish{
+	text-align: center;
+}
 
 #wishListTableContainer table tbody {
-	display: block;
 	max-height: 450px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	text-align: left;
 	font-size: 14px;
 	text-overflow: ellipsis;
-}
-
-#wishTable thead {
-	height: 20px;
 }
 
 #wishTable tbody tr {
@@ -164,13 +162,17 @@ background-color: none;
 }
 
 #proImg {
-	width: 60%;
-	height: 60%;
+	width: 100px;
+	height: 100px;
 	padding: 0px 0px 0px 0px;
 }
 
 #imgTd {
 	width: 25%;
+	height: 25%;
+}
+#wInfoTd{
+	padding-left: 15px;
 }
 
 #btnTd {
@@ -178,8 +180,8 @@ background-color: none;
 	text-align: center;
 }
 #wishImg {
-	width: 80%;
-	height: 80%;
+	width: 100px;
+    height: 100px;
 	padding: 10px 0px 10px 10px;
 }
 #wishCount,#orderCount,#sellCount{
@@ -204,7 +206,8 @@ background-color: none;
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="trade.me">거래내역</a></li>
 					</ol>
 					</nav>
@@ -295,7 +298,7 @@ background-color: none;
 	        					<div id="wishListTableContainer">
 			                    	<table id="wishTable">
 										<thead>
-											<tr><td colspan="3">찜목록</td></tr>
+											<tr><td colspan='3'>찜목록</td></tr>
 										</thead>
 										<tbody>
 										</tbody>
@@ -337,17 +340,17 @@ background-color: none;
 	    		endPage = result.oPi.endPage;
 	    		maxPage = result.oPi.maxPage;
 				count = oList.length;
-	    	    
 	    	    if(count == 0){
 	    			str += "<tr>"
 		    			+ "<td colspan='6'>구매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(oList, function(key, o){
-		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+		    			
+		    			str += '<tr>'
 		    				+ "<td>"+o.paymentNo+"</td>"
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
-			   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
+			   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
 			   				+ "<td>"+o.productTitle+"</td>"
 			   				+ "<td>￦"+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
@@ -366,6 +369,10 @@ background-color: none;
     			}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage-5)+')">이전</a></li>';
     			}
+	    			console.log("페이징");
+	    			console.log(curPage);
+	    			console.log(startPage);
+	    			console.log(endPage);
 	    		for(var i=startPage; i<endPage+1; i++){
 	    			if (i==curPage) { //현재페이지일때 current-page class 추가
 	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
@@ -378,7 +385,7 @@ background-color: none;
 	    		}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage+5)+')">다음</a></li>';
 	    		}
-    			$("#orderPageArea>#orderPage").html(pStr);
+		    	$("#orderPageArea>#orderPage").html(pStr);
 	    		
     		},error : function(){
     			console.log("구매내역 ajax 통신 실패");
@@ -411,7 +418,6 @@ background-color: none;
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(sList, function(key, s){ 
-		    			console.log(s);
 		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
 			   				+ "<td>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
@@ -478,7 +484,7 @@ background-color: none;
     				    	+ "</tr>";
     			    }else{
     					$.each(oList, function(key, o){
-    						str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+    						str += '<tr>'
 			    				+ "<td>"+o.paymentNo+"</td>"
 				   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 				   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
@@ -612,13 +618,12 @@ background-color: none;
     			let cStr = "";
     			//개수 0이면
     			if(count == 0){
-    				str += "<span id='noWish'>찜내역이 없습니다.</span>";
+    				str += "<tr id='nowish'><td colspan='3'>찜내역이 없습니다.</td></tr>";
     			}else{ //있으면 목록 뽑아주기
 	    			$.each(wishList, function(key, w){
-	    				console.log(w.productNo);
 	    				str += "<tr>"
-	    					+ "<td id='imgTd'><img id='wishImg' alt='제품이미지' src='resources/상추.jpg'></td>"
-							+ "<td>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
+	    					+ '<td id="imgTd"><img id="wishImg" alt="제품이미지" src="'+w.filePath+w.changeName+'"></td>'
+							+ "<td id='wInfoTd'>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
 							+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
 	    					+ "</tr>";
 	    			});
