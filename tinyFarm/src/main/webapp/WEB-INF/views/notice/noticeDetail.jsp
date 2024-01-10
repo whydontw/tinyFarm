@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>작은농장</title>
 <style>
     table {
         border: 1px #a39485 solid;
@@ -48,6 +48,9 @@
     .title-sub-writer>p,#noticeType{
 		color: rgba(0,0,0,0.4);
 	}
+	#noticeType{
+		min-width: 90px;
+	}
 	.title-sub,.title-sub-btn{
 		display:flex;
 		justify-content: space-between;
@@ -55,6 +58,14 @@
 	.update-btn:hover,.delete-btn:hover{
 		cursor:pointer;
 		color:#FF6C30;
+	}
+	.title{
+		max-width:1100px;
+		word-wrap:break-word;
+	}
+	#board_content{
+		width:100%;
+		word-wrap:break-word;
 	}
 </style>
 </head>
@@ -101,7 +112,11 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12 titleDiv" role="main">
-							<h2 class="title"><b id="noticeType">[${notice.noticeType}]</b>&nbsp;&nbsp;<b>${notice.noticeTitle}</b></h2>
+							<div style="display:flex;">
+								<h2 id="noticeType"><b>[${notice.noticeType}]</b>&nbsp;&nbsp;</h2>
+								<h2 class="title"><b>${notice.noticeTitle}</b></h2>
+							</div>
+							
 								
 							<div class="title-sub">
 								<div class="title-sub-writer">
