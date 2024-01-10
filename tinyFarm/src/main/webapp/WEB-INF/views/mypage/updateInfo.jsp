@@ -66,7 +66,7 @@
 
 #deleteImg {
 	height: 36px;
-	width: 28%;
+	width: 25%;
 	border: none;
 	cursor: pointer;
 }
@@ -139,7 +139,18 @@
 	color: red;
 	font-size: 15px;
 }
-
+.btn-del{
+	width: 20%;
+	height: 10%;
+	margin: auto;
+	background-color: #b6b8b6;
+	color: white;
+	border: none;
+}
+.btn-del:focus{
+	outline: none;
+}
+        
 #delText {
 	width: 90%;
 	height: 40px;
@@ -223,7 +234,7 @@
 	    									<!-- 파일 업로드 입력 폼 -->
 									       <div class="box-file-input">
 									       	<label><input type="file"class="file-input" id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)"></label>
-									       	<button type="button" id="deleteImg">사진 삭제</button>
+									       	<button type="button" id="deleteImg" class="btn-del">사진삭제</button>
 									       </div>
 										</div>
 									</div>

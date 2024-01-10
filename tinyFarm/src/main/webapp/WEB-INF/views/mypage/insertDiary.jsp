@@ -73,7 +73,7 @@ a, p {
 	width: 10%;
 	height: 15%;
 	float: right;
-	border-radius: 0;
+	margin-top: 1%;
 }
 .btn-red{
 	margin-left: 1%;
