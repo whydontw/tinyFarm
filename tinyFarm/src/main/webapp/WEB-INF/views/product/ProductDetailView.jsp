@@ -6,6 +6,7 @@
 
 <head>
 	<% String contextPath = request.getContextPath(); %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -162,7 +163,12 @@
 	                       <div>
 		                       <p><span>작물종류</span><span>${p.categoryName}</span></p>
 		                       <p><span>작성자</span><span>${p.userId}</span></p>
-		                       <p><span>등록일자</span><span><fmt:formatDate value="${p.regiDate}" pattern="yyyy년 MM월 dd일"/></span></p>
+		                       <p><span>등록일자</span>
+		                          <span>
+		                          <fmt:parseDate value="${p.regiDate}" var="dateFmt" pattern="yyyy-MM-dd"/>
+		                          <fmt:formatDate value="${dateFmt}" pattern="yyyy년 MM월 dd일"/>
+		                          </span>
+		                       </p>
 	                       </div>
                         </div>
                             
