@@ -117,19 +117,19 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label for="first_name">수령인</label>
-                                    <input type="text" class="form-control" id="first_name" value="${loginUser.userName}" required>
+                                    <input type="text" class="form-control" id="first_name" value="${loginUser.userName}" placeholder="필수 입력 사항 입니다." required>
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="phone_number">이메일</label>
-                                    <input type="text" class="form-control" id="email" min="0" value="${loginUser.email}">
+                                    <input type="text" class="form-control" id="email" min="0" value="${loginUser.email}" placeholder="필수 입력 사항 입니다." required>
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="phone_number">연락처</label>
-                                    <input type="text" class="form-control" id="phone_number" min="0" value="${loginUser.phone}" required>
+                                    <input type="text" class="form-control" id="phone_number" min="0" value="${loginUser.phone}" placeholder="필수 입력 사항 입니다." required>
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="company">주소</label>
-                                    <input type="text" class="form-control" id="address" value="${loginUser.address}" required>
+                                    <input type="text" class="form-control" id="address" value="${loginUser.address}" placeholder="필수 입력 사항 입니다." required>
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <label for="order-notes">배송 메모</label>
@@ -167,7 +167,7 @@
                             <h5 id="totalPrice">${3000+p.productPrice}원</h5>
                         </div>
                         <div class="checkout-btn mt-30">
-                            <a href="#" class="btn alazea-btn w-100" onclick="requestPay()">결제하기</a>
+                            <a href="javascript:void(0)" class="btn alazea-btn w-100" onclick="requestPay()">결제하기</a>
                             <%--    <button class="kdg-detailPost-btn" onclick="requestPay()" >${post.immediatly}원으로 즉시구매 클릭</button> --%>
                         </div>
                     </div>
@@ -183,7 +183,36 @@
     <script>
 
            	function requestPay() {
-           		
+
+  				var deliveryName  = $("#first_name").val();
+  				var deliveryEmail  = $("#email").val();
+  				var deliveryPhonenumber  = $("#phone_number").val();
+  				var deliveryAddress  = $("#address").val();
+ 				
+ 				console.log(deliveryAddress);
+ 				
+ 				if(deliveryName == ''){
+ 					alert('수령인을 입력하세요');
+ 					$("#first_name").focus();
+ 					return false;
+ 				}
+ 				if(deliveryEmail == ''){
+ 					alert('메일 주소를 입력하세요');
+ 					$("#address").focus();
+ 					return false;
+ 				}
+ 				if(deliveryPhonenumber == ''){
+ 					alert('연락처를 입력하세요');
+ 					$("#address").focus();
+ 					return false;
+ 				}
+ 				if(deliveryAddress == ''){
+ 					alert('주소를 입력하세요');
+ 					$("#address").focus();
+ 					return false;
+ 				}
+ 				
+ 				
            		var totalPrice = ${3000 + p.productPrice};
      			var IMP = window.IMP;
         		IMP.init("imp42520578");
