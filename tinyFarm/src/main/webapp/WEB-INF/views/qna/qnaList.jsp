@@ -100,11 +100,11 @@
                                         <th>삭제</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody align="center">
 		                        	 <c:forEach items="${qList}" var="qList" varStatus="index">
 	                                    <tr>
 	                                        <td>${qList.qnaNo }</td>
-	                                        <td>
+	                                        <td align="left">
 	                                        	<p><b>${qList.qnaTitle }</b> <small>&nbsp;&nbsp; [ ${qList.qnaCreatedate } ]</small></p>
 	                                        	<p>${qList.qnaContent }</p>
 							                        				                        

@@ -116,6 +116,32 @@
 
     <script type="text/javascript">
     
+	    $("#qnaTitle").keyup(function(){
+			
+			let qnaTitle = $(this).val();
+			
+			if(qnaTitle.length > 60){
+				alert("60자 미만으로 작성이 가능합니다.");
+				qnaTitle = qnaTitle.substr(0, 60);
+				$(this).val(qnaTitle);
+			}
+			
+		})
+		
+		$("#qnaContent").keyup(function(){
+			
+			console.log($(this).val())
+			
+			let qnaContent = $(this).val();
+			
+			if(qnaContent.length > 500){
+				alert("500자 미만으로 작성이 가능합니다.");
+				qnaContent = qnaContent.substr(0, 500);
+				$(this).val(qnaContent);
+			}
+			
+		})
+    
     	function qnaSend(){
     		
     		if($("#qnaTitle").val() == null || $("#qnaTitle").val() == ""){
