@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +12,9 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title -->
-<title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+<title>작은농장</title>
 <!-- jQuery 라이브러리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
 
@@ -47,6 +45,30 @@
 .search-form {
 	width: 400px;
 }
+#widgetsearch{
+	outline: none;
+}
+.enrollBtn{
+	width: 100px;
+	height: 30px;
+	border: none;
+	outline: none;
+	background-color:#70c745;
+	color : white; 
+	display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+.enrollBtn:focus{
+	outline: none;
+}
+.enrollBtn:hover{
+	cursor: pointer;
+	background-color:#70a745;
+	transition-duration: 400ms;
+}
+
+
 </style>
 
 
@@ -55,12 +77,9 @@
 <body>
 	<%@include file="../common/header.jsp"%>
 
-	<!-- ##### Breadcrumb Area Start ##### -->
+	<!-- 상단 시작 -->
 	<div class="breadcrumb-area">
-		<!-- Top Breadcrumb Area -->
-		<div
-			class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-			style="background-image: url(resources/img/bg-img/24.jpg);">
+		<div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(resources/img/bg-img/24.jpg);">
 			<h2>이야기해요</h2>
 		</div>
 
@@ -69,8 +88,7 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/tinyfarm"><i
-									class="fa fa-home"></i> Home</a></li>
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i> Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">이야기해요</li>
 						</ol>
 					</nav>
@@ -78,91 +96,72 @@
 			</div>
 		</div>
 	</div>
-	<!-- ##### Breadcrumb Area End ##### -->
+	<!-- 상단 끝 -->
 
-	<!-- ##### Blog Area Start ##### -->
+
+
+	<!-- 게시글 영역 시작 -->
 	<section class="alazea-blog-area mb-100">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-8">
 					<div style="display: flex; justify-content: flex-end;">
-						<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
-							style="width: 25px; height: 25px;"></a>
+						<!-- 
+					<a href="insert.bo"><img src="resources/img/icon/글작성1.png"
+							style="width: 25px; height: 25px;"></a>  -->
+						<button type="button" class="enrollBtn" onclick="location.href='insert.bo'">글작성</button>
+
+						
 					</div>
 					<div class="row">
-
-
 						<div>
-							<ul class="feed_items">
-
-							</ul>
-							<ul class="searchFeed_items">
-
-							</ul>
+							<ul class="feed_items"></ul>
+							<ul class="searchFeed_items"></ul>
 						</div>
 					</div>
 				</div>
 
-				<!-- 검색창 -->
+
 				<div class="col-12 col-md-4">
 					<div class="post-sidebar-area">
-						<!-- ##### Single Widget Area ##### -->
 						<div class="single-widget-area">
+							<!-- 검색창 -->
 							<div class="search-form">
 								<input type="text" name="searchText" id="widgetsearch"
-									placeholder="Search...">
+									placeholder="작성자,해시태그 검색...">
 								<button onclick="searchBoardList();" id="searchBtn">
 									<i class="icon_search"></i>
 								</button>
 							</div>
 						</div>
 
-						<!-- 날씨api -->
-						<jsp:include
-							page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
-
-
+						<!-- 날씨 api -->
+						<jsp:include page="/WEB-INF/views/common/weather/weather_resize.jsp"></jsp:include>
 
 						<div class="col-12 col-lg-7 mt-50">
-							<div class="alazea-service-area mb-100"
-								style="margin-bottom: 0px;">
-								<!-- Single Service Area -->
-								<div
-									class="single-service-area d-flex align-items-center wow fadeInUp"
-									data-wow-delay="100ms">
-									<!-- Icon -->
+							<div class="alazea-service-area mb-100" style="margin-bottom: 0px;">
+								<div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
 									<div class="service-icon mr-30">
 										<img src="resources/img/core-img/s1.png" alt="">
 									</div>
-									<!-- Content -->
 									<div class="service-content" id="weather__temp">
 										<h5></h5>
 										<h6></h6>
 									</div>
 								</div>
-								<!-- Single Service Area -->
-								<div
-									class="single-service-area d-flex align-items-center wow fadeInUp"
-									data-wow-delay="300ms">
-									<!-- Icon -->
+								<div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="300ms">
 									<div class="service-icon mr-30">
 										<img src="resources/img/core-img/s2.png" alt="">
 									</div>
-									<!-- Content -->
 									<div class="service-content" id="weather__moi">
 										<h5></h5>
 										<h6></h6>
 									</div>
 								</div>
-								<!-- Single Service Area -->
-								<div
-									class="single-service-area d-flex align-items-center wow fadeInUp"
-									data-wow-delay="500ms">
-									<!-- Icon -->
+								<div class="single-service-area d-flex align-items-center wow fadeInUp" data-wow-delay="500ms">
 									<div class="service-icon mr-30">
 										<img src="resources/img/core-img/s3.png" alt="">
 									</div>
-									<!-- Content -->
 									<div class="service-content" id="weather__reco">
 										<h5>텃밭에 추천해요!</h5>
 										<h6></h6>
@@ -170,36 +169,32 @@
 								</div>
 							</div>
 						</div>
-
-
-
-
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- ##### Blog Area End ##### -->
+	<!-- 게시글 영역 끝 -->
 
 	<script>
                        	$(function(){
                        		selectBoardList();
                        		time();
                        	});
-                      </script>
+    </script>
 
 	<script>
-							
-									
+							//게시판 조회기능						
                        		function selectBoardList(){
                     	   		 
                        			$.ajax({
                        				url: "list.bo",
                        				success: function(result){
                      					
-                       					$(".feed_items").empty();
+                       					$(".feed_items").empty(); //비워주면서 중복게시물 삭제
                        					if(result.length == 0){
-                       						
+                       						var text = "게시글이 존재하지 않습니다."
+                       						$(".feed_items").append(text);
                        					}else {
                        						
 	                       					for(var i in result){
@@ -213,9 +208,7 @@
 	                       						var div3 = $("<div></div>");
 	                       						var footerUl = $("<ul class='boardFooter'>");
 	                       						var footerLi1 = $("<li></li>");
-	                       						var footerLi2 = $("<li></li>");
-	                       						
-	                       					
+	                       						var footerLi2 = $("<li></li>");  					
 	                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
 	                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
 	                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
@@ -228,17 +221,12 @@
 	                       						
 	                       						profileStr.attr("src",result[i].profile);
 	                       						
-	                       						
+	                       						//시간: 방금전/몇분전/몇시간전/몇일전 띄우기
 	                       			            var today = new Date();
-	                       				        //console.log("today: " + today);
-	                       			
-	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+	                       				        var dateString = result[i].createDate; 
 	                       				        var dateParts = dateString.split(/[- :]/);
 	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-	                       				        //console.log("timeValue: " + timeValue);
-	                       				        
-	                       				     
-	                       			
+
 	                       				        const timeDifference = today - timeValue; // 밀리초 단위의 차이
 	                       				        const seconds = Math.floor(timeDifference / 1000);
 	                       				        const minutes = Math.floor(seconds / 60);
@@ -255,7 +243,6 @@
 	                       				            const year = timeValue.getFullYear();
 	                       				            const month = timeValue.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
 	                       				            const day = timeValue.getDate();
-	                       			
 	                       				            msg = year + ". " + month + ". " + day;
 	                       				        } else if (hours > 0) {
 	                       				            msg = hours + "시간 전";
@@ -265,7 +252,6 @@
 	                       				            msg = "방금 전";
 	                       				        }
 	                       			
-	                       				        //console.log(msg);
 	                       				    	spanDiv1.text(msg);
 	                       	                   
 	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
@@ -290,12 +276,7 @@
 	                       						
 	                       						liDiv.append(boardHeaderDiv).append(boardContentDiv).append(div3).append(hrStr);
 	                       						
-	                       						$(".feed_items").append(liDiv);
-	                       					
-	                       					 
-	                       						
-	                       						
-	                       					
+	                       						$(".feed_items").append(liDiv);	                       					              					
 	                       						
 	                       						/*
 	                       							<div>
@@ -355,10 +336,9 @@
                        		//검색게시판리스트
                        		function searchBoardList(){
                     	   		 
-                       			$(".feed_items").hide();
+                       			$(".feed_items").hide(); //검색기능을 사용했으면 게시물 리스트 숨기기
                        			var searchText = $("#widgetsearch").val();
                        			var searchHash = "%"+searchText+"%";
-                       			//console.log(searchText);
                        			
                        			$.ajax({
                        				url: "search.bo",
@@ -368,9 +348,10 @@
                        				},
                        				success: function(result){
                      					
-                       					$(".searchFeed_items").empty();
+                       					$(".searchFeed_items").empty(); //중복게시물 지워주기
                        					if(result.length == 0){
-                       						
+                       						var text = "검색한 게시글이 존재하지 않습니다."
+                           					$(".searchFeed_items").append(text);
                        					}else {
                        						
 	                       					for(var i in result){
@@ -384,9 +365,7 @@
 	                       						var div3 = $("<div></div>");
 	                       						var footerUl = $("<ul class='boardFooter'>");
 	                       						var footerLi1 = $("<li></li>");
-	                       						var footerLi2 = $("<li></li>");
-	                       						
-	                       					
+	                       						var footerLi2 = $("<li></li>");    					
 	                       						var profileStr = $("<img style='width: 30px; height: 30px; border-radius: 20px;'>");
 	                       						var hiddenBno = $("<input type='hidden' name='boardNo'>");
 	                       						var replyIcon = $("<img style='width: 23px; height: 23px;'>"); 
@@ -398,17 +377,12 @@
 	                       						var hrStr = $("<hr style='background-color: #E0E0E0; opacity: 0.7'>");
 	                       						
 	                       						profileStr.attr("src",result[i].profile);
-	                       						
-	                       						
+												
+	                       						//시간: 방금전/몇분전/몇시간전/몇일전 띄우기
 	                       			            var today = new Date();
-	                       				        //console.log("today: " + today);
-	                       			
-	                       				        var dateString = result[i].createDate; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+	                       				        var dateString = result[i].createDate; 
 	                       				        var dateParts = dateString.split(/[- :]/);
 	                       				        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-	                       				        //console.log("timeValue: " + timeValue);
-	                       				        
-	                       				     
 	                       			
 	                       				        const timeDifference = today - timeValue; // 밀리초 단위의 차이
 	                       				        const seconds = Math.floor(timeDifference / 1000);
@@ -435,11 +409,10 @@
 	                       				        } else {
 	                       				            msg = "방금 전";
 	                       				        }
-	                       			
-	                       				        //console.log(msg);
+
 	                       				    	spanDiv1.text(msg);
 	                       	                   
-	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1);  //이 부분 맞는지 확인
+	                       						pDiv.text(result[i].boardWriter).append(" •").append(spanDiv1); 
 	                       						div1.append(pDiv);
 	                       						boardHeaderDiv.append(profileStr).append("&nbsp;&nbsp;").append(div1);
 	                       						
@@ -466,9 +439,8 @@
 	                       						
 	                       					}
                        					}
-                       					findLike();
-                       				  
-                       					
+                       					findLike(); //좋아요한 게시글 찾아주기
+                    					
                        				},
                        				error: function(){
                        					console.log("통신오류");
@@ -477,30 +449,23 @@
                        		}     
                        		
                        		
-                       		
+                       		//로그인한 회원이 좋아요한 게시글 찾기
                             function findLike(){
-                            	
-							
-							
-								var boardNoArray = document.querySelectorAll('.boardFooter input#hiddenBno');
-								//console.log(boardNoArray)
 								
+                       			//게시된 모든 게시물 번호 가져오기
+								var boardNoArray = document.querySelectorAll('.boardFooter input#hiddenBno');
+
                             	 $.ajax({
                             		url : "findLike.bo",
                             		data : {
-                            			userNo : ${loginUser.userNo}
-										
+                            			userNo : ${loginUser.userNo}			
                             		},
-                            		//async : false, //순서대로 하게끔만들음(동기식마냥)
                             		success: function(result){
-	                            
-                            				for(var j=0;j<boardNoArray.length;j++){
+	                            			
+                            				//모든 게시물 번호 중에서 회원이 좋아요한 게시물 번호와 일치하면 실행
+                            				for(var j=0;j<boardNoArray.length;j++){    
 		                            			for(var i in result){	
 		                            				if(boardNoArray[j].value==result[i].refBno){
-		                            					console.log("확인");
-		                            					console.log($(boardNoArray[j]).siblings("button"));
-		                            					//console.log("refBno : "+result[i].refBno);
-		                            					//console.log($(boardNoArray[j]).siblings("img.heartClass"));
 		                            					$(boardNoArray[j]).siblings("img").eq(0).attr("src","resources/img/icon/heart-fill.svg");
 		                            					$(boardNoArray[j]).siblings("button").css("color","#FF9999");
 		                            					$(boardNoArray[j]).siblings("#likeCount").css("color","#FF9999");
@@ -508,14 +473,10 @@
 		                            				}else{
 		                            					$(boardNoArray[j]).siblings("img").eq(0).attr("src","resources/img/icon/heart.svg")
 		                            					$(boardNoArray[j]).siblings("button").css("color","black");
-		                            					$(boardNoArray[j]).siblings("#likeCount").css("color","black");
-		                            					
+		                            					$(boardNoArray[j]).siblings("#likeCount").css("color","black");	
 		                            				}
 	                            				}
-                            				}
-
-
-										
+                            				}			
                             		},
                             		error: function(){
                             			console.log("통신오류");
@@ -523,30 +484,19 @@
                             	}); 
                             		
                            	}
-                            
-                            	
-              
-                            //로그인유저userNo와 각 게시글의 bno를 받아오기
-                         
- 					
-                            
+                			
+                       		//좋아요 기능
                             function dolike(el){
                             	
-                            	var refBno = $(el).parents().children().eq(0).val();
-      
-                            	var heartImg = $(el).parents().children().eq(1); //이미지사진 
-                            	
-                            	//var likeText = $(el).parents().children().eq(2).text();
-                            	var like = $(el).parents().children().eq(2);
+                            	var refBno = $(el).parents().children().eq(0).val();  //게시글번호
+                            	var heartImg = $(el).parents().children().eq(1); //하트이미지
+                            	var like = $(el).parents().children().eq(2); 
                             	var likeText = like.text();
-                            	//console.log(likeText);
-                            	var likeCount = $(el).parents().children().eq(3); 
-                            	
-     							//console.log(likeCount.text())
-                            	var searchText = $("#widgetsearch").val();
+                            	var likeCount = $(el).parents().children().eq(3); //좋아요 수  
+                            	var searchText = $("#widgetsearch").val(); //검색키워드
 
      							
-                            	//if(이미지파일이 heart이면 ) 
+                            //이미지파일이 기본 heart이면 좋아요기능 수행하고 좋아요한 이미지라면 좋아요취소기능 수행하기 
                             if(heartImg.attr("src") =="resources/img/icon/heart.svg"){
                             	 $.ajax({
                             		url : "dolike.bo",
@@ -561,8 +511,7 @@
                             					selectBoardList();
                             				}else{
 												searchBoardList();
-                            				}
-		
+                            				}		
                             			}else{
                             				console.log("좋아요실패");
                             			}
@@ -601,13 +550,10 @@
                           
                         	//시간표시
                         	function time(){
-                        		 var today = new Date();
-                        	        //console.log("today: " + today);
-
-                        	        var dateString = "${boardInfo.createDate}"; // 여기에 "${boardInfo.createDate}" 대신 직접 값을 넣어주세요.
+                        			var today = new Date();
+                        	        var dateString = "${boardInfo.createDate}"; 
                         	        var dateParts = dateString.split(/[- :]/);
                         	        var timeValue = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], dateParts[3], dateParts[4], dateParts[5]);
-                        	        //console.log("timeValue: " + timeValue);
 
                         	        const timeDifference = today - timeValue; // 밀리초 단위의 차이
                         	        const seconds = Math.floor(timeDifference / 1000);
@@ -633,14 +579,12 @@
                         	        } else {
                         	            msg = "방금 전";
                         	        }
-
-                        	        //console.log(msg);
-                        	        //document.getElementById("boardCreateDate").innerText = msg;
                         	        $("#boardCreateDate").append(msg)
                         		
                         		
                         	}
                             
+                        	//날씨 온도에 따라 경보문 띄우기
                         	function todayGreenCast(todayGreenTemp, todayGreenMoi){
             		   			
             		   			if(todayGreenTemp < 10){
@@ -700,15 +644,9 @@
             						$("#weather__reco > h6").html("<p>시금치 / 봄동 / 상추 / 갓 / 쑥갓 / 돌산갓 / 케일 / 청경채</p>")
             		   				
             		   			}
-            		   			
             		   		}
                         	
-                        	
-                       </script>
-
-
-	<script>
-							$(function(){
+                        	$(function(){
 								$(".feed_items").on("click","li>.boardContent",function(){
 									location.href="detail.bo?boardNo="+$(this).children().eq(0).val();
 								});
@@ -718,7 +656,10 @@
 								});
 								
 							});
-						</script>
+                        	
+                       </script>
+
+
 
 
 

@@ -24,25 +24,6 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList");
 	}
 
-	
-	/*
-	
-	//게시글 리스트 총 개수 
-	public int boardListCount(SqlSessionTemplate sqlSession) {
-		
-		return sqlSession.selectOne("boardMapper.boardListCount");
-	}
-
-	//페이지바가 있는 게시글 리스트 조회
-	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int limit = pi.getBoardLimit();
-		int offset= (pi.getCurrentPage()-1)*pi.getBoardLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset,limit);
-		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", null, rowBounds);
-	}
-	*/
 	//게시글 상세보기 전 조회수 증가 메소드
 	public int boardIncreaseCount(SqlSessionTemplate sqlSession, int boardNo) {
 		
@@ -97,21 +78,11 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteReply", replyNo);
 	}
 	
-	
-	//유저가 좋아요했는지 안했는지 확인
-	/*
-	 * public int findLike(SqlSessionTemplate sqlSession, BoardLike br) {
-	 * 
-	 * return sqlSession.selectOne("boardMapper.findLike", br); }
-	 */	
-	
-
+	//좋아요한 리스트찾기
 	public ArrayList<BoardLike> findLike(SqlSessionTemplate sqlSession, BoardLike br) {
-		// TODO Auto-generated method stub
+	
 		return (ArrayList)sqlSession.selectList("boardMapper.findLike", br);
 	}
-	
-	
 	
 	//좋아요수 증가
 	public int likeIncreaseCount(SqlSessionTemplate sqlSession, BoardLike bl) {
@@ -146,8 +117,7 @@ public class BoardDao {
 
 	//댓글 신고
 	public int replyReport(SqlSessionTemplate sqlSession, ReplyReport rp) {
-		System.out.println(rp);
-		// TODO Auto-generated method stub
+
 		return sqlSession.insert("boardMapper.replyReport", rp);
 	}
 
@@ -156,9 +126,5 @@ public class BoardDao {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList",b);
 	}
-
-
-	
-
 
 }

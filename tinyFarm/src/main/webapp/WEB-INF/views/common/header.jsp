@@ -217,9 +217,9 @@ a, p {
 											<li><a href="makeInGarden.pp">실내정원 만들기</a></li>
 											<li><a href="season.re">계절별 텃밭 가꾸는법</a></li>
 										</ul></li>
-									<li><a href="moveMbtiTest.bo">작은농부 테스트</a></li>
+									<li><a href="moveMbtiTest.mt">풀BTI 테스트</a></li>
 
-									<li><a href="">커뮤니티</a>
+									<li><a>커뮤니티</a>
 										<ul class="dropdown">
 											<li><a href="moveList.bo">이야기해요</a></li>
 											<li><a href="noticeList.no">공지사항</a></li>

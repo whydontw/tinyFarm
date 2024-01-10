@@ -18,16 +18,6 @@ import com.kh.tinyfarm.common.model.vo.PageInfo;
 public class BoardServiceImpl implements BoardService {
 
 	
-	/*
-	//게시글 리스트
-		@Override
-		public ArrayList<Board> selectBoardList(int userNo) {
-
-			return boardDao.selectBoardList(sqlSession,userNo);
-		}
-*/
-	
-	
 	@Autowired
 	private BoardDao boardDao;
 	
@@ -42,22 +32,6 @@ public class BoardServiceImpl implements BoardService {
 			return boardDao.selectBoardList(sqlSession);
 		}
 
-	
-	/*
-	//게시글 리스트 총 개수
-	@Override
-	public int boardListCount() {
-		
-		return boardDao.boardListCount(sqlSession);
-	}
-	
-	//페이지가 있는 게시글리스트 조회
-	@Override
-	public ArrayList<Board> selectBoardList(PageInfo pi) {
-		
-		return boardDao.selectBoardList(sqlSession,pi);
-	}
-	*/
 	//게시글 상세보기 전 조회수 증가 메소드
 	@Override
 	public int boardIncreaseCount(int boardNo) {
@@ -120,21 +94,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.deleteReply(sqlSession,replyNo);
 	}
 
-	
-	//유저가 좋아요했는지 안했는지 확인
-	/*
-	 * @Override public int findLike(BoardLike br) {
-	 * 
-	 * return boardDao.findLike(sqlSession,br); }
-	 */
+	//좋아요한 리스트 찾기
 	@Override
 	public ArrayList<BoardLike> findLike(BoardLike br) {
 		
 		return boardDao.findLike(sqlSession,br);
 	}
 
-	
-	
 	//좋아요 수 증가
 	@Override
 	public int likeIncreaseCount(BoardLike bl) {
@@ -173,7 +139,7 @@ public class BoardServiceImpl implements BoardService {
 	//댓글 신고
 	@Override
 	public int replyReport(ReplyReport rp) {
-		// TODO Auto-generated method stub
+
 		return boardDao.replyReport(sqlSession,rp);
 	}
 
