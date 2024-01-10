@@ -70,9 +70,10 @@ a, p {
 	font-size: 17px;
 }
 .btn-green, .btn-red{
-	width: 50px;
-	height: 30px;
+	width: 10%;
+	height: 15%;
 	float: right;
+	border-radius: 0;
 }
 .btn-red{
 	margin-left: 1%;
@@ -129,8 +130,8 @@ a, p {
 								<label>공개 시 내가 팔로우 한 사람들에게만 공개됩니다. </label>
 								<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
 								<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
-								<input type="button" id="backBtn" class="btn-red" value="취소">
-								<input type="submit" id="diBtn" class="btn-green" value="등록">
+								<input type="button" id="backBtn" class="btn-red alazea-btn-gray" value="취소">
+								<input type="submit" id="diBtn" class="btn-green alazea-btn" value="등록">
 							</div>
 						</form>
 					</div>

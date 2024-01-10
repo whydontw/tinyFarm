@@ -620,7 +620,7 @@ public class MypageController {
 		int loginUserNo = m.getUserNo();
 		int refDbno = diaryNo;
 		
-		//좋아요 정보 담은 후 가져오기
+		//좋아요 정보 담은 가져오기
 		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
 		
 		DiaryLike like = diaryService.selectLike(dl);

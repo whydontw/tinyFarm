@@ -131,8 +131,6 @@ thead, tbody {
 
 #wishListTableContainer table tbody #nowish{
 margin: auto;
- color: red;
- border: 1px solid blue;
  font-size: 14px;
 }
 #wishListTableContainer {

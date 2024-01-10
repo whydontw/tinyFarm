@@ -64,9 +64,10 @@
         	text-align: center;
         }
         .btn-green{
-        	width: 80px;
-        	height: 40px;
+        	width: 90px;
+        	height: 50px;
         	margin: auto;
+        	border-radius: 0;
         }
         #diarylike{
          	width: 28px;

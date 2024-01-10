@@ -130,8 +130,8 @@
 					          				<input type="radio" id="openN" name="selectOpen" value="N" checked> <label for="openN">비공개</label>
 		          						</c:otherwise>
 		          					</c:choose>
-			          				<input type="button" id="backBtn" class="btn-red" value="이전">
-			          				<input type="submit" id="diBtn" class="btn-green" value="수정">
+			          				<input type="button" id="backBtn" class="btn-red alazea-btn-gray" value="이전">
+			          				<input type="submit" id="diBtn" class="btn-green alazea-btn" value="수정">
 		          				</div>
 		          			</form>
                     </div>
