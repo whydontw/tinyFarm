@@ -573,7 +573,7 @@
 		              </div>
 			          <div class="mb-3">
 			            <label for="message-text" class="col-form-label">의견:</label>
-			            <textarea class="form-control" id="updateCommentTextarea"></textarea>
+			            <textarea class="form-control" id="updateCommentTextarea" style="resize: none;"></textarea>
 			          </div>
 		        </form>
 	        </div>
