@@ -211,7 +211,7 @@ background-color: none;
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
 						<li class="breadcrumb-item"><a href="trade.me">거래내역</a></li>
 					</ol>
 					</nav>

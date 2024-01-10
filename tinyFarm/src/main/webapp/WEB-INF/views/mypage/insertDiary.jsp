@@ -93,7 +93,8 @@ a, p {
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+							<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 							<li class="breadcrumb-item"><a href="javascript:void(0)">영농일지 작성</a></li>
 						</ol>
 					</nav>

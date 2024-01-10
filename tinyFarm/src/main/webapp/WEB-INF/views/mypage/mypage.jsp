@@ -45,7 +45,7 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ul class="breadcrumb" id="navi">
-							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i>Home</a></li>
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
 							<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						</ul>
 					</nav>
@@ -73,6 +73,7 @@
 		                        		<img src="resources/jisu/img/fruit.png" id="gradeImg"> <br>
                         			</c:when>
                         		</c:choose>
+                        		<!-- 등급은 굵은 글씨로 나타내기 -->
                         		<span>작은농장의 '<span style="font-weight: bold;">${loginUser.grade } </span>' ${loginUser.userName }님</span>
                         	</div>
                         <div class="myPageMain">

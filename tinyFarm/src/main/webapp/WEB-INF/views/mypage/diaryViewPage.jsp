@@ -102,7 +102,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
                             <li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0)">일지보기</a></li>
                         </ol>
@@ -288,7 +288,8 @@
     		}, function(back) {
     			//아니오 누를시 현재페이지 유지
     			if (!back) {return false;}
-    			window.history.back();
+    			
+    			window.history.go(-1);
     		}); 
     	 });
     </script>

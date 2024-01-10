@@ -84,8 +84,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item"><a href="insert.di">영농일지 수정</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">영농일지 수정</a></li>
 					</ol>
 					</nav>
 				</div>
@@ -197,7 +198,7 @@
     	   let diaryTitle = $("#diaryTitle").val();
     	   let diaryContent = $("#diaryContent").val();
     	   let openVal = $("input[name=selectOpen]:checked").val();
-    	   
+    	   console.log(diaryTitle);
     	   //제목 없을시
     	   if(diaryTitle==""){
     		   swal("error", "제목을 입력해주세요.", "error");
