@@ -91,7 +91,7 @@
 
             <div class="row">
                 <!-- Sidebar Area -->
-                <div class="col-12 col-md-3 col-lg-3">
+                <div class="col-12 col-md-3 col-lg-2">
                     <div class="shop-sidebar-area">
 
                         <!-- Shop Widget -->
@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- All Products Area -->
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-10">
 
                     <div class="shop-products-area">
                         <div class="row">
