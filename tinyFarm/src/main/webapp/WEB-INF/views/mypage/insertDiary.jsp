@@ -192,7 +192,7 @@ a, p {
     		closeOnCancel : true
     	}, function(alert) { 
     			if(!alert){return false;} //아니오 클릭시 현재페이지 유지
-	           	window.history.back(); //이전페이지로 이동
+    			location.href="diary.me"; //이전페이지로 이동
 	    });
 	});
 		function insertDiary() {

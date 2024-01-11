@@ -618,7 +618,7 @@ background-color: none;
 	    			$.each(wishList, function(key, w){
 	    				str += "<tr>"
 	    					+ '<td id="imgTd"><img id="wishImg" alt="제품이미지" src="'+w.filePath+w.changeName+'"></td>'
-							+ "<td id='wInfoTd'>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
+							+ "<td id='wInfoTd'>"+w.productTitle+"<br>￦ "+w.productPrice+"</td>"
 							+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
 	    					+ "</tr>";
 	    			});

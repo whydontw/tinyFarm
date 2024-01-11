@@ -200,7 +200,7 @@ a, p {
     		closeOnCancel : true
     	}, function(isConfirm) {
     		if (isConfirm) {
-   				window.history.back();
+    			location.href="diary.me";
     		}else{
     			return false;
     		}

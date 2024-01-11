@@ -207,7 +207,6 @@
 	    					},error : function(){
 	    						console.log("좋아요 수 재조회 실패");
 	    					}
-	    				
 	    				});
 	    			}
 	    		},error:function(){
