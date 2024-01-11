@@ -124,6 +124,7 @@ public class MypageController {
 			m.setOriginName(reUpfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
 		}else {
+			//프로필 사진 삭제시 기본이미지
 			String changeName = "resources/profile.jpg";
 			m.setOriginName("profile.jpg");
 			m.setChangeName(changeName);
