@@ -65,6 +65,7 @@
                 
                 <div class="col-12 col-md-9">
                     <!-- <div class="row"> -->
+                    	
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
                                 <p><h5><b>🌱 도서 관리</b></h5></p>
@@ -88,6 +89,7 @@
 
 
                         <!-- 표 작성 내역 -->
+                        <div class="mb-15" id="">현재 페이지:&nbsp;&nbsp;${pi.currentPage }</div>
 						<div class=" ">
 							<table class="table" align="center">
 								<colgroup>
@@ -117,7 +119,7 @@
 									<c:forEach var="bl" items="${bookList }">
 										<tr>
 											<td>${bl.bookNo }</td>
-											<td class="cart_product_img"><img src="${contextPath }/${bl.bookChangeName}" alt="_book"></a></td>
+											<td class="cart_product_img"><a href="bookDetail.re?bookNo=${bl.bookNo }"><img src="${contextPath }/${bl.bookChangeName}" alt="_book"></a></td>
 											<td align="left"><a href="bookDetail.re?bookNo=${bl.bookNo }"><span># ${bl.bookCategory }</span> <p>${bl.bookTitle }</p></a></td>
 											<td>${bl.bookPrice } 원</td>
 											<td>${bl.bookAuthor }</td>

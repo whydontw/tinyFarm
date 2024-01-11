@@ -549,7 +549,7 @@ public class AdminController {
 	
 	@GetMapping("/bookList.ad")
 	public String selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
-								@RequestParam(value="bookCategory", defaultValue="") String bookCategory,
+								@RequestParam(value="bookCategory", defaultValue="all") String bookCategory,
 								Model model) {
 		
 		HashMap<String, String> bookMap = new HashMap<String, String>();
