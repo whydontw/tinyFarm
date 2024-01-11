@@ -115,6 +115,7 @@ public class MypageController {
 			//기존 파일 존재하면 지워주기
 			if (preUser.getOriginName() != null) {
 				File f = new File(session.getServletContext().getRealPath(preUser.getChangeName()));
+				//기본 프로필 사진은 남겨두기!! OriginName이 profile.jpg이 아닐때만 사진 삭제해주기
 				if(!preUser.getOriginName().equals("profile.jpg")) {
 					f.delete();
 				}
@@ -183,7 +184,6 @@ public class MypageController {
 		
 		Member loginUser = ((Member) session.getAttribute("loginUser")); //세션에서 로그인 정보 추출
 		String userId = loginUser.getUserId(); //회원 아이디 추출
-		
 		
 		if (text.equals("탈퇴하겠습니다.")) { //탈퇴 입력문구 확인
 			int result = diaryService.deleteMember(userId);
@@ -406,8 +406,8 @@ public class MypageController {
 	//일지 작성 + 회원등급 조정
 	@PostMapping("insert.di")
 	public String insertDiary(String selectDate
-			,Diary d
-			,HttpSession session) {
+								,Diary d
+								,HttpSession session) {
 		//등업용 회원정보 미리 꺼내기
 		Member m = (Member)session.getAttribute("loginUser");
 		int userNo = m.getUserNo();
@@ -418,8 +418,8 @@ public class MypageController {
 		
 		if (result>0) {
 			int diaryCount = diaryService.diaryListCount(userNo);
-			//씨앗, 새싹(7개), 잎새(14개), 열매(30개)
 			
+			//씨앗, 새싹(7개), 잎새(14개), 열매(30개)
 			//글 작성 직후 개수 카운트
 			if(diaryCount==7 || diaryCount==14 || diaryCount==30) {
 				//등업조건일 경우 등업문구 띄우기
@@ -521,9 +521,7 @@ public class MypageController {
 			//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
 			Member w =  diaryService.selectDiaryWriter(userNo);
 			
-			Member m = (Member)session.getAttribute("loginUser");
-			
-			int loginUserNo = m.getUserNo();
+			int loginUserNo = w.getUserNo();
 			int diaryNo = d.getDiaryNo();
 			int refDbno = diaryNo;
 			
@@ -608,9 +606,9 @@ public class MypageController {
 		}else { //실패시 아무것도 보내지 않고 오류처리
 			return null;
 		}
-		
 	}
-	//좋아요 전후  count
+	
+	//좋아요 전후 count
 	@ResponseBody
 	@GetMapping(value="likeCount.di",produces = "application/json; charset=UTF-8" )
 	public int recountLike(int diaryNo) {
@@ -647,13 +645,15 @@ public class MypageController {
 		int refDbno = diaryNo;
 		
 		//좋아요 정보 가져오기
+		//1. 좋아요 객체 생성
 		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
-		
+		//2. 해당 객체에 해당하는 좋아요 정보 불러오기
 		DiaryLike like = diaryService.selectLike(dl);
 		
-		//좋아요 수
+		//해당 일지의 좋아요 수
 		int likeCount = diaryService.countLike(diaryNo);
 		
+		//diary 객체에 담아서 페이지에 보여주기
 		d.setLikeCount(likeCount);
 
 		model.addAttribute("w",w); //작성자 정보
@@ -687,9 +687,8 @@ public class MypageController {
 			return "redirect:/diaryViewPage";
 		}
 	}
-
 	
-	//거래목록
+	//거래목록 페이지 넘기기
 	@GetMapping("trade.me")
 	public String tradeList() {
 		return "mypage/myTradePage";
@@ -715,8 +714,6 @@ public class MypageController {
 		//페이징 처리된 게시글 목록 조회하기
 		PageInfo oPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Payments> oList = diaryService.myOrderList(userNo, oPi);
-		System.out.println("구매내역 pi : "+oPi);
-		System.out.println("구매내역 목록 : "+oList);
 		
 		//map에 페이지 정보와 글정보 담기
 		result.put("oList", oList);
@@ -789,8 +786,10 @@ public class MypageController {
 	public Map<String, Object> sellSearchPage(@RequestParam int userNo, @RequestParam String searchDate,
 											@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
 		
-		String date = searchDate.substring(2,7).replace("-", "/"); //DB형식에 날짜 맞추기(yy/MM)
+		//DB형식에 날짜 맞추기(yy/MM)
+		String date = searchDate.substring(2,7).replace("-", "/");
 		
+		//product 객체 생성
 		Product p = new Product();
 		p.setUserNo(userNo);
 		p.setRegiDate(date);
@@ -822,9 +821,13 @@ public class MypageController {
 	@GetMapping(value="wishList.me",produces="application/json; charset=UTF-8")
 	public Map<String, Object> wishListPage(int userNo) {
 		
+		//찜 내역 보여줄 Map 생성
 		Map<String, Object> result = new HashMap<String, Object>();
+		//찜내역 조회
 		ArrayList<Product> wishList = diaryService.selectWish(userNo);
+		//결과 담아서 보내주기
 		result.put("wishList", wishList);
+		
 		return result;
 	}
 

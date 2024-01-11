@@ -208,10 +208,10 @@ a, p {
     });
        
     function updateDiary(){
-       let diaryTitle = $("#diaryTitle").val();
-       let diaryContent = $("#diaryContent").val();
-       let openVal = $("input[name=selectOpen]:checked").val();
-       console.log(diaryTitle);
+       let diaryTitle = $("#diaryTitle").val(); //제목
+       let diaryContent = $("#diaryContent").val(); //내용
+       let openVal = $("input[name=selectOpen]:checked").val(); //공개여부
+       
        //제목 없을시
        if(diaryTitle==""){
     	   swal("error", "제목을 입력해주세요.", "error");

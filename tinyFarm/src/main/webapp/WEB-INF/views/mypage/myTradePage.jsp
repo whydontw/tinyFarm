@@ -347,10 +347,7 @@ background-color: none;
     			}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage-5)+')">이전</a></li>';
     			}
-	    			console.log("페이징");
-	    			console.log(curPage);
-	    			console.log(startPage);
-	    			console.log(endPage);
+
 	    		for(var i=startPage; i<endPage+1; i++){
 	    			if (i==curPage) { //현재페이지일때 current-page class 추가
 	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
@@ -358,13 +355,14 @@ background-color: none;
 	    		        pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
 	    		    }
 	    		}
+	    		
 	    		if(endPage>=maxPage){ //마지막페이지가 최대페이지보다 크면 다음버튼 비활성
 	    			pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">다음</a></li>';
 	    		}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage+5)+')">다음</a></li>';
 	    		}
-		    	$("#orderPageArea>#orderPage").html(pStr);
 	    		
+		    	$("#orderPageArea>#orderPage").html(pStr);
     		},error : function(){
     			console.log("구매내역 ajax 통신 실패");
     		}
