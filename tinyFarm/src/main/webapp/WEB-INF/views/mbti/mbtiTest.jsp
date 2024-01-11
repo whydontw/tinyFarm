@@ -446,8 +446,7 @@
 							</div>
 							<hr style='background-color: #E0E0E0; opacity: 0.7'>
 
-							<a href="moveMbtiTest.bo" class="btn alazea-btn-orange ml-15"
-								style="border-radius: 30px;">다시하기</a>
+							<a href="moveMbtiTest.mt" class="btn alazea-btn-orange ml-15" style="border-radius: 30px;">다시하기</a>
 
 
 						</div>

@@ -85,6 +85,11 @@ public class ChatDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getUserId", userNo);
 	}
+
+	public int updateReceiverStatus(SqlSessionTemplate sqlSession, ChatMessage chatMessage) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("chatMapper.updateReceiverStatus",chatMessage);
+	}
 	
 	
 	

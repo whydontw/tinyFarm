@@ -103,4 +103,10 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.getUserId(sqlSession,userNo);
 	}
 
+	@Override
+	public int updateReceiverStatus(ChatMessage chatMessage) {
+		// TODO Auto-generated method stub
+		return chatDao.updateReceiverStatus(sqlSession,chatMessage);
+	}
+
 }
