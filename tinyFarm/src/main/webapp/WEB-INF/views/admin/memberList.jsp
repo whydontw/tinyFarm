@@ -70,15 +70,6 @@
                             <div class="mb-0">
                                 <p><h5><b>🌱 회원 관리</b></h5></p>
                             </div>
-<!--                             <div class="search_by_terms"> -->
-<!--                                 <form action="#" method="post" class="form-inline"> -->
-<!--                                     <select class="custom-select widget-title"> -->
-<!--                                       <option selected>Show:</option> -->
-<!--                                       <option value="1">미답변</option> -->
-<!--                                       <option value="2">답변완료</option> -->
-<!--                                     </select> -->
-<!--                                 </form> -->
-<!--                             </div> -->
                         </div>
 
                         <!-- 표 작성 내역 -->

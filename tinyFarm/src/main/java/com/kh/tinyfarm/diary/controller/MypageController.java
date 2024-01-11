@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,7 +109,7 @@ public class MypageController {
 		
 		//새로운 프로필 사진 첨부시
 		if (!reUpfile.getOriginalFilename().equals("")) {
-
+			
 			//DB에 정보 덮어쓰기
 			String changeName = saveFile(reUpfile, session);
 			//기존 파일 존재하면 지워주기
@@ -122,6 +120,10 @@ public class MypageController {
 			//Member에 새 프로필사진 담기
 			m.setOriginName(reUpfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
+		}else {
+			String changeName = "resources/profile.jpg";
+			m.setOriginName("profile.jpg");
+			m.setChangeName(changeName);
 		}
 
 		//새로 입력한 정보 변경해주기(DB)
@@ -616,9 +618,9 @@ public class MypageController {
 		int loginUserNo = m.getUserNo();
 		int refDbno = diaryNo;
 		
+		//좋아요 정보 담은 가져오기
 		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
 		
-		//좋아요 정보 가져오기
 		DiaryLike like = diaryService.selectLike(dl);
 		
 		//좋아요 수
@@ -685,6 +687,8 @@ public class MypageController {
 		//페이징 처리된 게시글 목록 조회하기
 		PageInfo oPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Payments> oList = diaryService.myOrderList(userNo, oPi);
+		System.out.println("구매내역 pi : "+oPi);
+		System.out.println("구매내역 목록 : "+oList);
 		
 		//map에 페이지 정보와 글정보 담기
 		result.put("oList", oList);
@@ -714,7 +718,6 @@ public class MypageController {
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
-		System.out.println(sList);
 		result.put("sList", sList);
 		result.put("sPi", sPi);
 		

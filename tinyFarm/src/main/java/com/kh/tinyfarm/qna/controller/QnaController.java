@@ -43,9 +43,9 @@ public class QnaController {
 			int result = qnaService.qnaEnroll(qna);
 			
 			if(result > 0) {
-	        	session.setAttribute("alertMsg", "QNA 등록 완료하였습니다.");
+	        	session.setAttribute("alertMsg", "문의사항이 등록되었습니다.");
 			}else {
-				session.setAttribute("alertMsg", "QNA 등록 실패하였습니다.");
+				session.setAttribute("alertMsg", "등록 오류!");
 			}
 			
 			return "redirect:qnaList.qa";
@@ -63,7 +63,7 @@ public class QnaController {
 				m = (Member) session.getAttribute("loginUser");
 				
 			}else {
-				session.setAttribute("alertMsg", "로그인을 해주세요");
+				session.setAttribute("alertMsg", "로그인을 해주세요.");
 				return "redirect:loginGo.me";
 			}
 
@@ -118,9 +118,9 @@ public class QnaController {
 			int result = qnaService.myQnaUpdate(updateQna);
 	
 			if(result > 0) {
-	        	session.setAttribute("alertMsg", "QNA 수정 완료하였습니다.");
+	        	session.setAttribute("alertMsg", "문의사항 수정 완료하였습니다.");
 			}else {
-				session.setAttribute("alertMsg", "QNA 수정 실패하였습니다.");
+				session.setAttribute("alertMsg", "수정 실패!");
 			}
 			
 			return "redirect:qnaList.qa";
@@ -134,9 +134,9 @@ public class QnaController {
 			int result = qnaService.myQnaDelete(qnaNo);
 			
 			if(result > 0) {
-	        	session.setAttribute("alertMsg", "QNA 삭제 완료하였습니다.");
+	        	session.setAttribute("alertMsg", "문의사항을 삭제하였습니다.");
 			}else {
-				session.setAttribute("alertMsg", "QNA 삭제 실패하였습니다.");
+				session.setAttribute("alertMsg", "삭제 실패!");
 			}
 			
 			return "redirect:qnaList.qa";

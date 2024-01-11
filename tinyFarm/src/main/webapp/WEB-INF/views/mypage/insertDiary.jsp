@@ -10,22 +10,19 @@ String selectDate = request.getParameter("selectDate"); //달력에서 선택한
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Title -->
 <title>마이페이지</title>
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
 <!-- summernote emoji -->
 <link href="resources/tam-emoji/css/emoji.css" rel="stylesheet">
-
 <!-- Core Stylesheet -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-
 <!-- alert창 cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
@@ -70,9 +67,10 @@ a, p {
 	font-size: 17px;
 }
 .btn-green, .btn-red{
-	width: 50px;
-	height: 30px;
+	width: 10%;
+	height: 15%;
 	float: right;
+	margin-top: 1%;
 }
 .btn-red{
 	margin-left: 1%;
@@ -93,7 +91,8 @@ a, p {
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+							<li class="breadcrumb-item"><a href="diary.me">영농일지</a></li>
 							<li class="breadcrumb-item"><a href="javascript:void(0)">영농일지 작성</a></li>
 						</ol>
 					</nav>
@@ -128,8 +127,8 @@ a, p {
 								<label>공개 시 내가 팔로우 한 사람들에게만 공개됩니다. </label>
 								<input type="radio" id="openY" name="selectOpen" value="Y"> <label for="openY">공개</label>
 								<input type="radio" id="openN" name="selectOpen" value="N"> <label for="openN">비공개</label>
-								<input type="button" id="backBtn" class="btn-red" value="취소">
-								<input type="submit" id="diBtn" class="btn-green" value="등록">
+								<input type="button" id="backBtn" class="btn-red alazea-btn-gray" value="취소">
+								<input type="submit" id="diBtn" class="btn-green alazea-btn" value="등록">
 							</div>
 						</form>
 					</div>
@@ -137,15 +136,11 @@ a, p {
 			</div>
 		</div>
 	</section>
-
+	
 	<!-- 일지 작성 스크립트 -->
-	<!-- summernote 이모지 -->
-	<script src="resources/tam-emoji/js/config.js"></script>
-  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 	<script>
 	//sweetalert css 사용
 	$(function(){
-		document.emojiType = 'unicode'; // default: image
 	    document.emojiSource = 'resources/tam-emoji/img'; //이모지 사진 사용
 		$('#diaryContent').summernote({
 					width : 900,
@@ -169,8 +164,8 @@ a, p {
 									'맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],	
 					fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 								'20', '22', '24', '28', '30', '36', '50', '72' ]
-				});
 		});
+	});
 
 		//뒤로가기 버튼 클릭시
 		$("#backBtn").click(function() {
@@ -201,6 +196,13 @@ a, p {
 				$("#diaryTitle").focus;
 				return false;
 			}
+			
+			//제목 50자 넘을시 작성 막기
+			if(diaryTitle.length >30){
+				swal('제목 입력', '제목은 최대 30자까지 가능합니다.', 'error');
+				$("#diaryTitle").focus;
+				return false;
+			}
 			//내용 공백
 			if (diaryContent == "") {
 				swal('내용 입력', '내용을 입력해주세요.', 'error');
@@ -228,6 +230,9 @@ a, p {
 	<script src="resources/js/plugins/plugins.js"></script>
 	<!-- Active js -->
 	<script src="resources/js/active.js"></script>
+	<!-- summernote 이모지 -->
+	<script src="resources/tam-emoji/js/config.js"></script>
+  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 </body>
 
 </html>

@@ -93,19 +93,20 @@ public interface DiaryService {
 
 	//찜목록
 	ArrayList<Product> selectWish(int userNo);
+	
 	//영농일지 좋아요 정보
-		DiaryLike selectLike(DiaryLike dl);
+	DiaryLike selectLike(DiaryLike dl);
 		
-		//좋아요 수
-		int countLike(Integer diaryNo);
-		
-		//좋아요 수 증가
-		int LikeCount(DiaryLike dLike);
-
-		//좋아요 취소
-		int unLikeCount(DiaryLike dLike);
-		
-		//일지 작성자 정보
-		Member selectDiaryWriter(int userNo);
+	//좋아요 수
+	int countLike(Integer diaryNo);
+	
+	//좋아요 수 증가
+	int LikeCount(DiaryLike dLike);
+	
+	//좋아요 취소
+	int unLikeCount(DiaryLike dLike);
+	
+	//일지 작성자 정보
+	Member selectDiaryWriter(int userNo);
 
 }
