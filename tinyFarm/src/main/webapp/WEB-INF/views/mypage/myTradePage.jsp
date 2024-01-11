@@ -7,45 +7,34 @@
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Title -->
 <title>거래내역</title>
-
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
-
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/jisu/css/tradePage.css">
 <link rel="stylesheet" href="resources/style.css">
 <script src="resources/jisu/js/myPage.js"></script>
-<!-- date 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
 .widget-title, .dateSearch {
 	display: inline-block;
 }
-
 .dateSearch {
 	width: 20%;
 	float: right;
 	text-align: right;
 }
-
 table.ui-datepicker-calendar {
 	display: none;
 }
-
 .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all{
 	background-color: #70c745;
 }
-
 .ui-datepicker-year, .ui-datepicker-month {
 	-o-appearance: none;
 	-webkit-appearance: none;
@@ -57,11 +46,9 @@ table.ui-datepicker-calendar {
 	width: 10%;
 	background-color: #70c745;
 }
-
 .ui-datepicker-year>option, .ui-datepicker-month>option {
 	background-color: #fff;
 }
-
 .hasDatepicker {
 	width: 50%;
 }
@@ -76,7 +63,6 @@ table.ui-datepicker-calendar {
 	width:15px;
 	height:15px;
 }
-
 #orderDate, #sellDate {
 	width: 70%;
 	height: 30px;
@@ -89,7 +75,6 @@ table.ui-datepicker-calendar {
 	box-sizing: border-box;
 	color: black;
 }
-
 #orderBtn, #sellBtn {
 	width: 40px;
 	height: 30px;
@@ -101,7 +86,6 @@ table.ui-datepicker-calendar {
 	box-sizing: border-box;
 	cursor: pointer;
 }
-
 #wishBtn {
 	width: 40px;
 	height: 30px;
@@ -111,30 +95,29 @@ table.ui-datepicker-calendar {
 	outline: none;
 	margin: auto;
 }
-
 #wishBtn:hover {
 	background-color: #ebebeb;
 }
-
 .pagingArea {
 	margin-top: 1%;
 }
-
 table {
 	border: none;
 	font-size: 14px;
 }
-
-thead {
+thead, tbody {
 	height: 40px;
 }
-
+.page-item.current-page a{
+	background-color: #70c745;
+}
 #wishListTableContainer {
 	margin-top: -15px;
 }
-
+#nowish{
+	text-align: center;
+}
 #wishListTableContainer table tbody {
-	display: block;
 	max-height: 450px;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -142,15 +125,9 @@ thead {
 	font-size: 14px;
 	text-overflow: ellipsis;
 }
-
-#wishTable thead {
-	height: 20px;
-}
-
 #wishTable tbody tr {
 	border-bottom: 1px solid grey;
 }
-
 /* 찜내역 스크롤바 css */
 #wishListTableContainer table tbody::-webkit-scrollbar{
 	width: 7px;
@@ -162,32 +139,38 @@ thead {
 #wishListTableContainer table tbody::-webkit-scrollbar-track{
 background-color: none;
 }
-
 #proImg {
-	width: 60%;
-	height: 60%;
+	width: 100px;
+	height: 100px;
 	padding: 0px 0px 0px 0px;
 }
-
 #imgTd {
 	width: 25%;
+	height: 25%;
 }
-
+#wInfoTd{
+	padding-left: 15px;
+}
 #btnTd {
 	width: 20%;
 	text-align: center;
 }
 #wishImg {
-	width: 80%;
-	height: 80%;
+	width: 100px;
+    height: 100px;
 	padding: 10px 0px 10px 10px;
 }
 #wishCount,#orderCount,#sellCount{
 	font-size: 14px;
 }
+#orderTd, #sellTd{
+	max-width: 200px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
 </style>
 </head>
-
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 
@@ -204,7 +187,8 @@ background-color: none;
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="trade.me">거래내역</a></li>
 					</ol>
 					</nav>
@@ -295,7 +279,7 @@ background-color: none;
 	        					<div id="wishListTableContainer">
 			                    	<table id="wishTable">
 										<thead>
-											<tr><td colspan="3">찜목록</td></tr>
+											<tr><td colspan='3'>찜목록</td></tr>
 										</thead>
 										<tbody>
 										</tbody>
@@ -337,19 +321,19 @@ background-color: none;
 	    		endPage = result.oPi.endPage;
 	    		maxPage = result.oPi.maxPage;
 				count = oList.length;
-	    	    
 	    	    if(count == 0){
 	    			str += "<tr>"
 		    			+ "<td colspan='6'>구매내역이 존재하지 않습니다.</td>"
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(oList, function(key, o){
-		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+		    			
+		    			str += '<tr>'
 		    				+ "<td>"+o.paymentNo+"</td>"
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
-			   				+ '<td><img id="proImg" src="'+o.changeName+'"></td>'
-			   				+ "<td>"+o.productTitle+"</td>"
-			   				+ "<td>￦"+o.paymentPrice+"</td>"
+			   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
+			   				+ "<td id='orderTd'>"+o.productTitle+"</td>"
+			   				+ "<td>￦ "+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
 			   				+ "</tr>";
 		    			});
@@ -366,6 +350,7 @@ background-color: none;
     			}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage-5)+')">이전</a></li>';
     			}
+
 	    		for(var i=startPage; i<endPage+1; i++){
 	    			if (i==curPage) { //현재페이지일때 current-page class 추가
 	    		        pStr += '<li class="page-item current-page"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
@@ -373,12 +358,14 @@ background-color: none;
 	    		        pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+i+')">'+i+'</a></li>';
 	    		    }
 	    		}
+	    		
 	    		if(endPage>=maxPage){ //마지막페이지가 최대페이지보다 크면 다음버튼 비활성
 	    			pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return false;">다음</a></li>';
 	    		}else{
     				pStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="loadOrderPage('+(startPage+5)+')">다음</a></li>';
 	    		}
-    			$("#orderPageArea>#orderPage").html(pStr);
+	    		
+		    	$("#orderPageArea>#orderPage").html(pStr);
 	    		
     		},error : function(){
     			console.log("구매내역 ajax 통신 실패");
@@ -411,16 +398,18 @@ background-color: none;
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(sList, function(key, s){ 
-		    			console.log(s);
-		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
-			   				+ "<td>"+s.productNo+"</td>"
+		    			str += '<tr onclick="productDatail(this);">' //클릭시 해당 제품 글로 이동
+			   				+ "<td class='pNo'>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 			   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
-			   				+ "<td>"+s.productTitle+"</td>"
-			   				+ "<td>￦"+s.productPrice+"</td>"
-			   				+ "<td>"+s.salesStatus+"</td>"
+			   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
+			   				+ "<td>￦ "+s.productPrice+"</td>"
+			   				+ "<td class='status'>"+s.salesStatus+"</td>"
 			   				+ "</tr>";
+			   				
+			   				
 		    			});
+		    			
 	    		}
 	    	    
 	    	    //cStr 문구 작성
@@ -450,7 +439,19 @@ background-color: none;
     		}
     	});
     }	
-
+	
+	//삭제/판매된 거래내역은 detail 볼 수 없도록 막기
+    function productDatail(el){
+    	let pNo = $(el).children(".pNo").text();
+    	let status = $(el).children(".status").text();
+		if(status == 'Y'){
+			location.href="pdetail.bo?pno="+pNo;
+		}else{
+			swal('존재하지 않는 게시글', '판매되거나 삭제된 게시글은 \n볼 수 없습니다.😢', 'error');
+		}
+	}
+	
+	
 	//구매내역 날짜검색
     function loadOrderSearch(page){
     	let date = $("#orderDate").val(); //검색날짜
@@ -478,11 +479,11 @@ background-color: none;
     				    	+ "</tr>";
     			    }else{
     					$.each(oList, function(key, o){
-    						str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+o.productNo+'">' //클릭시 해당 제품 글로 이동
+    						str += '<tr>'
 			    				+ "<td>"+o.paymentNo+"</td>"
 				   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 				   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
-				   				+ "<td>"+o.productTitle+"</td>"
+				   				+ "<td id='orderTd'>"+o.productTitle+"</td>"
 				   				+ "<td>￦"+o.paymentPrice+"</td>"
 				   				+ "<td>"+o.paymentMethod+"</td>"
 				   				+ "</tr>";
@@ -551,13 +552,13 @@ background-color: none;
 			   			+ "</tr>";
 		    	}else{
 			   		$.each(sList, function(key, s){
-			   			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
-		   				+ "<td>"+s.productNo+"</td>"
+			   			str += '<tr onclick="productDatail(this);">' //클릭시 해당 제품 글로 이동
+		   				+ "<td class='pNo'>"+s.productNo+"</td>"
 		   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 		   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
-		   				+ "<td>"+s.productTitle+"</td>"
+		   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
 		   				+ "<td>￦"+s.productPrice+"</td>"
-		   				+ "<td>"+s.salesStatus+"</td>"
+		   				+ "<td class='status'>"+s.salesStatus+"</td>"
 		   				+ "</tr>";
 			   		});
 		    	}
@@ -612,13 +613,12 @@ background-color: none;
     			let cStr = "";
     			//개수 0이면
     			if(count == 0){
-    				str += "<span id='noWish'>찜내역이 없습니다.</span>";
+    				str += "<tr id='nowish'><td colspan='3'>찜내역이 없습니다.</td></tr>";
     			}else{ //있으면 목록 뽑아주기
 	    			$.each(wishList, function(key, w){
-	    				console.log(w.productNo);
 	    				str += "<tr>"
-	    					+ "<td id='imgTd'><img id='wishImg' alt='제품이미지' src='resources/상추.jpg'></td>"
-							+ "<td>"+w.productTitle+"<br>￦"+w.productPrice+"</td>"
+	    					+ '<td id="imgTd"><img id="wishImg" alt="제품이미지" src="'+w.filePath+w.changeName+'"></td>'
+							+ "<td id='wInfoTd'>"+w.productTitle+"<br>￦ "+w.productPrice+"</td>"
 							+ '<td id="btnTd"><input type="button" id="wishBtn" value="보기" onclick="location.href=\'pdetail.bo?pno=\' + '+w.productNo+'"></td>'
 	    					+ "</tr>";
 	    			});

@@ -3,33 +3,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title -->
-    <title>마이페이지</title>
-    <!-- Favicon -->
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Title -->
+<title>마이페이지</title>
+<!-- Favicon -->
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<style>
+#updateMe, #myDiary, #myActive, #myTrade {
+	border-radius: 10px 10px 10px 10px;
+	padding-top: 50px;
+	background-color: #f7f5f5;
+}
 
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="resources/style.css">
-   	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
-   	
-   	<style>
-   		#updateMe, #myDiary, #myActive, #myTrade {
-			border-radius: 10px 10px 10px 10px;
-			padding-top: 50px;
-			background-color: #f7f5f5;
-		}
-		#gradeImg{
-			margin: auto;
-			width: 50px;
-			height: 50px;
-		}
-   	</style>
+#gradeImg {
+	margin: auto;
+	width: 50px;
+	height: 50px;
+}
+</style>
 </head>
 
 <body>
@@ -45,7 +43,7 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ul class="breadcrumb" id="navi">
-							<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i>Home</a></li>
+							<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
 							<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						</ul>
 					</nav>
@@ -73,7 +71,8 @@
 		                        		<img src="resources/jisu/img/fruit.png" id="gradeImg"> <br>
                         			</c:when>
                         		</c:choose>
-                        		<span>작은농장의 '${loginUser.grade } ' ${loginUser.userName }님</span>
+                        		<!-- 등급은 굵은 글씨로 나타내기 -->
+                        		<span>작은농장의 '<span style="font-weight: bold;">${loginUser.grade } </span>' ${loginUser.userName }님</span>
                         	</div>
                         <div class="myPageMain">
                             <div id="updateMe">

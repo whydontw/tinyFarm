@@ -155,7 +155,7 @@ public class DiaryDao {
 		return sqlSession.selectOne("diaryMapper.orderCount",userNo);
 	}
 	//구매목록
-	public ArrayList<Product> myOrderList(SqlSession sqlSession, int userNo, PageInfo oPi) {
+	public ArrayList<Payments> myOrderList(SqlSession sqlSession, int userNo, PageInfo oPi) {
 		int limit = oPi.getPageLimit();
 		int offset = (oPi.getCurrentPage() - 1) * limit;
 		RowBounds rowbounds = new RowBounds(offset, limit);

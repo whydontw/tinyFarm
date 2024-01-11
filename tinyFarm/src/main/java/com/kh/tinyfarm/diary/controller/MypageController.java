@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,17 +109,25 @@ public class MypageController {
 		
 		//새로운 프로필 사진 첨부시
 		if (!reUpfile.getOriginalFilename().equals("")) {
-
+			
 			//DB에 정보 덮어쓰기
 			String changeName = saveFile(reUpfile, session);
 			//기존 파일 존재하면 지워주기
 			if (preUser.getOriginName() != null) {
 				File f = new File(session.getServletContext().getRealPath(preUser.getChangeName()));
-				f.delete();
+				//기본 프로필 사진은 남겨두기!! OriginName이 profile.jpg이 아닐때만 사진 삭제해주기
+				if(!preUser.getOriginName().equals("profile.jpg")) {
+					f.delete();
+				}
 			}
 			//Member에 새 프로필사진 담기
 			m.setOriginName(reUpfile.getOriginalFilename());
 			m.setChangeName("resources/uploadFiles/"+changeName);
+		}else {
+			//프로필 사진 삭제시 기본이미지
+			String changeName = "resources/profile.jpg";
+			m.setOriginName("profile.jpg");
+			m.setChangeName(changeName);
 		}
 
 		//새로 입력한 정보 변경해주기(DB)
@@ -179,7 +185,6 @@ public class MypageController {
 		
 		Member loginUser = ((Member) session.getAttribute("loginUser")); //세션에서 로그인 정보 추출
 		String userId = loginUser.getUserId(); //회원 아이디 추출
-		
 		
 		if (text.equals("탈퇴하겠습니다.")) { //탈퇴 입력문구 확인
 			int result = diaryService.deleteMember(userId);
@@ -402,8 +407,8 @@ public class MypageController {
 	//일지 작성 + 회원등급 조정
 	@PostMapping("insert.di")
 	public String insertDiary(String selectDate
-			,Diary d
-			,HttpSession session) {
+								,Diary d
+								,HttpSession session) {
 		//등업용 회원정보 미리 꺼내기
 		Member m = (Member)session.getAttribute("loginUser");
 		int userNo = m.getUserNo();
@@ -414,8 +419,8 @@ public class MypageController {
 		
 		if (result>0) {
 			int diaryCount = diaryService.diaryListCount(userNo);
-			//씨앗, 새싹(7개), 잎새(14개), 열매(30개)
 			
+			//씨앗, 새싹(7개), 잎새(14개), 열매(30개)
 			//글 작성 직후 개수 카운트
 			if(diaryCount==7 || diaryCount==14 || diaryCount==30) {
 				//등업조건일 경우 등업문구 띄우기
@@ -510,10 +515,34 @@ public class MypageController {
 			session.setAttribute("alertMsg", "일지 수정이 완료되었습니다.");
 			DiaryCategory dc = diaryService.selectCategory(cNo);
 			d.setCategoryNo(dc.getDiarycateName());
+			
+			//일지수정 후 뷰페이지 넘겨줄 프로필 사진 가져오기
+			int userNo = d.getDiaryWriter();
+			
+			//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
+			Member w =  diaryService.selectDiaryWriter(userNo);
+			
+			int loginUserNo = w.getUserNo();
+			int diaryNo = d.getDiaryNo();
+			int refDbno = diaryNo;
+			
+			//좋아요 정보 가져오기
+			DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
+			
+			DiaryLike like = diaryService.selectLike(dl);
+			
+			//좋아요 수
+			int likeCount = diaryService.countLike(diaryNo);
+			
+			d.setLikeCount(likeCount);
+			
+			//좋아요 정보도 가져오기..
 			mv.addObject("d", d);
+			mv.addObject("w",w);
+			mv.addObject("like", like);
 			mv.setViewName("mypage/diaryViewPage");
 		} else {
-			session.setAttribute("alertMsg", "일지 수정이 실패했습니다.");
+			session.setAttribute("alertMsg", "일지 수정을 실패했습니다.");
 			//에러페이지 넘기기
 			mv.setViewName("common/error");
 		}
@@ -578,9 +607,9 @@ public class MypageController {
 		}else { //실패시 아무것도 보내지 않고 오류처리
 			return null;
 		}
-		
 	}
-	//좋아요 전후  count
+	
+	//좋아요 전후 count
 	@ResponseBody
 	@GetMapping(value="likeCount.di",produces = "application/json; charset=UTF-8" )
 	public int recountLike(int diaryNo) {
@@ -616,14 +645,16 @@ public class MypageController {
 		int loginUserNo = m.getUserNo();
 		int refDbno = diaryNo;
 		
-		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
-		
 		//좋아요 정보 가져오기
+		//1. 좋아요 객체 생성
+		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
+		//2. 해당 객체에 해당하는 좋아요 정보 불러오기
 		DiaryLike like = diaryService.selectLike(dl);
 		
-		//좋아요 수
+		//해당 일지의 좋아요 수
 		int likeCount = diaryService.countLike(diaryNo);
 		
+		//diary 객체에 담아서 페이지에 보여주기
 		d.setLikeCount(likeCount);
 
 		model.addAttribute("w",w); //작성자 정보
@@ -657,9 +688,8 @@ public class MypageController {
 			return "redirect:/diaryViewPage";
 		}
 	}
-
 	
-	//거래목록
+	//거래목록 페이지 넘기기
 	@GetMapping("trade.me")
 	public String tradeList() {
 		return "mypage/myTradePage";
@@ -714,7 +744,6 @@ public class MypageController {
 		PageInfo sPi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		ArrayList<Product> sList = diaryService.mySellList(userNo, sPi);
 		//map에 페이지 정보와 글정보 담기
-		System.out.println(sList);
 		result.put("sList", sList);
 		result.put("sPi", sPi);
 		
@@ -758,8 +787,10 @@ public class MypageController {
 	public Map<String, Object> sellSearchPage(@RequestParam int userNo, @RequestParam String searchDate,
 											@RequestParam(value = "currentPage", defaultValue = "1") String cp) {
 		
-		String date = searchDate.substring(2,7).replace("-", "/"); //DB형식에 날짜 맞추기(yy/MM)
+		//DB형식에 날짜 맞추기(yy/MM)
+		String date = searchDate.substring(2,7).replace("-", "/");
 		
+		//product 객체 생성
 		Product p = new Product();
 		p.setUserNo(userNo);
 		p.setRegiDate(date);
@@ -791,9 +822,13 @@ public class MypageController {
 	@GetMapping(value="wishList.me",produces="application/json; charset=UTF-8")
 	public Map<String, Object> wishListPage(int userNo) {
 		
+		//찜 내역 보여줄 Map 생성
 		Map<String, Object> result = new HashMap<String, Object>();
+		//찜내역 조회
 		ArrayList<Product> wishList = diaryService.selectWish(userNo);
+		//결과 담아서 보내주기
 		result.put("wishList", wishList);
+		
 		return result;
 	}
 

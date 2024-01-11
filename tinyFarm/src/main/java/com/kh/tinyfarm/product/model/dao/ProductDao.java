@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.product.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -19,13 +20,13 @@ import com.kh.tinyfarm.product.model.vo.Product;
 public class ProductDao {
 
 	//상품 전체 개수
-	public int listCount(SqlSessionTemplate sqlSession) {
+	public int listCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
-		return sqlSession.selectOne("productMapper.listCount");
+		return sqlSession.selectOne("productMapper.listCount", map);
 	}
 
 	//상품 리스트
-	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		
 		//몇개씩 보여줄지
 		int limit = pi.getBoardLimit();
@@ -34,7 +35,7 @@ public class ProductDao {
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		//rowbounds 객체를 전달해야하는데 전달할 파라미터(전달값)이 없다면 null을 넣어서 메소드 호출하기.
-		return (ArrayList)sqlSession.selectList("productMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("productMapper.selectList", map, rowBounds);
 	}
 
 	//상품 조회수 증가
@@ -136,16 +137,6 @@ public class ProductDao {
 		
 		return sqlSession.selectOne("productMapper.selectLikeYn", product);
 	}
-
-	/*
-	 * //상품 좋아요 조회 public Product selectLike(SqlSessionTemplate sqlSession2, int
-	 * pno) {
-	 * 
-	 * return sqlSession2.selectOne("productMapper.selectLike", pno); }
-	 */
-
-	 
-
 
 
 

@@ -4,91 +4,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title -->
-    <title>마이페이지</title>
-    <!-- Favicon -->
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	<!-- 달력 API -->
-	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<!-- alert창 cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-	<style>
-	.fc-event {
-	    background: none;
-	    border: none;
-	    width:30px;
-  	}
-  	.fc-daygrid-event-harness {
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	}
-	.fc-day-sun a {
-	  color: red;
-	  text-decoration: none;
-	}
-	.fc-toolbar-chunk{
-		display: inline-block;
-	}
-	.fc-day-sat a {
-	  color: blue;
-	  text-decoration: none;
-	}
-	.fc-today-button.fc-button.fc-button-primary,
-	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary,
-	.fc-dayGridMonth-button.fc-button.fc-button-primary,
-	.fc-listMonth-button.fc-button.fc-button-primary{
-		background-color: #98d479;
-		border: 1px solid #d6e5c5;
-	}
-	
-	.fc-listMonth-button.fc-button.fc-button-primary.fc-button-active,
-	.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active{
-		background-color: #98d479;
-		border: none;
-	}
-	
-	.fc-today-button.fc-button.fc-button-primary:active,
-	.fc-prev-button.fc-button.fc-button-primary:active,
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Title -->
+<title>마이페이지</title>
+<!-- Favicon -->
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<!-- 달력 API -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<style>
+.fc-event {
+	background: none;
+	border: none;
+	width: 30px;
+}
+
+.fc-daygrid-event-harness {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.fc-day-sun a {
+	color: red;
+	text-decoration: none;
+}
+
+.fc-toolbar-chunk {
+	display: inline-block;
+}
+
+.fc-day-sat a {
+	color: blue;
+	text-decoration: none;
+}
+
+.fc-today-button.fc-button.fc-button-primary, .fc-prev-button.fc-button.fc-button-primary,
+	.fc-next-button.fc-button.fc-button-primary, .fc-dayGridMonth-button.fc-button.fc-button-primary,
+	.fc-listMonth-button.fc-button.fc-button-primary {
+	background-color: #98d479;
+	border: 1px solid #d6e5c5;
+}
+
+.fc-listMonth-button.fc-button.fc-button-primary.fc-button-active,
+	.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
+	background-color: #98d479;
+	border: none;
+}
+
+.fc-today-button.fc-button.fc-button-primary:active, .fc-prev-button.fc-button.fc-button-primary:active,
 	.fc-next-button.fc-button.fc-button-primary:active,
 	.fc-dayGridMonth-button.fc-button.fc-button-primary:active,
-	.fc-listMonth-button.fc-button.fc-button-primary:active{
-		background-color: #aae48c;
-		border: none;
-	}
-	
-	.fc-prev-button.fc-button.fc-button-primary{
-		margin-right: 3%;
-	}
-	.fc-prev-button.fc-button.fc-button-primary,
-	.fc-next-button.fc-button.fc-button-primary{
-		width: 5%;
-		height: 5%;
-	}
-	.fc-col-header-cell.fc-day{
-		background-color: #98d479;
-	}
-	.fc-scrollgrid.fc-scrollgrid-liquid tbody{
-		border: 1px solid #98d479;
-	}
-	.fc-day.fc-day-today.fc-daygrid-day{
-		background-color: #ebdfd3;
-	}
-	.fc-daygrid-bg-harness{
-		background-color: #f1efec;
-	}
-	</style>
+	.fc-listMonth-button.fc-button.fc-button-primary:active {
+	background-color: #aae48c;
+	border: none;
+}
+
+.fc-prev-button.fc-button.fc-button-primary {
+	margin-right: 3%;
+}
+
+.fc-prev-button.fc-button.fc-button-primary, .fc-next-button.fc-button.fc-button-primary
+	{
+	width: 5%;
+	height: 5%;
+}
+
+.fc-col-header-cell.fc-day {
+	background-color: #98d479;
+}
+
+.fc-scrollgrid.fc-scrollgrid-liquid tbody {
+	border: 1px solid #98d479;
+}
+
+.fc-day.fc-day-today.fc-daygrid-day {
+	background-color: #ebdfd3;
+}
+
+.fc-daygrid-bg-harness {
+	background-color: #f1efec;
+}
+</style>
 </head>
 
 <body>
@@ -105,7 +112,8 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="diary.me">영농일지</a></li>
 					</ol>
 					</nav>
@@ -135,7 +143,6 @@
             left: 'today,dayGridMonth,listMonth',
             center: 'title',
             right: 'prev,next'
-            
         },
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
@@ -179,7 +186,8 @@
 	    eventContent: function(img) { //새싹이미지를 위한 함수 ..
 	    	let imageUrl = img.event.extendedProps.imageUrl;
 	        return {
-	           html: '<div class="fc-content"><div class="fc-title">' + img.event.title + '</div><img src="' + imageUrl + '" alt="Event Image" style="max-width: 100%; height: auto;"></div>'
+	           html: '<div class="fc-content"><div class="fc-title">' + img.event.title
+	           		+'</div><img src="' + imageUrl + '" alt="Event Image" style="max-width: 100%; height: auto;"></div>'
 	        };
 	    },events: //일지 작성된 날짜에 이미지 띄우기
 	    	function(info, successCallback, failureCallback){

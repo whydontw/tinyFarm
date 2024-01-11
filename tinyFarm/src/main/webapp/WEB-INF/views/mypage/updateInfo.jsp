@@ -9,14 +9,10 @@
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
 <!-- Title -->
 <title>회원 정보 수정</title>
-
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
-
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
@@ -28,24 +24,20 @@
 	font-size: 30px;
 	text-align: center;
 }
-
 #center {
 	width: 70%;
 	margin: auto;
 	margin-top: 2%;
 }
-
 .col-8 {
 	float: right;
 	margin-right: 8%;
 }
-
 .changeImg {
 	margin: auto;
 	width: 50%;
 	height: 100%;
 }
-
 .box-file-input label {
 	display: inline-block;
 	background: #70c745;
@@ -55,22 +47,18 @@
 	cursor: pointer;
 	margin-left: 26%;
 }
-
 .box-file-input label:after {
 	content: "사진등록";
 }
-
 .box-file-input .file-input {
 	display: none;
 }
-
 #deleteImg {
 	height: 36px;
-	width: 28%;
+	width: 25%;
 	border: none;
 	cursor: pointer;
 }
-
 #searchBtn {
 	width: 50px;
 	height: 46px;
@@ -88,36 +76,29 @@
 	color: #ffffff;
 	border-radius: 0px 3px 3px 0px;
 }
-
 #searchBtn:hover {
 	background-color: #c9cdc6; /* Darker gray background on hover */
 }
-
 .modal-header {
 	background-color: #98d479;
 	color: #fff;
 	font-size: 25px;
 }
-
 .modal-content.main {
 	width: 60%;
 	margin: auto;
 }
-
 #pwdModal.modal-content {
 	border: none;
 }
-
 #deleteModal.modal-content {
 	border: none;
 	font-size: 14px;
 }
-
 #texet-area {
 	width: 70%;
 	border: none;
 }
-
 .btn-click {
 	width: 80px;
 	height: 40px;
@@ -125,21 +106,28 @@
 	border: none;
 	color: #fff;
 }
-
 .btn-click:hover {
 	background-color: #a4c992;
 	border: none;
 }
-
 .btn-click:checked, .btn-click:after {
 	border: none;
 }
-
 .kaUser {
 	color: red;
 	font-size: 15px;
 }
-
+.btn-del{
+	width: 20%;
+	height: 10%;
+	margin: auto;
+	background-color: #b6b8b6;
+	color: white;
+	border: none;
+}
+.btn-del:focus{
+	outline: none;
+}
 #delText {
 	width: 90%;
 	height: 40px;
@@ -147,28 +135,26 @@
 	padding-left: 5px;
 	font-size: 13px;
 }
-
 #delWarn {
 	color: red;
 	text-align: center;
 	margin-top: 2%;
 	margin-bottom: 3%;
 }
-
 #deleteModal .mr-sm-2 {
 	display: flex;
 }
-
 #deleteModal .mr-sm-2 p {
 	font-size: 14px;
 }
-
 .delNum {
 	width: 150px;
 }
-
 .mr-sm-2.top {
 	margin-top: 5%;
+}
+#updateBtn{
+	margin-left: 7%;
 }
 </style>
 </head>
@@ -187,7 +173,8 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="update.me">회원 정보 수정</a></li>
 					</ol>
 					</nav>
@@ -222,7 +209,7 @@
 	    									<!-- 파일 업로드 입력 폼 -->
 									       <div class="box-file-input">
 									       	<label><input type="file"class="file-input" id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)"></label>
-									       	<button type="button" id="deleteImg">사진 삭제</button>
+									       	<button type="button" id="deleteImg" class="btn-del">사진삭제</button>
 									       </div>
 										</div>
 									</div>
@@ -232,7 +219,7 @@
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label>비밀번호</label>
-	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="수정하기">
+	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="변경하기">
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="userName">이름</label>
@@ -253,8 +240,8 @@
 	                                </div>
 	                            </div>
   								<div class="col-8">
-                                    <button type="submit" class="btn alazea-btn mt-15">수정하기</button>
-                                    <button type="button" class="btn alazea-btn mt-15" data-toggle="modal" data-target="#deleteForm">탈퇴하기</button>
+                                    <button type="submit" id="updateBtn" class="btn alazea-btn mt-15">수정하기</button>
+                                    <button type="button" class="btn alazea-btn-gray mt-15" data-toggle="modal" data-target="#deleteForm">탈퇴하기</button>
                                 </div>
 	                        </form>
 	                    </div>
@@ -306,32 +293,10 @@
                     <!-- Modal body -->
                     <div class="modal-content" id="deleteModal">
                         <div id="center">
-                        	<c:choose>
-	                        	<c:when test="${diaryCount eq 0 }">
-	                        		 <div class="mr-sm-2 top"><p class="delNum">🌱 작성한 영농일지</p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
-	                        	</c:otherwise>
-                        	</c:choose>
-	                        	
-	                        <c:choose>	
-	                        	<c:when test="${boardCount eq 0 }">
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p><p>${boardCount } 개 </p></div>
-	                        	</c:otherwise>
-	                        </c:choose>	
-	                        <c:choose>	
-	                        	<c:when test="${replyCount eq 0}">
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>${replyCount } 개 </p></div>
-	                        	</c:otherwise>
-                        	</c:choose>
-                        	<div class="mr-sm-2"><p class="delNum">🌱 함께한 일수 </p> <p>${date } 일 </p></div>
+		                	<div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
+	                        <div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p><p>${boardCount } 개 </p></div>
+	                        <div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>${replyCount } 개 </p></div>
+	                       	<div class="mr-sm-2"><p class="delNum">🌱 함께한 일수 </p> <p>${date } 일 </p></div>
                             <div id="delWarn">
                             탈퇴 후 복구할 수 없습니다. <br>
                             '&nbsp;&nbsp;탈퇴하겠습니다.&nbsp;&nbsp;' <br>
@@ -361,10 +326,9 @@
 		//프로필 사진 변경
 		function loadImg(inputFile, num) {
 			let profileImage = document.getElementById('profileImage');
-		    
 			if (inputFile.files.length == 1) { //파일이 등록되면(length = 1)
 				let reader = new FileReader();
-			
+				
 				//파일을 읽어줄 메소드 :  reader.readAsDataURL(파일)
 				reader.readAsDataURL(inputFile.files[0]);
 				reader.onload = function(e) {
@@ -415,7 +379,7 @@
 			    		wantPwd ="";
 			    		chkPWd="";
 		    			//성공시 모달창 닫기
-			    		$("#updatePwdForm .close").arrt("clicked","true"); 
+			    		$("#updatePwdForm>.close").click();
 
 		    		}else if(result=="NNNYY"){
 		    			swal('변경 실패', '현재 비밀번호가 일치하지 않습니다.', 'error');

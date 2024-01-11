@@ -40,7 +40,7 @@
 				<div class="author-widget mb-30">
 					<div class="author-thumb-name d-flex align-items-center">
 						<div class="author-name">
-							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>QnA</b></h4>
+							<h4><img src="${contextPath }/resources/img/icon/carrot_icon.png"> <b>1:1 문의하기</b></h4>
 						</div>
 					</div>
 					<div class="single-latest-post d-flex align-items-center">
@@ -74,6 +74,7 @@
 						<div class="post-content">
 <!-- 							<a href="bookList.ad" class="post-title"><h6>도서 관리</h6></a> -->
 							<a href="bookInsert.re" class="post-title"><h6>도서 등록</h6></a>
+							<a href="bookList.ad" class="post-title"><h6>도서 관리</h6></a>
 						</div>
 					</div>
 				</div>

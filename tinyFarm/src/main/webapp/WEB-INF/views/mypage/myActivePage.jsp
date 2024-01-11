@@ -3,66 +3,83 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<!-- Title -->
+<title>나의 활동내역</title>
+<!-- Favicon -->
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<style>
+table {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	border-radius: 5px;
+}
 
-    <!-- Title -->
-    <title>나의 활동내역</title>
+thead {
+	font-weight: bold;
+	color: #fff;
+	background-color: #70c745;
+}
 
-    <!-- Favicon -->
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
+.single-widget-area .widget-title {
+	width: 100%;
+	position: relative;
+	margin-left: 10%;
+}
 
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="resources/style.css">
-	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<style>
-		table {
-			width: 100%;
-			height: 100%;
-			text-align: center;
-		    box-shadow: 0 2px 5px rgba(0,0,0,.25);
-		    border-radius: 5px;
-		}
-		thead {
-	        font-weight: bold;
-	        color: #fff;
-        	background-color: #70c745;
-        }
-		.single-widget-area .widget-title {
-		    width: 100%;
-		    position: relative;
-		    margin-left: 10%;
-		}
-		#boardList>table thead tr:hover,
-		#replyList>table thead tr:hover,
-		#followingTableContainer>table thead tr:hover,
-		#followerTableContainer>table thead tr:hover{ 
-			cursor: default; 
-		}
-		#boardList>table tbody tr:hover,
-		#replyList>table tbody tr:hover,
-		#followingTableContainer>table tbody tr:hover,
-		#followerTableContainer>table tbody tr:hover{ 
-			cursor: pointer; 
-			background-color: #e9f0e6;
-		}
-		.page-item.current-page a{
-		    background-color: #70c745;
-		}
-		#boardCount, #replyCount{
-			font-size: 13px;
-		}
-		#followingCount, #followerCount{
-			font-weight: lighter;
-		}
-	</style>
+#boardList>table thead tr:hover, #replyList>table thead tr:hover,
+	#followingTableContainer>table thead tr:hover, #followerTableContainer>table thead tr:hover
+	{
+	cursor: default;
+}
+
+#boardList>table tbody tr:hover, #replyList>table tbody tr:hover,
+	#followingTableContainer>table tbody tr:hover, #followerTableContainer>table tbody tr:hover
+	{
+	cursor: pointer;
+	background-color: #e9f0e6;
+}
+
+.page-item.current-page a {
+	background-color: #70c745;
+}
+
+#boardCount, #replyCount {
+	font-size: 13px;
+}
+
+#followingCount, #followerCount {
+	font-weight: lighter;
+}
+
+thead, tbody tr{
+	height: 40px
+}
+#titleTd, #reTd{
+	max-width: 440px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+#fiTd, #fwTd{
+	max-width: 250px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+</style>
 </head>
 
 <body>
@@ -84,7 +101,8 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+						<li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
 						<li class="breadcrumb-item"><a href="active.me">활동내역</a></li>
 						
 					</ol>
@@ -135,9 +153,8 @@
                     			<thead>
                     				<tr>
                     					<td style="width: 10%">글번호</td>
-                    					<td style="width: 60%">댓글내용</td>
+                    					<td style="width: 70%">댓글내용</td>
                     					<td style="width: 20%">작성일</td>
-                    					<td style="width: 10%">좋아요</td>
                     				</tr>
                     			</thead>
                     			<tbody>
@@ -253,7 +270,7 @@
 		    				let date = new Date(b.createDate);
 		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+b.boardNo+'">'  //클릭시 해당 게시글로 이동
 			    				+ "<td>"+b.boardNo+"</td>"
-			    				+ "<td>"+b.boardTitle+"</td>"
+			    				+ "<td id='titleTd'>"+b.boardTitle+"</td>"
 			    				+ "<td>"+formatDateForBoard(b.createDate)+"</td>"
 			    				+ "<td>"+b.count+"</td>"
 			    				+ "<td>"+b.likeCount+"</td>"
@@ -316,9 +333,8 @@
 		    			$.each(rList, function(key, r){
 		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+r.refBno+'">'
 			    				+ "<td>"+r.refBno+"</td>"
-			    				+ "<td>"+r.replyContent+"</td>"
+			    				+ "<td id='reTd'>"+r.replyContent+"</td>"
 			    				+ "<td>"+formatDateForReply(r.createDate)+"</td>"
-			    				+ "<td>"+r.likeCount+"</td>"
 			    				+ "</tr>";
 		    			});
 	    			}
@@ -379,7 +395,7 @@
 		    				+ "</tr>";
 	    			}else{ 
 		    			$.each(fiList, function(key, fi){
-		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td>'+fi.followingId+'</td></tr>';
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td id="fiTd">'+fi.followingId+'</td></tr>';
 		    			});
 	    			}
 	    				
@@ -524,7 +540,7 @@
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(fwList, function(key, fw){
-		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td colspan="2">'+fw.userId+'</td></tr>';
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td colspan="2" id="fwTd">'+fw.userId+'</td></tr>';
 		    			});
 	    			}
 	    			

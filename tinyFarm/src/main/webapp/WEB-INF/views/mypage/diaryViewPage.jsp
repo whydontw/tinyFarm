@@ -2,91 +2,114 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>영농일지보기</title>
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	<!-- alert창 cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    
-    <style>
-        .content {
-            width: 100%;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 3%;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 3%;
-        }
+<meta charset="UTF-8">
+<title>영농일지보기</title>
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<style>
+.content {
+	width: 100%;
+	border: 1px solid #dee2e6;
+	border-radius: 10px;
+	padding: 3%;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-bottom: 3%;
+}
 
-		#cNt p{
-			font-size: 15px;
-			color: grey;
-		}
-		#cNt{
-			text-align: center;
-			margin-bottom: 5%;
-		}
-		#miniProfile{
-			display:inline-block;
-			
-		}
-		#miniProfile img{
-			width: 35px;
-			height: 35px;
-			border-radius: 100%;
-			margin-bottom: 2%;
-		}
-		#selectDate{
-			font-size: 15px;
-			color: grey;
-		
-		}
-		.content>.note-editor.note-frame{
-			border: none;
-		}
-        #diaryContent {
-            width: 100%;
-            margin-top: 5%;
-        }
-        .btn-area{
-        	width: 50%;
-        	margin: auto;
-        	text-align: center;
-        }
-        .btn-green{
-        	width: 80px;
-        	height: 40px;
-        	margin: auto;
-        }
-        #diarylike{
-         	width: 28px;
-         	height: 28px;
-        	float: right;
-        	text-align: center;
-        	font-size: 14px;
-        }
-        #likeCount{
-        	margin-top: -2%;
-        }
-        
-        #diarylike img{
-        	width: 100%;
-        	height: 100%; 
-        }
-        #diarylike:hover {
-        	cursor: pointer;
-        }
-    </style>
+#cNt p {
+	font-size: 15px;
+	color: grey;
+}
+
+#cNt {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+#miniProfile {
+	display: inline-block;
+}
+
+#miniProfile img {
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+	margin-bottom: 2%;
+}
+
+#selectDate {
+	font-size: 15px;
+	color: grey;
+}
+
+.content>.note-editor.note-frame {
+	border: none;
+}
+
+#diaryContent {
+	width: 100%;
+	margin-top: 5%;
+}
+
+.btn-area {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+.btn-green {
+	width: 90px;
+	height: 50px;
+	margin: auto;
+	background-color: #70C745;
+	color: white;
+	border: none;
+}
+
+.btn-green:focus {
+	outline: none;
+}
+
+.btn-green:hover {
+	background-color: white;
+	color: #70C745;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #70C745;
+	transition-duration: 400ms;
+}
+
+#diarylike {
+	width: 28px;
+	height: 28px;
+	float: right;
+	text-align: center;
+	font-size: 14px;
+}
+
+#likeCount {
+	margin-top: -2%;
+}
+
+#diarylike img {
+	width: 100%;
+	height: 100%;
+}
+
+#diarylike:hover {
+	cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -102,7 +125,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="mypage.me"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="/tinyfarm"><i class="fa fa-home"></i>작은농장</a></li>
+                            <li class="breadcrumb-item"><a href="mypage.me">마이페이지</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0)">일지보기</a></li>
                         </ol>
                     </nav>
@@ -121,15 +145,7 @@
 		                        <p>${d.categoryNo }</p>
 		                        <h4>${d.diaryTitle }</h4>
 	                    	</div>
-	                    	<c:choose>
-	                    		<c:when test="${not empty w.changeName }">
-			                    	<span id="miniProfile"><img src="${w.changeName }">&nbsp;${w.userName } &nbsp;</span>
-	                    		</c:when>
-	                    		<c:otherwise>
-	                    			<span id="miniProfile"><img src="resources/profile.jpg">&nbsp;${w.userName } &nbsp;</span>
-	                    		</c:otherwise>
-			                    	
-	                    	</c:choose>
+			                <span id="miniProfile"><img src="${w.changeName }">&nbsp;${w.userName } &nbsp;</span>
 	                    	<span id="selectDate">${d.selectDate }</span>
 	                    	<div id="diarylike">
 	                    		<c:choose>
@@ -153,7 +169,7 @@
 			                        <button id="backBtn" class="btn-green">뒤로가기</button>
 	                    		</c:when>
 	                    		<c:otherwise>
-	                    			<button id="backBtn" class="btn-green">뒤로가기</button>
+	                    			<button id="backBtn" class="btn-green" onclick="window.history.back();">뒤로가기</button>
 	                    		</c:otherwise>
 	                    	</c:choose>
 	                    </div>
@@ -191,7 +207,6 @@
 	    					},error : function(){
 	    						console.log("좋아요 수 재조회 실패");
 	    					}
-	    				
 	    				});
 	    			}
 	    		},error:function(){
@@ -287,7 +302,8 @@
     		}, function(back) {
     			//아니오 누를시 현재페이지 유지
     			if (!back) {return false;}
-    			window.history.back();
+    			location.href="diary.me";
+    			
     		}); 
     	 });
     </script>

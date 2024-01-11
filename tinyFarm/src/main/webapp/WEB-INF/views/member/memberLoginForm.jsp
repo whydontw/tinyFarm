@@ -48,7 +48,7 @@ String contextPath = request.getContextPath();
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">Login</a></li>
+							<li class="breadcrumb-item"><a href="#">로그인</a></li>
 
 						</ol>
 					</nav>
@@ -65,7 +65,7 @@ String contextPath = request.getContextPath();
 				<div class="col-12 col-lg-5">
 					<!-- Section Heading -->
 					<div class="section-heading">
-						<h2>LOGIN</h2>
+						<h2>로그인</h2>
 					</div>
 					<!-- Contact Form Area -->
 					<div class="contact-form-area mb-100">

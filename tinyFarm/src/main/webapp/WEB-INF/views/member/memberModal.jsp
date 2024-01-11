@@ -6,25 +6,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Favicon -->
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/img/core-img/favicon.ico">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.ico">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Core Stylesheet -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 <!-- alert창 cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
-	.mb-4>*{
-		display: inline;
-	}
+.mb-4>*{
+	display: inline;
+}
 </style>
 </head>
 <body>
-
 	<!-- Button trigger modal -->
 	<button style="display: none;" type="button"
 		class="btn btn-primary btn1" data-toggle="modal"
@@ -77,9 +74,8 @@
 				</div>
 				<div class="d-flex justify-content-start" style="margin-top: -85px;">
 					<button type="button" id="followBtn" class="btn alazea-btn2" onclick="followUser();"
-						style="margin-bottom: 20px; margin-left: 290px;">팔로우</button>
-					<button type="button" class="btn alazea-btn2" onclick="goChat();"
-						style="margin-left: 3px">1:1 채팅</button>
+							style="margin-bottom: 20px; margin-left: 290px;">팔로우</button>
+					<button type="button" class="btn alazea-btn2" onclick="goChat();" style="margin-left: 3px">1:1 채팅</button>
 					<button type="button" id="diarybtn" class="btn alazea-btn2" style="margin-left: 3px">일지보기</button>
 				</div>
 			</div>
@@ -147,7 +143,6 @@
 	    	let followingId= $("#userId").text();
 	    	let followingName = $("#userName").text();
 	    	
-	    	console.log(followingId);
 	    	let alert = window.confirm(followingName+"님의 영농일지를 구경하시겠습니까?");
 	    	let form = document.createElement("form");
 			let obj; //넘겨받을 값 준비
@@ -171,7 +166,6 @@
 	    //채팅방 이동
 	    function goChat(){
 	    	var userId = $("#userId").text();
-	    	console.log(userId);
 	    	location.href = "chatList.ch?userId="+userId;
 	    }
 
@@ -212,24 +206,19 @@
     				return false;
     			}
     		});
-
 		});    
 
-	</script>
-	<!-- ##### All Javascript Files ##### -->
-	<!-- jQuery-2.2.4 js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.2.4.min.js"></script>
-	<!-- Popper js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/bootstrap/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
-	<!-- All Plugins js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
-	<!-- Active js -->
-	<script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
+</script>
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
 </body>
 </html>
