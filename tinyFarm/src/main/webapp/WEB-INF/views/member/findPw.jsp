@@ -53,7 +53,7 @@
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/"><i
 												class="fa fa-home"></i> Home</a></li>
-										<li class="breadcrumb-item"><a href="#">FIND PASSWORD</a></li>
+										<li class="breadcrumb-item"><a href="#">비밀번호찾기</a></li>
 										
 									</ol>
 									</nav>
@@ -64,7 +64,7 @@
 				<div align="center">
 				    <form name="idfindscreen" method="POST">
 				        <div class="search-title">
-				            <h3 style = "margin-bottom:40px">FIND PASSWORD</h3>
+				            <h4 style = "margin-bottom:40px">회원 정보에 등록된 이메일로 찾기</h4>
 				        </div>
 				
 				        <div class="row">

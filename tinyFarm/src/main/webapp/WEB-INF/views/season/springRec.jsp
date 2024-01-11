@@ -117,9 +117,9 @@ String contextPath = request.getContextPath();
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="/tinyfarm/"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">식물정보</a></li>
 							<li class="breadcrumb-item active" aria-current="page">계절별
 								텃밭 가꾸는 법</li>
+							<li class="breadcrumb-item"><a href="#">봄</a></li>
 						</ol>
 					</nav>
 				</div>

@@ -45,20 +45,50 @@
   
   <select id="listCount" resultType="_int">
   	SELECT COUNT(*)
-	FROM PRODUCT
-	WHERE SALES_STATUS = 'Y'
+   	FROM PRODUCT P
+   	JOIN MEMBER M ON (P.USER_NO=M.USER_NO)
+   	WHERE P.SALES_STATUS='Y'
+   	<choose>
+   		<when test="category=='writer'">
+   			AND USER_ID
+   		</when>
+   		<when test="category=='title'">
+	    	AND PRODUCT_TITLE
+	    </when>
+	    <otherwise>
+	    	AND PRODUCT_CONTENT
+	    </otherwise>
+    </choose>
+    LIKE '%' || #{keyword} || '%'
+   	ORDER BY P.REGI_DATE DESC
 
   </select>
 
-  <select id="selectList" resultMap="productResultSet">
-	SELECT PRODUCT_NO
-	      ,PRODUCT_TITLE
-	      ,PRODUCT_PRICE
-	      ,FILE_PATH
-	      ,CHANGE_NAME
+  <select id="selectList" resultMap="productResultSet" parameterType="hashmap">
+  	SELECT P.PRODUCT_NO
+	      ,P.PRODUCT_TITLE
+	      ,P.PRODUCT_PRICE
+	      ,AT.FILE_PATH
+	      ,AT.CHANGE_NAME
+	      ,M.USER_ID
+	      ,P.COUNT
+   		  ,P.REGI_DATE
 	FROM PRODUCT P
-	LEFT JOIN ATTACHMENT AT ON (P.PRODUCT_NO=AT.REF_NO)
+	JOIN ATTACHMENT AT ON (P.PRODUCT_NO=AT.REF_NO)
+	JOIN MEMBER M ON (P.USER_NO=M.USER_NO)
 	WHERE P.SALES_STATUS = 'Y'
+	<choose>
+   		<when test="category=='writer'">
+   			AND USER_ID
+   		</when>
+   		<when test="category=='title'">
+	    	AND PRODUCT_TITLE
+	    </when>
+	    <otherwise>
+	    	AND PRODUCT_CONTENT
+	    </otherwise>
+    </choose>
+    LIKE '%' || #{keyword} || '%'
 	ORDER BY P.REGI_DATE DESC
   </select>
   
@@ -219,6 +249,7 @@
 	    AND USER_NO = #{userNo}
 	  
   </select> 
+  
   
   
   </mapper>

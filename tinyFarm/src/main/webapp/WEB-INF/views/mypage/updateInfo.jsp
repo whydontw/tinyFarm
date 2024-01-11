@@ -219,7 +219,7 @@
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label>비밀번호</label>
-	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="수정하기">
+	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="변경하기">
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="userName">이름</label>
@@ -293,32 +293,10 @@
                     <!-- Modal body -->
                     <div class="modal-content" id="deleteModal">
                         <div id="center">
-                        	<c:choose>
-	                        	<c:when test="${diaryCount eq 0 }">
-	                        		 <div class="mr-sm-2 top"><p class="delNum">🌱 작성한 영농일지</p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
-	                        	</c:otherwise>
-                        	</c:choose>
-	                        	
-	                        <c:choose>	
-	                        	<c:when test="${boardCount eq 0 }">
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p><p>${boardCount } 개 </p></div>
-	                        	</c:otherwise>
-	                        </c:choose>	
-	                        <c:choose>	
-	                        	<c:when test="${replyCount eq 0}">
-	                        		<div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>0 개 </p></div>
-	                        	</c:when>
-	                        	<c:otherwise>
-		                            <div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>${replyCount } 개 </p></div>
-	                        	</c:otherwise>
-                        	</c:choose>
-                        	<div class="mr-sm-2"><p class="delNum">🌱 함께한 일수 </p> <p>${date } 일 </p></div>
+		                	<div class="mr-sm-2"><p class="delNum">🌱 작성한 영농일지</p> <p>${diaryCount } 개 </p></div> 
+	                        <div class="mr-sm-2"><p class="delNum">🌱 작성한 게시글 수 </p><p>${boardCount } 개 </p></div>
+	                        <div class="mr-sm-2"><p class="delNum">🌱 작성한 댓글 수 </p> <p>${replyCount } 개 </p></div>
+	                       	<div class="mr-sm-2"><p class="delNum">🌱 함께한 일수 </p> <p>${date } 일 </p></div>
                             <div id="delWarn">
                             탈퇴 후 복구할 수 없습니다. <br>
                             '&nbsp;&nbsp;탈퇴하겠습니다.&nbsp;&nbsp;' <br>
@@ -343,13 +321,11 @@
 			$("#deleteImg").click(function(){
 				//삭제버튼 클릭시 src값 null로 변경, 대체이미지로 기본프로필 사용
 				$("#profileImage").attr("src", "").attr("onerror","this.src='resources/profile.jpg'");
-				console.log("사진삭제 : "+$("#profileImage").val());
 			});		
 		});
 		//프로필 사진 변경
 		function loadImg(inputFile, num) {
 			let profileImage = document.getElementById('profileImage');
-		    console.log("변경후 : "+profileImage);
 			if (inputFile.files.length == 1) { //파일이 등록되면(length = 1)
 				let reader = new FileReader();
 				

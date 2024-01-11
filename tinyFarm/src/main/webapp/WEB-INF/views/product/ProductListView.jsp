@@ -100,30 +100,35 @@
     <!-- ##### Breadcrumb Area End ##### -->
     
 	<!-- 작물 검색 -->
-<!--      <div class="pccontainer" align="center">
-		<div>
+      <div class="pccontainer" align="center">
+		<div id="search-area">
+		<form action="plist.bo" method="get" >
+			<input type="hidden" name="currentPage" value="1">
 			<table class="psearch-area">
 				<tr id=psearch>
 					<td align="center" class="pcategory" style="width: 200px;">
- 						<select class="form-control" name="psearchField" id="psearchField">
-							<option value="title">채소</option>
-							<option value="id">과일</option>
-							<option value="category">곡물</option>
+						<select class="form-control" name="category" id="psearchField" >
+							<option value="writer">작성자</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>				
+						
 						</select>
 					</td>
 					<td class="pcontent">
-						<input type="text" class="form-control"placeholder="거래 하고 싶은 작물을 검색해보세요." name="psearch" id="psearch" maxlength="100" style="width: 700px;">
+						<input type="text" name="keyword" value="${map.keyword}" class="form-control" placeholder="거래 하고 싶은 작물을 검색해보세요." id="psearch" maxlength="100" style="width: 700px;">
 					</td>
 					<td class="psearchbtn">
-						<button class="btn alazea-btn" name="psearchButton" id="psearchButton" style="width: 100px;">검색</button>
+						<button type="submit" class="btn alazea-btn" id="psearchButton" style="width: 100px;">검색</button>
 					</td>
 				</tr>
 			</table>
+			</form>
 		</div>
 	</div>
 	
-	<br><br> -->
-    
+	<br><br>
+	
+
 
     <!-- ##### Shop Area Start ##### -->
     <section class="shop-page section-padding-0-100">
@@ -182,18 +187,18 @@
                 </div> 
 	                                    
                         <!-- Pagination -->
-                        <nav aria-label="Page navigation">
+                         <nav aria-label="Page navigation">
                             <ul class="pagination">
                             	<c:if test="${pi.currentPage > 1}">
-                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage-1}">
+                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage-1}&category=${map.category}&keyword=${map.keyword}">
                                 	<i class="fa fa-angle-left"></i></a>
                                 	</li>
                                 </c:if>
                                 <c:forEach begin="${pi.startPage}" end="${pi.endPage }" var="p">
-                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${p}">${p}</a></li>
+                                	<li class="page-item"><a class="page-link" href="plist.bo?currentPage=${p}&category=${map.category}&keyword=${map.keyword}">${p}</a></li>
                                 </c:forEach>
                                 <c:if test="${pi.currentPage < pi.maxPage}">
-	                                <li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage+1}">
+	                                <li class="page-item"><a class="page-link" href="plist.bo?currentPage=${pi.currentPage+1}&category=${map.category}&keyword=${map.keyword}">
 	                                <i class="fa fa-angle-right"></i></a></li>
                                 </c:if>
                             </ul>

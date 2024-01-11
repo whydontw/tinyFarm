@@ -59,10 +59,14 @@ a, p {
 	width: 30%;
 	font-size: 17px;
 }
-.btn-green, .btn-red {
-	width: 50px;
-	height: 30px;
+.btn-green, .btn-red{
+	width: 10%;
+	height: 15%;
 	float: right;
+	margin-top: 1%;
+}
+.btn-red{
+	margin-left: 1%;
 }
 </style>
 </head>
@@ -196,7 +200,7 @@ a, p {
     		closeOnCancel : true
     	}, function(isConfirm) {
     		if (isConfirm) {
-   				window.history.back();
+    			location.href="diary.me";
     		}else{
     			return false;
     		}
@@ -204,10 +208,10 @@ a, p {
     });
        
     function updateDiary(){
-       let diaryTitle = $("#diaryTitle").val();
-       let diaryContent = $("#diaryContent").val();
-       let openVal = $("input[name=selectOpen]:checked").val();
-       console.log(diaryTitle);
+       let diaryTitle = $("#diaryTitle").val(); //제목
+       let diaryContent = $("#diaryContent").val(); //내용
+       let openVal = $("input[name=selectOpen]:checked").val(); //공개여부
+       
        //제목 없을시
        if(diaryTitle==""){
     	   swal("error", "제목을 입력해주세요.", "error");

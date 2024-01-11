@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.product.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.tinyfarm.common.model.vo.Attachment;
 import com.kh.tinyfarm.common.model.vo.PageInfo;
@@ -13,10 +14,10 @@ import com.kh.tinyfarm.product.model.vo.Product;
 public interface ProductService {
 
 	//상품 수 조회
-	int listCount();
+	int listCount(HashMap<String, String> map);
 
 	//상품 리스트
-	ArrayList<Product> selectList(PageInfo pi);
+	ArrayList<Product> selectList(PageInfo pi, HashMap<String, String> map);
 
 	//상품 조회수 증가
 	int increaseCount(int pno);
@@ -50,8 +51,9 @@ public interface ProductService {
 	//상품 좋아요 여부 조회하기
 	int selectLikeYn(Product product);
 
-	//상품 좋아요 조회
-//	Product selectLike(int pno);
+
+	
+
 
 	
 

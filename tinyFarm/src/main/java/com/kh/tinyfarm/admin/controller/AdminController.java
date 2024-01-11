@@ -542,6 +542,43 @@ public class AdminController {
 		return adminService.reportDetailInfo(replyNo);
 	}
 	
+	
+	
+	
+	// #########################################################
+	
+	@GetMapping("/bookList.ad")
+	public String selectBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+								@RequestParam(value="bookCategory", defaultValue="all") String bookCategory,
+								Model model) {
+		
+		HashMap<String, String> bookMap = new HashMap<String, String>();
+		bookMap.put("bookCategory", bookCategory);
+		
+		
+		
+		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
+		int bookListCount = bookService.bookListCount(bookMap);
+
+		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
+		int boardLimit = 5;
+		// 페이징 바 개수(pageLimit)
+		int pageLimit = 5;
+
+		PageInfo pi = Pagination.getPageInfo(bookListCount, currentPage, pageLimit, boardLimit);
+
+		// 페이징 처리된 게시글 목록 조회해서 boardListView에 보여주기
+		ArrayList<Book> bookList = bookService.selectBookList(pi, bookMap);
+		
+
+		model.addAttribute("bookCategory", bookCategory);
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("pi", pi);
+
+		
+		return "admin/bookList";
+	}
+	
 
 	
 }

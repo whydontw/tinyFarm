@@ -74,6 +74,7 @@
 						<div class="post-content">
 <!-- 							<a href="bookList.ad" class="post-title"><h6>도서 관리</h6></a> -->
 							<a href="bookInsert.re" class="post-title"><h6>도서 등록</h6></a>
+							<a href="bookList.ad" class="post-title"><h6>도서 관리</h6></a>
 						</div>
 					</div>
 				</div>

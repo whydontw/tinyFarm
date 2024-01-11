@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionSuspensionNotSupportedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -218,12 +219,11 @@ public class BookRecomController {
 		return "redirect:bookDetail.re?bookNo=" + book.getBookNo();
 	}
 	
+
 	
 	
 	@PostMapping("bookDelete.re")
-	public String bookDelete(int bookNo, HttpSession session) {
-		
-		System.out.println(bookNo);
+	public String bookDelete(int bookNo, @RequestParam(value="type", defaultValue="") String adminBook, HttpSession session) {
 		
 		int result = bookService.bookDelete(bookNo);
 		
@@ -233,7 +233,12 @@ public class BookRecomController {
 			session.setAttribute("alertMsg", "오류가 발생하였습니다.");
 		}
 		
-		return "redirect:bookMain.re";
+		if(adminBook.equals("")) {
+			return "redirect:bookMain.re";
+		}
+		
+		return "redirect:bookList.ad";
 	}
+	
 	
 }
