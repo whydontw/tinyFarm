@@ -143,7 +143,6 @@
             left: 'today,dayGridMonth,listMonth',
             center: 'title',
             right: 'prev,next'
-            
         },
 		selectable: true, //날짜 선택
 		locale: 'ko',//한글 설정
@@ -187,7 +186,8 @@
 	    eventContent: function(img) { //새싹이미지를 위한 함수 ..
 	    	let imageUrl = img.event.extendedProps.imageUrl;
 	        return {
-	           html: '<div class="fc-content"><div class="fc-title">' + img.event.title + '</div><img src="' + imageUrl + '" alt="Event Image" style="max-width: 100%; height: auto;"></div>'
+	           html: '<div class="fc-content"><div class="fc-title">' + img.event.title
+	           		+'</div><img src="' + imageUrl + '" alt="Event Image" style="max-width: 100%; height: auto;"></div>'
 	        };
 	    },events: //일지 작성된 날짜에 이미지 띄우기
 	    	function(info, successCallback, failureCallback){
