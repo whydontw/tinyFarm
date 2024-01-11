@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="resources/jisu/css/tradePage.css">
 <link rel="stylesheet" href="resources/style.css">
 <script src="resources/jisu/js/myPage.js"></script>
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
 .widget-title, .dateSearch {
 	display: inline-block;
@@ -330,7 +333,7 @@ background-color: none;
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 			   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
 			   				+ "<td id='orderTd'>"+o.productTitle+"</td>"
-			   				+ "<td>￦"+o.paymentPrice+"</td>"
+			   				+ "<td>￦ "+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
 			   				+ "</tr>";
 		    			});
@@ -363,6 +366,7 @@ background-color: none;
 	    		}
 	    		
 		    	$("#orderPageArea>#orderPage").html(pStr);
+	    		
     		},error : function(){
     			console.log("구매내역 ajax 통신 실패");
     		}
@@ -394,15 +398,18 @@ background-color: none;
 		    			+ "</tr>";
 	    		}else{
 		    		$.each(sList, function(key, s){ 
-		    			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
-			   				+ "<td>"+s.productNo+"</td>"
+		    			str += '<tr onclick="productDatail(this);">' //클릭시 해당 제품 글로 이동
+			   				+ "<td class='pNo'>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 			   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
 			   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
-			   				+ "<td>￦"+s.productPrice+"</td>"
-			   				+ "<td>"+s.salesStatus+"</td>"
+			   				+ "<td>￦ "+s.productPrice+"</td>"
+			   				+ "<td class='status'>"+s.salesStatus+"</td>"
 			   				+ "</tr>";
+			   				
+			   				
 		    			});
+		    			
 	    		}
 	    	    
 	    	    //cStr 문구 작성
@@ -432,7 +439,19 @@ background-color: none;
     		}
     	});
     }	
-
+	
+	//삭제/판매된 거래내역은 detail 볼 수 없도록 막기
+    function productDatail(el){
+    	let pNo = $(el).children(".pNo").text();
+    	let status = $(el).children(".status").text();
+		if(status == 'Y'){
+			location.href="pdetail.bo?pno="+pNo;
+		}else{
+			swal('존재하지 않는 게시글', '판매되거나 삭제된 게시글은 \n볼 수 없습니다.😢', 'error');
+		}
+	}
+	
+	
 	//구매내역 날짜검색
     function loadOrderSearch(page){
     	let date = $("#orderDate").val(); //검색날짜
@@ -533,13 +552,13 @@ background-color: none;
 			   			+ "</tr>";
 		    	}else{
 			   		$.each(sList, function(key, s){
-			   			str += '<tr onclick="location.href=\'pdetail.bo?pno=\' + '+s.productNo+'">' //클릭시 해당 제품 글로 이동
-		   				+ "<td>"+s.productNo+"</td>"
+			   			str += '<tr onclick="productDatail(this);">' //클릭시 해당 제품 글로 이동
+		   				+ "<td class='pNo'>"+s.productNo+"</td>"
 		   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 		   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
 		   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
 		   				+ "<td>￦"+s.productPrice+"</td>"
-		   				+ "<td>"+s.salesStatus+"</td>"
+		   				+ "<td class='status'>"+s.salesStatus+"</td>"
 		   				+ "</tr>";
 			   		});
 		    	}
