@@ -345,6 +345,17 @@
 							</div>
 						</div>
 					</c:when>
+					<c:when test="${loginUser.userId eq 'admin'}">
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="buttonContent">
+								<form action="delete.bo" method="post">
+									<input type="hidden" name="boardNo" value="${boardInfo.boardNo }">
+									<button class="deleteButton" type="submit" style="outline: none;">삭제하기</button>
+								</form>
+							</div>
+						</div>
+					</c:when>
 					<c:otherwise>
 						<!-- Modal body -->
 						<div class="modal-body">
@@ -375,8 +386,15 @@
 					<div class="replyBody">
 						<input id="hiddenRno" type="hidden"> 
 						<input id="hiddenRContent" type="hidden">
-						<button type="button" class="updateRbutton" onclick="updateReply(this);" style="border: none; outline: none;">수정하기</button>
-						<button type="button" class="deleteRbutton" onclick="deleteReply(this);" style="border: none; outline: none;">삭제하기</button>
+						<c:choose>
+							<c:when test="${loginUser.userId eq 'admin' }">
+								<button type="button" class="deleteRbutton" onclick="deleteReply(this);" style="border: none; outline: none;">삭제하기</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="updateRbutton" onclick="updateReply(this);" style="border: none; outline: none;">수정하기</button>
+								<button type="button" class="deleteRbutton" onclick="deleteReply(this);" style="border: none; outline: none;">삭제하기</button>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -429,7 +447,7 @@
                    var replyCreateDate = $("<span class='comment-date'></span>");
                    var replyContentStr = $("<p id='originContent'></p>");
                   
-                   if(loginUserId == result[i].replyWriter){
+                   if(loginUserId == result[i].replyWriter || loginUserId == "admin"){
                   	   var replyModalBtn = $("<button type='button' id='replyBtn' data-toggle='modal' data-target='#replyModal' style='border: none;' onclick='giveRno(this);'><img src='resources/img/icon/dots.png' id='replyImg' style='width: 20px; height: 20px;'></button>");
                    }else{
                 	   var replyModalBtn = $("<button type='button' id='replyBtn' data-toggle='modal' data-target='#replyModal' style='border: none;' onclick='giveRno(this);'></button>");
@@ -478,7 +496,7 @@
 			        replyCreateDate.text(msg);
                           
                    //승민 추가-------------------
-                   if(loginUserId == result[i].replyWriter){
+                   if(loginUserId == result[i].replyWriter || loginUserId == "admin"){
 	                   commentContent.append(inConmmentContent).append(replyContentStr);
                 	   
                    }else {

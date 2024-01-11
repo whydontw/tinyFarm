@@ -40,6 +40,7 @@
 	border: none;
 	outline: none;
 	font-weight: bold;
+	transition-duration: 400ms;
 }
 
 .start, .question {
@@ -155,6 +156,51 @@
 	font-size: 25px;
 }
 
+.recommendLoding{
+  width: 90vw;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+}
+
+.droplet_spinner {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+.droplet_spinner .droplet {
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+  
+  background-color: #70c745;
+  border-radius: 50%;
+  transform-origin: center bottom;
+  
+  animation: bounce 1.2s cubic-bezier(0.3, 0.01, 0.4, 1) infinite;
+}
+
+.droplet_spinner .droplet:nth-child(1) {
+  animation-delay: -0.4s;
+}
+
+.droplet_spinner .droplet:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.droplet_spinner .droplet:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
 </style>
 
 
@@ -363,7 +409,13 @@
 									<h4 class="post-title">
 										당신의 공간에<br> <strong>추천하는 식물은</strong>
 									</h4>
-
+									<div class="recommendLoding">
+									 	 <div class="droplet_spinner">
+									  	 <div class="droplet"></div>
+									     <div class="droplet"></div>
+									     <div class="droplet"></div>
+									  </div>
+									</div>
 									<!-- ##### Single Widget Area ##### -->
 									<div class="single-widget-area" id="recommendPlant"></div>
 								</div>
@@ -731,19 +783,19 @@
 
 			lv1 : {
 				lvTitle : "Lv.1-초보자",
-				lvExplain : "식물을 처음 키우기 시작하는 단계라 걱정인가요? 잘 찾아 왔어요. 식물 키우기 풀박사가 도와줄테니 걱정마세요!",
+				lvExplain : "식물을 처음 키우기 시작하는 단계라 걱정인가요? 잘 찾아 왔어요. 식물박사들이 도와줄테니 걱정마세요!",
 				lvTag1 : "#새내기",
 				lvTag2 : "#초보집사",
 			},
 			lv2 : {
 				lvTitle : "Lv.2-식물 러버",
-				lvExplain : "식물 키우는 재미에 푹빠져버리셨네요! 잘 찾아 왔어요. 풀박사가 되어가는 여정을 함께 해요!",
+				lvExplain : "식물 키우는 재미에 푹빠져버리셨네요! 잘 찾아 왔어요. 식물박사가 되어가는 여정을 함께 해요!",
 				lvTag1 : "#나도 곧 풀박사",
 				lvTag2 : "#열정적",
 			},
 			lv3 : {
-				lvTitle : "Lv.1-나는야 박사",
-				lvExplain : "혹시 당신은 이미 풀박사 만렙? 식집사의 방앗간에 오신걸 환영해요!",
+				lvTitle : "Lv.3-나는야 식물박사",
+				lvExplain : "혹시 당신은 이미 만렙? 작은농장에 오신걸 환영해요!",
 				lvTag1 : "#무엇이든 물어봐",
 				lvTag2 : "#고수의 향기",
 			},
@@ -775,7 +827,7 @@
 			 $("#load").show();
 
 		     // 8초 후에 숨기기
-		     setTimeout(hideLoading, 8000);
+		     setTimeout(hideLoading, 3000);
 		    
 		 }
 
@@ -945,7 +997,7 @@
 									formDiv.append(detailImg);
 									formDiv.append(div1);
 									wrapDiv.append(formDiv);
-
+									$(".recommendLoding").css("display", "none");
 									$("#recommendPlant").append(wrapDiv);
 								}
 
