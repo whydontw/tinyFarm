@@ -145,15 +145,7 @@
 		                        <p>${d.categoryNo }</p>
 		                        <h4>${d.diaryTitle }</h4>
 	                    	</div>
-	                    	<c:choose>
-	                    		<c:when test="${not empty w.changeName }">
-			                    	<span id="miniProfile"><img src="${w.changeName }">&nbsp;${w.userName } &nbsp;</span>
-	                    		</c:when>
-	                    		<c:otherwise>
-	                    			<span id="miniProfile"><img src="resources/profile.jpg">&nbsp;${w.userName } &nbsp;</span>
-	                    		</c:otherwise>
-			                    	
-	                    	</c:choose>
+			                <span id="miniProfile"><img src="${w.changeName }">&nbsp;${w.userName } &nbsp;</span>
 	                    	<span id="selectDate">${d.selectDate }</span>
 	                    	<div id="diarylike">
 	                    		<c:choose>
@@ -177,7 +169,7 @@
 			                        <button id="backBtn" class="btn-green">뒤로가기</button>
 	                    		</c:when>
 	                    		<c:otherwise>
-	                    			<button id="backBtn" class="btn-green">뒤로가기</button>
+	                    			<button id="backBtn" class="btn-green" onclick="window.history.back();">뒤로가기</button>
 	                    		</c:otherwise>
 	                    	</c:choose>
 	                    </div>
@@ -311,8 +303,8 @@
     		}, function(back) {
     			//아니오 누를시 현재페이지 유지
     			if (!back) {return false;}
+    			location.href="diary.me";
     			
-    			window.history.go(-1);
     		}); 
     	 });
     </script>

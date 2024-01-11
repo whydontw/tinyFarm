@@ -95,6 +95,9 @@
 .fc-daygrid-bg-harness {
 	background-color: #f1efec;
 }
+.breadcrumb li{
+	cursor: pointer;
+}
 </style>
 </head>
 
