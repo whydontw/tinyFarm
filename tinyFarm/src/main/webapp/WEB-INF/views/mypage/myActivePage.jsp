@@ -63,9 +63,22 @@ thead {
 	font-weight: lighter;
 }
 
-thead, tbody {
-	height: 40px;
+thead, tbody tr{
+	height: 40px
 }
+#titleTd, #reTd{
+	max-width: 440px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+#fiTd, #fwTd{
+	max-width: 250px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
 </style>
 </head>
 
@@ -140,9 +153,8 @@ thead, tbody {
                     			<thead>
                     				<tr>
                     					<td style="width: 10%">글번호</td>
-                    					<td style="width: 60%">댓글내용</td>
+                    					<td style="width: 70%">댓글내용</td>
                     					<td style="width: 20%">작성일</td>
-                    					<td style="width: 10%">좋아요</td>
                     				</tr>
                     			</thead>
                     			<tbody>
@@ -258,7 +270,7 @@ thead, tbody {
 		    				let date = new Date(b.createDate);
 		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+b.boardNo+'">'  //클릭시 해당 게시글로 이동
 			    				+ "<td>"+b.boardNo+"</td>"
-			    				+ "<td>"+b.boardTitle+"</td>"
+			    				+ "<td id='titleTd'>"+b.boardTitle+"</td>"
 			    				+ "<td>"+formatDateForBoard(b.createDate)+"</td>"
 			    				+ "<td>"+b.count+"</td>"
 			    				+ "<td>"+b.likeCount+"</td>"
@@ -321,9 +333,8 @@ thead, tbody {
 		    			$.each(rList, function(key, r){
 		    				str += '<tr onclick="location.href=\'detail.bo?boardNo=\' + '+r.refBno+'">'
 			    				+ "<td>"+r.refBno+"</td>"
-			    				+ "<td>"+r.replyContent+"</td>"
+			    				+ "<td id='reTd'>"+r.replyContent+"</td>"
 			    				+ "<td>"+formatDateForReply(r.createDate)+"</td>"
-			    				+ "<td>"+r.likeCount+"</td>"
 			    				+ "</tr>";
 		    			});
 	    			}
@@ -384,7 +395,7 @@ thead, tbody {
 		    				+ "</tr>";
 	    			}else{ 
 		    			$.each(fiList, function(key, fi){
-		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td>'+fi.followingId+'</td></tr>';
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td id="fiTd">'+fi.followingId+'</td></tr>';
 		    			});
 	    			}
 	    				
@@ -529,7 +540,7 @@ thead, tbody {
 		    				+ "</tr>";
 	    			}else{
 		    			$.each(fwList, function(key, fw){
-		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td colspan="2">'+fw.userId+'</td></tr>';
+		    				str += '<tr data-toggle="modal" data-target="#loadMemberModal"><td colspan="2" id="fwTd">'+fw.userId+'</td></tr>';
 		    			});
 	    			}
 	    			

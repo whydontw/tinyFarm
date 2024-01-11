@@ -160,9 +160,14 @@ background-color: none;
 #wishCount,#orderCount,#sellCount{
 	font-size: 14px;
 }
+#orderTd, #sellTd{
+	max-width: 200px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
 </style>
 </head>
-
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 
@@ -324,7 +329,7 @@ background-color: none;
 		    				+ "<td>"+o.paymentNo+"</td>"
 			   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 			   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
-			   				+ "<td>"+o.productTitle+"</td>"
+			   				+ "<td id='orderTd'>"+o.productTitle+"</td>"
 			   				+ "<td>￦"+o.paymentPrice+"</td>"
 			   				+ "<td>"+o.paymentMethod+"</td>"
 			   				+ "</tr>";
@@ -395,7 +400,7 @@ background-color: none;
 			   				+ "<td>"+s.productNo+"</td>"
 			   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 			   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
-			   				+ "<td>"+s.productTitle+"</td>"
+			   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
 			   				+ "<td>￦"+s.productPrice+"</td>"
 			   				+ "<td>"+s.salesStatus+"</td>"
 			   				+ "</tr>";
@@ -461,7 +466,7 @@ background-color: none;
 			    				+ "<td>"+o.paymentNo+"</td>"
 				   				+ "<td>"+o.orderDate.substring(0,10)+"</td>"
 				   				+ '<td><img id="proImg" src="'+o.filePath+o.changeName+'"></td>'
-				   				+ "<td>"+o.productTitle+"</td>"
+				   				+ "<td id='orderTd'>"+o.productTitle+"</td>"
 				   				+ "<td>￦"+o.paymentPrice+"</td>"
 				   				+ "<td>"+o.paymentMethod+"</td>"
 				   				+ "</tr>";
@@ -534,7 +539,7 @@ background-color: none;
 		   				+ "<td>"+s.productNo+"</td>"
 		   				+ "<td>"+s.regiDate.substring(0,10)+"</td>"
 		   				+ '<td><img id="proImg" src="'+s.filePath+s.changeName+'"></td>'
-		   				+ "<td>"+s.productTitle+"</td>"
+		   				+ "<td id='sellTd'>"+s.productTitle+"</td>"
 		   				+ "<td>￦"+s.productPrice+"</td>"
 		   				+ "<td>"+s.salesStatus+"</td>"
 		   				+ "</tr>";
