@@ -2,106 +2,114 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>영농일지보기</title>
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	<!-- alert창 cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    
-    <style>
-        .content {
-            width: 100%;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 3%;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 3%;
-        }
+<meta charset="UTF-8">
+<title>영농일지보기</title>
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<style>
+.content {
+	width: 100%;
+	border: 1px solid #dee2e6;
+	border-radius: 10px;
+	padding: 3%;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-bottom: 3%;
+}
 
-		#cNt p{
-			font-size: 15px;
-			color: grey;
-		}
-		#cNt{
-			text-align: center;
-			margin-bottom: 5%;
-		}
-		#miniProfile{
-			display:inline-block;
-			
-		}
-		#miniProfile img{
-			width: 35px;
-			height: 35px;
-			border-radius: 100%;
-			margin-bottom: 2%;
-		}
-		#selectDate{
-			font-size: 15px;
-			color: grey;
-		
-		}
-		.content>.note-editor.note-frame{
-			border: none;
-		}
-        #diaryContent {
-            width: 100%;
-            margin-top: 5%;
-        }
-        .btn-area{
-        	width: 50%;
-        	margin: auto;
-        	text-align: center;
-        }
-        .btn-green{
-        	width: 90px;
-        	height: 50px;
-        	margin: auto;
-        	background-color: #70C745;
-			color: white;
-			border: none;
-        }
-        .btn-green:focus{
-			outline: none;
-		}
-        
-        .btn-green:hover{
-        	background-color: white;
-			color: #70C745;
-			border-style: solid;
-			border-width: 1px;
-			border-color: #70C745;
-			transition-duration: 400ms;
-        }
-        #diarylike{
-         	width: 28px;
-         	height: 28px;
-        	float: right;
-        	text-align: center;
-        	font-size: 14px;
-        }
-        #likeCount{
-        	margin-top: -2%;
-        }
-        
-        #diarylike img{
-        	width: 100%;
-        	height: 100%; 
-        }
-        #diarylike:hover {
-        	cursor: pointer;
-        }
-    </style>
+#cNt p {
+	font-size: 15px;
+	color: grey;
+}
+
+#cNt {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+#miniProfile {
+	display: inline-block;
+}
+
+#miniProfile img {
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+	margin-bottom: 2%;
+}
+
+#selectDate {
+	font-size: 15px;
+	color: grey;
+}
+
+.content>.note-editor.note-frame {
+	border: none;
+}
+
+#diaryContent {
+	width: 100%;
+	margin-top: 5%;
+}
+
+.btn-area {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+.btn-green {
+	width: 90px;
+	height: 50px;
+	margin: auto;
+	background-color: #70C745;
+	color: white;
+	border: none;
+}
+
+.btn-green:focus {
+	outline: none;
+}
+
+.btn-green:hover {
+	background-color: white;
+	color: #70C745;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #70C745;
+	transition-duration: 400ms;
+}
+
+#diarylike {
+	width: 28px;
+	height: 28px;
+	float: right;
+	text-align: center;
+	font-size: 14px;
+}
+
+#likeCount {
+	margin-top: -2%;
+}
+
+#diarylike img {
+	width: 100%;
+	height: 100%;
+}
+
+#diarylike:hover {
+	cursor: pointer;
+}
+</style>
 </head>
 
 <body>

@@ -3,69 +3,70 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<!-- Title -->
+<title>나의 활동내역</title>
+<!-- Favicon -->
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<style>
+table {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+	border-radius: 5px;
+}
 
-    <!-- Title -->
-    <title>나의 활동내역</title>
+thead {
+	font-weight: bold;
+	color: #fff;
+	background-color: #70c745;
+}
 
-    <!-- Favicon -->
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
+.single-widget-area .widget-title {
+	width: 100%;
+	position: relative;
+	margin-left: 10%;
+}
 
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="resources/style.css">
-	<link rel="stylesheet" href="resources/jisu/css/mypage.css">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<style>
-		table {
-			width: 100%;
-			height: 100%;
-			text-align: center;
-		    box-shadow: 0 2px 5px rgba(0,0,0,.25);
-		    border-radius: 5px;
-		}
-		thead {
-	        font-weight: bold;
-	        color: #fff;
-        	background-color: #70c745;
-        }
-		.single-widget-area .widget-title {
-		    width: 100%;
-		    position: relative;
-		    margin-left: 10%;
-		}
-		#boardList>table thead tr:hover,
-		#replyList>table thead tr:hover,
-		#followingTableContainer>table thead tr:hover,
-		#followerTableContainer>table thead tr:hover{ 
-			cursor: default; 
-		}
-		#boardList>table tbody tr:hover,
-		#replyList>table tbody tr:hover,
-		#followingTableContainer>table tbody tr:hover,
-		#followerTableContainer>table tbody tr:hover{ 
-			cursor: pointer; 
-			background-color: #e9f0e6;
-		}
-		.page-item.current-page a{
-		    background-color: #70c745;
-		}
-		#boardCount, #replyCount{
-			font-size: 13px;
-		}
-		#followingCount, #followerCount{
-			font-weight: lighter;
-		}
-		thead, tbody {
+#boardList>table thead tr:hover, #replyList>table thead tr:hover,
+	#followingTableContainer>table thead tr:hover, #followerTableContainer>table thead tr:hover
+	{
+	cursor: default;
+}
+
+#boardList>table tbody tr:hover, #replyList>table tbody tr:hover,
+	#followingTableContainer>table tbody tr:hover, #followerTableContainer>table tbody tr:hover
+	{
+	cursor: pointer;
+	background-color: #e9f0e6;
+}
+
+.page-item.current-page a {
+	background-color: #70c745;
+}
+
+#boardCount, #replyCount {
+	font-size: 13px;
+}
+
+#followingCount, #followerCount {
+	font-weight: lighter;
+}
+
+thead, tbody {
 	height: 40px;
 }
-	</style>
+</style>
 </head>
 
 <body>

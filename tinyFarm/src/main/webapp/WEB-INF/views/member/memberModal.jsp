@@ -6,25 +6,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Favicon -->
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/img/core-img/favicon.ico">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.ico">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Core Stylesheet -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 <!-- alert창 cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <style>
-	.mb-4>*{
-		display: inline;
-	}
+.mb-4>*{
+	display: inline;
+}
 </style>
 </head>
 <body>
-
 	<!-- Button trigger modal -->
 	<button style="display: none;" type="button"
 		class="btn btn-primary btn1" data-toggle="modal"
@@ -215,21 +212,17 @@
 
 		});    
 
-	</script>
-	<!-- ##### All Javascript Files ##### -->
-	<!-- jQuery-2.2.4 js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.2.4.min.js"></script>
-	<!-- Popper js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/bootstrap/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
-	<!-- All Plugins js -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
-	<!-- Active js -->
-	<script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
+</script>
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="${pageContext.request.contextPath}/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="${pageContext.request.contextPath}/resources/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="${pageContext.request.contextPath}/resources/js/active.js"></script>
 </body>
 </html>

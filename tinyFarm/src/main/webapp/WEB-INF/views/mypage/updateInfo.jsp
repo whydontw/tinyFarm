@@ -9,14 +9,10 @@
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
 <!-- Title -->
 <title>회원 정보 수정</title>
-
 <!-- Favicon -->
 <link rel="icon" href="resources/img/core-img/favicon.ico">
-
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="resources/style.css">
 <link rel="stylesheet" href="resources/jisu/css/mypage.css">
@@ -28,24 +24,20 @@
 	font-size: 30px;
 	text-align: center;
 }
-
 #center {
 	width: 70%;
 	margin: auto;
 	margin-top: 2%;
 }
-
 .col-8 {
 	float: right;
 	margin-right: 8%;
 }
-
 .changeImg {
 	margin: auto;
 	width: 50%;
 	height: 100%;
 }
-
 .box-file-input label {
 	display: inline-block;
 	background: #70c745;
@@ -55,22 +47,18 @@
 	cursor: pointer;
 	margin-left: 26%;
 }
-
 .box-file-input label:after {
 	content: "사진등록";
 }
-
 .box-file-input .file-input {
 	display: none;
 }
-
 #deleteImg {
 	height: 36px;
 	width: 25%;
 	border: none;
 	cursor: pointer;
 }
-
 #searchBtn {
 	width: 50px;
 	height: 46px;
@@ -88,36 +76,29 @@
 	color: #ffffff;
 	border-radius: 0px 3px 3px 0px;
 }
-
 #searchBtn:hover {
 	background-color: #c9cdc6; /* Darker gray background on hover */
 }
-
 .modal-header {
 	background-color: #98d479;
 	color: #fff;
 	font-size: 25px;
 }
-
 .modal-content.main {
 	width: 60%;
 	margin: auto;
 }
-
 #pwdModal.modal-content {
 	border: none;
 }
-
 #deleteModal.modal-content {
 	border: none;
 	font-size: 14px;
 }
-
 #texet-area {
 	width: 70%;
 	border: none;
 }
-
 .btn-click {
 	width: 80px;
 	height: 40px;
@@ -125,16 +106,13 @@
 	border: none;
 	color: #fff;
 }
-
 .btn-click:hover {
 	background-color: #a4c992;
 	border: none;
 }
-
 .btn-click:checked, .btn-click:after {
 	border: none;
 }
-
 .kaUser {
 	color: red;
 	font-size: 15px;
@@ -150,7 +128,6 @@
 .btn-del:focus{
 	outline: none;
 }
-        
 #delText {
 	width: 90%;
 	height: 40px;
@@ -158,26 +135,21 @@
 	padding-left: 5px;
 	font-size: 13px;
 }
-
 #delWarn {
 	color: red;
 	text-align: center;
 	margin-top: 2%;
 	margin-bottom: 3%;
 }
-
 #deleteModal .mr-sm-2 {
 	display: flex;
 }
-
 #deleteModal .mr-sm-2 p {
 	font-size: 14px;
 }
-
 .delNum {
 	width: 150px;
 }
-
 .mr-sm-2.top {
 	margin-top: 5%;
 }

@@ -321,11 +321,10 @@
   	</update>
   	
   	<!-- 구매내역 개수 -->
-  	<select id="orderCount" resultType="_int" parameterType="product">
+  	<select id="orderCount" resultType="_int" parameterType="payments">
   		SELECT COUNT(PAYMENT_NO)
   		FROM PRODUCT_PAYMENT
   		WHERE USER_NO=#{userNo}
-  		AND SALES_STATUS='Y'
   	</select>
   	
   	<!-- 구매내역 목록 -->
