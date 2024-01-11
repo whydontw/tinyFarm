@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,30 +36,35 @@ public class ProductController {
 	private ProductService productservice;
 	
 	//상품 리스트
-	@RequestMapping("plist.bo")
-	public String selectProductList(@RequestParam(value="currentPage",defaultValue="1") int currentPage, Model model) {
+	@GetMapping("plist.bo")
+	public String selectProductList(@RequestParam(value="currentPage",defaultValue="1") int currentPage,
+									Model model,String category, String keyword){
 
 		int maxPage; // 가장 마지막 페이징바
 		int startPage; // 페이징바 시작수
 		int endPage; //페이징바 끝수
 		
+		HashMap<String, String> map = new HashMap<>();
+	    map.put("keyword", keyword);
+	    map.put("category", category);
+		
 		//페이징 처리된 전체 상품 조회
-		int listCount = productservice.listCount();
+		int listCount = productservice.listCount(map);
 		
 		int productLimit = 9;
 		int pageLimit = 5;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, productLimit);
 		
-		ArrayList<Product> list = productservice.selectList(pi);
+		ArrayList<Product> list = productservice.selectList(pi,map);
 		
+		model.addAttribute("map", map);
 		model.addAttribute("list", list);
-		
-		System.out.println("list : " +list);
 		model.addAttribute("pi", pi);
 		
 		return "product/ProductListView";
 	}
+	
 	
 	//상품 상세조회
 	@GetMapping("pdetail.bo")
@@ -333,10 +339,11 @@ public class ProductController {
 		return p;
 	}
 
-	
-	
+
+}
+
 	
 	
 	
 
-}
+

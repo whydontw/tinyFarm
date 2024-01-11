@@ -1,6 +1,7 @@
 package com.kh.tinyfarm.product.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,18 @@ public class ProductServiceImpl implements ProductService {
 	
 	//상품 전체 개수
 	@Override
-	public int listCount() {
+	public int listCount(HashMap<String, String> map) {
 		
-		return productDao.listCount(sqlSession);
+		return productDao.listCount(sqlSession, map);
 	}
+	
 
 
 	//상품 리스트
 	@Override
-	public ArrayList<Product> selectList(PageInfo pi) {
+	public ArrayList<Product> selectList(PageInfo pi, HashMap<String, String> map) {
 		
-		return productDao.selectList(sqlSession, pi);
+		return productDao.selectList(sqlSession, pi, map);
 	}
 
 	//상품 조회수 증가
@@ -126,16 +128,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
-	//상품 좋아요 조회
-	/*
-	 * @Override public Product selectLike(int pno) {
-	 * 
-	 * return productDao.selectLike(sqlSession, pno); }
-	 * 
-	 */
 
-	
-	
 
 
 
