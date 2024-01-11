@@ -53,7 +53,7 @@
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/"><i
 												class="fa fa-home"></i> Home</a></li>
-										<li class="breadcrumb-item"><a href="#">FIND ID</a></li>
+										<li class="breadcrumb-item"><a href="#">아이디찾기</a></li>
 										
 									</ol>
 									</nav>
@@ -64,7 +64,7 @@
 				<div align="center">
 				    <form action="findIdResult.me" name="idfindscreen" method="post">
 				        <div class="search-title">
-				            <h3 style = "margin-bottom:40px">FIND ID</h3>
+				            <h4 style = "margin-bottom:40px">회원 정보에 등록된 이름과 전화번호로 찾기</h4>
 				        </div>
 				
 				        <div class="row">
