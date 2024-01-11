@@ -7,67 +7,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title -->
-    <title>마이페이지</title>
-    <!-- Favicon -->
-    <link rel="icon" href="resources/img/core-img/favicon.ico">
-    <!-- summernote emoji -->
-	<link href="resources/tam-emoji/css/emoji.css" rel="stylesheet">
-    <!-- alert창 cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    <!-- Core Stylesheet -->
-	 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="resources/jisu/css/mypage.css">
-    
-    <style>
-		a,p{
-			font-family: 'Noto Sans KR', sans-serif !important;
-		}
-		.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
-			font-family: 'Noto Sans KR', sans-serif !important;
-		}
-		.pl{
-		    width: 100px;
-		    height: 35px;
-		    box-sizing: border-box;
-		    border-radius: 10px;
-		    font-style: normal;
-		    font-size: 14px;
-		    line-height: 16px;
-		}
-		
-		.pl:focus{
-		    border: 1px solid #70c745;
-		    box-sizing: border-box;
-		    border-radius: 10px;
-		    border-radius: 10px;
-		}
-	  	#diaryTitle{
-	  		width: 100%;
-	  		height: 40px;
-	  	}
-	  	#datelabel{
-	  		float: right;
-	  		text-align: right;
-	  		padding-top: 20px;
-		  	width: 30%;
-		  	font-size: 17px;
-	  	}
-	  	.btn-green, .btn-red{
-	  		width: 50px;
-	  		height: 30px;
-	  		float: right;
-	  	}
-	  	
-	</style>
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Title -->
+<title>마이페이지</title>
+<!-- Favicon -->
+<link rel="icon" href="resources/img/core-img/favicon.ico">
+<!-- summernote emoji -->
+<link href="resources/tam-emoji/css/emoji.css" rel="stylesheet">
+<!-- alert창 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<!-- Core Stylesheet -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="resources/style.css">
+<link rel="stylesheet" href="resources/jisu/css/mypage.css">
+<style>
+a, p {
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+.pl {
+	width: 100px;
+	height: 35px;
+	box-sizing: border-box;
+	border-radius: 10px;
+	font-style: normal;
+	font-size: 14px;
+	line-height: 16px;
+}
+.pl:focus {
+	border: 1px solid #70c745;
+	box-sizing: border-box;
+	border-radius: 10px;
+	border-radius: 10px;
+}
+#diaryTitle {
+	width: 100%;
+	height: 40px;
+}
+#datelabel {
+	float: right;
+	text-align: right;
+	padding-top: 20px;
+	width: 30%;
+	font-size: 17px;
+}
+.btn-green, .btn-red {
+	width: 50px;
+	height: 30px;
+	float: right;
+}
+</style>
 </head>
 
 <body>
