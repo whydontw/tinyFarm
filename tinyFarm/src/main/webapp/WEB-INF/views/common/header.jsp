@@ -102,10 +102,6 @@ a, p {
 	display: block;
 }
 
-#login {
-	font-size : 20px;
-}
-
 </style>
 </head>
 
@@ -140,7 +136,7 @@ a, p {
 							<div class="top-header-meta d-flex">
 								<div class="new-message-div px-2 hidden"></div>
 								<!-- Login -->
-								<div class="login" id="login" style="font-size : 25px;">
+								<div class="login">
 									<c:choose>
 										<c:when test="${empty loginUser}">
 											<a href="loginGo.me"> <i class="fa fa-user"
