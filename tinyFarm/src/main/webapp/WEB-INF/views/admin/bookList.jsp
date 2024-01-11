@@ -116,19 +116,24 @@
 								</thead>
 								<tbody align="center">
 								
-									<c:forEach var="bl" items="${bookList }">
-										<tr>
-											<td>${bl.bookNo }</td>
-											<td class="cart_product_img"><a href="bookDetail.re?bookNo=${bl.bookNo }"><img src="${contextPath }/${bl.bookChangeName}" alt="_book"></a></td>
-											<td align="left"><a href="bookDetail.re?bookNo=${bl.bookNo }"><span># ${bl.bookCategory }</span> <p>${bl.bookTitle }</p></a></td>
-											<td>${bl.bookPrice } 원</td>
-											<td>${bl.bookAuthor }</td>
-											<td>${bl.publisher }</td>
-											<td>${bl.bookCount }</td>
-											<td><a href="#" onclick="bookDeleteBtn(${bl.bookNo})"><i class="icon_close"></i></a></td>
-										</tr>
-									</c:forEach>
-									
+								
+									<c:if test="${empty bookList }">
+										<tr><td colspan="8">※ 등록된 도서가 없습니다.</td></tr>
+									</c:if>
+									<c:if test="${not empty bookList }">
+										<c:forEach var="bl" items="${bookList }">
+											<tr>
+												<td>${bl.bookNo }</td>
+												<td class="cart_product_img"><a href="bookDetail.re?bookNo=${bl.bookNo }"><img src="${contextPath }/${bl.bookChangeName}" alt="_book"></a></td>
+												<td align="left"><a href="bookDetail.re?bookNo=${bl.bookNo }"><span># ${bl.bookCategory }</span> <p>${bl.bookTitle }</p></a></td>
+												<td>${bl.bookPrice } 원</td>
+												<td>${bl.bookAuthor }</td>
+												<td>${bl.publisher }</td>
+												<td>${bl.bookCount }</td>
+												<td><a href="#" onclick="bookDeleteBtn(${bl.bookNo})"><i class="icon_close"></i></a></td>
+											</tr>
+										</c:forEach>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
