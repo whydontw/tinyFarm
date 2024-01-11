@@ -171,55 +171,67 @@ a, p {
     	  $("#categoryNo").val(caNo);
        });
        
-       $("#backBtn").click(function(){
-    		swal({
-    			title : "일지 수정 취소",
-    			text : "이전 페이지로 이동하시겠습니까?\n수정 중인 내용이 사라집니다.",
-    			type : "warning",
-    			showCancelButton : true,
-    			confirmButtonClass : "btn-danger",
-    			confirmButtonText : "예",
-    			cancelButtonText : "아니오",
-    			closeOnConfirm : false,
-    			closeOnCancel : true
-    		}, function(isConfirm) {
-    			if (isConfirm) {
-    				window.history.back();
-    			}else{
-    				return false;
-    			}
-    		});
-      });
        
-       function updateDiary(){
-    	   let diaryTitle = $("#diaryTitle").val();
-    	   let diaryContent = $("#diaryContent").val();
-    	   let openVal = $("input[name=selectOpen]:checked").val();
-    	   console.log(diaryTitle);
-    	   //제목 없을시
-    	   if(diaryTitle==""){
-    		   swal("error", "제목을 입력해주세요.", "error");
-    		   $(this).focus;
-    		   return false;
-    	   }
-    	   //제목 50자 넘을시 작성 막기
-    	   if(diaryTitle.length >30){
-				swal('제목 입력', '제목은 최대 30자까지 가능합니다.', 'error');
-				$("#diaryTitle").focus;
-				return false;
-			}
-    	   //내용 없을시
-    	   if(diaryContent==""){
-    		   swal("error", "내용을 입력해주세요.", "error");
-    		   $(this).focus;
-    		   return false;
-    	   }
-    	   //공개선택 안되어있을시
-    	   if(openVal==null){
-    		   swal("error", "공개여부를 선택해주세요.", "error");
-    		   return false;
-    	   }
+   	//제목 글자수 제한(50자)
+   	$("#diaryTitle").keyup(function(){
+   		let titleLength = $(this).val().length; //입력한 제목의 길이
+   		if(titleLength>50){ //50자가 넘을때
+   			//알림 띄우고
+   			swal('글자수 초과', '제목은 50자까지 작성 가능합니다.', 'error');
+   			//50자 까지 글자 자른 상태로 보여주기
+   			$(this).val($(this).val().substring(0,50));
+   		}
+   	});
+   	
+    $("#backBtn").click(function(){
+    	swal({
+    		title : "일지 수정 취소",
+    		text : "이전 페이지로 이동하시겠습니까?\n수정 중인 내용이 사라집니다.",
+    		type : "warning",
+    		showCancelButton : true,
+    		confirmButtonClass : "btn-danger",
+    		confirmButtonText : "예",
+    		cancelButtonText : "아니오",
+    		closeOnConfirm : false,
+    		closeOnCancel : true
+    	}, function(isConfirm) {
+    		if (isConfirm) {
+   				window.history.back();
+    		}else{
+    			return false;
+    		}
+    	});
+    });
+       
+    function updateDiary(){
+       let diaryTitle = $("#diaryTitle").val();
+       let diaryContent = $("#diaryContent").val();
+       let openVal = $("input[name=selectOpen]:checked").val();
+       console.log(diaryTitle);
+       //제목 없을시
+       if(diaryTitle==""){
+    	   swal("error", "제목을 입력해주세요.", "error");
+    	   $(this).focus;
+    	   return false;
        }
+       //제목 50자 넘을시 작성 막기
+       if(diaryTitle.length >30){
+			swal('제목 입력', '제목은 최대 30자까지 가능합니다.', 'error');
+			$("#diaryTitle").focus;
+			return false;
+		}
+       //내용 없을시
+       if(diaryContent==""){
+    	   swal("error", "내용을 입력해주세요.", "error");
+    	   $(this).focus;
+    	   return false;
+       }
+       //공개선택 안되어있을시
+       if(openVal==null){
+    	   swal("error", "공개여부를 선택해주세요.", "error");
+    	   return false;
+       }
+    }
        
    </script>
 
