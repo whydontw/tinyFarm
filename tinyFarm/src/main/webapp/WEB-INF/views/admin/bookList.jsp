@@ -67,121 +67,69 @@
                     <!-- <div class="row"> -->
                         <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                             <div class="mb-0">
-                                <p><h5><b>🌱 회원 관리</b></h5></p>
+                                <p><h5><b>🌱 도서 관리</b></h5></p>
                             </div>
                             <div class="search_by_terms">
-                                <form action="#" method="post" class="form-inline">
-                                    <select class="custom-select widget-title">
-                                      <option selected>Show:</option>
-                                      <option value="1">미답변</option>
-                                      <option value="2">답변완료</option>
-                                    </select>
-                                </form>
+                                <select class="custom-select widget-title" id="selectBookCategory" onchange="selectBookCategory(this.value)">
+                                  <option value="all">Show:</option>
+                                  <option value="gardening">원예</option>
+                                  <option value="landscaping">조경</option>
+                                  <option value="vegetableGarden">텃밭</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- 표 작성 내역 -->
-                        <div class="clearfix mt-15 mb-15" id="memberListTable">
-                        	<div class="mb-15">현재 페이지: ${pi.currentPage }</div>
-                            <table class="table table-responsive" align="center" id="">
-                                <colgroup>
-                                    <col width="5%">
-                                    <col width="13%">
-                                    <col width="auto%">
-                                    <col width="10%">
-                                    <col width="5%">
-                                </colgroup>
-                                <thead>
-                                    <tr align="center">
-                                        <th>No.</th>
-                                        <th>작성자</th>
-                                        <th>이름</th>
-                                        <th>조회수</th>
-                                        <th><input type="checkbox" name="checkAll" id="checkAll"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                	<c:forEach var="b" items="${bList }">
-	                                    <tr>
-	                                        <td>${b.reportNo }</td>
-	                                        <td>${b.reportWriter }</td>
-	                                        <td>${b.boardTitle }</td>
-	                                        <td>${b.createDate }</td>
-	                                        <td><input type="checkbox" value="${b.reportNo }" class="chkMember"></td>
-	                                    </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="single-widget-area float-right">
-                            <ol class="popular-tags d-flex flex-wrap" onclick="memberStatus()">
-                                <li><a href="#"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;일괄삭제</a></li>
-<!--                            <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> 다운로드</a></li> -->
-                            </ol>
-                        </div>
-                        
-                        
-                        <!-- Button trigger modal -->
-						<button type="button" id="memberdetailViewModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"></button>
+						<script type="text/javascript">
+							function selectBookCategory(bookCategory){
+								location.href = 'bookList.ad?currentPage=1&bookCategory=' + bookCategory;
+							}
 						
-						<!-- Modal -->
-						<div class="modal" id="exampleModalCenter" tabindex="-5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						  <div class="modal-dialog modal-dialog-centered" role="document">
-						    <div class="modal-content">
-						      <div class="modal-body">
-						      
-							      <div class="col-12">
-				                    <div class="checkout_details_area clearfix">
-				                        <h5>🌱 회원 정보</h5>
-				                            <div class="row mt-15">
-				                            	<div class="mx-auto"></div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="first_name">No</label>
-				                                    <input type="text" class="form-control" id="userNo_detail" name="userNo" value="" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="first_name">ID</label>
-				                                    <input type="text" class="form-control" id="userId_detail" name="userId" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="last_name">이름</label>
-				                                    <input type="text" class="form-control" id="userName_detail" name="userName" required>
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="country">회원등급</label>
-				                                    <select class="custom-select d-block w-100" id="userGrade_detail" name="grade">
-				                                        <option value="일반회원">일반회원</option>
-				                                        <option value="특별회원">특별회원</option>
-				                                        <option value="관리자">관리자</option>
-				                                    </select>
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="city">가입일자</label>
-				                                    <input type="text" class="form-control" id="userEnrollDate_detail" name="enrolldate" readonly="readonly">
-				                                </div>
-				                                <div class="col-md-6 mb-4">
-				                                    <label for="country">활동</label>
-				                                    <select class="custom-select d-block w-100" id="userStatus_detail" name="status">
-				                                        <option value="Y">활동</option>
-				                                        <option value="N">활동중지</option>
-				                                    </select>
-				                                </div>
-				                                <div class="col-12 mb-4">
-				                                    <label for="company">주소</label>
-				                                    <input type="text" class="form-control" id="userAddress_detail" name="address">
-				                                </div>
-				                                <div class="col-12 mb-4">
-				                                    <label for="company">연락처</label>
-				                                    <input type="text" class="form-control" id="userPhone_detail" name="phone">
-				                                </div>
-				                            </div>
-			                              	<button type="button" class="btn alazea-btn mt-15 float-right" onclick="memberInfoUpdate()">수정</button>
-					                    </div>
-					                </div>
-							      </div>
-							    </div>
-							  </div>
-							</div>
+						</script>
+
+
+                        <!-- 표 작성 내역 -->
+						<div class=" ">
+							<table class="table" align="center">
+								<colgroup>
+									<col width="5%">
+									<col width="15%">
+									<col width="auto">
+									<col width="10%">
+									<col width="15%">
+									<col width="15%">
+									<col width="10%">
+									<col width="7%">
+								</colgroup>
+								<thead>
+									<tr align="center">
+										<th>No</th>
+										<th>표지</th>
+										<th>제목</th>
+										<th>가격</th>
+										<th>저자</th>
+										<th>출판사</th>
+										<th>조회수</th>
+										<th>삭제</th>
+									</tr>
+								</thead>
+								<tbody align="center">
+								
+									<c:forEach var="bl" items="${bookList }">
+										<tr>
+											<td>${bl.bookNo }</td>
+											<td class="cart_product_img"><img src="${contextPath }/${bl.bookChangeName}" alt="_book"></a></td>
+											<td align="left"><a href="bookDetail.re?bookNo=${bl.bookNo }"><span># ${bl.bookCategory }</span> <p>${bl.bookTitle }</p></a></td>
+											<td>${bl.bookPrice } 원</td>
+											<td>${bl.bookAuthor }</td>
+											<td>${bl.publisher }</td>
+											<td>${bl.bookCount }</td>
+											<td><a href="#" onclick="bookDeleteBtn(${bl.bookNo})"><i class="icon_close"></i></a></td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
+						</div>
                         
                         
                         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -189,154 +137,42 @@
 					    	
                         $(function(){
                         	
-                        	//Modal 버튼 숨김
-                        	$("#memberdetailViewModal").hide();
-                        	
                         	//전체 선택/선택해제
                             $("#checkAll").on("change", function(){
                                 $("table input[type='checkbox']").prop("checked", $(this).prop("checked"));
                             });
                         	
+                        	let val = "${bookCategory}";
+                        	$("#selectBookCategory").val(val);
+                        	
                         });
                         
                         
-                        function memberStatus(){
+                        
+                        //등록 form 이동
+	                   	function bookDeleteBtn(bookNo){
                         	
-                        	if(confirm("선택한 회원의 활동 중지 처리를 하시겠습니까?")){
+                        	if(confirm('해당 도서를 삭제하시겠습니까?')){
+                        		
+    	                   		var formObj = $("<form>");		//태그 생성하기
+    	                   		
+    	                   		formObj.attr("action", "bookDelete.re").attr("method", "post");
+    	                   		
+    	                   		var inputBook1 = $("<input>").prop("type", "hidden").prop("name", "bookNo").prop("value", bookNo);
+    	                   		var inputBook2 = $("<input>").prop("type", "hidden").prop("name", "type").prop("value", "adminBook");
 
-                            let chkMemberList = "";
-							
-                            //체크 요소 접근
-                            $(".chkMember:checked").each(function(index, item){
-                            	
-                                if(index == 0){							//첫번째[0]면 값만 넣기
-                                	chkMemberList += item.value;
-                                } else {								//첫번째 아니면 ,값 넣기
-                                	chkMemberList += "," + item.value;
-                                }
-
-                            });
-                            
-	                            //선택된 글 없을시
-	                            if(chkMemberList == null || chkMemberList == ""){
-	                            	alert("회원을 선택하세요");
-	                            }else{
-	                            
-		                            //선택된 글이 있는 경우
-		                    		var formObj = $("<form>");		//태그 생성하기
-		                    		formObj.attr("action", "memberStatus.ad").attr("method", "post");
-		                    		
-		                    		var inputQnos = $("<input>").prop("type", "hidden").prop("name", "chkMemberList").prop("value", chkMemberList);
-		                    		var obj = formObj.append(inputQnos);
-		                    		
-		    						$("body").append(obj)
-		
-		    						obj.submit();
-	    						
-	                            }
-	                            
-                        	}
-                            
-                        }
-                        
-                        
-                        function memberDetailInfo(userNo){
-                        	
-                        	$.ajax({
-                        		url : "memberDetailInfo.ad",
-                        		data: { userNo : userNo },
-                        		success: function(result){
-                        			
-                        			$("#userNo_detail").val(result.userNo);
-                        			$("#userId_detail").val(result.userId);
-                        			$("#userName_detail").val(result.userName);
-                        			$("#userAddress_detail").val(result.address);
-                        			$("#userEnrollDate_detail").val(result.enrollDate);
-                        			$("#userStatus_detail").val(result.status);
-                        			$("#userGrade_detail").val(result.grade);
-                        			$("#userPhone_detail").val(result.phone);
-                        			
-                        			var imageSrc = "${contextPath}/" + result.changeName;
-                        			
-                        			$("#profileImage").prop("src", imageSrc);
-                        			
-                                	$("#memberdetailViewModal").click();
-                                	
-                        		},
-                        		error: function(){
-                        			alert("오류났수ㅜ");
-                        		}
-
-                        	})
-                        	
-                        }
-                        
-                        
-                        
-                        //div 새로고침
-//                         function memberListReload(){
-//                             $('#memberListTable').load(window.location.href + '#memberListTable');
-//                      	}
-                        
-                        
-                        //회원 정보 변경
-                        function memberInfoUpdate(){
-
-                        	if(!confirm('회원 정보를 수정하겠습니까?')){
-                        		return false;
+    	                   		var obj = formObj.append(inputBook1);
+    	                   		obj = formObj.append(inputBook2);
+    	                   		
+    	   						$("body").append(obj)
+    	
+    	   						obj.submit();
+                        		
                         	}
                         	
-                        	var userNo = $('#userNo_detail').val();
-                        	var status = $('#userStatus_detail').val();
-                        	var grade = $('#userGrade_detail').val();
-                        	
-                        	$.ajax({
-                        		url : "memberInfoUpdate.ad",
-                        		data: {
-                        			userNo : userNo,
-                        			status : status,
-                        			grade : grade
-                        		},
-                        		success: function(result){
-                        			
-                        			$("#userStatus_detail").val(result.status);
-                        			$("#userGrade_detail").val(result.grade);
-                        			
-                        			//table 새로고침
-//                         			memberListReload();
-                        			window.location.reload();
-                        			
-                        		},
-                        		error: function(){
-                        			alert("오류났수ㅜ");
-                        		}
-
-                        	})
-                        	
-                        }
-                        
+	                   	}
 					</script>
                         
-                        
-                        
-<!--				######### 검색 ######### -->
-                    <div class="section-padding-100">
-                        <div class="single-widget-area">
-                        	<!-- height-50 css 추가 -->
-                            <form action="#" method="get" class="search-form d-flex float-right">   
-                                <div class="">
-                                    <select class="custom-select widget-title height-50">
-                                        <option value="searchId">아이디</option>
-                                        <option value="searchEmail">이메일</option>
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <input type="search" name="search" id="widgetsearch" placeholder="Search...">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-12 mt-100">
@@ -346,16 +182,16 @@
                                 <ul class="pagination">
                                 
 			                        <c:if test="${pi.currentPage > 1}">
-			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage-1}"><i class="fa fa-angle-left"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="bookList.ad?currentPage=${pi.currentPage-1}&bookCategory=${bookCategory}"><i class="fa fa-angle-left"></i></a></li>
 									</c:if>
                                     
                                     <!-- paging 개수 -->
                                     <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage }">
-	                                    <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${i}">${i}</a></li>
+	                                    <li class="page-item"><a class="page-link" href="bookList.ad?currentPage=${i}&bookCategory=${bookCategory}">${i}</a></li>
 									</c:forEach>
 				                    
 				                     <c:if test="${pi.currentPage < pi.maxPage}">
-			                            <li class="page-item"><a class="page-link" href="memberList.ad?currentPage=${pi.currentPage+1}"><i class="fa fa-angle-right"></i></a></li>
+			                            <li class="page-item"><a class="page-link" href="bookList.ad?currentPage=${pi.currentPage+1}&bookCategory=${bookCategory}"><i class="fa fa-angle-right"></i></a></li>
 									</c:if>
                                 </ul>
                             </nav>
@@ -367,7 +203,6 @@
         </div>
     </section>
     <!-- ##### Blog Area End ##### -->
-
 
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

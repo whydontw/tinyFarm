@@ -38,6 +38,25 @@
 			.genric-btn:hover {
 			    background-color: #BDBDBD; /* 호버 시 배경 색상 변경 */
 			}
+			.box-file-input label {
+				display: inline-block;
+				background: #70c745;
+				color: #fff;
+				padding: 0px 5px;
+				width:80px;
+				line-height: 35px;
+				cursor: pointer;
+
+			}
+			
+			.box-file-input label:after {
+				content: "첨부파일";
+				line-width: 55px;
+			}
+			
+			.box-file-input .file-input {
+				display: none;
+			}
 			</style>
 	</head>
 	
@@ -59,7 +78,7 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#"><i
 									class="fa fa-home"></i> Home</a></li>
-							<li class="breadcrumb-item"><a href="#">Join</a></li>
+							<li class="breadcrumb-item"><a href="#">회원가입</a></li>
 							
 						</ol>
 						</nav>
@@ -74,21 +93,20 @@
 	            <div class="row justify-content-between">
 	                <div class="col-12 col-lg-7 mx-auto">
 	                    <div class="checkout_details_area clearfix">
-	                        <h5 style= "font-size : 30px">JOIN US</h5>
+	                        
 	                        <form action="insert.me" method="post" enctype="multipart/form-data">
-		                           <div class="row">
-									    <label for="upfile" style="position: absolute; top: 90px; left: 30px; z-index: 2;">프로필 사진</label>
-									    <div style="width: 300px; height: 300px; border: 1px solid #ccc; margin-top: 45px; margin-bottom: 20px; margin-left: 200px; position: relative; overflow: hidden;">
-									        <!-- 이미지 표시 -->
-									        <img id="profileImage" src="<%= contextPath %>/resources/profile.jpg" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
-
-									    </div>
-									    <div>    
-									        <!-- 파일 업로드 입력 폼 -->
-									       <input type="file" id="upfile" name="upfile" style="cursor: pointer; background-color:white; border:none; margin-left:260px" onchange="loadImg(this, 1)">
-									    </div>
-									    <div id="file-name-display" style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%); text-align: center;"></div>
-									</div>
+		                     <div class="row" style="position: relative;">
+								    <label for="upfile" style="position: absolute; top: 90px; left: 50px; z-index: 2;">프로필 사진</label>
+								    <div style="width: 300px; height: 300px; border: 1px solid #ccc; margin-top: 45px; margin-bottom: 20px; margin-left: 230px; position: relative; overflow: hidden;">
+								        <!-- 이미지 표시 -->
+								        <img id="profileImage" src="<%= contextPath %>/resources/profile.jpg" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+								    </div>
+								    <!-- 입력 상자 추가 -->
+								    <div class="box-file-input" style="position: absolute; top: 345px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2;">
+								        <label style = "margin-top:15px;"><input type="file" class="file-input" id="upfile" name="upfile" onchange="loadImg(this, 1)"></label>
+								    </div>
+								    <div id="file-name-display" style="position: absolute; top: 70%; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2;"></div>
+								</div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="enrollUserId" style = "margin-top:10px">아이디</label>
 	                                    <input type="text" class="form-control" id="enrollUserId" name = "userId" required>
@@ -114,11 +132,11 @@
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="phone">전화번호</label>
-	                                    <input type="text" class="form-control" id="phone" name="phone"  placeholder = "휴대폰 번호(숫자만 입력)">
+	                                    <input type="text" class="form-control" id="phone" name="phone"  placeholder = "휴대폰 번호(숫자만 입력)" required>
 	                                </div>
 	                               <div class="col-12 mb-4" style="position: relative;">
 									    <label for="address">주소</label>
-									    <input type="text" id="address" class="form-control" name="address" readonly>
+									    <input type="text" id="address" class="form-control" name="address" readonly required> 
 										<div class="button-group-area" id="address_kakao" style="position: absolute; top: 32px; right: 15px;">
 										    <a href="#" class="genric-btn primary mt-0" style="height: 46px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">주소검색</a>
 										</div>
