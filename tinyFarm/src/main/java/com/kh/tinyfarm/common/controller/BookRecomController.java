@@ -104,7 +104,7 @@ public class BookRecomController {
 		// 여기에 추가적인 로직이나 결과에 대한 처리를 추가할 수 있습니다.
 		if (result > 0) {
 			session.setAttribute("alertMsg", "도서 등록 완료");
-			return "redirect:/bookMain.re";
+			return "redirect:/bookList.ad";
 		} else {
 			session.setAttribute("alertMsg", "도서 등록 실패");
 			return "common/errorPage";
