@@ -84,7 +84,7 @@ public class WebsocketBasicServer extends TextWebSocketHandler{
 		chatMessage.setCreateDate( new Date( System.currentTimeMillis()));
 		//System.out.println("chatMessage : "+chatMessage);
 		int result = chatService.insertChatMsg(chatMessage);
-
+		int updateState = chatService.updateReceiverStatus(chatMessage); //받는 상대의 상태 Y로 바꾸기
 		for(WebSocketSession ws : users) {
 			// WebSocketSession == HttpSession (로그인정보,채팅방정보) 을 가로챈것..
 			String id = ((Member)ws.getAttributes().get("loginUser")).getUserId(); //test123와 test1이 채팅jsp에 접속하면 users에는 두개가 담겨있음.

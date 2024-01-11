@@ -34,4 +34,6 @@ public interface ChatService {
 	int updateChatRoom(ChatRoom cr);
 
 	String getUserId(int userNo);
+
+	int updateReceiverStatus(ChatMessage chatMessage);
 }

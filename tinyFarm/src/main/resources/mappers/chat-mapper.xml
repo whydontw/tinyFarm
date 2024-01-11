@@ -197,4 +197,10 @@
   		WHERE USER_NO = #{userNo}
   		AND STATUS = 'Y'	
   	</select>
+  	
+  	<update id="updateReceiverStatus" parameterType="chatMsg">
+  		UPDATE CHAT_ROOM SET FIRST_MEM_STATUS = 'Y'
+  							,RECEIVE_MEM_STATUS = 'Y'
+  					WHERE CHAT_ROOM_NO = #{chatRoomNo}
+  	</update>
   </mapper>
