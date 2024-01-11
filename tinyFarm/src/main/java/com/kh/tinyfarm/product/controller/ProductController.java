@@ -284,8 +284,8 @@ public class ProductController {
 		
 		if(result>0) {
 			
-			File f = new File(session.getServletContext().getRealPath(filePath));
-					f.delete();
+//			File f = new File(session.getServletContext().getRealPath(filePath));
+//					f.delete();
 					
 			session.setAttribute("alertMsg", "상품 삭제 성공");
 			
