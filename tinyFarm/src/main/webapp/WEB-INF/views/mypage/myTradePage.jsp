@@ -168,7 +168,6 @@ background-color: none;
 }
 </style>
 </head>
-
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp" %>
 

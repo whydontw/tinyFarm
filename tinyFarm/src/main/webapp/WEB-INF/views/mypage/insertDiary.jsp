@@ -166,73 +166,82 @@ a, p {
 								'20', '22', '24', '28', '30', '36', '50', '72' ]
 		});
 	});
-
-		//뒤로가기 버튼 클릭시
-		$("#backBtn").click(function() {
-			let alert = swal({
-    			title : "작성취소",
-    			text : "이전 페이지로 이동하시겠습니까?\n작성 중인 내용이 사라집니다.",
-    			icon: 'question',
-    			showCancelButton : true,
-    			confirmButtonClass : "btn-danger",
-    			confirmButtonText : "예",
-    			cancelButtonText : "아니오",
-    			closeOnConfirm : false,
-    			closeOnCancel : true
-    		}, function(alert) { 
-    				if(!alert){return false;} //아니오 클릭시 현재페이지 유지
-		           	window.history.back(); //이전페이지로 이동
-		    });
-		});
-
-		function insertDiary() {
-			let diaryTitle = $("#diaryTitle").val(); //제목
-			let diaryContent = $("#diaryContent").val(); //내용
-			let openVal = $("input[name=selectOpen]:checked").val(); //공개여부
-			
-			//제목 공백
-			if (diaryTitle == "") {
-				swal('제목 입력', '제목을 입력해주세요.', 'error');
-				$("#diaryTitle").focus;
-				return false;
-			}
-			
-			//제목 50자 넘을시 작성 막기
-			if(diaryTitle.length >30){
-				swal('제목 입력', '제목은 최대 30자까지 가능합니다.', 'error');
-				$("#diaryTitle").focus;
-				return false;
-			}
-			//내용 공백
-			if (diaryContent == "") {
-				swal('내용 입력', '내용을 입력해주세요.', 'error');
-				$("#diaryContent").focus;
-				return false;
-			}
-			//공개여부 선택 안할시
-			if (openVal == null) {
-				swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
-				return false;
-			}
+	
+	//제목 글자수 제한(50자)
+	$("#diaryTitle").keyup(function(){
+		let titleLength = $(this).val().length; //입력한 제목의 길이
+		if(titleLength>50){ //50자가 넘을때
+			//알림 띄우고
+			swal('글자수 초과', '제목은 50자까지 작성 가능합니다.', 'error');
+			//50자 까지 글자 자른 상태로 보여주기
+			$(this).val($(this).val().substring(0,50));
 		}
-	</script>
+	});
+	
+	//뒤로가기 버튼 클릭시
+	$("#backBtn").click(function() {
+		let alert = swal({
+    		title : "작성취소",
+    		text : "이전 페이지로 이동하시겠습니까?\n작성 중인 내용이 사라집니다.",
+    		icon: 'question',
+    		showCancelButton : true,
+    		confirmButtonClass : "btn-danger",
+    		confirmButtonText : "예",
+    		cancelButtonText : "아니오",
+    		closeOnConfirm : false,
+    		closeOnCancel : true
+    	}, function(alert) { 
+    			if(!alert){return false;} //아니오 클릭시 현재페이지 유지
+	           	window.history.back(); //이전페이지로 이동
+	    });
+	});
+		function insertDiary() {
+		let diaryTitle = $("#diaryTitle").val(); //제목
+		let diaryContent = $("#diaryContent").val(); //내용
+		let openVal = $("input[name=selectOpen]:checked").val(); //공개여부
+		
+		//제목 공백
+			if (diaryTitle == "") {
+		swal('제목 입력', '제목을 입력해주세요.', 'error');
+			$(this).focus;
+			return false;
+		}
+		
+		//제목 50자 넘을시 작성 막기
+		if(diaryTitle.length >50){
+			swal('제목 입력', '제목은 최대 50자까지 가능합니다.', 'error');
+			$(this).focus;
+			return false;
+		}
+		//내용 공백
+		if (diaryContent == "") {
+			swal('내용 입력', '내용을 입력해주세요.', 'error');
+			$(this).focus;
+			return false;
+		}
+		//공개여부 선택 안할시
+		if (openVal == null) {
+			swal('공개/비공개 선택', '공개여부를 선택해주세요.', 'error');
+			return false;
+		}
+	}
+</script>
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
-	<!-- ##### All Javascript Files ##### -->
-	<!-- jQuery-2.2.4 js -->
-	<!-- <script src="resources/js/jquery/jquery-2.2.4.min.js"></script> -->
-	<!-- Popper js -->
-	<script src="resources/js/bootstrap/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script src="resources/js/bootstrap/bootstrap.min.js"></script>
-	<!-- All Plugins js -->
-	<script src="resources/js/plugins/plugins.js"></script>
-	<!-- Active js -->
-	<script src="resources/js/active.js"></script>
-	<!-- summernote 이모지 -->
-	<script src="resources/tam-emoji/js/config.js"></script>
-  	<script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<!-- <script src="resources/js/jquery/jquery-2.2.4.min.js"></script> -->
+<!-- Popper js -->
+<script src="resources/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="resources/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="resources/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="resources/js/active.js"></script>
+<!-- summernote 이모지 -->
+<script src="resources/tam-emoji/js/config.js"></script>
+ <script src="resources/tam-emoji/js/tam-emoji.min.js"></script>
 </body>
-
 </html>
