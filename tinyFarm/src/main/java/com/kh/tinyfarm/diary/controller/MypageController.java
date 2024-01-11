@@ -115,7 +115,9 @@ public class MypageController {
 			//기존 파일 존재하면 지워주기
 			if (preUser.getOriginName() != null) {
 				File f = new File(session.getServletContext().getRealPath(preUser.getChangeName()));
-				f.delete();
+				if(!preUser.getOriginName().equals("profile.jpg")) {
+					f.delete();
+				}
 			}
 			//Member에 새 프로필사진 담기
 			m.setOriginName(reUpfile.getOriginalFilename());
@@ -512,10 +514,36 @@ public class MypageController {
 			session.setAttribute("alertMsg", "일지 수정이 완료되었습니다.");
 			DiaryCategory dc = diaryService.selectCategory(cNo);
 			d.setCategoryNo(dc.getDiarycateName());
+			
+			//일지수정 후 뷰페이지 넘겨줄 프로필 사진 가져오기
+			int userNo = d.getDiaryWriter();
+			
+			//작성자 프로필사진, 이름을 보여주기 위해 멤버조회
+			Member w =  diaryService.selectDiaryWriter(userNo);
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			int loginUserNo = m.getUserNo();
+			int diaryNo = d.getDiaryNo();
+			int refDbno = diaryNo;
+			
+			//좋아요 정보 가져오기
+			DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
+			
+			DiaryLike like = diaryService.selectLike(dl);
+			
+			//좋아요 수
+			int likeCount = diaryService.countLike(diaryNo);
+			
+			d.setLikeCount(likeCount);
+			
+			//좋아요 정보도 가져오기..
 			mv.addObject("d", d);
+			mv.addObject("w",w);
+			mv.addObject("like", like);
 			mv.setViewName("mypage/diaryViewPage");
 		} else {
-			session.setAttribute("alertMsg", "일지 수정이 실패했습니다.");
+			session.setAttribute("alertMsg", "일지 수정을 실패했습니다.");
 			//에러페이지 넘기기
 			mv.setViewName("common/error");
 		}
@@ -618,7 +646,7 @@ public class MypageController {
 		int loginUserNo = m.getUserNo();
 		int refDbno = diaryNo;
 		
-		//좋아요 정보 담은 가져오기
+		//좋아요 정보 가져오기
 		DiaryLike dl = new DiaryLike(refDbno,loginUserNo);
 		
 		DiaryLike like = diaryService.selectLike(dl);

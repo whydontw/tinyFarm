@@ -59,10 +59,14 @@ a, p {
 	width: 30%;
 	font-size: 17px;
 }
-.btn-green, .btn-red {
-	width: 50px;
-	height: 30px;
+.btn-green, .btn-red{
+	width: 10%;
+	height: 15%;
 	float: right;
+	margin-top: 1%;
+}
+.btn-red{
+	margin-left: 1%;
 }
 </style>
 </head>

@@ -219,7 +219,7 @@
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label>비밀번호</label>
-	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="수정하기">
+	                                    <input type="button" class="form-control" data-toggle="modal" data-target="#updatePwdForm" value="변경하기">
 	                                </div>
 	                                <div class="col-12 mb-4">
 	                                    <label for="userName">이름</label>
@@ -343,13 +343,11 @@
 			$("#deleteImg").click(function(){
 				//삭제버튼 클릭시 src값 null로 변경, 대체이미지로 기본프로필 사용
 				$("#profileImage").attr("src", "").attr("onerror","this.src='resources/profile.jpg'");
-				console.log("사진삭제 : "+$("#profileImage").val());
 			});		
 		});
 		//프로필 사진 변경
 		function loadImg(inputFile, num) {
 			let profileImage = document.getElementById('profileImage');
-		    console.log("변경후 : "+profileImage);
 			if (inputFile.files.length == 1) { //파일이 등록되면(length = 1)
 				let reader = new FileReader();
 				
