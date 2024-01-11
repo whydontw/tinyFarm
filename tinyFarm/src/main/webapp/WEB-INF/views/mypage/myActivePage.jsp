@@ -63,7 +63,7 @@ thead {
 	font-weight: lighter;
 }
 
-thead, tbody {
+thead, tbody tr{
 	height: 40px
 }
 #titleTd, #reTd{
