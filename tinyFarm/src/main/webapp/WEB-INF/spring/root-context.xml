@@ -13,7 +13,7 @@
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
 		<!-- 어떤 DB에 접속할것인지 작성 -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
 		<property name="username" value="TINYFARM" />
 		<property name="password" value="TINYFARM" />
 	</bean>
