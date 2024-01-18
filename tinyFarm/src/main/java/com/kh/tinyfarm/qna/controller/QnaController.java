@@ -38,7 +38,6 @@ public class QnaController {
 		@PostMapping("/qnaEnroll.qa")
 		public String qnaEnroll(Qna qna, Model model, HttpSession session) {
 			
-			System.out.println(qna);
 			
 			int result = qnaService.qnaEnroll(qna);
 			
