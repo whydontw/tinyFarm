@@ -196,14 +196,19 @@ public class AdminController {
 	
 	//QNA 목록
 	@GetMapping("/qnaList.ad")
-	public String selectQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="answerYn", defaultValue="2") int answerYn, Model model) {
+	public String selectQnaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="answerYn", defaultValue="2") int answerYn, Model model, HttpSession session) {
+		
 		
 		HashMap<String, Integer> qMap = new HashMap<String, Integer>();
 		qMap.put("answerYn", answerYn);
+		qMap.put("userNo", ((Member)session.getAttribute("loginUser")).getUserNo());
 		
 		
 		// 전체 게시글 개수(listCount) - selectListCount() 메소드 명
 		int qnaListCount = qnaService.qnaListCount(qMap);
+		
+		System.out.println("qna 개수: " + qnaListCount);
+		
 
 		// 한 페이지에서 보여줘야 하는 게시글 개수(boardLimit)
 		int boardLimit = 5;
@@ -216,9 +221,6 @@ public class AdminController {
 		ArrayList<Qna> qList = qnaService.selectQnaList(pi, qMap);
 		
 		
-		System.out.println("답변여부" + answerYn);
-		
-
 		model.addAttribute("qList", qList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("answerYn", answerYn);
@@ -386,7 +388,6 @@ public class AdminController {
 		
 		int result = memberService.memberStatus(map);
 		
-		System.out.println("일괄 어쩌구 결과: " + result);
 		
 		String resultStr = "";
 		
@@ -520,7 +521,6 @@ public class AdminController {
 		
 		int result = adminService.reportStatus(map);
 		
-		System.out.println("result " + result);
 		
 		String resultStr = "";
 		
