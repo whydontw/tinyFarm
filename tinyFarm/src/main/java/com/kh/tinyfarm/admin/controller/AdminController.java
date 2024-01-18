@@ -49,7 +49,7 @@ public class AdminController {
 	
 	
 
-	
+	//commit test
 	
 	
 	//메인 페이지
