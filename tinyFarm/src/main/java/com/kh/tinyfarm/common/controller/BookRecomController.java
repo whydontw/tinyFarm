@@ -42,8 +42,6 @@ public class BookRecomController {
 								 Model model) {
 			
 		
-			System.out.println("bookCategory: " + bookCategory);
-		
 		
 			HashMap<String, String> bookMap = new HashMap<>();
 			bookMap.put("orderByStandard", orderByStandard);
@@ -147,7 +145,6 @@ public class BookRecomController {
 	public String bookDetail(int bookNo, Model model) {
 		
 		int result = bookService.increaseCount(bookNo);
-		System.out.println("책 조회수 1 증가: " + result);
 		
 		Book book = null;
 		
@@ -177,13 +174,10 @@ public class BookRecomController {
 	@PostMapping("bookUpdate.re")
 	public String bookUpdate(Book book, MultipartFile upfile, HttpSession session) {
 		
-		System.out.println(book);
-		System.out.println(upfile.getOriginalFilename());
 		
 		//기존 책 정보
 		Book oldBook = bookService.bookDetail(book.getBookNo());
 		
-		System.out.println("옛날 책정보: " + oldBook);
 		
 		
 		//파일이 바뀌었을 때
@@ -205,7 +199,6 @@ public class BookRecomController {
 			book.setBookChangeName(oldBook.getBookChangeName());
 		}
 		
-		System.out.println(book);
 		
 		int result = bookService.bookUpdate(book);
 		
