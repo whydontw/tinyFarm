@@ -88,7 +88,7 @@
                                     <col width="5%">
                                     <col width="12%">
                                     <col width="13%">
-                                    <col width="15%">
+                                    <col width="17%">
                                     <col width="auto%">
                                     <col width="7%">
                                     <col width="5%">

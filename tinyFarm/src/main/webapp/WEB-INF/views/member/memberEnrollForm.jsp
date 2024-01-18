@@ -15,13 +15,14 @@
 	    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
 	    <!-- Title -->
-	    <title>Alazea - Gardening &amp; Landscaping HTML Template</title>
+	    <title>회원가입</title>
 	
-	    <!-- Favicon -->
-	    <link rel="icon" href="/resources/img/core-img/favicon.ico">
 	
 	    <!-- Core Stylesheet -->
 	    <link rel="stylesheet" href="<%= contextPath %>/resources/style.css">
+	    
+	    <!-- Favicon -->
+	    <link rel="icon" href="<%= contextPath %>/resources/img/core-img/favicon.ico">
 	
 		<style>
 			.genric-btn {
@@ -162,6 +163,9 @@
 							console.log(inputUserId.val().length);
 							
 							var idLength = inputUserId.val().trim().length;
+							
+							console.log("룰루랄라")
+							
 						    if (idLength >= 5 && idLength <= 15) {
 							
 								$.ajax({
@@ -245,6 +249,9 @@
 						
 						        inputUserId.keyup(function(){
 						            var idLength = inputUserId.val().trim().length;
+						            
+						            console.log("아이디길이", idLength);
+						            
 						            var minLength = 6;
 						            var maxLength = 15;
 						
@@ -269,7 +276,7 @@
 						                });
 						            } else {
 						                $("#checkResult").show();
-						                $("#checkResult").css("color","red").text("아이디는 6자 이상 15자 이하로 입력해주세요.");
+						                $("#checkResult").css("color","red").text("아이디는 5자 이상 15자 이하로 입력해주세요.");
 						                $("button[type=submit]").attr("disabled", true);
 						            }
 						        });

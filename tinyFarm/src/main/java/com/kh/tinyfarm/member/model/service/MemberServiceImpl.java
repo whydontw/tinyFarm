@@ -30,12 +30,8 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder bcryptPasswordEncoder;
     
-    // 생성자 추가
-    public MemberServiceImpl() {
-        System.out.println("MemberServiceImpl 생성자 호출");
-    }
 
-	@Override
+    @Override
 	public Member loginMember(Member m) {
 	
 		Member loginUser = memberDao.loginMember(sqlSession, m);

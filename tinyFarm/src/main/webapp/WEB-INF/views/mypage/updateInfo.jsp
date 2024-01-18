@@ -197,7 +197,7 @@
 									        <!-- 이미지 표시 -->
 									        <c:choose>
 									        	<c:when test="${not empty loginUser.changeName }">
-											        <img id="profileImage" src="${loginUser.changeName}" alt="프로필 사진">
+											        <img id="profileImage" src="${loginUser.changeName}" alt="프로필 사진" style="width:100%; height:100%; object-fit:cover;">
 									        	</c:when>
 									        	<c:otherwise>
 									        		<img id="profileImage" src="resources/profile.jpg" alt="기본 프로필 사진">

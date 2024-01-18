@@ -79,7 +79,6 @@ public class BoardController {
 	public String boardInsert(Board b,HttpSession session) {
 
 		int result = boardService.insertBoard(b);
-		System.out.println("result : "+result);
 		if(result>0) {
 			session.setAttribute("alertMsg", "게시글 작성이 성공하셨습니다.");
 			return "redirect:moveList.bo";
@@ -221,7 +220,6 @@ public class BoardController {
 	//게시글 신고
 	@PostMapping("report.bo")
 	public String boardReport(BoardReport bp,HttpSession session) {
-		System.out.println("bp : "+bp);
 		
 		int result =boardService.boardReport(bp);
 		

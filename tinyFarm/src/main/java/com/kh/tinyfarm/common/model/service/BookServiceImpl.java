@@ -20,10 +20,6 @@ public class BookServiceImpl implements BookService {
 	 @Autowired
 	 private SqlSessionTemplate sqlSession;
 	
-	 // 생성자 추가
-    public BookServiceImpl() {
-        System.out.println("MemberServiceImpl 생성자 호출");
-    }
 
 	@Override
 	public int insertBook(Book b) {

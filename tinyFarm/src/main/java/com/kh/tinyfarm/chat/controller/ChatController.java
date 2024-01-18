@@ -27,7 +27,6 @@ public class ChatController {
 	public String goChat(@RequestParam(value = "userId",defaultValue = "")String userId,Model model) {
 		//다른 페이지에서 1:1 채팅하기를 눌렀을 때 userId 받아서 전달
 		model.addAttribute("userId", userId);
-		System.out.println(userId);
 		return "chat/chatingList";
 	}
 	
@@ -49,7 +48,6 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="insertChatRoom.ch",produces="text/html; charset=UTF-8")
 	public String insertChatRoom(ChatRoom cr) {
-		System.out.println(cr);
 		//채팅방이 아예 DB에 존재하지 않는지 확인
 		int count = chatService.checkExistChatRoom(cr);
 		//채팅방이 존재하지만 현재 사용자가 채팅방을 나간 상태(N)인지 확인
@@ -104,7 +102,6 @@ public class ChatController {
 	@RequestMapping(value="selectNotReadMsg.ch",produces = "application/json; charset=UTF-8")
 	public ArrayList<HashMap> selectNotReadMsg(String userId){
 		ArrayList<HashMap> list = chatService.selectNotReadMsg(userId);
-		System.out.println(list);
 		return list;
 	}
 	

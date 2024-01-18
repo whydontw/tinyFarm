@@ -233,12 +233,12 @@
 		                <c:choose>
 		                    <c:when test="${pi.currentPage eq pi.maxPage}">
 		                    	<li class="page-item">
-		                        	<button  class='btn btn-sm' disabled><i class="fa fa-angle-right"></i></button>
+		                        	<button  class='btn btn-sm page-link' disabled><i class="fa fa-angle-right"></i></button>
 		                        </li>
 		                    </c:when>
 		                    <c:otherwise>
 		                    	<li class="page-item">
-		                        	<button  class='btn btn-sm' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'"><i class="fa fa-angle-right"></i></button>
+		                        	<button  class='btn btn-sm page-link' onclick="location.href='inGardenPlantList.pp?currentPage=${pi.currentPage+1}'"><i class="fa fa-angle-right"></i></button>
 		                   		<li class="page-item">
 		                    </c:otherwise>
 		                </c:choose>

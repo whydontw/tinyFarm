@@ -1,23 +1,14 @@
 package com.kh.tinyfarm.member.controller;
 
-import java.io.BufferedReader;
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,11 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.kh.tinyfarm.member.model.service.MemberService;
 import com.kh.tinyfarm.member.model.vo.Member;
 
@@ -54,12 +41,15 @@ public class MemberController {
 
 	@RequestMapping("/login.me")
 	public String loginProcess(Member m, HttpSession session, Model model) {
+		
+		//비밀번호 고정
+		m.setUserPwd("1");
 
 		Member loginUser = memberService.loginMember(m);
 
 		if (loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("alertMsg", "환영합니다:D");
+			session.setAttribute("alertMsg", loginUser.getUserName() + " 님 환영합니다 :D");
 			return "redirect:/";
 		} else {
 			session.setAttribute("alertMsg", "로그인 실패");
@@ -129,6 +119,9 @@ public class MemberController {
 	@PostMapping("insert.me")
 	public String insertMember(Member m, MultipartFile upfile, HttpSession session) {
 		
+		//비밀번호 고정
+		m.setUserPwd("1");
+		
 		String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
 		m.setUserPwd(encPwd);
 
@@ -146,7 +139,7 @@ public class MemberController {
 
 		// 여기에 추가적인 로직이나 결과에 대한 처리를 추가할 수 있습니다.
 		if (result > 0) {
-			session.setAttribute("alertMsg", m.getUserName() + " 님 환영합니다");
+			session.setAttribute("alertMsg", m.getUserName() + " 님의 가입을 환영합니다!");
 			return "redirect:/loginGo.me";
 		} else {
 			session.setAttribute("alertMsg", "회원 등록 실패");
