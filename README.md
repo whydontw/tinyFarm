@@ -1,7 +1,10 @@
 ## 🌱 작은농장(TinyFarm)
 <br>
+
 ![작은농장_main](https://github.com/whydontw/tinyFarm/assets/101682578/6220ecad-e63e-4425-8827-a67b404476cd)
+
 <br>
+
 **`프로젝트명`** 작은농장(TinyFarm)
 
 **`개발기간`** 23.12.06 ~ 24.01.12
