@@ -1,7 +1,8 @@
 ## 🌱 작은농장(TinyFarm)
 <br>
 
-![작은농장_main](https://github.com/whydontw/tinyFarm/assets/101682578/d72f7ac8-5c11-455d-9ed0-8ba34b44d0cc)
+![작은농장_main](https://github.com/parade358/NILILI/assets/101682578/a640dd90-98f6-418d-8a9b-45096a7d53a0)
+
 
 <br>
 
